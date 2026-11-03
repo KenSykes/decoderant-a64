@@ -1,0 +1,31 @@
+[package]
+name = "aarch64-isa"
+description = "A64 decoder, encoder, formatter and instruction info generated from Arm's AARCHMRS"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license = "MIT AND BSD-3-Clause"
+include = ["src/**", "Cargo.toml", "spec/LICENSE-AARCHMRS"]
+publish.workspace = true
+
+[features]
+default = ["std", "decoder", "encoder", "op_code_info", "instr_info", "formatter"]
+std = []
+decoder = []
+encoder = []
+op_code_info = []
+instr_info = []
+formatter = []
+code_asm = ["encoder", "op_code_info"]
+
+[dependencies]
+thiserror = { workspace = true, default-features = false }
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+# Independent oracles for the differential tests (hand-written decode trees).
+fARM64 = { version = "0.1", features = ["alloc", "crypto"] }
+yaxpeax-arm = "0.5"
+yaxpeax-arch = { version = "0.3", default-features = false }

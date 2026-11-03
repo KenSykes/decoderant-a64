@@ -1,0 +1,20 @@
+# Pinned AARCHMRS release that aarch64-isa's generated tables come from. fetch.cmake
+# downloads the tarball and refuses it unless its SHA-256 matches; aarch64-isa-gen
+# refuses spec files whose SHA-256 differs from the `file` lines. Nothing listed here
+# is committed (Instructions.json alone is over 100 MB).
+#
+# Only Arm's open-source (BSD 3-clause) package is used, never the proprietary ones.
+# Licence checked for this release (2026-11-02): docs/notice.html and the `_meta`
+# block of Instructions.json, Features.json and Registers.json all state BSD 3-clause
+# ("This document is Non-confidential and licensed under the BSD 3-clause license.").
+#
+# Format:
+#   release <name>
+#   tarball <sha256> <url>
+#   file <path inside the tarball> <sha256>
+release AARCHMRS_OPENSOURCE_A_profile_FAT-2026-09
+tarball d5bf3f538663fb18be081ba8e9f08b188ed06f81dd19d4aa2da5b2795103a4ec https://developer.arm.com/-/cdn-downloads/permalink/Exploration-Tools-OS-Machine-Readable-Data/AARCHMRS_BSD/AARCHMRS_OPENSOURCE_A_profile_FAT-2026-09.tar.gz
+file Instructions.json ef75f3ec02df1b9b9c0612f4ea259d6710ac3de686b097d8f9c83d1d97aa800a
+file Features.json 4895f896d54b119c8f4916484f72532353a557e3a767393ac4fff382d317619e
+file Registers.json 06d6f82f60cd3e4defe687f7a9d182acdafca3cf914b432c3fbe848295794e9e
+file docs/notice.html 91e83f6178857ba3e96d69c989bee40c351b775d3a58ff6773c9ec4659ba99d3

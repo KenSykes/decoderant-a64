@@ -1,0 +1,58 @@
+# Groups only the exhaustive fARM64 comparison reaches (tests/oracles.rs,
+# `farm64_exhaustive`); same format as farm64.txt. The sampled groups in farm64.txt
+# also apply.
+
+SYSL_RC_systeminstrs mnemonic isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:clr invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:clrex invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:dmb invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:dsb invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:extrx invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:extry invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:fma16 invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:fma32 invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:fma64 invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:fms16 invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:fms32 invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:fms64 invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:genlut invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:genter invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:gexit invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:isb invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:ldx invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:ldy invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:ldz invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:ldzi invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:mac16 invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:matfp invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:matint invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:pssbb invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:sb invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:set invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:ssbb invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:stx invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:sty invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:stz invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:stzi invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:tcommit invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:tstart invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:ttest invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:vecfp invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:vecint invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:wfet invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:wfit invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+
+# Reviewed one by one.
+UNALLOCATED:fminnmv invalid-vs-valid isa The FP16 across-lanes forms fix bit 22 to 0; fARM64 also accepts bit 22 set
+UNALLOCATED:fminv invalid-vs-valid isa The FP16 across-lanes forms fix bit 22 to 0; fARM64 also accepts bit 22 set
+UNALLOCATED:fcvtxn invalid-vs-valid isa FCVTXN has only the sz = 1 form (double to single); fARM64 accepts sz = 0
+UNALLOCATED:fcvtxn2 invalid-vs-valid isa FCVTXN2 has only the sz = 1 form (double to single); fARM64 accepts sz = 0
+UNALLOCATED:urecpe invalid-vs-valid isa URECPE has no 64-bit element form (sz = 1 is reserved); fARM64 accepts .2D
+UNALLOCATED:ursqrte invalid-vs-valid isa URSQRTE has no 64-bit element form (sz = 1 is reserved); fARM64 accepts .2D
+UNALLOCATED:smstart invalid-vs-valid isa MSR SVCR* with an unallocated CRm (000x, 1xxx) is UNDEFINED; fARM64 prints SMSTART
+UNALLOCATED:smstop invalid-vs-valid isa MSR SVCR* with an unallocated CRm (000x, 1xxx) is UNDEFINED; fARM64 prints SMSTOP
+MRRS_RS_systemmovepr operands isa Only registers with a 128-bit accessor in Registers.json have MRRS names; fARM64 also names 64-bit registers
+MSRR_SR_systemmovepr operands isa Only registers with a 128-bit accessor in Registers.json have MSRR names; fARM64 also names 64-bit registers
+SYSP_CR_syspairinstrs mnemonic isa TLBIP exists only for the address forms in Registers.json; fARM64 also prints TLBIP for VMALLE1 and the other non-address operations
+SYSP_CR_syspairinstrs operands both TLBIP with Rt = 31 leaves out the optional register pair; fARM64 prints XZR, XZR
+SYS_CR_systeminstrs mnemonic both MLBI is not in the pinned Registers.json, so it prints as SYS; fARM64 knows it from another source

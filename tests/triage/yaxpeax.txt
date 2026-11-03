@@ -1,0 +1,1221 @@
+# Triage of disagreement groups with yaxpeax-arm 0.5 (tests/oracles.rs).
+#
+# Format: <encoding> <class> <right side> <reason> (see farm64.txt for the
+# classes and sides). yaxpeax-arm 0.5 predates many extensions and accepts many
+# reserved field values; generated groups (oracle lacks the encoding, the other
+# oracle agrees with us) were reviewed in bulk by sampling their examples; the
+# remaining groups are triaged one by one at the end of the file.
+
+ABS_32_dp_1src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+ABS_64_dp_1src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+ADDG_64_addsub_immtags valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MTE)
+ADDG_64_addsub_immtags valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+ADDPT_64_addsub_pt valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CPA)
+ADDP_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADDS_32S_addsub_ext invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADDS_32S_addsub_ext operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADDS_32_addsub_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADDS_64S_addsub_ext invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADDS_64S_addsub_ext operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADD_32_addsub_ext invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADD_32_addsub_ext operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADD_32_addsub_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADD_64_addsub_ext invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADD_64_addsub_ext operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADD_64_addsub_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ADD_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ANDS_32S_log_imm invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ANDS_32_log_shift invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ANDS_64S_log_imm invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ANDS_64_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+AND_32_log_shift invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+AND_32_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+AND_64_log_imm invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+AND_64_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+AUTIASPPCR_64LRR_dp_1src operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+AUTIASPPC_only_dp_1src_imm operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+AUTIBSPPCR_64LRR_dp_1src operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+AUTIBSPPC_only_dp_1src_imm operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+AXFLAG_M_pstate mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+BF1CVTL_asimdmisc_V valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8)
+BF2CVTL_asimdmisc_V valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8)
+BFCVTN_asimdmisc_4S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_BF16)
+BFCVT_BS_floatdp1 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_BF16)
+BFDOT_asimdelem_E valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_BF16)
+BFDOT_asimdsame2_D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_BF16)
+BFMLAL_asimdelem_F valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_BF16)
+BFMLAL_asimdsame2_F_ valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_BF16)
+BFMMLA_asimdsame2_E valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_BF16)
+BICS_32_log_shift invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+BICS_64_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+BIC_32_log_shift invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+BIC_32_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+BIC_64_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+BTI_HB_hints mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+CASALT_C64_comswap_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+CASAT_C64_comswap_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+CASLT_C64_comswap_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+CASPALT_CP64_comswappr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+CASPAT_CP64_comswappr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+CASPLT_CP64_comswappr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+CASPT_CP64_comswappr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+CAST_C64_comswap_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+CBBEQ_8_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBBGE_8_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBBGT_8_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBBHI_8_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBBHS_8_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBBNE_8_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBEQ_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBEQ_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBEQ_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBEQ_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBGE_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBGE_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBGT_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBGT_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBGT_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBGT_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHEQ_16_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHGE_16_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHGT_16_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHHI_16_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHHS_16_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHI_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHI_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHI_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHI_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHNE_16_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHS_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBHS_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBLO_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBLO_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBLT_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBLT_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBNE_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBNE_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBNE_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CBNE_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CMPBR)
+CFINV_M_pstate mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+CFLTEQ_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTEQ_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTEQ_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTEQ_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTGE_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTGE_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTGT_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTGT_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTGT_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTGT_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTHI_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTHI_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTHI_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTHI_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTHS_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTHS_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTLO_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTLO_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTLT_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTLT_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTNE_32_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTNE_32_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTNE_64_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CFLTNE_64_regs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+CHKFEAT_HF_hints mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+CLRBHB_HI_hints mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+CLREX_BN_barriers operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+CMEQ_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+CMGE_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+CMGT_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+CMHI_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+CMHS_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+CMTST_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+CNT_32_dp_1src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+CNT_64_dp_1src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+CPYEN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYEN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYERN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYERN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYERTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYERTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYERTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYERTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYERTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYERTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYERT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYERT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYETN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYETN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYETRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYETRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYETWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYETWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYET_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYET_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYEWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYEWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYEWTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYEWTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYEWTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYEWTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYEWTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYEWTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYEWT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYEWT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYE_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYE_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFEN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFERN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFERN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFERTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFERTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFERTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFERTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFERTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFERTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFERT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFERT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFETN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFETN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFETRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFETRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFETWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFETWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFET_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFET_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFEWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEWTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFEWTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEWTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFEWTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEWTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFEWTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEWT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFEWT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFE_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFE_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMRTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMRTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMRTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMRTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMRTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMRTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMRT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMRT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMWTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMWTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMWTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMWTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMWTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMWTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMWT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFMWT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFM_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFM_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPRTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPRTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPRTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPRTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPRTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPRTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPRT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPRT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPWTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPWTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPWTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPWTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPWTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPWTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPWT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFPWT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFP_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYFP_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMRTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMRTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMRTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMRTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMRTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMRTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMRT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMRT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMWTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMWTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMWTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMWTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMWTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMWTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMWT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYMWT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYM_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYM_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPRTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPRTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPRTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPRTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPRTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPRTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPRT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPRT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPWTN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPWTN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPWTRN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPWTRN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPWTWN_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPWTWN_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPWT_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYPWT_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYP_CPY_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+CPYP_CPY_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CTZ_32_dp_1src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+CTZ_64_dp_1src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+DCPS1_DC_exception operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+DCPS2_DC_exception operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+DCPS3_DC_exception operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+DGH_HI_hints mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+DSB_BOn_barriers valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_XS)
+DUP_asimdins_DV_v invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+DUP_asimdins_DV_v mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+EON_32_log_shift invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+EON_32_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+EON_64_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+EOR_32_log_imm invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+EOR_32_log_shift invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+EOR_32_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+EOR_64_log_imm invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+EOR_64_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+F1CVTL_asimdmisc_V valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8)
+F2CVTL_asimdmisc_V valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8)
+FABD_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FACGE_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FACGT_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FADDP_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FADD_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FAMAX_asimdsame_only valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_AdvSIMD, FEAT_FAMINMAX)
+FAMAX_asimdsamefp16_only valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_AdvSIMD, FEAT_FAMINMAX)
+FAMIN_asimdsame_only valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_AdvSIMD, FEAT_FAMINMAX)
+FAMIN_asimdsamefp16_only valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_AdvSIMD, FEAT_FAMINMAX)
+FCADD_asimdsame2_C invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCMEQ_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCMGE_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCMGT_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCMLA_advsimd_elt invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCMLA_asimdsame2_C invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCMTLMG_D_floatcmp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FCMTLMG_H_floatcmp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FCMTLMG_S_floatcmp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FCMTL_D_floatcmp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FCMTL_H_floatcmp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FCMTL_S_floatcmp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FCVTAS_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTAS_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTAS_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTAS_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTAU_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTAU_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTAU_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTAU_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTMS_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTMS_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTMS_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTMS_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTMU_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTMU_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTMU_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTMU_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTNS_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTNS_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTNS_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTNS_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTNU_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTNU_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTNU_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTNU_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTN_asimdsame2_D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8)
+FCVTN_asimdsame2_H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8)
+FCVTPS_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTPS_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTPS_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTPS_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTPU_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTPU_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTPU_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTPU_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTZS_32D_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCVTZS_32H_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCVTZS_32S_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCVTZS_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTZS_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTZS_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTZS_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTZU_32D_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCVTZU_32H_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCVTZU_32S_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCVTZU_asimdshf_C invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FCVTZU_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTZU_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTZU_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FCVTZU_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+FDIV_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FDOT_asimdelem_D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8DOT4)
+FDOT_asimdelem_FP16FP32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_F16F32DOT)
+FDOT_asimdelem_G valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8DOT2)
+FDOT_asimdsame2_D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8DOT2)
+FDOT_asimdsame2_DD valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8DOT4)
+FDOT_asimdsame2_FP16FP32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_F16F32DOT)
+FLT_EX_exception valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+FMAXINM_D_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMAXINM_H_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMAXINM_S_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMAXMGINM_D_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMAXMGINM_H_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMAXMGINM_S_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMAXMG_D_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMAXMG_H_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMAXMG_S_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMAXNMP_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMAXNM_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMAXP_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMAX_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMININM_D_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMININM_H_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMININM_S_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMINMGINM_D_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMINMGINM_H_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMINMGINM_S_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMINMG_D_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMINMG_H_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMINMG_S_floatdp2 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPv2)
+FMINNMP_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMINNM_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMINP_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMIN_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMLAL2_asimdelem_LH mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMLAL2_asimdsame_F valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FHM)
+FMLALB_asimdelem_H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLALB_asimdsame2_J valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLALLBB_asimdelem_J valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLALLBB_asimdsame2_G valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLALLBT_asimdelem_J valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLALLBT_asimdsame2_G valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLALLTB_asimdelem_J valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLALLTB_asimdsame2_G valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLALLTT_asimdelem_J valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLALLTT_asimdsame2_G valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLALT_asimdelem_H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLALT_asimdsame2_J valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8FMA)
+FMLAL_asimdelem_LH operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMLAL_asimdsame_F valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FHM)
+FMLA_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMLSL2_asimdelem_LH mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMLSL2_asimdsame_F valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FHM)
+FMLSL_asimdelem_LH operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMLSL_asimdsame_F valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FHM)
+FMLS_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMMLA_asimd_FP16FP16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_F16MM)
+FMMLA_asimd_FP16FP32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_F16F32MM)
+FMMLA_asimd_FP8FP16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_F8F16MM)
+FMMLA_asimd_FP8FP32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_F8F32MM)
+FMULX_asimdelem_R_SD invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMULX_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FMUL_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FRECPS_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FRINT32X_asimdmisc_R valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FRINTTS)
+FRINT64X_asimdmisc_R valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FRINTTS)
+FRSQRTS_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+FSCALE_asimdsame_only valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8)
+FSCALE_asimdsamefp16_only valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP8)
+FSUB_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+GCSB_HD_hints mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+GCSSTR_64_ldst_gcs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_GCS)
+GCSSTTR_64_ldst_gcs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_GCS)
+HINTE_extendedhint valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_HINTE)
+HINT_HM_hints mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+IRG_64I_dp_2src operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LD2_asisdlse_R2 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LD2_asisdlsep_I2_i invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LD2_asisdlsep_R2_r invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LD3_asisdlse_R3 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LD3_asisdlsep_I3_i invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LD3_asisdlsep_R3_r invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LD4_asisdlse_R4 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LD4_asisdlsep_I4_i invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LD4_asisdlsep_R4_r invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LD64B_64L_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LS64)
+LDA64B_64L_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LS64, FEAT_LSC64B)
+LDAP1_asisdlso_D1 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_AdvSIMD, FEAT_LRCPC3)
+LDAPP_64_ldiappstilp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSCP)
+LDAPR_32L_ldapstl_writeback valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+LDAPR_64L_ldapstl_writeback valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+LDAPUR_B_ldapstl_simd valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LRCPC3)
+LDAPUR_D_ldapstl_simd valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LRCPC3)
+LDAPUR_H_ldapstl_simd valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LRCPC3)
+LDAPUR_Q_ldapstl_simd valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LRCPC3)
+LDAPUR_S_ldapstl_simd valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LRCPC3)
+LDAP_64_ldiappstilp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSCP)
+LDATXR_LR32_ldstexclr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDATXR_LR32_ldstexclr_unpriv valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDATXR_LR64_ldstexclr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDATXR_LR64_ldstexclr_unpriv valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDBFADDAL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFADDA_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFADDL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFADD_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMAXAL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMAXA_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMAXL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMAXNMAL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMAXNMA_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMAXNML_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMAXNM_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMAX_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMINAL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMINA_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMINL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMINNMAL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMINNMA_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMINNML_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMINNM_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDBFMIN_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDCLRPAL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+LDCLRPA_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+LDCLRPL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+LDCLRP_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+LDFADDAL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFADDAL_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFADDAL_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFADDA_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFADDA_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFADDA_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFADDL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFADDL_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFADDL_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFADD_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFADD_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFADD_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXAL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXAL_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXAL_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXA_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXA_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXA_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXL_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXL_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNMAL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNMAL_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNMAL_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNMA_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNMA_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNMA_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNML_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNML_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNML_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNM_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNM_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAXNM_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAX_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAX_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMAX_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINAL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINAL_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINAL_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINA_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINA_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINA_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINL_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINL_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNMAL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNMAL_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNMAL_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNMA_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNMA_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNMA_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNML_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNML_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNML_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNM_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNM_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMINNM_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMIN_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMIN_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDFMIN_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+LDIAPP_32LE_ldiappstilp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+LDIAPP_32L_ldiappstilp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+LDIAPP_64LS_ldiappstilp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+LDIAPP_64L_ldiappstilp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+LDRB_32BL_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDRB_32B_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDRH_32_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDRSB_32BL_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDRSB_32B_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDRSB_64BL_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDRSB_64B_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDRSH_32_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDRSH_64_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDRSW_64_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_32_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_64_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_BL_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_B_ldst_regoff invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_B_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_D_ldst_regoff invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_D_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_H_ldst_regoff invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_H_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_Q_ldst_regoff invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_Q_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_S_ldst_regoff invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDR_S_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+LDSETPAL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+LDSETPA_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+LDSETPL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+LDSETP_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+LDTADDAL_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTADDAL_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTADDA_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTADDA_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTADDL_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTADDL_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTADD_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTADD_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTCLRAL_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTCLRAL_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTCLRA_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTCLRA_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTCLRL_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTCLRL_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTCLR_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTCLR_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTNP_64_ldstnapair_offs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTNP_64_ldstnapair_offs valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDTNP_Q_ldstnapair_offs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LSUI)
+LDTNP_Q_ldstnapair_offs valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDTP_64_ldstpair_off valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTP_64_ldstpair_off valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDTP_64_ldstpair_post valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTP_64_ldstpair_post valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDTP_64_ldstpair_pre valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTP_64_ldstpair_pre valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDTP_Q_ldstpair_off valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LSUI)
+LDTP_Q_ldstpair_off valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDTP_Q_ldstpair_post valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LSUI)
+LDTP_Q_ldstpair_post valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDTP_Q_ldstpair_pre valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LSUI)
+LDTP_Q_ldstpair_pre valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDTSETAL_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTSETAL_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTSETA_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTSETA_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTSETL_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTSETL_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTSET_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTSET_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTXR_LR32_ldstexclr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTXR_LR32_ldstexclr_unpriv valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDTXR_LR64_ldstexclr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+LDTXR_LR64_ldstexclr_unpriv valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LUTI2_asimdtbl_L5 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_AdvSIMD, FEAT_LUT)
+LUTI2_asimdtbl_L6 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_AdvSIMD, FEAT_LUT)
+LUTI4_asimdtbl_L5 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_AdvSIMD, FEAT_LUT)
+LUTI4_asimdtbl_L7 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_AdvSIMD, FEAT_LUT)
+MADDPT_64A_dp_3src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CPA)
+MLA_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+MLS_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+MOVN_32_movewide mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+MRRS_RS_systemmovepr valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_SYSREG128)
+MSRR_SR_systemmovepr valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_SYSREG128)
+MSUBPT_64A_dp_3src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CPA)
+MUL_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ORN_32_log_shift invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ORN_32_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ORN_64_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ORR_32_log_imm invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ORR_32_log_imm mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ORR_32_log_shift invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ORR_32_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ORR_64_log_imm invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ORR_64_log_imm mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ORR_64_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+PMUL_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+RCWCASAL_C64_rcwcomswap valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWCASA_C64_rcwcomswap valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWCASL_C64_rcwcomswap valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWCASPAL_C64_rcwcomswappr valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWCASPA_C64_rcwcomswappr valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWCASPL_C64_rcwcomswappr valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWCASP_C64_rcwcomswappr valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWCAS_C64_rcwcomswap valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWCLRAL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWCLRA_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWCLRL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWCLRPAL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWCLRPA_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWCLRPL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWCLRP_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWCLR_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSCASAL_C64_rcwcomswap valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSCASA_C64_rcwcomswap valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSCASL_C64_rcwcomswap valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSCASPAL_C64_rcwcomswappr valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSCASPA_C64_rcwcomswappr valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSCASPL_C64_rcwcomswappr valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSCASP_C64_rcwcomswappr valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSCAS_C64_rcwcomswap valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSCLRAL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSCLRA_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSCLRL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSCLRPAL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSCLRPA_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSCLRPL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSCLRP_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSCLR_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSETAL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSETA_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSETL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSETPAL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSETPA_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSETPL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSETP_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSET_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSSETAL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSSETA_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSSETL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSSETPAL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSSETPA_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSSETPL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSSETP_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSSET_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSSWPAL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSSWPA_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSSWPL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSSWPPAL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSSWPPA_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSSWPPL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSSWPP_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSSWP_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSWPAL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSWPA_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSWPL_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RCWSWPPAL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSWPPA_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSWPPL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSWPP_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_D128, FEAT_THE)
+RCWSWP_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_THE)
+RETAASPPC_only_miscbranch operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+RETABSPPC_only_miscbranch operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+REV32_asimdmisc_R invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+RPRFM_R_ldst_regoff mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+RSHRN_asimdshf_N invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SABA_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SABD_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SCVTF_D32_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SCVTF_H32_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SCVTF_S32_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SCVTF_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+SCVTF_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+SCVTF_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+SCVTF_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+SDOT_asimdsame2_D invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SETEN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETEN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETETN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETETN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETET_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETET_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETE_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETE_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGEN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGEN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGETN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGETN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGET_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGET_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGE_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGE_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGMN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGMN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGMTN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGMTN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGMT_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGMT_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGM_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGM_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOEN_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOETN_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOET_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOE_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOMN_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOMTN_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOMT_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOM_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOPN_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+SETGOPN_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOPTN_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOPT_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOP_memset_go valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGPN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGPN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGPTN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGPTN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGPT_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGPT_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGP_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS, FEAT_MTE)
+SETGP_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETMN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETMN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETMTN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETMTN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETMT_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETMT_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETM_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETM_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETPN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETPN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETPTN_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETPTN_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETPT_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETPT_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETP_SET_memcms valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS)
+SETP_SET_memcms valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SEVL_HI_hints mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SHADD_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SHSUB_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SHUH_HI_hints mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SMAXP_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SMAX_32_dp_2src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+SMAX_32_minmax_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+SMAX_64_dp_2src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+SMAX_64_minmax_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+SMAX_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SMINP_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SMIN_32_dp_2src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+SMIN_32_minmax_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+SMIN_64_dp_2src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+SMIN_64_minmax_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+SMIN_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SMMLA_asimdsame2_G valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_I8MM)
+SQADD_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQDMLAL_asimddiff_L invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQDMLSL_asimddiff_L invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQDMULH_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQDMULH_asisdelem_R invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQDMULH_asisdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQDMULL_asimddiff_L invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQRDMLAH_asisdelem_R invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQRDMLSH_asisdelem_R invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQRDMULH_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQRDMULH_asisdelem_R invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQRDMULH_asisdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQRSHL_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQRSHRN_asimdshf_N invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQRSHRUN_asimdshf_N invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQSHL_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SQSUB_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SRHADD_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SRSHL_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SSHLL_asimdshf_L invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SSHLL_asimdshf_L mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SSHL_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ST2_asisdlse_R2 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ST2_asisdlsep_I2_i invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ST2_asisdlsep_R2_r invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ST3_asisdlse_R3 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ST3_asisdlsep_I3_i invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ST3_asisdlsep_R3_r invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ST4_asisdlse_R4 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ST4_asisdlsep_I4_i invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ST4_asisdlsep_R4_r invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ST64BV0_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LS64_ACCDATA)
+ST64BV_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LS64_V)
+ST64B_64L_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LS64)
+STBFADDL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STBFADD_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STBFMAXL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STBFMAXNML_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STBFMAXNM_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STBFMAX_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STBFMINL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STBFMINNML_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STBFMINNM_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STBFMIN_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STCPH_HI_hints mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STFADDL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFADDL_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFADDL_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFADD_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFADD_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFADD_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAXL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAXL_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAXL_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAXNML_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAXNML_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAXNML_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAXNM_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAXNM_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAXNM_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAX_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAX_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMAX_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMINL_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMINL_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMINL_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMINNML_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMINNML_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMINNML_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMINNM_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMINNM_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMINNM_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMIN_16 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMIN_32 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STFMIN_64 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSFE)
+STGP_64_ldstpair_off valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MTE)
+STGP_64_ldstpair_post valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MTE)
+STGP_64_ldstpair_post valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+STGP_64_ldstpair_pre valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MTE)
+STGP_64_ldstpair_pre valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+STILP_32SE_ldiappstilp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+STILP_32S_ldiappstilp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+STILP_64SS_ldiappstilp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+STILP_64S_ldiappstilp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+STL1_asisdlso_D1 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_AdvSIMD, FEAT_LRCPC3)
+STL64BV0_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LS64_ACCDATA, FEAT_LSC64B)
+STL64BV_64_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LS64_V, FEAT_LSC64B)
+STL64B_64L_memop valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LS64, FEAT_LSC64B)
+STLP_64_ldiappstilp valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSCP)
+STLR_32S_ldapstl_writeback valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+STLR_64S_ldapstl_writeback valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LRCPC3)
+STLTXR_SR32_ldstexclr_unpriv valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+STLTXR_SR64_ldstexclr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+STLTXR_SR64_ldstexclr_unpriv valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+STLUR_B_ldapstl_simd valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LRCPC3)
+STLUR_D_ldapstl_simd valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LRCPC3)
+STLUR_H_ldapstl_simd valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LRCPC3)
+STLUR_Q_ldapstl_simd valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LRCPC3)
+STLUR_S_ldapstl_simd valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LRCPC3)
+STRB_32BL_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STRB_32B_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STRH_32_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_32_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_64_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_BL_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_B_ldst_regoff invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_B_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_D_ldst_regoff invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_D_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_H_ldst_regoff invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_H_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_Q_ldst_regoff invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_Q_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_S_ldst_regoff invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STR_S_ldst_regoff operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STSHH_HI_hints mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+STTNP_64_ldstnapair_offs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+STTNP_Q_ldstnapair_offs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LSUI)
+STTP_64_ldstpair_off valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+STTP_64_ldstpair_post valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+STTP_64_ldstpair_post valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+STTP_64_ldstpair_pre valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+STTP_64_ldstpair_pre valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+STTP_Q_ldstpair_off valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LSUI)
+STTP_Q_ldstpair_post valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LSUI)
+STTP_Q_ldstpair_pre valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FP, FEAT_LSUI)
+STTXR_SR32_ldstexclr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+STTXR_SR32_ldstexclr_unpriv valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+STTXR_SR64_ldstexclr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+STTXR_SR64_ldstexclr_unpriv valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SUBG_64_addsub_immtags valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MTE)
+SUBG_64_addsub_immtags valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SUBPT_64_addsub_pt valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CPA)
+SUBS_32S_addsub_ext invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUBS_32S_addsub_ext operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUBS_32_addsub_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUBS_64S_addsub_ext invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUBS_64S_addsub_ext operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUBS_64_addsub_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUB_32_addsub_ext invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUB_32_addsub_ext operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUB_32_addsub_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUB_64_addsub_ext invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUB_64_addsub_ext operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUB_64_addsub_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUB_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SUDOT_asimdelem_D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_I8MM)
+SWPPAL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+SWPPA_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+SWPPL_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+SWPP_128_memop_128 valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSE128)
+SWPTAL_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+SWPTAL_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+SWPTA_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+SWPTA_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+SWPTL_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+SWPTL_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+SWPT_32_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+SWPT_64_memop_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+SYSP_CR_syspairinstrs valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_SYSINSTR128)
+TCHANGEB_tc_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_S1POE2)
+TCHANGEB_tc_imm valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+TCHANGEB_tc_reg valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_S1POE2)
+TCHANGEF_tc_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_S1POE2)
+TCHANGEF_tc_imm valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+TCHANGEF_tc_reg valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_S1POE2)
+TENTER_te_exception valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_TEV)
+TENTER_te_exception valid-vs-invalid:unpredictable both yaxpeax rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+TEXIT_te_branch_reg valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_TEV)
+TFLTNZ valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+TFLTZ valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CFLT)
+UABA_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UABD_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UCVTF_D32_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UCVTF_H32_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UCVTF_S32_float2fix invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UCVTF_sisd_32D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+UCVTF_sisd_32H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+UCVTF_sisd_64H valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+UCVTF_sisd_64S valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_FPRCVT)
+UDOT_asimdsame2_D invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UHADD_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UHSUB_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UMAXP_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UMAX_32U_minmax_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+UMAX_32_dp_2src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+UMAX_64U_minmax_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+UMAX_64_dp_2src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+UMAX_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UMINP_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UMIN_32U_minmax_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+UMIN_32_dp_2src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+UMIN_64U_minmax_imm valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+UMIN_64_dp_2src valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_CSSC)
+UMIN_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UMMLA_asimdsame2_G valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_I8MM)
+UNALLOCATED:adc invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:adcs invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:add invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:adds invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:and invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ands invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:asr invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autiasppc invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autibsppc invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:bcax invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:bic invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:bics invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ccmn invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ccmp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cinc invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cmeq invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cmge invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cmgt invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cmhi invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cmhs invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cmp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cmtst invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:crc32cb invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:crc32cw invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:crc32w invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:csel invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:csinc invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:csinv invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:csneg invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:dup invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:eon invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:eor invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:eor3 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:facge invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:facgt invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fadd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:faddp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fcadd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fcmge invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fcmgt invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fcmla invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fcmp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fcmpe invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fcvtzs invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fcvtzu invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmax invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fminnm invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fminnmp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmla invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmlal invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmls invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmlsl invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmul invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmulx invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:irg invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ld1 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ld1r invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ld2 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ld2r invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ld3 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ld3r invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ld4 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ld4r invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ldr invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:lsr invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:mls invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:mov invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:movi invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:movk invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:mul invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:mvn invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:mvni invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ngcs invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:orn invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:orr invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pmul invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:rax1 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ror invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:saba invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sabd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sbc invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:scvtf invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sdot invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sha512h invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sha512h2 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sha512su0 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sha512su1 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:shsub invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sm3partw1 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sm3partw2 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sm3ss1 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sm4e invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sm4ekey invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:smax invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:smin invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sminp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:smov invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqdmlal invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqdmlsl invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqdmulh invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqdmull invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqdmull2 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqrdmlah invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqrdmlsh invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqrdmulh invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqshl invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqsub invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:srhadd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:srshl invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sshl invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sshll2 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:st1 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:st2 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:st3 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:st4 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:str invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sub invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:subs invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:tst invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:uaba invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:uabd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ucvtf invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:udf invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:udiv invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:udot invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:uhadd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:uhsub invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:umax invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:umaxp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:uminp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:umov invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:uqadd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:uqrshl invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:uqsub invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:urhadd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:urshl invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ushl invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UQADD_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UQRSHL_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UQRSHRN_asimdshf_N invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UQSHL_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UQSUB_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+URHADD_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+URSHL_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+USDOT_asimdelem_D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_I8MM)
+USDOT_asimdsame2_D valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_I8MM)
+USHLL_asimdshf_L invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+USHLL_asimdshf_L mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+USHL_asimdsame_only invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+USMMLA_asimdsame2_G valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_I8MM)
+WFET_only_systeminstrswithreg valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_WFxT)
+WFIT_only_systeminstrswithreg valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_WFxT)
+XAFLAG_M_pstate mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+
+# Reviewed one by one.
+PRFM_P_loadlit operands isa The SLC prefetch targets (PLDSLCKEEP, ...) are allocated in the pinned release; yaxpeax-arm prints them as numbers
+PRFM_P_ldst_pos operands isa The SLC prefetch targets are allocated in the pinned release; yaxpeax-arm prints them as numbers
+PRFUM_P_ldst_unscaled operands isa The SLC prefetch targets are allocated in the pinned release; yaxpeax-arm prints them as numbers
+PRFM_P_ldst_regoff operands both The extend amount is printed only when S = 1 (the template's {<amount>}); yaxpeax-arm prints #0 for S = 0, and prints SLC targets as numbers
+SLBND_HI_hints mnemonic isa SLBND (FEAT_RLCS hint) postdates yaxpeax-arm 0.5, which prints the hint number
+SRLS_HI_hints mnemonic isa SRLS (FEAT_RLCS hint) postdates yaxpeax-arm 0.5, which prints the hint number
+MSR_SI_pstate invalid-vs-valid isa MSR (immediate) with an unallocated PSTATE field is UNDEFINED; yaxpeax-arm prints pstate.<n>
+MSR_SI_pstate operands isa PSTATE field names (DAIFClr, SPSel, PAN) from Registers.json; yaxpeax-arm prints pstate.<n>
+MSR_SR_systemmove operands isa yaxpeax-arm prints Rt from four bits (x15 for 31, x6 for 22); Rt is bits 4:0
+MRS_RS_systemmove operands isa System register names from the pinned Registers.json that yaxpeax-arm 0.5 does not know
+URECPE_asimdmisc_R invalid-vs-valid isa URECPE has no 64-bit element form (sz = 1 is reserved); yaxpeax-arm accepts .2D
+URSQRTE_asimdmisc_R invalid-vs-valid isa URSQRTE has no 64-bit element form (sz = 1 is reserved); yaxpeax-arm accepts .2D
+SUBPS_64S_dp_2src mnemonic both CMPP is the spec's preferred alias of SUBPS with Rd = XZR; yaxpeax-arm does not apply it
+SYS_CR_systeminstrs operands both SYS with Rt = 31 leaves out the optional <Xt>; yaxpeax-arm always prints XZR
+SYS_CR_systeminstrs mnemonic isa PLBI and the nXS TLBI operations are named in the pinned Registers.json; yaxpeax-arm prints SYS

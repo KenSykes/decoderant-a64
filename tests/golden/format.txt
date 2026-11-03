@@ -1,0 +1,248 @@
+f380001f AUTIASPPC_only_dp_1src_imm   autiasppc 0x1000
+f381c39f AUTIASPPC_only_dp_1src_imm   autiasppc 0xffffffffffffd790
+13800000 EXTR_32_extract              ror w0, w0, #0
+13922401 EXTR_32_extract              extr w1, w0, w18, #9
+10000000 ADR_only_pcreladdr           adr x0, 0x1000
+10c01194 ADR_only_pcreladdr           adr x20, 0xfffffffffff81230
+11000000 ADD_32_addsub_imm            add w0, w0, #0
+116ec695 ADD_32_addsub_imm            add w21, w20, #0xbb1, lsl #0xc
+91800000 ADDG_64_addsub_immtags       addg x0, x0, #0, #0
+918a4374 ADDG_64_addsub_immtags       addg x20, x27, #0xa0, #0
+11c00000 SMAX_32_minmax_imm           smax w0, w0, #0
+11c24a20 SMAX_32_minmax_imm           smax w0, w17, #-0x6e
+12000000 AND_32_log_imm               and w0, w0, #0x1
+1212f664 INVALID                      .inst 0x1212f664
+12800000 MOVN_32_movewide             mov w0, #0xffffffff
+1292d6bc MOVN_32_movewide             mov w28, #0xffff694a
+13000000 SBFM_32M_bitfield            sbfx w0, w0, #0, #1
+133f6a82 INVALID                      .inst 0x133f6a82
+54000000 B_only_condbranch            b.eq 0x1000
+54651e8d B_only_condbranch            b.le 0xcb3d0
+5500001f RETAASPPC_only_miscbranch    retaasppc 0x1000
+55027f1f RETAASPPC_only_miscbranch    retaasppc 0xffffffffffffc020
+74008000 CBBGT_8_regs                 cbbgt w0, w0, 0x1000
+74088c9c CBBGT_8_regs                 cbbgt w28, w8, 0x1190
+d4000001 SVC_EX_exception             svc #0
+d414bda1 SVC_EX_exception             svc #0xa5ed
+d5031000 WFET_only_systeminstrswithreg wfet x0
+d503100e WFET_only_systeminstrswithreg wfet x14
+d503201f NOP_HI_hints                 nop
+d503201f NOP_HI_hints                 nop
+d503305f CLREX_BN_barriers            clrex #0
+d503395f CLREX_BN_barriers            clrex #9
+d500401f CFINV_M_pstate               cfinv
+d507433f INVALID                      .inst 0xd507433f
+d5080000 SYS_CR_systeminstrs          sys #0, c0, c0, #0, x0
+d508e179 SYS_CR_systeminstrs          sys #0, c14, c1, #3, x25
+d5100000 MSR_SR_systemmove            msr s2_0_c0_c0_0, x0
+d51dfffd MSR_SR_systemmove            msr s3_5_c15_c15_7, x29
+d5480000 SYSP_CR_syspairinstrs        sysp #0, c0, c0, #0, x0, x1
+d5491633 INVALID                      .inst 0xd5491633
+d5500000 MSRR_SR_systemmovepr         msrr s2_0_c0_c0_0, x0, x1
+d5583619 INVALID                      .inst 0xd5583619
+d61f0000 BR_64_branch_reg             br x0
+d61f0040 BR_64_branch_reg             br x2
+d5840000 TCHANGEB_tc_reg              tchangeb x0, x0
+d5860350 TCHANGEB_tc_reg              tchangeb x16, x26, nb
+d5940000 TCHANGEB_tc_imm              tchangeb x0, #0
+d595c8c3 TCHANGEB_tc_imm              tchangeb x3, #0x46
+14000000 B_only_branch_imm            b 0x1000
+17f4eb8a B_only_branch_imm            b 0xffffffffffd3be28
+34000000 CBZ_32_compbranch            cbz w0, 0x1000
+3406afdf CBZ_32_compbranch            cbz wzr, 0xe5f8
+74000000 CBGT_32_regs                 cbgt w0, w0, 0x1000
+741f0476 CBGT_32_regs                 cbgt w22, wzr, 0x108c
+76000000 CFLTGT_32_imm                cfltgt #0, w0, #0
+761c0d7e CFLTGT_32_imm                cfltgt #3, w30, #-0x35
+76000200 CFLTGT_32_regs               cfltgt #0, w0, w0
+76030a0b CFLTGT_32_regs               cfltgt #2, w11, w3
+76000240 TFLTZ                        tfltz #0, w0, #0
+76f80658 TFLTZ                        tfltz #1, w24, #0x1f
+75000000 CBGT_32_imm                  cbgt w0, #0, 0x1000
+751ca8de CBGT_32_imm                  cbgt w30, #0x39, 0xd18
+36000000 TBZ_only_testbranch          tbz w0, #0, 0x1000
+b6442c31 TBZ_only_testbranch          tbz x17, #0x28, 0xffffffffffff9584
+d5002000 HINTE_extendedhint           hinte #0
+d5002cb9 HINTE_extendedhint           hinte #0xcb9
+08207c00 CASP_CP32_comswappr          casp w0, w1, w0, w1, [x0]
+08297d38 INVALID                      .inst 0x08297d38
+0c000000 ST4_asisdlse_R4              st4 { v0.8b, v1.8b, v2.8b, v3.8b }, [x0]
+0c0000dc ST4_asisdlse_R4              st4 { v28.8b, v29.8b, v30.8b, v31.8b }, [x6]
+0c800000 ST4_asisdlsep_R4_r           st4 { v0.8b, v1.8b, v2.8b, v3.8b }, [x0], x0
+0c910505 ST4_asisdlsep_R4_r           st4 { v5.4h, v6.4h, v7.4h, v8.4h }, [x8], x17
+0d000000 ST1_asisdlso_B1_1b           st1 { v0.b }[0], [x0]
+0d000f95 ST1_asisdlso_B1_1b           st1 { v21.b }[3], [x28]
+0d800000 ST1_asisdlsop_BX1_r1b        st1 { v0.b }[0], [x0], x0
+0d9b0fc6 ST1_asisdlsop_BX1_r1b        st1 { v6.b }[3], [x30], x27
+19200800 RCWCAS_C64_rcwcomswap        rcwcas x0, x0, [x0]
+193f0944 RCWCAS_C64_rcwcomswap        rcwcas xzr, x4, [x10]
+19200c00 RCWCASP_C64_rcwcomswappr     rcwcasp x0, x1, x0, x1, [x0]
+19270e75 INVALID                      .inst 0x19270e75
+19201000 LDCLRP_128_memop_128         ldclrp x0, x0, [x0]
+193e13a7 LDCLRP_128_memop_128         ldclrp x7, x30, [x29]
+49807c00 CASPT_CP64_comswappr_unpriv  caspt x0, x1, x0, x1, [x0]
+49897d0c INVALID                      .inst 0x49897d0c
+c9807c00 CAST_C64_comswap_unpriv      cast x0, x0, [x0]
+c98b7ef4 CAST_C64_comswap_unpriv      cast x11, x20, [x23]
+d91f0c00 GCSSTR_64_ldst_gcs           gcsstr x0, [x0]
+d91f0cb8 GCSSTR_64_ldst_gcs           gcsstr x24, [x5]
+d9200400 STG_64Spost_ldsttags         stg x0, [x0], #0
+d932f601 STG_64Spost_ldsttags         stg x1, [x16], #-0xd10
+88200000 STXP_SP32_ldstexclp          stxp w0, w0, w0, [x0]
+88374e28 STXP_SP32_ldstexclp          stxp w23, w8, w19, [x17]
+89000000 STTXR_SR32_ldstexclr_unpriv  sttxr w0, w0, [x0]
+89043d2b STTXR_SR32_ldstexclr_unpriv  sttxr w4, w11, [x9]
+08000000 STXRB_SR32_ldstexclr         stxrb w0, w0, [x0]
+08105bed STXRB_SR32_ldstexclr         stxrb w16, w13, [sp]
+08800000 STLLRB_SL32_ldstord          stllrb w0, [x0]
+0881725d STLLRB_SL32_ldstord          stllrb w29, [x18]
+08a07c00 CASB_C32_comswap             casb w0, w0, [x0]
+08b07ccb CASB_C32_comswap             casb w16, w11, [x6]
+99000800 STILP_32SE_ldiappstilp       stilp w0, w0, [x0, #-8]!
+9908080e STILP_32SE_ldiappstilp       stilp w14, w8, [x0, #-8]!
+99800800 STLR_32S_ldapstl_writeback   stlr w0, [x0, #-4]!
+9980081e STLR_32S_ldapstl_writeback   stlr w30, [x0, #-4]!
+19000000 STLURB_32_ldapstl_unscaled   stlurb w0, [x0]
+191f5297 STLURB_32_ldapstl_unscaled   stlurb w23, [x20, #-0xb]
+1dc00000 SETGOP_memset_go             setgop [x0]!, x0!
+9dc400b4 INVALID                      .inst 0x9dc400b4
+1d000800 STLUR_B_ldapstl_simd         stlur b0, [x0]
+1d113908 STLUR_B_ldapstl_simd         stlur b8, [x8, #-0xed]
+18000000 LDR_32_loadlit               ldr w0, 0x1000
+187d7750 LDR_32_loadlit               ldr w16, 0xfbee8
+19000400 CPYFP_CPY_memcms             cpyfp [x0]!, [x0]!, x0!
+19160736 CPYFP_CPY_memcms             cpyfp [x22]!, [x22]!, x25!
+19200400 LDTADD_32_memop_unpriv       ldtadd w0, w0, [x0]
+19280733 LDTADD_32_memop_unpriv       ldtadd w8, w19, [x25]
+28000000 STNP_32_ldstnapair_offs      stnp w0, w0, [x0]
+2826dda2 STNP_32_ldstnapair_offs      stnp w2, w23, [x13, #-0xcc]
+28800000 STP_32_ldstpair_post         stp w0, w0, [x0], #0
+288b9719 STP_32_ldstpair_post         stp w25, w5, [x24], #0x5c
+29000000 STP_32_ldstpair_off          stp w0, w0, [x0]
+293825fa STP_32_ldstpair_off          stp w26, w9, [x15, #-0x40]
+29800000 STP_32_ldstpair_pre          stp w0, w0, [x0, #0]!
+29800357 STP_32_ldstpair_pre          stp w23, w0, [x26, #0]!
+38000000 STURB_32_ldst_unscaled       sturb w0, [x0]
+381c7151 STURB_32_ldst_unscaled       sturb w17, [x10, #-0x39]
+38000400 STRB_32_ldst_immpost         strb w0, [x0], #0
+380e84f0 STRB_32_ldst_immpost         strb w16, [x7], #0xe8
+38000800 STTRB_32_ldst_unpriv         sttrb w0, [x0]
+3819a864 STTRB_32_ldst_unpriv         sttrb w4, [x3, #-0x66]
+38000c00 STRB_32_ldst_immpre          strb w0, [x0, #0]!
+38076cef STRB_32_ldst_immpre          strb w15, [x7, #0x76]!
+38200000 LDADDB_32_memop              ldaddb w0, w0, [x0]
+383a0114 LDADDB_32_memop              ldaddb w26, w20, [x8]
+38200800 INVALID                      .inst 0x38200800
+3838480c STRB_32B_ldst_regoff         strb w12, [x0, w24, uxtw]
+f8200400 LDRAA_64_ldst_pac            ldraa x0, [x0]
+f86ee6c5 LDRAA_64_ldst_pac            ldraa x5, [x22, #-0x890]
+39000000 STRB_32_ldst_pos             strb w0, [x0]
+39044216 STRB_32_ldst_pos             strb w22, [x16, #0x110]
+1ac00800 UDIV_32_dp_2src              udiv w0, w0, w0
+1ac50903 UDIV_32_dp_2src              udiv w3, w8, w5
+5ac00000 RBIT_32_dp_1src              rbit w0, w0
+5ac000e2 RBIT_32_dp_1src              rbit w2, w7
+0a000000 AND_32_log_shift             and w0, w0, w0
+0a544cb8 AND_32_log_shift             and w24, w5, w20, lsr #0x13
+0b000000 ADD_32_addsub_shift          add w0, w0, w0
+0b89f582 INVALID                      .inst 0x0b89f582
+0b200000 ADD_32_addsub_ext            add w0, w0, w0, uxtb
+0b335de8 INVALID                      .inst 0x0b335de8
+1a000000 ADC_32_addsub_carry          adc w0, w0, w0
+1a000299 ADC_32_addsub_carry          adc w25, w20, w0
+9a002000 ADDPT_64_addsub_pt           addpt x0, x0, x0
+9a09366f ADDPT_64_addsub_pt           addpt x15, x19, x9, lsl #5
+ba000400 RMIF_only_rmif               rmif x0, #0, #0
+ba0d86e3 RMIF_only_rmif               rmif x23, #0x1b, #3
+3a00080d SETF8_only_setf              setf8 w0
+3a00088d SETF8_only_setf              setf8 w4
+3a400000 CCMN_32_condcmp_reg          ccmn w0, w0, #0, eq
+3a45e304 CCMN_32_condcmp_reg          ccmn w24, w5, #4, al
+3a400800 CCMN_32_condcmp_imm          ccmn w0, #0, #0, eq
+3a5a29ed CCMN_32_condcmp_imm          ccmn w15, #0x1a, #0xd, cs
+1a800000 CSEL_32_condsel              csel w0, w0, w0, eq
+1a9c837f CSEL_32_condsel              csel wzr, w27, w28, hi
+1b000000 MADD_32A_dp_3src             madd w0, w0, w0, w0
+1b1e0923 MADD_32A_dp_3src             madd w3, w9, w30, w2
+4e284800 AESE_B_cryptoaes             aese v0.16b, v0.16b
+4e2849eb AESE_B_cryptoaes             aese v11.16b, v15.16b
+5e000000 SHA1C_QSV_cryptosha3         sha1c q0, s0, v0.4s
+5e1d0372 SHA1C_QSV_cryptosha3         sha1c q18, s27, v29.4s
+5e280800 SHA1H_SS_cryptosha2          sha1h s0, s0
+5e280bcb SHA1H_SS_cryptosha2          sha1h s11, s30
+5e000400 INVALID                      .inst 0x5e000400
+5e1f04ef DUP_asisdone_only            mov b15, v7.b[0xf]
+5e401c00 FMULX_asisdsamefp16_only     fmulx h0, h0, h0
+5e5c1da3 FMULX_asisdsamefp16_only     fmulx h3, h13, h28
+5e79a800 FCVTNS_asisdmiscfp16_R       fcvtns h0, h0
+5e79a93b FCVTNS_asisdmiscfp16_R       fcvtns h27, h9
+7e008400 INVALID                      .inst 0x7e008400
+7e57846c SQRDMLAH_asisdsame2_only     sqrdmlah h12, h3, h23
+5e203800 SUQADD_asisdmisc_R           suqadd b0, b0
+5ee03b27 SUQADD_asisdmisc_R           suqadd d7, d25
+5ef1b800 ADDP_asisdpair_only          addp d0, v0.2d
+5ef1b90b ADDP_asisdpair_only          addp d11, v8.2d
+5e209000 INVALID                      .inst 0x5e209000
+5e339162 INVALID                      .inst 0x5e339162
+5e200c00 SQADD_asisdsame_only         sqadd b0, b0, b0
+5e3b0d32 SQADD_asisdsame_only         sqadd b18, b9, b27
+5f400400 SSHR_asisdshf_R              sshr d0, d0, #0x40
+5f5a05cb SSHR_asisdshf_R              sshr d11, d14, #0x26
+5f003000 INVALID                      .inst 0x5f003000
+5fea3088 INVALID                      .inst 0x5fea3088
+0e000000 TBL_asimdtbl_L1_1            tbl v0.8b, { v0.16b }, v0.8b
+4e0801ec TBL_asimdtbl_L1_1            tbl v12.16b, { v15.16b }, v8.16b
+0e001800 UZP1_asimdperm_only          uzp1 v0.8b, v0.8b, v0.8b
+4e8b1bfa UZP1_asimdperm_only          uzp1 v26.4s, v31.4s, v11.4s
+2e000000 EXT_asimdext_only            ext v0.8b, v0.8b, v0.8b, #0
+2e1249d8 INVALID                      .inst 0x2e1249d8
+0e000400 INVALID                      .inst 0x0e000400
+0e0f04e1 DUP_asimdins_DV_v            dup v1.8b, v7.b[7]
+0e400400 FMAXNM_asimdsamefp16_only    fmaxnm v0.4h, v0.4h, v0.4h
+4e4004dd FMAXNM_asimdsamefp16_only    fmaxnm v29.8h, v6.8h, v0.8h
+0e798800 FRINTN_asimdmiscfp16_R       frintn v0.4h, v0.4h
+4e7988bc FRINTN_asimdmiscfp16_R       frintn v28.8h, v5.8h
+0e009400 INVALID                      .inst 0x0e009400
+0e869495 SDOT_asimdsame2_D            sdot v21.2s, v4.8b, v6.8b
+0e200800 REV64_asimdmisc_R            rev64 v0.8b, v0.8b
+0ea00922 REV64_asimdmisc_R            rev64 v2.2s, v9.2s
+0e303800 SADDLV_asimdall_only         saddlv h0, v0.8b
+4ef03895 INVALID                      .inst 0x4ef03895
+0e200000 SADDL_asimddiff_L            saddl v0.8h, v0.8b, v0.8b
+0eb3036c SADDL_asimddiff_L            saddl v12.2d, v27.2s, v19.2s
+0e200400 SHADD_asimdsame_only         shadd v0.8b, v0.8b, v0.8b
+0e7f0713 SHADD_asimdsame_only         shadd v19.4h, v24.4h, v31.4h
+0f000400 MOVI_asimdimm_L_sl           movi v0.2s, #0
+0f0505c2 MOVI_asimdimm_L_sl           movi v2.2s, #0xae
+0f000400 MOVI_asimdimm_L_sl           movi v0.2s, #0
+0f3005ca SSHR_asimdshf_R              sshr v10.2s, v14.2s, #0x10
+0f002000 INVALID                      .inst 0x0f002000
+4fd328cb INVALID                      .inst 0x4fd328cb
+ce408000 SM3TT1A_VVV4_crypto3_imm2    sm3tt1a v0.4s, v0.4s, v0.s[0]
+ce4b805d SM3TT1A_VVV4_crypto3_imm2    sm3tt1a v29.4s, v2.4s, v11.s[0]
+ce608000 SHA512H_QQV_cryptosha512_3   sha512h q0, q0, v0.2d
+ce79806f SHA512H_QQV_cryptosha512_3   sha512h q15, q3, v25.2d
+ce000000 EOR3_VVV16_crypto4           eor3 v0.16b, v0.16b, v0.16b, v0.16b
+ce18142c EOR3_VVV16_crypto4           eor3 v12.16b, v1.16b, v24.16b, v5.16b
+ce800000 XAR_VVV2_crypto3_imm6        xar v0.2d, v0.2d, v0.2d, #0
+ce86cec2 XAR_VVV2_crypto3_imm6        xar v2.2d, v22.2d, v6.2d, #0x33
+cec08000 SHA512SU0_VV2_cryptosha512_2 sha512su0 v0.2d, v0.2d
+cec08120 SHA512SU0_VV2_cryptosha512_2 sha512su0 v0.2d, v9.2d
+1e020000 INVALID                      .inst 0x1e020000
+1e025300 INVALID                      .inst 0x1e025300
+1e200000 FCVTNS_32S_float2int         fcvtns w0, s0
+1e20019d FCVTNS_32S_float2int         fcvtns w29, s12
+1e204000 FMOV_S_floatdp1              fmov s0, s0
+1e204135 FMOV_S_floatdp1              fmov s21, s9
+1e202000 FCMP_S_floatcmp              fcmp s0, s0
+1e3e22a0 FCMP_S_floatcmp              fcmp s21, s30
+1e201000 FMOV_S_floatimm              fmov s0, #2.0
+1e2a900a FMOV_S_floatimm              fmov s10, #0.3125
+1e200400 FCCMP_S_floatccmp            fccmp s0, s0, #0, eq
+1e279460 FCCMP_S_floatccmp            fccmp s3, s7, #0, ls
+1e200800 FMUL_S_floatdp2              fmul s0, s0, s0
+1e3d097d FMUL_S_floatdp2              fmul s29, s11, s29
+1e200c00 FCSEL_S_floatsel             fcsel s0, s0, s0, eq
+1e303f78 FCSEL_S_floatsel             fcsel s24, s27, s16, cc
+1f000000 FMADD_S_floatdp3             fmadd s0, s0, s0, s0
+1f041bab FMADD_S_floatdp3             fmadd s11, s29, s4, s6

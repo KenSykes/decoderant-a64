@@ -1,0 +1,122 @@
+# Groups only the exhaustive yaxpeax-arm comparison reaches (tests/oracles.rs,
+# `yaxpeax_exhaustive`); same format as yaxpeax.txt. The sampled groups in
+# yaxpeax.txt also apply.
+
+ADDS_64_addsub_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+ANDS_32_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+BICS_32_log_shift operands isa farm64 agrees with us on every sample; yaxpeax is wrong here
+MOVN_64_movewide mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+MOVZ_32_movewide mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+MOVZ_64_movewide mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+MSR_SI_pstate mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+SETGOEN_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+SETGOETN_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+SETGOET_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+SETGOE_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+SETGOMN_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+SETGOMTN_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+SETGOMT_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+SETGOM_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+SETGOPTN_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+SETGOPT_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+SETGOP_memset_go valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_MOPS_GO, FEAT_MTE)
+STLTXR_SR32_ldstexclr_unpriv valid-vs-invalid isa yaxpeax does not implement this encoding (FEAT_LSUI)
+SYSL_RC_systeminstrs mnemonic isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:abs invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:addp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autda invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autdb invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autdza invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autdzb invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autia invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autia171615 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autiasppcr invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autib invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autib171615 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autibsppcr invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autiza invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:autizb invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:bfcvt invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cinv invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cls invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:clz invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cmle invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cmlt invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cmn invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cneg invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:crc32b invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:crc32ch invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:crc32cx invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:crc32h invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:crc32x invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:cset invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:csetm invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fabd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fabs invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fcmeq invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fcmle invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fcmlt invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fdiv invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmaxnm invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmaxnmp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmaxp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmin invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fminp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fmov invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fneg invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:frecps invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:frint32x invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:frint32z invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:frint64x invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:frint64z invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:frsqrts invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:fsub invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:gmi invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:lsl invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:mla invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:neg invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ngc invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacda invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacdb invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacdza invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacdzb invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacga invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacia invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacia171615 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:paciasppc invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacib invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacib171615 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacibsppc invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:paciza invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacizb invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacnbiasppc invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:pacnbibsppc invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:rbit invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:rev invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:rev16 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:rev32 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:rmif invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sbcs invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sdiv invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:shadd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:smaxp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqadd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqdmlal2 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqdmlsl2 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:sqrshl invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:subp invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:subps invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:umin invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:uqshl invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:ushll2 invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:xpacd invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+UNALLOCATED:xpaci invalid-vs-valid isa farm64 agrees with us on every sample; yaxpeax is wrong here
+
+# Reviewed one by one.
+UNALLOCATED:fminnmv invalid-vs-valid isa The FP16 across-lanes forms fix bit 22 to 0; yaxpeax-arm also accepts bit 22 set
+UNALLOCATED:fminv invalid-vs-valid isa The FP16 across-lanes forms fix bit 22 to 0; yaxpeax-arm also accepts bit 22 set
+UNALLOCATED:fcvtxn invalid-vs-valid isa FCVTXN has only the sz = 1 form (double to single); yaxpeax-arm accepts sz = 0
+UNALLOCATED:fcvtxn2 invalid-vs-valid isa FCVTXN2 has only the sz = 1 form (double to single); yaxpeax-arm accepts sz = 0
+UNALLOCATED:urecpe invalid-vs-valid isa URECPE has no 64-bit element form (sz = 1 is reserved); yaxpeax-arm accepts .2D
+UNALLOCATED:ursqrte invalid-vs-valid isa URSQRTE has no 64-bit element form (sz = 1 is reserved); yaxpeax-arm accepts .2D
+UNALLOCATED:msr invalid-vs-valid isa MSR (immediate) with an unallocated PSTATE field is UNDEFINED; yaxpeax-arm prints pstate.<n>

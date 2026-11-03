@@ -1,0 +1,258 @@
+# Triage of disagreement groups with fARM64 0.1 (tests/oracles.rs).
+#
+# Format: <encoding> <class> <right side> <reason>
+#   class: valid-vs-invalid (we decode it, fARM64 rejects it), invalid-vs-valid,
+#          mnemonic, operands, valid-vs-invalid:unpredictable (we decode a
+#          CONSTRAINED UNPREDICTABLE instance and flag it).
+#   right side: isa (aarch64-isa is right), oracle (fARM64 is right: a bug to fix
+#          here), both (a syntax or policy difference, neither is wrong).
+#
+# Generated groups (oracle lacks the encoding, UNPREDICTABLE policy, the other
+# oracle agrees with us) were reviewed in bulk by sampling their examples; the
+# remaining groups are triaged one by one at the end of the file.
+
+AUTIA171615_64LR_dp_1src valid-vs-invalid isa farm64 does not implement this encoding (FEAT_PAuth_LR)
+AUTIB171615_64LR_dp_1src valid-vs-invalid isa farm64 does not implement this encoding (FEAT_PAuth_LR)
+CFLTEQ_32_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTEQ_32_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTEQ_64_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTEQ_64_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTGE_32_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTGE_64_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTGT_32_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTGT_32_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTGT_64_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTGT_64_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTHI_32_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTHI_32_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTHI_64_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTHI_64_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTHS_32_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTHS_64_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTLO_32_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTLO_64_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTLT_32_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTLT_64_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTNE_32_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTNE_32_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTNE_64_imm valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CFLTNE_64_regs valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+CPYEN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYERN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYERTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYERTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYERTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYERT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYETN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYETRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYETWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYET_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYEWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYEWTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYEWTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYEWTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYEWT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYE_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFERN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFERTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFERTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFERTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFERT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFETN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFETRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFETWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFET_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEWTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEWTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEWTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFEWT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFE_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMRTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMRTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMRTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMRT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMWTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMWTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMWTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFMWT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFM_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPRTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPRTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPRTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPRT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPWTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPWTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPWTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFPWT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYFP_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMRTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMRTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMRTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMRT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMWTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMWTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMWTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYMWT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYM_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPRTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPRTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPRTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPRT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPWTN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPWTRN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPWTWN_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYPWT_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+CPYP_CPY_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+FCMLA_advsimd_elt valid-vs-invalid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+FCMTLMG_D_floatcmp valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FCMTLMG_H_floatcmp valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FCMTLMG_S_floatcmp valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FCMTL_D_floatcmp valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FCMTL_H_floatcmp valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FCMTL_S_floatcmp valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FLT_EX_exception valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+FMAXINM_D_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMAXINM_H_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMAXINM_S_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMAXMGINM_D_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMAXMGINM_H_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMAXMGINM_S_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMAXMG_D_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMAXMG_H_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMAXMG_S_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMININM_D_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMININM_H_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMININM_S_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMINMGINM_D_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMINMGINM_H_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMINMGINM_S_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMINMG_D_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMINMG_H_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+FMINMG_S_floatdp2 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_FPv2)
+HINT_HM_hints mnemonic isa yaxpeax agrees with us on every sample; farm64 is wrong here
+LDA64B_64L_memop valid-vs-invalid isa farm64 does not implement this encoding (FEAT_LS64, FEAT_LSC64B)
+LDAP1_asisdlso_D1 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_AdvSIMD, FEAT_LRCPC3)
+LDAPRB_32L_memop valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDAPRH_32L_memop valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDAPR_32L_memop valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+LDAPR_64L_memop valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+PACIA171615_64LR_dp_1src valid-vs-invalid isa farm64 does not implement this encoding (FEAT_PAuth_LR)
+PACIB171615_64LR_dp_1src valid-vs-invalid isa farm64 does not implement this encoding (FEAT_PAuth_LR)
+SETEN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETETN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETET_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETE_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGEN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGETN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGET_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGE_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGMN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGMTN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGMT_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGM_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOEN_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOETN_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOET_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOE_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOMN_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOMTN_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOMT_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOM_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOPN_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOPTN_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOPT_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGOP_memset_go valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGPN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGPTN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGPT_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETGP_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETMN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETMTN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETMT_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETM_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETPN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETPTN_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETPT_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+SETP_SET_memcms valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+STL1_asisdlso_D1 valid-vs-invalid isa farm64 does not implement this encoding (FEAT_AdvSIMD, FEAT_LRCPC3)
+STL64BV0_64_memop valid-vs-invalid isa farm64 does not implement this encoding (FEAT_LS64_ACCDATA, FEAT_LSC64B)
+STL64BV_64_memop valid-vs-invalid isa farm64 does not implement this encoding (FEAT_LS64_V, FEAT_LSC64B)
+STL64B_64L_memop valid-vs-invalid isa farm64 does not implement this encoding (FEAT_LS64, FEAT_LSC64B)
+TCHANGEB_tc_imm valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+TCHANGEF_tc_imm valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+TENTER_te_exception valid-vs-invalid:unpredictable both farm64 rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()
+TEXIT_te_branch_reg valid-vs-invalid isa farm64 does not implement this encoding (FEAT_TEV)
+TFLTNZ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+TFLTZ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_CFLT)
+UNALLOCATED:casalt invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:casat invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:caslt invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:caspalt invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:caspat invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:casplt invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:caspt invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:cast invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:mrrs invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:mrs invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:msr invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:msrr invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+UNALLOCATED:tcancel invalid-vs-valid isa yaxpeax agrees with us on every sample; farm64 is wrong here
+
+# Reviewed one by one.
+PRFM_P_loadlit operands isa The SLC prefetch targets (PLDSLCKEEP, ...) are allocated in the pinned release; fARM64 prints them as #imm
+PRFM_P_ldst_pos operands isa The SLC prefetch targets are allocated in the pinned release; fARM64 prints them as #imm
+PRFM_P_ldst_regoff operands isa The SLC prefetch targets are allocated in the pinned release; fARM64 prints them as #imm
+PRFUM_P_ldst_unscaled operands isa The SLC prefetch targets are allocated in the pinned release; fARM64 prints them as #imm
+HINTE_extendedhint mnemonic isa HINTE (extended hint space, 2026-09) postdates fARM64 0.1, which decodes the space as MSR/MRS with op0 = 0
+SLBND_HI_hints mnemonic isa SLBND (FEAT_RLCS hint) postdates fARM64 0.1, which prints the hint number
+SRLS_HI_hints mnemonic isa SRLS (FEAT_RLCS hint) postdates fARM64 0.1, which reads the hint as STSHH with a reserved policy
+MSR_SI_pstate invalid-vs-valid isa MSR (immediate) with an unallocated PSTATE field is UNDEFINED; fARM64 prints it as an MSR (register) with op0 = 0, which is not a register move
+MSR_SI_pstate operands isa MSR PAN, #imm (op1 = 000, op2 = 100); fARM64 prints the word as an MSR (register) with op0 = 0
+URECPE_asimdmisc_R invalid-vs-valid isa URECPE has no 64-bit element form (sz = 1 is reserved); fARM64 accepts .2D
+URSQRTE_asimdmisc_R invalid-vs-valid isa URSQRTE has no 64-bit element form (sz = 1 is reserved); fARM64 accepts .2D
+MRS_RS_systemmove operands isa System register names from the pinned Registers.json that fARM64 0.1 does not know (printed as S<op0>_...)
+MSR_SR_systemmove operands isa System register names from the pinned Registers.json that fARM64 0.1 does not know (printed as S<op0>_...)
+SUBPS_64S_dp_2src mnemonic both CMPP is the spec's preferred alias of SUBPS with Rd = XZR; fARM64 does not apply it
+SYS_CR_systeminstrs operands both SYS with Rt = 31 leaves out the optional <Xt> (the template's default), and TLBI operations print a non-31 Rt; fARM64 always prints XZR and drops it for TLBI
+LDTADD_32_memop_unpriv mnemonic both STTADD is the spec's preferred alias of LDTADD with Rt = ZR; fARM64 does not apply it
+LDTADD_64_memop_unpriv mnemonic both STTADD is the spec's preferred alias of LDTADD with Rt = ZR; fARM64 does not apply it
+LDTADDL_32_memop_unpriv mnemonic both STTADDL is the spec's preferred alias of LDTADDL with Rt = ZR; fARM64 does not apply it
+LDTADDL_64_memop_unpriv mnemonic both STTADDL is the spec's preferred alias of LDTADDL with Rt = ZR; fARM64 does not apply it
+LDTCLR_32_memop_unpriv mnemonic both STTCLR is the spec's preferred alias of LDTCLR with Rt = ZR; fARM64 does not apply it
+LDTCLR_64_memop_unpriv mnemonic both STTCLR is the spec's preferred alias of LDTCLR with Rt = ZR; fARM64 does not apply it
+LDTCLRL_32_memop_unpriv mnemonic both STTCLRL is the spec's preferred alias of LDTCLRL with Rt = ZR; fARM64 does not apply it
+LDTCLRL_64_memop_unpriv mnemonic both STTCLRL is the spec's preferred alias of LDTCLRL with Rt = ZR; fARM64 does not apply it
+LDTSET_32_memop_unpriv mnemonic both STTSET is the spec's preferred alias of LDTSET with Rt = ZR; fARM64 does not apply it
+LDTSET_64_memop_unpriv mnemonic both STTSET is the spec's preferred alias of LDTSET with Rt = ZR; fARM64 does not apply it
+LDTSETL_32_memop_unpriv mnemonic both STTSETL is the spec's preferred alias of LDTSETL with Rt = ZR; fARM64 does not apply it
+LDTSETL_64_memop_unpriv mnemonic both STTSETL is the spec's preferred alias of LDTSETL with Rt = ZR; fARM64 does not apply it

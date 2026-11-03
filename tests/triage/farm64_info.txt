@@ -1,0 +1,282 @@
+# Triage of instruction-info disagreements with fARM64 0.1 (tests/info.rs): the
+# registers read and written, compared on words both decoders print the same way.
+# Format: <encoding> registers <right side> <reason>. Grouped by category; the
+# examples of every category were checked against the Arm ARM operation
+# descriptions.
+
+ADDHN_asimddiff_N registers isa ADDHN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+AESD_B_cryptoaes registers isa AESD reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+AESE_B_cryptoaes registers isa AESE reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+BFCVTN_asimdmisc_4S registers isa BFCVTN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+BIF_asimdsame_only registers isa BIF reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+BIT_asimdsame_only registers isa BIT reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+BSL_asimdsame_only registers isa BSL reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+CBBEQ_8_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBBGE_8_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBBGT_8_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBBHI_8_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBBHS_8_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBBNE_8_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBEQ_32_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBEQ_32_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBEQ_64_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBEQ_64_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBGE_32_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBGE_64_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBGT_32_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBGT_32_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBGT_64_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBGT_64_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHEQ_16_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHGE_16_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHGT_16_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHHI_16_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHHS_16_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHI_32_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHI_32_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHI_64_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHI_64_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHNE_16_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHS_32_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBHS_64_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBLO_32_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBLO_64_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBLT_32_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBLT_64_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBNE_32_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBNE_32_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBNE_64_imm registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+CBNE_64_regs registers isa Compare-and-branch compares registers and does not read NZCV; fARM64 reports an NZCV read
+FCVTN_asimdmisc_N registers isa FCVTN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+FCVTN_asimdsame2_H registers isa FCVTN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+FCVTXN_asimdmisc_N registers isa FCVTXN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+FMLALLBB_asimdelem_J registers isa FMLALLBB reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+FMLALLBB_asimdsame2_G registers isa FMLALLBB reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+FMLALLBT_asimdelem_J registers isa FMLALLBT reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+FMLALLBT_asimdsame2_G registers isa FMLALLBT reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+FMLALLTB_asimdelem_J registers isa FMLALLTB reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+FMLALLTB_asimdsame2_G registers isa FMLALLTB reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+FMLALLTT_asimdelem_J registers isa FMLALLTT reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+FMLALLTT_asimdsame2_G registers isa FMLALLTT reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+INS_asimdins_IR_r registers isa INS reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+INS_asimdins_IV_v registers isa INS reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+LD1R_asisdlsop_RX1_r registers isa The post-index register is read; fARM64 reports it written
+LD1_asisdlsep_R1_r1 registers isa The post-index register is read; fARM64 reports it written
+LD1_asisdlsep_R2_r2 registers isa The post-index register is read; fARM64 reports it written
+LD1_asisdlsep_R3_r3 registers isa The post-index register is read; fARM64 reports it written
+LD1_asisdlsep_R4_r4 registers isa The post-index register is read; fARM64 reports it written
+LD1_asisdlso_B1_1b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD1_asisdlso_D1_1d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD1_asisdlso_H1_1h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD1_asisdlso_S1_1s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD1_asisdlsop_B1_i1b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD1_asisdlsop_BX1_r1b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD1_asisdlsop_D1_i1d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD1_asisdlsop_DX1_r1d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD1_asisdlsop_H1_i1h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD1_asisdlsop_HX1_r1h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD1_asisdlsop_S1_i1s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD1_asisdlsop_SX1_r1s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2R_asisdlsop_RX2_r registers isa The post-index register is read; fARM64 reports it written
+LD2_asisdlsep_R2_r registers isa The post-index register is read; fARM64 reports it written
+LD2_asisdlso_B2_2b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2_asisdlso_D2_2d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2_asisdlso_H2_2h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2_asisdlso_S2_2s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2_asisdlsop_B2_i2b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2_asisdlsop_BX2_r2b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2_asisdlsop_D2_i2d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2_asisdlsop_DX2_r2d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2_asisdlsop_H2_i2h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2_asisdlsop_HX2_r2h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2_asisdlsop_S2_i2s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD2_asisdlsop_SX2_r2s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3R_asisdlsop_RX3_r registers isa The post-index register is read; fARM64 reports it written
+LD3_asisdlsep_R3_r registers isa The post-index register is read; fARM64 reports it written
+LD3_asisdlso_B3_3b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3_asisdlso_D3_3d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3_asisdlso_H3_3h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3_asisdlso_S3_3s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3_asisdlsop_B3_i3b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3_asisdlsop_BX3_r3b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3_asisdlsop_D3_i3d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3_asisdlsop_DX3_r3d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3_asisdlsop_H3_i3h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3_asisdlsop_HX3_r3h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3_asisdlsop_S3_i3s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD3_asisdlsop_SX3_r3s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4R_asisdlsop_RX4_r registers isa The post-index register is read; fARM64 reports it written
+LD4_asisdlsep_R4_r registers isa The post-index register is read; fARM64 reports it written
+LD4_asisdlso_B4_4b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4_asisdlso_D4_4d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4_asisdlso_H4_4h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4_asisdlso_S4_4s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4_asisdlsop_B4_i4b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4_asisdlsop_BX4_r4b registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4_asisdlsop_D4_i4d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4_asisdlsop_DX4_r4d registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4_asisdlsop_H4_i4h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4_asisdlsop_HX4_r4h registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4_asisdlsop_S4_i4s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LD4_asisdlsop_SX4_r4s registers isa Single-lane loads keep the other lanes, so the transfer registers are read-written; fARM64 reports a plain write (and the post-index register as written)
+LDCLRPAL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+LDCLRPA_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+LDCLRPL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+LDCLRP_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+LDG_64Loffset_ldsttags registers isa LDG reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+LDSETPAL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+LDSETPA_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+LDSETPL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+LDSETP_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+LDTADDAL_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTADDAL_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTADDA_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTADDA_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTADDL_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTADDL_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTADD_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTADD_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTCLRAL_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTCLRAL_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTCLRA_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTCLRA_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTCLRL_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTCLRL_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTCLR_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTCLR_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTSETAL_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTSETAL_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTSETA_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTSETA_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTSETL_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTSETL_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTSET_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+LDTSET_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+RADDHN_asimddiff_N registers isa RADDHN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+RCWCASAL_C64_rcwcomswap registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWCASA_C64_rcwcomswap registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWCASL_C64_rcwcomswap registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWCASPAL_C64_rcwcomswappr registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWCASPA_C64_rcwcomswappr registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWCASPL_C64_rcwcomswappr registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWCASP_C64_rcwcomswappr registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWCAS_C64_rcwcomswap registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWCLRPAL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWCLRPA_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWCLRPL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWCLRP_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSCASAL_C64_rcwcomswap registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWSCASA_C64_rcwcomswap registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWSCASL_C64_rcwcomswap registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWSCASPAL_C64_rcwcomswappr registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWSCASPA_C64_rcwcomswappr registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWSCASPL_C64_rcwcomswappr registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWSCASP_C64_rcwcomswappr registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWSCAS_C64_rcwcomswap registers isa RCWCAS*: Xs (compare value, replaced by the old value) is read-written and Xt (new value) read; fARM64 reports both written
+RCWSCLRPAL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSCLRPA_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSCLRPL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSCLRP_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSETPAL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSETPA_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSETPL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSETP_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSSETPAL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSSETPA_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSSETPL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSSETP_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSSWPPAL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSSWPPA_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSSWPPL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSSWPP_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSWPPAL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSWPPA_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSWPPL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RCWSWPP_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+RPRFM_R_ldst_regoff registers isa RPRFM reads Xm (the range description); fARM64 reports it written
+RSHRN_asimdshf_N registers isa RSHRN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+RSUBHN_asimddiff_N registers isa RSUBHN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SABAL_asimddiff_L registers isa SABAL reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SABA_asimdsame_only registers isa SABA reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SADALP_asimdmisc_P registers isa SADALP reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA1C_QSV_cryptosha3 registers isa SHA1C reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA1M_QSV_cryptosha3 registers isa SHA1M reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA1P_QSV_cryptosha3 registers isa SHA1P reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA1SU0_VVV_cryptosha3 registers isa SHA1SU0 reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA1SU1_VV_cryptosha2 registers isa SHA1SU1 reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA256H2_QQV_cryptosha3 registers isa SHA256H2 reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA256H_QQV_cryptosha3 registers isa SHA256H reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA256SU0_VV_cryptosha2 registers isa SHA256SU0 reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA256SU1_VVV_cryptosha3 registers isa SHA256SU1 reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA512H2_QQV_cryptosha512_3 registers isa SHA512H2 reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA512H_QQV_cryptosha512_3 registers isa SHA512H reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA512SU0_VV2_cryptosha512_2 registers isa SHA512SU0 reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHA512SU1_VVV2_cryptosha512_3 registers isa SHA512SU1 reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SHRN_asimdshf_N registers isa SHRN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SM3PARTW1_VVV4_cryptosha512_3 registers isa SM3PARTW1 reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SM3PARTW2_VVV4_cryptosha512_3 registers isa SM3PARTW2 reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SM3TT1A_VVV4_crypto3_imm2 registers isa SM3TT1A reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SM3TT1B_VVV4_crypto3_imm2 registers isa SM3TT1B reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SM3TT2A_VVV4_crypto3_imm2 registers isa SM3TT2A reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SM3TT2B_VVV_crypto3_imm2 registers isa SM3TT2B reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SM4E_VV4_cryptosha512_2 registers isa SM4E reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SQRSHRN_asimdshf_N registers isa SQRSHRN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SQRSHRUN_asimdshf_N registers isa SQRSHRUN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SQSHRN_asimdshf_N registers isa SQSHRN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SQSHRUN_asimdshf_N registers isa SQSHRUN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SQXTN_asimdmisc_N registers isa SQXTN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SQXTUN_asimdmisc_N registers isa SQXTUN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SRSRA_asimdshf_R registers isa SRSRA reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SRSRA_asisdshf_R registers isa SRSRA reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SSRA_asimdshf_R registers isa SSRA reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SSRA_asisdshf_R registers isa SSRA reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+STGM_64bulk_ldsttags registers isa STGM/STZGM read Xt (the tag source) and do not write back; fARM64 reports Xt read-written
+STILP_32SE_ldiappstilp registers isa Stores read their data registers; fARM64 reports them written
+STILP_32S_ldiappstilp registers isa Stores read their data registers; fARM64 reports them written
+STILP_64SS_ldiappstilp registers isa Stores read their data registers; fARM64 reports them written
+STILP_64S_ldiappstilp registers isa Stores read their data registers; fARM64 reports them written
+STLP_64_ldiappstilp registers isa Stores read their data registers; fARM64 reports them written
+STLTXR_SR32_ldstexclr_unpriv registers isa Store exclusive: Ws (status) written, Xt read; fARM64 merges them differently
+STLTXR_SR64_ldstexclr_unpriv registers isa Store exclusive: Ws (status) written, Xt read; fARM64 merges them differently
+STTNP_64_ldstnapair_offs registers isa Stores read their data registers; fARM64 reports them written
+STTNP_Q_ldstnapair_offs registers isa Stores read their data registers; fARM64 reports them written
+STTP_64_ldstpair_off registers isa Stores read their data registers; fARM64 reports them written
+STTP_64_ldstpair_post registers isa Stores read their data registers; fARM64 reports them written
+STTP_64_ldstpair_pre registers isa Stores read their data registers; fARM64 reports them written
+STTP_Q_ldstpair_off registers isa Stores read their data registers; fARM64 reports them written
+STTP_Q_ldstpair_post registers isa Stores read their data registers; fARM64 reports them written
+STTP_Q_ldstpair_pre registers isa Stores read their data registers; fARM64 reports them written
+STTXR_SR32_ldstexclr_unpriv registers isa Store exclusive: Ws (status) written, Xt read; fARM64 merges them differently
+STTXR_SR64_ldstexclr_unpriv registers isa Store exclusive: Ws (status) written, Xt read; fARM64 merges them differently
+STZGM_64bulk_ldsttags registers isa STGM/STZGM read Xt (the tag source) and do not write back; fARM64 reports Xt read-written
+SUBHN_asimddiff_N registers isa SUBHN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+SUBPS_64S_dp_2src registers isa SUBPS sets NZCV (it is the flag-setting form); fARM64 reports no flags
+SWPPAL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+SWPPA_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+SWPPL_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+SWPP_128_memop_128 registers isa 128-bit atomics: the Xt1:Xt2 pair is both the operand and the result (read-written); fARM64 splits it into a read and a write
+SWPTAL_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+SWPTAL_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+SWPTA_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+SWPTA_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+SWPTL_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+SWPTL_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+SWPT_32_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+SWPT_64_memop_unpriv registers isa LDT<op>/SWPT: Xs is the source (read) and Xt the destination (written); fARM64 reports Xs written
+TBX_asimdtbl_L1_1 registers isa TBX reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+TBX_asimdtbl_L2_2 registers isa TBX reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+TBX_asimdtbl_L3_3 registers isa TBX reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+TBX_asimdtbl_L4_4 registers isa TBX reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+UABAL_asimddiff_L registers isa UABAL reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+UABA_asimdsame_only registers isa UABA reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+UADALP_asimdmisc_P registers isa UADALP reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+UQRSHRN_asimdshf_N registers isa UQRSHRN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+UQSHRN_asimdshf_N registers isa UQSHRN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+UQXTN_asimdmisc_N registers isa UQXTN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+URSRA_asimdshf_R registers isa URSRA reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+URSRA_asisdshf_R registers isa URSRA reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+USRA_asimdshf_R registers isa USRA reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+USRA_asisdshf_R registers isa USRA reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+WFET_only_systeminstrswithreg registers isa WFET/WFIT read Xt (the timeout); fARM64 reports it written
+WFIT_only_systeminstrswithreg registers isa WFET/WFIT read Xt (the timeout); fARM64 reports it written
+XTN_asimdmisc_N registers isa XTN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
