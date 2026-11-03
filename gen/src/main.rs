@@ -12,6 +12,7 @@
 //! file (tables, report, `spec/encodings.txt`) differs from the checked-in one: the CI
 //! job for hosts that have the spec data.
 
+mod dispatch;
 mod emit;
 mod expr;
 mod model;

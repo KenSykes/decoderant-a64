@@ -29,3 +29,7 @@ workspace = true
 fARM64 = { version = "0.1", features = ["alloc", "crypto"] }
 yaxpeax-arm = "0.5"
 yaxpeax-arch = { version = "0.3", default-features = false }
+
+[[bench]]
+name = "decode"
+harness = false

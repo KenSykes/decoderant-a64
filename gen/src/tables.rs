@@ -247,6 +247,33 @@ pub fn generate(
         }
     }
 
+    // Decode dispatch: the leaves in decode order (depth first, children most
+    // specific first: the order of their position keys), each with the conjunction
+    // of its path conditions.
+    let mut order: Vec<usize> = (0..model.leaves.len()).collect();
+    order.sort_by(|&a, &b| key[a].cmp(&key[b]));
+    let leaf_cond: Vec<Option<u32>> = model
+        .leaves
+        .iter()
+        .map(|leaf| {
+            let mut all: Option<u32> = None;
+            for &n in model.path(leaf.node).iter().rev() {
+                if let Some(c) = node_cond[n] {
+                    all = Some(match all {
+                        None => c,
+                        Some(a) => arena.intern(crate::expr::E::Bin("&&".into(), a, c)),
+                    });
+                }
+            }
+            all
+        })
+        .collect();
+    let pats: Vec<(u32, u32)> = order
+        .iter()
+        .map(|&l| (leaf_full[l].mask, leaf_full[l].value))
+        .collect();
+    let dispatch = crate::dispatch::build(&pats);
+
     // --- code.rs: Code, Mnemonic, Feature.
     let mut code = emit::header(&spec.release);
     let mut cv: Vec<(String, String, String)> =
@@ -308,14 +335,20 @@ pub fn generate(
     t.push_str(
         "#![allow(clippy::all)]\n\n\
          use crate::bits::{F, Fs};\n\
+         #[cfg(test)]\n\
          use crate::cond::{BinOp, Expr, Func};\n\
          #[allow(unused_imports)]\n\
          use crate::desc::*;\n\
          use crate::generated::{Code, Feature, Mnemonic, Register};\n\
          use crate::operand::{Arrangement, MemoryMode};\n\
-         use crate::tables::{AliasData, EncodingData, FieldInfo, NO_COND, Node};\n\n",
+         use crate::tables::{AliasData, Cand, EncodingData, FieldInfo, NO_COND};\n\
+         #[cfg(test)]\n\
+         use crate::tables::Node;\n\n",
     );
     t.push_str(&emit::exprs(&arena, &fvar));
+    let mut conds = emit::header(&spec.release);
+    conds.push_str(&emit::cond_fns(&arena, &fvar));
+    emit::write(&out_dir.join("conds.rs"), &conds)?;
 
     let mut children: Vec<usize> = Vec::new();
     let mut nodes = String::new();
@@ -338,18 +371,53 @@ pub fn generate(
     }
     let _ = writeln!(
         t,
-        "pub(crate) const ROOT: usize = {};\n\npub(crate) static NODES: [Node; {}] = [\n{nodes}];\n",
+        "// The decode tree: the reference the dispatch is tested against.\n\
+         #[cfg(test)]\n\
+         pub(crate) const ROOT: usize = {};\n\n\
+         #[cfg(test)]\n\
+         pub(crate) static NODES: [Node; {}] = [\n{nodes}];\n",
         model.root,
         model.nodes.len()
     );
     let _ = writeln!(
         t,
-        "pub(crate) static CHILDREN: [u16; {}] = [",
+        "#[cfg(test)]\npub(crate) static CHILDREN: [u16; {}] = [",
         children.len()
     );
     for chunk in children.chunks(16) {
         let line: Vec<String> = chunk.iter().map(|c| c.to_string()).collect();
         let _ = writeln!(t, "    {},", line.join(", "));
+    }
+    let _ = writeln!(t, "];\n");
+
+    // The dispatch: slots, then the candidate lists.
+    let _ = writeln!(
+        t,
+        "pub(crate) const DISPATCH_ROOT: u32 = {:#010x};\n\n\
+         pub(crate) static DISPATCH: [u32; {}] = [",
+        dispatch.root,
+        dispatch.slots.len()
+    );
+    for chunk in dispatch.slots.chunks(8) {
+        let line: Vec<String> = chunk.iter().map(|s| format!("{s:#010x}")).collect();
+        let _ = writeln!(t, "    {},", line.join(", "));
+    }
+    let _ = writeln!(t, "];\n");
+    let _ = writeln!(
+        t,
+        "pub(crate) static CANDIDATES: [Cand; {}] = [",
+        dispatch.lists.len()
+    );
+    for &i in &dispatch.lists {
+        let l = order[i];
+        let _ = writeln!(
+            t,
+            "    Cand {{ mask: {:#010x}, value: {:#010x}, cond: {}, code: Code::{} }},",
+            leaf_full[l].mask,
+            leaf_full[l].value,
+            leaf_cond[l].map_or("NO_COND".into(), |c| c.to_string()),
+            names::code_variant(&model.leaves[l].name)
+        );
     }
     let _ = writeln!(t, "];\n");
 
@@ -497,6 +565,16 @@ pub fn generate(
         feature_names.len(),
         mnemonics.len(),
         sys.count
+    );
+    let _ = writeln!(
+        r,
+        "Decode dispatch: {} slots, {} candidate entries; over all words, {:.2} tables \
+         and {:.2} candidates on average, at most {} candidates.\n",
+        dispatch.slots.len(),
+        dispatch.lists.len(),
+        dispatch.mean_depth,
+        dispatch.mean_list,
+        dispatch.max_list
     );
     let _ = writeln!(
         r,

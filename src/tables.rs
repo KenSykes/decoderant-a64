@@ -58,6 +58,8 @@ pub(crate) struct EncodingData {
 }
 
 /// A node of the decode tree. Children are tried in order (most specific first).
+/// The decoder uses the dispatch built from it; the tree is the tests' reference.
+#[cfg(test)]
 #[derive(Debug, Clone, Copy)]
 pub(crate) struct Node {
     pub mask: u32,
@@ -68,3 +70,18 @@ pub(crate) struct Node {
     /// The encoding for a leaf, `Code::Invalid` for a group.
     pub code: Code,
 }
+
+/// A decode-dispatch candidate: an encoding's fixed bits and the conjunction of
+/// its path conditions.
+#[derive(Debug, Clone, Copy)]
+pub(crate) struct Cand {
+    pub mask: u32,
+    pub value: u32,
+    pub cond: u16,
+    pub code: Code,
+}
+
+/// Dispatch slots (`DISPATCH`): a list of candidates in `CANDIDATES`, tried in
+/// order (`LIST | len << 20 | start`), or a node indexing further slots by a field
+/// of the word (`lsb << 24 | width << 20 | base`).
+pub(crate) const SLOT_LIST: u32 = 1 << 31;

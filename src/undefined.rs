@@ -57,12 +57,36 @@ pub(crate) fn undefined(d: &EncodingData, w: u32) -> bool {
 
 /// Fields the decode pseudocode pins to one value but no operand sets: the encoder
 /// starts from these bits (`mask`, `value`).
-pub(crate) fn pinned(d: &EncodingData) -> (u32, u32) {
-    match d.name {
-        // SDOT/UDOT: `size` must be 10.
-        "SDOT_asimdsame2_D" | "UDOT_asimdsame2_D" | "SDOT_asimdelem_D" | "UDOT_asimdelem_D" => {
-            (3 << 22, 2 << 22)
-        }
-        _ => (0, 0),
+pub(crate) const fn pinned(d: &EncodingData) -> (u32, u32) {
+    // SDOT/UDOT: `size` must be 10.
+    const SIZE_10: &[&str] = &[
+        "SDOT_asimdsame2_D",
+        "UDOT_asimdsame2_D",
+        "SDOT_asimdelem_D",
+        "UDOT_asimdelem_D",
+    ];
+    if any_eq(SIZE_10, d.name) {
+        (3 << 22, 2 << 22)
+    } else {
+        (0, 0)
     }
+}
+
+/// Whether `s` is in `list` (usable in constants).
+const fn any_eq(list: &[&str], s: &str) -> bool {
+    let mut i = 0;
+    while i < list.len() {
+        let (a, b) = (list[i].as_bytes(), s.as_bytes());
+        if a.len() == b.len() {
+            let mut j = 0;
+            while j < a.len() && a[j] == b[j] {
+                j += 1;
+            }
+            if j == a.len() {
+                return true;
+            }
+        }
+        i += 1;
+    }
+    false
 }

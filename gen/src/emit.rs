@@ -191,15 +191,17 @@ pub fn exprs(arena: &Arena, features: &BTreeMap<String, String>) -> String {
         };
         let _ = writeln!(body, "    Expr::{s},");
     }
+    // The table is the reference the compiled conditions (`conds.rs`) are tested
+    // against.
     let mut out = String::new();
     let _ = writeln!(
         out,
-        "pub(crate) static EXPRS: [Expr; {}] = [\n{body}];\n",
+        "#[cfg(test)]\npub(crate) static EXPRS: [Expr; {}] = [\n{body}];\n",
         arena.nodes.len()
     );
     let _ = writeln!(
         out,
-        "pub(crate) static EXPR_ARGS: [u16; {}] = [",
+        "#[cfg(test)]\npub(crate) static EXPR_ARGS: [u16; {}] = [",
         args.len()
     );
     for chunk in args.chunks(16) {
@@ -207,6 +209,64 @@ pub fn exprs(arena: &Arena, features: &BTreeMap<String, String>) -> String {
         let _ = writeln!(out, "    {},", line.join(", "));
     }
     let _ = writeln!(out, "];\n");
+    out
+}
+
+/// `conds.rs`: every expression of the arena compiled to a function built from the
+/// evaluator's helpers (`crate::cond`), so a compiled condition computes exactly what
+/// interpreting `EXPRS` does, without walking the table. `CONDS[id]` is expression
+/// `id` as a condition.
+pub fn cond_fns(arena: &Arena, features: &BTreeMap<String, String>) -> String {
+    let mut out = String::from(
+        "#[allow(unused_imports)]\n\
+         use crate::cond::{BinOp, Ctx, Func, Val, bin, bit_not, call, equal, field, not, slice, uint};\n\
+         use crate::generated::Feature;\n\n",
+    );
+    for (i, e) in arena.nodes.iter().enumerate() {
+        let body = match e {
+            E::Bool(b) => format!("Val::Bool({b})"),
+            E::Field { lsb, width } => format!("field(cx, {lsb}, {width})"),
+            E::Bits { value, mask, width } => {
+                format!("Val::Bits {{ value: {value:#x}, mask: {mask:#x}, width: {width} }}")
+            }
+            E::Int(v) => format!("Val::Int({v})"),
+            E::Feature(f) => format!("Val::Bool(cx.features.has(Feature::{}))", features[f]),
+            E::Not(a) => format!("not(e{a}(cx))"),
+            E::BitNot(a) => format!("bit_not(e{a}(cx))"),
+            // The logical operators short-circuit, as the evaluator does.
+            E::Bin(op, a, b) if op == "&&" => {
+                format!("Val::Bool(e{a}(cx).truthy() && e{b}(cx).truthy())")
+            }
+            E::Bin(op, a, b) if op == "||" => {
+                format!("Val::Bool(e{a}(cx).truthy() || e{b}(cx).truthy())")
+            }
+            E::Bin(op, a, b) => format!("bin(BinOp::{}, e{a}(cx), e{b}(cx))", binop(op)),
+            E::In(a, m) => {
+                let tests: Vec<String> = m.iter().map(|m| format!("equal(x, e{m}(cx))")).collect();
+                format!("{{ let x = e{a}(cx); Val::Bool({}) }}", tests.join(" || "))
+            }
+            E::Slice(a, hi, lo) => format!("slice(e{a}(cx), {hi}, {lo})"),
+            E::UInt(a) => format!("uint(e{a}(cx))"),
+            E::Call(f, a) => {
+                let args: Vec<String> = a.iter().map(|a| format!("e{a}(cx)")).collect();
+                format!("call(Func::{f}, &[{}])", args.join(", "))
+            }
+        };
+        let _ = writeln!(
+            out,
+            "#[inline(always)]\n#[allow(unused_variables)]\nfn e{i}(cx: &Ctx<'_>) -> Val {{\n    {body}\n}}\n\
+             fn c{i}(cx: &Ctx<'_>) -> bool {{\n    e{i}(cx).truthy()\n}}\n"
+        );
+    }
+    let _ = writeln!(
+        out,
+        "pub(crate) static CONDS: [fn(&Ctx<'_>) -> bool; {}] = [",
+        arena.nodes.len()
+    );
+    for i in 0..arena.nodes.len() {
+        let _ = writeln!(out, "    c{i},");
+    }
+    let _ = writeln!(out, "];");
     out
 }
 
@@ -314,6 +374,9 @@ pub fn code_asm(asm: &BTreeMap<(String, String), std::collections::BTreeSet<usiz
 pub const MOD_RS: &str = r#"#[rustfmt::skip]
 #[allow(clippy::all, clippy::pedantic)]
 mod code;
+#[rustfmt::skip]
+#[allow(clippy::all, clippy::pedantic)]
+pub(crate) mod conds;
 #[cfg(feature = "code_asm")]
 #[rustfmt::skip]
 #[allow(clippy::all, clippy::pedantic)]

@@ -1,9 +1,15 @@
-//! Evaluation of the spec's encoding and alias conditions, compiled by the generator
-//! into [`EXPRS`](crate::generated::tables::EXPRS).
+//! Evaluation of the spec's encoding and alias conditions. The generator compiles
+//! each condition into a function (`crate::generated::conds`) built from the
+//! helpers here; the expression table it also emits
+//! ([`EXPRS`](crate::generated::tables::EXPRS)) is interpreted only by the tests,
+//! as the reference the compiled functions are checked against.
 
 use crate::bits::decode_bit_masks;
 use crate::feature_set::FeatureSet;
+#[cfg(test)]
 use crate::generated::Feature;
+use crate::generated::conds::CONDS;
+#[cfg(test)]
 use crate::generated::tables::{EXPR_ARGS, EXPRS};
 
 // The evaluator covers every operator and helper the generator compiles, whether or
@@ -50,6 +56,7 @@ pub(crate) const SYSOP_NAMES: &[&str] = &[
     "GCSSS1", "GCSSS2",
 ];
 
+#[cfg(test)]
 #[allow(dead_code)]
 #[derive(Debug, Clone, Copy)]
 pub(crate) enum Expr {
@@ -77,7 +84,7 @@ pub(crate) enum Expr {
 
 /// A value during evaluation.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum Val {
+pub(crate) enum Val {
     Bool(bool),
     /// A bit string; `mask` has the fixed bits (constants may contain `x`).
     Bits {
@@ -89,6 +96,7 @@ enum Val {
 }
 
 impl Val {
+    #[inline(always)]
     fn bits(value: u64, width: u8) -> Val {
         let mask = if width >= 64 {
             u64::MAX
@@ -102,7 +110,8 @@ impl Val {
         }
     }
 
-    fn truthy(self) -> bool {
+    #[inline(always)]
+    pub(crate) fn truthy(self) -> bool {
         match self {
             Val::Bool(b) => b,
             Val::Bits { value, .. } => value != 0,
@@ -110,6 +119,7 @@ impl Val {
         }
     }
 
+    #[inline(always)]
     fn int(self) -> i64 {
         match self {
             Val::Bool(b) => b as i64,
@@ -118,6 +128,7 @@ impl Val {
         }
     }
 
+    #[inline(always)]
     fn raw(self) -> (u64, u8) {
         match self {
             Val::Bits { value, width, .. } => (value, width),
@@ -127,7 +138,8 @@ impl Val {
     }
 }
 
-fn equal(a: Val, b: Val) -> bool {
+#[inline(always)]
+pub(crate) fn equal(a: Val, b: Val) -> bool {
     match (a, b) {
         (
             Val::Bits {
@@ -155,10 +167,72 @@ pub(crate) struct Ctx<'a> {
     pub features: &'a FeatureSet,
 }
 
+// One helper per kind of expression, shared by the compiled conditions and the
+// reference evaluator.
+
+#[inline(always)]
+pub(crate) fn field(cx: &Ctx<'_>, lsb: u8, width: u8) -> Val {
+    Val::bits(u64::from(cx.word >> lsb), width)
+}
+
+#[inline(always)]
+pub(crate) fn not(a: Val) -> Val {
+    Val::Bool(!a.truthy())
+}
+
+// Like `BinOp` and `Func`, covers an operator the pinned release may not use.
+#[allow(dead_code)]
+#[inline(always)]
+pub(crate) fn bit_not(a: Val) -> Val {
+    let (v, w) = a.raw();
+    Val::bits(!v, w)
+}
+
+/// A binary operator. The callers short-circuit the logical ones first, so here
+/// `And` and `Or` only see a left operand that does not decide the result.
+#[inline(always)]
+pub(crate) fn bin(op: BinOp, x: Val, y: Val) -> Val {
+    match op {
+        BinOp::Eq => Val::Bool(equal(x, y)),
+        BinOp::Ne => Val::Bool(!equal(x, y)),
+        BinOp::And | BinOp::Or => Val::Bool(y.truthy()),
+        BinOp::Lt => Val::Bool(x.int() < y.int()),
+        BinOp::Gt => Val::Bool(x.int() > y.int()),
+        BinOp::Ge => Val::Bool(x.int() >= y.int()),
+        BinOp::Le => Val::Bool(x.int() <= y.int()),
+        BinOp::Add => Val::Int(x.int().wrapping_add(y.int())),
+        BinOp::Sub => Val::Int(x.int().wrapping_sub(y.int())),
+        BinOp::Mod => Val::Int(x.int().checked_rem_euclid(y.int()).unwrap_or(0)),
+        BinOp::Xor => {
+            let (a, w) = x.raw();
+            let (b, _) = y.raw();
+            Val::bits(a ^ b, w)
+        }
+        BinOp::Concat => {
+            let (a, aw) = x.raw();
+            let (b, bw) = y.raw();
+            Val::bits(a << bw | b, aw + bw)
+        }
+    }
+}
+
+#[inline(always)]
+pub(crate) fn slice(a: Val, hi: u8, lo: u8) -> Val {
+    let (v, _) = a.raw();
+    Val::bits(v >> lo, hi - lo + 1)
+}
+
+#[inline(always)]
+pub(crate) fn uint(a: Val) -> Val {
+    Val::Int(a.raw().0 as i64)
+}
+
+/// The reference evaluator: interprets `EXPRS`.
+#[cfg(test)]
 fn eval(id: u16, cx: &Ctx<'_>) -> Val {
     match EXPRS[id as usize] {
         Expr::Bool(b) => Val::Bool(b),
-        Expr::Field { lsb, width } => Val::bits(u64::from(cx.word >> lsb), width),
+        Expr::Field { lsb, width } => field(cx, lsb, width),
         Expr::Bits { value, mask, width } => Val::Bits {
             value: u64::from(value),
             mask: u64::from(mask),
@@ -166,11 +240,8 @@ fn eval(id: u16, cx: &Ctx<'_>) -> Val {
         },
         Expr::Int(i) => Val::Int(i),
         Expr::Feature(f) => Val::Bool(cx.features.has(f)),
-        Expr::Not(a) => Val::Bool(!eval(a, cx).truthy()),
-        Expr::BitNot(a) => {
-            let (v, w) = eval(a, cx).raw();
-            Val::bits(!v, w)
-        }
+        Expr::Not(a) => not(eval(a, cx)),
+        Expr::BitNot(a) => bit_not(eval(a, cx)),
         Expr::Bin(op, a, b) => {
             let x = eval(a, cx);
             // Short-circuit the logical operators.
@@ -179,60 +250,38 @@ fn eval(id: u16, cx: &Ctx<'_>) -> Val {
                 BinOp::Or if x.truthy() => return Val::Bool(true),
                 _ => {}
             }
-            let y = eval(b, cx);
-            match op {
-                BinOp::Eq => Val::Bool(equal(x, y)),
-                BinOp::Ne => Val::Bool(!equal(x, y)),
-                BinOp::And | BinOp::Or => Val::Bool(y.truthy()),
-                BinOp::Lt => Val::Bool(x.int() < y.int()),
-                BinOp::Gt => Val::Bool(x.int() > y.int()),
-                BinOp::Ge => Val::Bool(x.int() >= y.int()),
-                BinOp::Le => Val::Bool(x.int() <= y.int()),
-                BinOp::Add => Val::Int(x.int().wrapping_add(y.int())),
-                BinOp::Sub => Val::Int(x.int().wrapping_sub(y.int())),
-                BinOp::Mod => Val::Int(x.int().checked_rem_euclid(y.int()).unwrap_or(0)),
-                BinOp::Xor => {
-                    let (a, w) = x.raw();
-                    let (b, _) = y.raw();
-                    Val::bits(a ^ b, w)
-                }
-                BinOp::Concat => {
-                    let (a, aw) = x.raw();
-                    let (b, bw) = y.raw();
-                    Val::bits(a << bw | b, aw + bw)
-                }
-            }
+            bin(op, x, eval(b, cx))
         }
         Expr::In(a, start, len) => {
             let x = eval(a, cx);
             let members = &EXPR_ARGS[start as usize..(start + len) as usize];
             Val::Bool(members.iter().any(|&m| equal(x, eval(m, cx))))
         }
-        Expr::Slice(a, hi, lo) => {
-            let (v, _) = eval(a, cx).raw();
-            Val::bits(v >> lo, hi - lo + 1)
-        }
-        Expr::UInt(a) => Val::Int(eval(a, cx).raw().0 as i64),
+        Expr::Slice(a, hi, lo) => slice(eval(a, cx), hi, lo),
+        Expr::UInt(a) => uint(eval(a, cx)),
         Expr::Call(f, start, n) => {
-            let args = &EXPR_ARGS[start as usize..start as usize + n as usize];
-            call(f, args, cx)
+            let args: std::vec::Vec<Val> = EXPR_ARGS[start as usize..start as usize + n as usize]
+                .iter()
+                .map(|&a| eval(a, cx))
+                .collect();
+            call(f, &args)
         }
     }
 }
 
-fn arg(args: &[u16], i: usize, cx: &Ctx<'_>) -> (u64, u8) {
-    args.get(i).map(|&a| eval(a, cx).raw()).unwrap_or((0, 0))
+fn arg(args: &[Val], i: usize) -> (u64, u8) {
+    args.get(i).map(|a| a.raw()).unwrap_or((0, 0))
 }
 
-fn call(f: Func, args: &[u16], cx: &Ctx<'_>) -> Val {
+pub(crate) fn call(f: Func, args: &[Val]) -> Val {
     match f {
         // BFXPreferred(sf, uns, imms, immr): whether UBFM/SBFM should print as
         // UBFX/SBFX rather than the other aliases.
         Func::BFXPreferred => {
-            let (sf, _) = arg(args, 0, cx);
-            let (uns, _) = arg(args, 1, cx);
-            let (imms, _) = arg(args, 2, cx);
-            let (immr, _) = arg(args, 3, cx);
+            let (sf, _) = arg(args, 0);
+            let (uns, _) = arg(args, 1);
+            let (imms, _) = arg(args, 2);
+            let (immr, _) = arg(args, 3);
             let bfx = if imms < immr || imms == if sf == 1 { 63 } else { 31 } {
                 false
             } else if immr == 0 {
@@ -247,10 +296,10 @@ fn call(f: Func, args: &[u16], cx: &Ctx<'_>) -> Val {
         // MoveWidePreferred(sf, immN, imms, immr): whether ORR (immediate) or
         // MOVZ/MOVN can express the bitmask as a single move.
         Func::MoveWidePreferred => {
-            let (sf, _) = arg(args, 0, cx);
-            let (n, _) = arg(args, 1, cx);
-            let (imms, _) = arg(args, 2, cx);
-            let (immr, _) = arg(args, 3, cx);
+            let (sf, _) = arg(args, 0);
+            let (n, _) = arg(args, 1);
+            let (imms, _) = arg(args, 2);
+            let (immr, _) = arg(args, 3);
             Val::Bool(move_wide_preferred(
                 sf == 1,
                 n as u32,
@@ -260,19 +309,19 @@ fn call(f: Func, args: &[u16], cx: &Ctx<'_>) -> Val {
         }
         Func::SVEMoveMaskPreferred => Val::Bool(false),
         Func::DecodeBitMasksCheckUndefined => {
-            let (n, _) = arg(args, 0, cx);
-            let (imms, _) = arg(args, 1, cx);
+            let (n, _) = arg(args, 0);
+            let (imms, _) = arg(args, 1);
             Val::Bool(decode_bit_masks(n as u32, imms as u32, 0, true, 64).is_none())
         }
-        Func::IsZero => Val::Bool(arg(args, 0, cx).0 == 0),
+        Func::IsZero => Val::Bool(arg(args, 0).0 == 0),
         Func::IsOnes => {
-            let (v, w) = arg(args, 0, cx);
+            let (v, w) = arg(args, 0);
             let m = if w >= 64 { u64::MAX } else { (1u64 << w) - 1 };
             Val::Bool(v & m == m)
         }
-        Func::BitCount => Val::Int(arg(args, 0, cx).0.count_ones() as i64),
+        Func::BitCount => Val::Int(arg(args, 0).0.count_ones() as i64),
         Func::SysOpIs => {
-            let a = |i| arg(args, i, cx).0 as u32;
+            let a = |i| arg(args, i).0 as u32;
             let enc = crate::sysreg::sys_encoding(1, a(0), a(1), a(2), a(3));
             let kind = match a(4) {
                 0 => crate::sysreg::SysKind::Sys,
@@ -284,8 +333,8 @@ fn call(f: Func, args: &[u16], cx: &Ctx<'_>) -> Val {
             Val::Bool(have == want)
         }
         Func::ZeroExtend => {
-            let (v, _) = arg(args, 0, cx);
-            let (w, _) = arg(args, 1, cx);
+            let (v, _) = arg(args, 0);
+            let (w, _) = arg(args, 1);
             Val::bits(v, w as u8)
         }
     }
@@ -311,7 +360,52 @@ pub(crate) fn move_wide_preferred(sf: bool, n: u32, imms: u32, immr: u32) -> boo
     false
 }
 
-/// Evaluates a compiled condition.
+/// Evaluates a condition.
+#[inline]
 pub(crate) fn holds(id: u16, cx: &Ctx<'_>) -> bool {
-    eval(id, cx).truthy()
+    CONDS[id as usize](cx)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// The compiled conditions agree with the reference evaluator on random words,
+    /// with every feature, none, and random feature subsets.
+    #[test]
+    fn compiled_conditions_match_the_evaluator() {
+        let mut seed = 0x9e37_79b9_7f4a_7c15u64;
+        let mut next = move || {
+            seed ^= seed << 13;
+            seed ^= seed >> 7;
+            seed ^= seed << 17;
+            seed
+        };
+        let mut sets = std::vec![FeatureSet::ALL, FeatureSet::EMPTY];
+        for _ in 0..30 {
+            let mut s = FeatureSet::EMPTY;
+            for f in Feature::values() {
+                if next() % 3 != 0 {
+                    s.insert(f);
+                }
+            }
+            sets.push(s);
+        }
+        for features in &sets {
+            for _ in 0..20_000 {
+                let cx = Ctx {
+                    word: next() as u32,
+                    features,
+                };
+                for id in 0..EXPRS.len() as u16 {
+                    assert_eq!(
+                        holds(id, &cx),
+                        eval(id, &cx).truthy(),
+                        "expression {id} on {:#010x}",
+                        cx.word
+                    );
+                }
+            }
+        }
+    }
 }

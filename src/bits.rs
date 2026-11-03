@@ -29,7 +29,7 @@ impl F {
     }
 
     #[inline]
-    pub fn set(self, word: &mut u32, v: u32) {
+    pub const fn set(self, word: &mut u32, v: u32) {
         *word = (*word & !self.mask()) | ((v << self.lsb) & self.mask());
     }
 
@@ -62,8 +62,11 @@ impl Fs {
         v
     }
 
-    pub fn set(self, word: &mut u32, mut v: u32) {
-        for f in self.0.iter().rev() {
+    pub const fn set(self, word: &mut u32, mut v: u32) {
+        let mut i = 4;
+        while i > 0 {
+            i -= 1;
+            let f = self.0[i];
             if f.width != 0 {
                 f.set(word, v);
                 v >>= f.width;
@@ -71,8 +74,8 @@ impl Fs {
         }
     }
 
-    pub fn mask(self) -> u32 {
-        self.0.iter().fold(0, |m, f| m | f.mask())
+    pub const fn mask(self) -> u32 {
+        self.0[0].mask() | self.0[1].mask() | self.0[2].mask() | self.0[3].mask()
     }
 
     pub const fn is_none(self) -> bool {

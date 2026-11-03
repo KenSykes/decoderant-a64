@@ -4,7 +4,9 @@
 
 ## Encodings
 
-4429 A64 encodings, 5219 decode-tree nodes, 480 condition expressions, 408 features, 1688 mnemonics, 3218 system registers and operations.
+4429 A64 encodings, 5219 decode-tree nodes, 579 condition expressions, 408 features, 1688 mnemonics, 3218 system registers and operations.
+
+Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 tables and 0.82 candidates on average, at most 3 candidates.
 
 | Group | Encodings | With operand support |
 |---|---|---|
