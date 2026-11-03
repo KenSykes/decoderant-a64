@@ -234,6 +234,13 @@ impl Instruction {
         enc.chain(sys)
     }
 
+    /// The system register or system operation the instance names (`MRS`, `MSR`,
+    /// `SYS`, `SYSL`, `SYSP` and their aliases), if the encoding is a system access
+    /// and the operands name a known one.
+    pub fn system_entry(&self) -> Option<&'static crate::SysEntry> {
+        crate::info::sys_entry(self)
+    }
+
     pub fn flow_control(&self) -> FlowControl {
         crate::info::flow_control(self)
     }

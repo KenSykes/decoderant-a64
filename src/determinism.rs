@@ -24,9 +24,23 @@ fn sysreg_reason(name: &str) -> Option<&'static str> {
         }
         "TPIDR_EL0" | "TPIDRRO_EL0" | "TPIDR2_EL0" => "thread pointer set by the OS",
         _ if name.starts_with("ID_") => "identification register (implementation-dependent)",
-        _ if name.starts_with("PMEVCNTR") => "performance counter",
+        _ if name.starts_with("PMEVCNTR") || name.starts_with("SPMEVCNTR") => "performance counter",
+        "PMICNTR_EL0" | "SPMCCNTR_EL0" => "performance counter",
+        // PMSELR_EL0, PMCR_EL0, PMCNTENSET_EL0, ...: configured by the OS (Windows
+        // allows EL0 reads; the values are not test inputs).
+        _ if name.starts_with("PM") && name.ends_with("_EL0") => {
+            "performance monitor state (configured by the OS)"
+        }
+        _ if name.starts_with("AMEVCNTR") => "activity monitor counter",
         _ => return None,
     })
+}
+
+/// The `S3_<op1>_C<Cn>_C<Cm>_<op2>` and `S1_<op1>_<Cn>_<Cm>_<op2>` accessors: the
+/// IMPLEMENTATION DEFINED system register and operation space, whose behaviour is
+/// the implementation's own (an emulator cannot be expected to match it).
+fn is_implementation_defined(name: &str) -> bool {
+    name.contains('<')
 }
 
 pub(crate) fn reason(insn: &Instruction) -> Option<&'static str> {
@@ -51,6 +65,9 @@ pub(crate) fn reason(insn: &Instruction) -> Option<&'static str> {
         _ => {}
     }
     if let Some(e) = sys_entry(insn) {
+        if is_implementation_defined(e.name) {
+            return Some("IMPLEMENTATION DEFINED system register or operation");
+        }
         match e.kind {
             SysKind::Mrs | SysKind::Mrrs => {
                 if let Some(r) = sysreg_reason(e.name) {

@@ -194,3 +194,45 @@ fn hint_feature_lookup() {
     );
     let _ = SysKind::Mrs;
 }
+
+/// `CFINV`, `XAFLAG` and `AXFLAG` are in the `pstate` iclass with `MSR (immediate)`
+/// but name no PSTATE field: they are ordinary EL0 instructions.
+#[test]
+fn flag_manipulation_is_el0() {
+    let el = |w: u32| decode_word(w, 0, &DecoderOptions::default()).min_el();
+    // CFINV, XAFLAG, AXFLAG.
+    assert_eq!(el(0xd500_401f), 0);
+    assert_eq!(el(0xd500_403f), 0);
+    assert_eq!(el(0xd500_405f), 0);
+    // MSR SPSel, #1 is still EL1.
+    assert_eq!(el(0xd500_41bf), 1);
+}
+
+/// Instances found by recording the full coverage set on a Cortex-A78C and replaying
+/// it against the Sail model (Phase 4), and the table entries that now cover them.
+#[test]
+fn constraints_and_determinism_from_the_hardware_replay() {
+    let i = |w: u32| decode_word(w, 0, &DecoderOptions::default());
+    // MSR SSBS, #0xb and MSR DIT, #7: only #0 and #1 are defined for 1-bit fields.
+    assert!(i(0xd503_4b3f).unpredictable_reason().is_some());
+    assert!(i(0xd503_475f).unpredictable_reason().is_some());
+    // MSR SSBS, #1, MSR DIT, #0 and MSR DAIFSet, #3 (a 4-bit field) are fine.
+    assert!(i(0xd503_413f).unpredictable_reason().is_none());
+    assert!(i(0xd503_405f).unpredictable_reason().is_none());
+    assert!(i(0xd503_43df).unpredictable_reason().is_none());
+    // CFINV shares the iclass and is fine.
+    assert!(i(0xd500_401f).unpredictable_reason().is_none());
+    // MRS X0, S3_7_C15_C9_0 and SYS #6, C11, C15, #4: the IMPLEMENTATION DEFINED
+    // register and operation space.
+    assert_eq!(
+        i(0xd53f_f900).nondeterminism_reason(),
+        Some("IMPLEMENTATION DEFINED system register or operation")
+    );
+    assert!(i(0xd50e_bf9f).nondeterminism_reason().is_some());
+    // MRS X9, SPMEVCNTR7_EL0: a counter.
+    assert!(i(0xd533_e0e9).nondeterminism_reason().is_some());
+    // MRS X14, PMSELR_EL0: performance monitor state set by the OS.
+    assert!(i(0xd53b_9cae).nondeterminism_reason().is_some());
+    // MRS X0, FPCR stays deterministic.
+    assert!(i(0xd53b_4400).nondeterminism_reason().is_none());
+}

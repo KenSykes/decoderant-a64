@@ -30,7 +30,8 @@ pub(crate) fn sys_kind(code: Code, word: u32) -> Option<SysKind> {
             }
         }
         "syspairinstrs" => SysKind::Sysp,
-        "pstate" => SysKind::MsrImm,
+        // CFINV, XAFLAG and AXFLAG share the iclass but name no PSTATE field.
+        "pstate" if code.op_code().mnemonic() == Mnemonic::Msr => SysKind::MsrImm,
         _ => return None,
     })
 }

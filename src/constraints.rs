@@ -122,6 +122,20 @@ static TABLE: &[Constraint] = &[
         },
         reason: "CPY* with overlapping or 31 registers (CONSTRAINED UNPREDICTABLE)",
     },
+    // MSR (immediate) to a 1-bit PSTATE field (UAO, PAN, SSBS, DIT, TCO): the
+    // immediate is CRm, and only #0 and #1 are defined (C6.2 MSR (immediate),
+    // `<imm>`). Hardware (Cortex-A78C) takes such words as UNDEFINED while the
+    // ASL-derived Sail model executes them with CRm<0>, so no result is architectural.
+    Constraint {
+        iclass: &["pstate"],
+        mask: 0,
+        value: 0,
+        test: |w| {
+            let (op1, crm, op2) = (f(w, 16, 3), f(w, 8, 4), f(w, 5, 3));
+            matches!((op1, op2), (0, 3) | (0, 4) | (3, 1) | (3, 2) | (3, 4)) && crm >> 1 != 0
+        },
+        reason: "MSR (immediate) to a 1-bit PSTATE field with an immediate above 1",
+    },
     // SET*: `if d == n || d == s || s == n || d == 31 || n == 31` (Rd destination,
     // Rn size, Rs data; Rs may be XZR).
     Constraint {
