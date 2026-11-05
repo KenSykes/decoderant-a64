@@ -620,113 +620,423 @@ a1600000 st1b_mzx_p_bi_2x8            st1b { z0.b, z8.b }, pn8, [x0]
 a16910a1 st1b_mzx_p_bi_2x8            st1b { z1.b, z9.b }, pn12, [x5, #-0xe, mul vl]
 a1608000 st1b_mzx_p_bi_4x4            st1b { z0.b, z4.b, z8.b, z12.b }, pn8, [x0]
 a1639801 st1b_mzx_p_bi_4x4            st1b { z1.b, z5.b, z9.b, z13.b }, pn14, [x0, #0xc, mul vl]
+80000000 fmop4a_za_zz_s1x1            fmop4a za0.s, z0.s, z16.s
+80060002 fmop4a_za_zz_s1x1            fmop4a za2.s, z0.s, z22.s
+80200000 fmop4a_za32_z8z8_b1x1        fmop4a za0.s, z0.b, z16.b
+802a0080 fmop4a_za32_z8z8_b1x1        fmop4a za0.s, z4.b, z26.b
+81000000 bfmop4a_za32_zz_h1x1         bfmop4a za0.s, z0.h, z16.h
+810c00c0 bfmop4a_za32_zz_h1x1         bfmop4a za0.s, z6.h, z28.h
+81200000 fmop4a_za32_zz_h1x1          fmop4a za0.s, z0.h, z16.h
+81240180 fmop4a_za32_zz_h1x1          fmop4a za0.s, z12.h, z20.h
+80008000 smop4a_za_zz_b1x1            smop4a za0.s, z0.b, z16.b
+800a8083 smop4a_za_zz_b1x1            smop4a za3.s, z4.b, z26.b
+80200008 fmop4a_za16_z8z8_b1x1        fmop4a za0.h, z0.b, z16.b
+802c0148 fmop4a_za16_z8z8_b1x1        fmop4a za0.h, z10.b, z28.b
+81000008 fmop4a_za_zz_h1x1            fmop4a za0.h, z0.h, z16.h
+810c0109 fmop4a_za_zz_h1x1            fmop4a za1.h, z8.h, z28.h
+81200008 bfmop4a_za_zz_h1x1           bfmop4a za0.h, z0.h, z16.h
+812e0189 bfmop4a_za_zz_h1x1           bfmop4a za1.h, z12.h, z30.h
+80008008 smop4a_za32_zz_h1x1          smop4a za0.s, z0.h, z16.h
+800a8108 smop4a_za32_zz_h1x1          smop4a za0.s, z8.h, z26.h
+80400000 ftmopa_za_zzzi_s2x1          ftmopa za0.s, { z0.s, z1.s }, z0.s, z20[0]
+805904a1 ftmopa_za_zzzi_s2x1          ftmopa za1.s, { z4.s, z5.s }, z25.s, z21[2]
+80600000 ftmopa_za32_z8z8zi_b2x1      ftmopa za0.s, { z0.b, z1.b }, z0.b, z20[0]
+806d1f63 ftmopa_za32_z8z8zi_b2x1      ftmopa za3.s, { z26.b, z27.b }, z13.b, z31[2]
+81400000 bftmopa_za32_zzzi_h2x1       bftmopa za0.s, { z0.h, z1.h }, z0.h, z20[0]
+81470d51 bftmopa_za32_zzzi_h2x1       bftmopa za1.s, { z10.h, z11.h }, z7.h, z23[1]
+81600000 ftmopa_za32_zzzi_h2x1        ftmopa za0.s, { z0.h, z1.h }, z0.h, z20[0]
+817c1d10 ftmopa_za32_zzzi_h2x1        ftmopa za0.s, { z8.h, z9.h }, z28.h, z31[1]
+80408000 stmopa_za_zzzi_b2x1          stmopa za0.s, { z0.b, z1.b }, z0.b, z20[0]
+80518881 stmopa_za_zzzi_b2x1          stmopa za1.s, { z4.b, z5.b }, z17.b, z22[0]
+80600008 ftmopa_za16_z8z8zi_b2x1      ftmopa za0.h, { z0.b, z1.b }, z0.b, z20[0]
+806a0b48 ftmopa_za16_z8z8zi_b2x1      ftmopa za0.h, { z26.b, z27.b }, z10.b, z22[0]
+81400008 ftmopa_za_zzzi_h2x1          ftmopa za0.h, { z0.h, z1.h }, z0.h, z20[0]
+81540889 ftmopa_za_zzzi_h2x1          ftmopa za1.h, { z4.h, z5.h }, z20.h, z22[0]
+81600008 bftmopa_za_zzzi_h2x1         bftmopa za0.h, { z0.h, z1.h }, z0.h, z20[0]
+817d0239 bftmopa_za_zzzi_h2x1         bftmopa za1.h, { z16.h, z17.h }, z29.h, z20[3]
+80408008 stmopa_za32_zzzi_h2x1        stmopa za0.s, { z0.h, z1.h }, z0.h, z20[0]
+8054875a stmopa_za32_zzzi_h2x1        stmopa za2.s, { z26.h, z27.h }, z20.h, z21[1]
+80800000 fmopa_za_pp_zz_32            fmopa za0.s, p0/m, p0/m, z0.s, z0.s
+808835c1 fmopa_za_pp_zz_32            fmopa za1.s, p5/m, p1/m, z14.s, z8.s
+81800000 bfmopa_za32_pp_zz_           bfmopa za0.s, p0/m, p0/m, z0.h, z0.h
+81994c03 bfmopa_za32_pp_zz_           bfmopa za3.s, p3/m, p2/m, z0.h, z25.h
+81a00000 fmopa_za32_pp_zz_16          fmopa za0.s, p0/m, p0/m, z0.h, z0.h
+81a78e40 fmopa_za32_pp_zz_16          fmopa za0.s, p3/m, p4/m, z18.h, z7.h
+80a00000 fmopa_za32_pp_z8z8_8         fmopa za0.s, p0/m, p0/m, z0.b, z0.b
+80b97a42 fmopa_za32_pp_z8z8_8         fmopa za2.s, p6/m, p3/m, z18.b, z25.b
+80800008 bmopa_za_pp_zz_32            bmopa za0.s, p0/m, p0/m, z0.s, z0.s
+8082a829 bmopa_za_pp_zz_32            bmopa za1.s, p2/m, p5/m, z1.s, z2.s
+80a00008 fmopa_za16_pp_z8z8_8         fmopa za0.h, p0/m, p0/m, z0.b, z0.b
+80b14fe8 fmopa_za16_pp_z8z8_8         fmopa za0.h, p3/m, p2/m, z31.b, z17.b
+80a00018 fmopab_za16_zz8z             fmopab za0.h, { z0.h, z1.h }, z0.b, z20.b
+80b21a19 fmopab_za16_zz8z             fmopab za1.h, { z16.h, z17.h }, z18.b, z30.b
+81800008 fmopa_za_pp_zz_16            fmopa za0.h, p0/m, p0/m, z0.h, z0.h
+81856de9 fmopa_za_pp_zz_16            fmopa za1.h, p3/m, p3/m, z15.h, z5.h
+81a00008 bfmopa_za_pp_zz_16           bfmopa za0.h, p0/m, p0/m, z0.h, z0.h
+81b2edc9 bfmopa_za_pp_zz_16           bfmopa za1.h, p3/m, p7/m, z14.h, z18.h
+a0800000 smopa_za_pp_zz_32            smopa za0.s, p0/m, p0/m, z0.b, z0.b
+a09c8ca3 smopa_za_pp_zz_32            smopa za3.s, p3/m, p4/m, z5.b, z28.b
+a0800008 smopa_za32_pp_zz_16          smopa za0.s, p0/m, p0/m, z0.h, z0.h
+a0920d29 smopa_za32_pp_zz_16          smopa za1.s, p3/m, p0/m, z9.h, z18.h
+80c00000 fmopa_za_pp_zz_64            fmopa za0.d, p0/m, p0/m, z0.d, z0.d
+80c15961 fmopa_za_pp_zz_64            fmopa za1.d, p6/m, p2/m, z11.d, z1.d
+a0c00000 smopa_za_pp_zz_64            smopa za0.d, p0/m, p0/m, z0.h, z0.h
+a0c93a00 smopa_za_pp_zz_64            smopa za0.d, p6/m, p1/m, z16.h, z9.h
+80c00008 fmop4a_za_zz_d1x1            fmop4a za0.d, z0.d, z16.d
+80c6018a fmop4a_za_zz_d1x1            fmop4a za2.d, z12.d, z22.d
+a0c00008 smop4a_za_zz_h1x1            smop4a za0.d, z0.h, z16.h
+a0ce004e smop4a_za_zz_h1x1            smop4a za6.d, z2.h, z30.h
+c0000000 mova_za_p_rz_b               mov za0h.b[w12, 0], p0/m, z0.b
+c00068e2 mova_za_p_rz_b               mov za0h.b[w15, 2], p2/m, z7.b
+c0040000 mova_za2_z_b1                mov za0h.b[w12, 0:1], { z0.b, z1.b }
+c004e040 mova_za2_z_b1                mov za0v.b[w15, 0:1], { z2.b, z3.b }
+c0040400 mova_za4_z_b1                mov za0h.b[w12, 0:3], { z0.b-z3.b }
+c0048403 mova_za4_z_b1                mov za0v.b[w12, 0xc:0xf], { z0.b-z3.b }
+c0040800 mova_za_mz2_1                mov za.d[w8, 0, vgx2], { z0.d, z1.d }
+c0042ac1 mova_za_mz2_1                mov za.d[w9, 1, vgx2], { z22.d, z23.d }
+c0040c00 mova_za_mz4_1                mov za.d[w8, 0, vgx4], { z0.d-z3.d }
+c0040f04 mova_za_mz4_1                mov za.d[w8, 4, vgx4], { z24.d-z27.d }
+c0020000 mova_z_p_rza_b               mov z0.b, p0/m, za0h.b[w12, 0]
+c002ecb6 mova_z_p_rza_b               mov z22.b, p3/m, za0v.b[w15, 5]
+c0060000 mova_mz2_za_b1               mov { z0.b, z1.b }, za0h.b[w12, 0:1]
+c006a06c mova_mz2_za_b1               mov { z12.b, z13.b }, za0v.b[w13, 6:7]
+c0060400 mova_mz4_za_b1               mov { z0.b-z3.b }, za0h.b[w12, 0:3]
+c0060454 mova_mz4_za_b1               mov { z20.b-z23.b }, za0h.b[w12, 8:0xb]
+c0060800 mova_mz_za2_1                mov { z0.d, z1.d }, za.d[w8, 0, vgx2]
+c006687e mova_mz_za2_1                mov { z30.d, z31.d }, za.d[w11, 3, vgx2]
+c0060c00 mova_mz_za4_1                mov { z0.d-z3.d }, za.d[w8, 0, vgx4]
+c0066cdc mova_mz_za4_1                mov { z28.d-z31.d }, za.d[w11, 6, vgx4]
+c0020200 movaz_z_rza_b                movaz z0.b, za0h.b[w12, 0]
+c002a353 movaz_z_rza_b                movaz z19.b, za0v.b[w13, 0xa]
+c0060200 movaz_mz2_za_b1              movaz { z0.b, z1.b }, za0h.b[w12, 0:1]
+c006c2b4 movaz_mz2_za_b1              movaz { z20.b, z21.b }, za0v.b[w14, 0xa:0xb]
+c0060600 movaz_mz4_za_b1              movaz { z0.b-z3.b }, za0h.b[w12, 0:3]
+c006c64c movaz_mz4_za_b1              movaz { z12.b-z15.b }, za0v.b[w14, 8:0xb]
+c0060a00 movaz_mz_za2_1               movaz { z0.d, z1.d }, za.d[w8, 0, vgx2]
+c0062a54 movaz_mz_za2_1               movaz { z20.d, z21.d }, za.d[w9, 2, vgx2]
+c0060e00 movaz_mz_za4_1               movaz { z0.d-z3.d }, za.d[w8, 0, vgx4]
+c0062e58 movaz_mz_za4_1               movaz { z24.d-z27.d }, za.d[w9, 2, vgx4]
+c0080000 zero_za_i_                   zero { }
+c00800e1 zero_za_i_                   zero { za0.d, za5.d, za6.d, za7.d }
+c00c0000 zero_za1_ri_2                zero za.d[w8, 0, vgx2]
+c00c0005 zero_za1_ri_2                zero za.d[w8, 5, vgx2]
+c0480001 zero_zt_i_                   zero { zt0 }
+c0480001 zero_zt_i_                   zero { zt0 }
+c04c03e0 movt_r_zt_                   movt x0, zt0[0]
+c04c13f9 movt_r_zt_                   movt x25, zt0[8]
+c04e03e0 movt_zt_r_                   movt zt0[0], x0
+c04e53f7 movt_zt_r_                   movt zt0[0x28], x23
+c04f03e0 movt_zt_z_                   movt zt0, z0
+c04f13e8 movt_zt_z_                   movt zt0[1, mul vl], z8
+c08c4000 luti2_mz2_ztz_1              luti2 { z0.b, z1.b }, zt0, z0[0]
+c08f513a luti2_mz2_ztz_1              luti2 { z26.h, z27.h }, zt0, z9[6]
+c08c8000 luti2_mz4_ztz_1              luti2 { z0.b-z3.b }, zt0, z0[0]
+c08f8200 luti2_mz4_ztz_1              luti2 { z0.b-z3.b }, zt0, z16[3]
+c0cc0000 luti2_z_ztz_                 luti2 z0.b, zt0, z0[0]
+c0cce2aa luti2_z_ztz_                 luti2 z10.s, zt0, z21[3]
+c08b0000 luti4_mz4_ztmz2_1            luti4 { z0.b-z3.b }, zt0, { z0, z1 }
+c08b3044 INVALID                      .inst 0xc08b3044
+c08a0000 luti6_mz4_ztmz3_1            luti6 { z0.b-z3.b }, zt0, { z0-z2 }
+c08a0010 luti6_mz4_ztmz3_1            luti6 { z16.b-z19.b }, zt0, { z0-z2 }
+c0900000 addha_za_pp_z_32             addha za0.s, p0/m, p0/m, z0.s
+c09000a2 addha_za_pp_z_32             addha za2.s, p0/m, p0/m, z5.s
+c0600000 fdot_za16_zz8i_2xi           fdot za.h[w8, 0, vgx2], { z0.b, z1.b }, z0.h[0], z20.b
+c0695c4f fdot_za16_zz8i_2xi           fdot za.h[w10, 7, vgx2], { z2.b, z3.b }, z9.h[1], z31.b
+c09c4000 luti2_mz2_ztz_8              luti2 { z0.b, z8.b }, zt0, z0[0]
+c09ff121 INVALID                      .inst 0xc09ff121
+c09c8000 luti2_mz4_ztz_4              luti2 { z0.b, z4.b, z8.b, z12.b }, zt0, z0[0]
+c09cb3c0 INVALID                      .inst 0xc09cb3c0
+c09b0000 luti4_mz4_ztmz2_4            luti4 { z0.b, z4.b, z8.b, z12.b }, zt0, { z0, z1 }
+c09b3180 INVALID                      .inst 0xc09b3180
+c09a0000 luti6_mz4_ztmz3_4            luti6 { z0.b, z4.b, z8.b, z12.b }, zt0, { z0-z2 }
+c09a0200 luti6_mz4_ztmz3_4            luti6 { z0.b, z4.b, z8.b, z12.b }, zt0, { z16-z18 }
+c1000000 smlall_za_zzi_s              smlall za.s[w8, 0:3], z0.b, z0.b[0]
+c103c443 smlall_za_zzi_s              smlall za.s[w10, 0xc:0xf], z2.b, z3.b[9]
+c1400000 fmlall_za32_z8z8i_1          fmlall za.s[w8, 0:3], z0.b, z0.b[0]
+c144f9a0 fmlall_za32_z8z8i_1          fmlall za.s[w11, 0:3], z13.b, z4.b[0xe]
+c1800000 smlall_za_zzi_d              smlall za.d[w8, 0:3], z0.h, z0.h[0]
+c18a2a43 smlall_za_zzi_d              smlall za.d[w9, 0xc:0xf], z18.h, z10.h[2]
+c1801010 bfmlal_za_zzi_1              bfmlal za.s[w8, 0:1], z0.h, z0.h[0]
+c18d3ab3 bfmlal_za_zzi_1              bfmlal za.s[w9, 6:7], z21.h, z13.h[2]
+c1c00000 fmlal_za_z8z8i_1             fmlal za.h[w8, 0:1], z0.b, z0.b[0]
+c1c1434b fmlal_za_z8z8i_1             fmlal za.h[w10, 6:7], z26.b, z1.b[1]
+c1c01000 smlal_za_zzi_1               smlal za.s[w8, 0:1], z0.h, z0.h[0]
+c1cb7406 smlal_za_zzi_1               smlal za.s[w11, 0xc:0xd], z0.h, z11.h[1]
+c1100000 smlall_za_zzi_s2xi           smlall za.s[w8, 0:3, vgx2], { z0.b, z1.b }, z0.b[0]
+c1170141 smlall_za_zzi_s2xi           smlall za.s[w8, 4:7, vgx2], { z10.b, z11.b }, z7.b[0]
+c1101000 fmla_za_zzi_h2xi             fmla za.h[w8, 0, vgx2], { z0.h, z1.h }, z0.h[0]
+c11c16c9 fmla_za_zzi_h2xi             fmla za.h[w8, 1, vgx2], { z22.h, z23.h }, z12.h[3]
+c1500000 fmla_za_zzi_s2xi             fmla za.s[w8, 0, vgx2], { z0.s, z1.s }, z0.s[0]
+c15a2d07 fmla_za_zzi_s2xi             fmla za.s[w9, 7, vgx2], { z8.s, z9.s }, z10.s[3]
+c1900000 smlall_za_zzi_d2xi           smlall za.d[w8, 0:3, vgx2], { z0.h, z1.h }, z0.h[0]
+c19c26c1 smlall_za_zzi_d2xi           smlall za.d[w9, 4:7, vgx2], { z22.h, z23.h }, z12.h[4]
+c1900020 fmlall_za32_z8z8i_2xi        fmlall za.s[w8, 0:3, vgx2], { z0.b, z1.b }, z0.b[0]
+c1914aa7 fmlall_za32_z8z8i_2xi        fmlall za.s[w10, 4:7, vgx2], { z20.b, z21.b }, z1.b[0xb]
+c1901010 bfmlal_za_zzi_2xi            bfmlal za.s[w8, 0:1, vgx2], { z0.h, z1.h }, z0.h[0]
+c1955a97 bfmlal_za_zzi_2xi            bfmlal za.s[w10, 6:7, vgx2], { z20.h, z21.h }, z5.h[5]
+c1901030 fmlal_za_z8z8i_2xi           fmlal za.h[w8, 0:1, vgx2], { z0.b, z1.b }, z0.b[0]
+c1971f36 fmlal_za_z8z8i_2xi           fmlal za.h[w8, 4:5, vgx2], { z24.b, z25.b }, z7.b[0xd]
+c1d00800 fvdotb_za32_z8z8i_2xi        fvdotb za.s[w8, 0, vgx4], { z0.b, z1.b }, z0.b[0]
+c1de6ac3 fvdotb_za32_z8z8i_2xi        fvdotb za.s[w11, 3, vgx4], { z22.b, z23.b }, z14.b[0]
+c1d00000 fmla_za_zzi_d2xi             fmla za.d[w8, 0, vgx2], { z0.d, z1.d }, z0.d[0]
+c1de4382 fmla_za_zzi_d2xi             fmla za.d[w10, 2, vgx2], { z28.d, z29.d }, z14.d[0]
+c1d01000 smlal_za_zzi_2xi             smlal za.s[w8, 0:1, vgx2], { z0.h, z1.h }, z0.h[0]
+c1d05e06 smlal_za_zzi_2xi             smlal za.s[w10, 4:5, vgx2], { z16.h, z17.h }, z0.h[7]
+c1d00020 fdot_za_z8z8i_2xi            fdot za.h[w8, 0, vgx2], { z0.b, z1.b }, z0.b[0]
+c1dc09ae fdot_za_z8z8i_2xi            fdot za.h[w8, 6, vgx2], { z12.b, z13.b }, z12.b[5]
+c1108000 smlall_za_zzi_s4xi           smlall za.s[w8, 0:3, vgx4], { z0.b-z3.b }, z0.b[0]
+c112c305 smlall_za_zzi_s4xi           smlall za.s[w10, 4:7, vgx4], { z24.b-z27.b }, z2.b[2]
+c1108040 fmlall_za32_z8z8i_4xi        fmlall za.s[w8, 0:3, vgx4], { z0.b-z3.b }, z0.b[0]
+c11dcec4 fmlall_za32_z8z8i_4xi        fmlall za.s[w10, 0:3, vgx4], { z20.b-z23.b }, z13.b[0xe]
+c1109000 fmla_za_zzi_h4xi             fmla za.h[w8, 0, vgx4], { z0.h-z3.h }, z0.h[0]
+c110d78c fmla_za_zzi_h4xi             fmla za.h[w10, 4, vgx4], { z28.h-z31.h }, z0.h[3]
+c1109040 fdot_za_z8z8i_4xi            fdot za.h[w8, 0, vgx4], { z0.b-z3.b }, z0.b[0]
+c117d9c7 fdot_za_z8z8i_4xi            fdot za.h[w10, 7, vgx4], { z12.b-z15.b }, z7.b[4]
+c1508000 fmla_za_zzi_s4xi             fmla za.s[w8, 0, vgx4], { z0.s-z3.s }, z0.s[0]
+c15ceb83 fmla_za_zzi_s4xi             fmla za.s[w11, 3, vgx4], { z28.s-z31.s }, z12.s[2]
+c1908000 smlall_za_zzi_d4xi           smlall za.d[w8, 0:3, vgx4], { z0.h-z3.h }, z0.h[0]
+c1938782 smlall_za_zzi_d4xi           smlall za.d[w8, 0:3, vgx4], { z28.h-z31.h }, z3.h[5]
+c1909010 bfmlal_za_zzi_4xi            bfmlal za.s[w8, 0:1, vgx4], { z0.h-z3.h }, z0.h[0]
+c190f895 bfmlal_za_zzi_4xi            bfmlal za.s[w11, 2:3, vgx4], { z4.h-z7.h }, z0.h[5]
+c1909020 fmlal_za_z8z8i_4xi           fmlal za.h[w8, 0:1, vgx4], { z0.b-z3.b }, z0.b[0]
+c193bea3 fmlal_za_z8z8i_4xi           fmlal za.h[w9, 6:7, vgx4], { z20.b-z23.b }, z3.b[0xc]
+c1d08000 fmla_za_zzi_d4xi             fmla za.d[w8, 0, vgx4], { z0.d-z3.d }, z0.d[0]
+c1d0e581 fmla_za_zzi_d4xi             fmla za.d[w11, 1, vgx4], { z12.d-z15.d }, z0.d[1]
+c1d09000 smlal_za_zzi_4xi             smlal za.s[w8, 0:1, vgx4], { z0.h-z3.h }, z0.h[0]
+c1d9b484 smlal_za_zzi_4xi             smlal za.s[w9, 0:1, vgx4], { z4.h-z7.h }, z9.h[3]
+c1200000 smlall_za_zzv_2x1            smlall za.s[w8, 0:3, vgx2], { z0.b, z1.b }, z0.b
+c12e0060 smlall_za_zzv_2x1            smlall za.s[w8, 0:3, vgx2], { z3.b, z4.b }, z14.b
+c1200002 fmlall_za32_z8z8v_2x1        fmlall za.s[w8, 0:3, vgx2], { z0.b, z1.b }, z0.b
+c12d62a2 fmlall_za32_z8z8v_2x1        fmlall za.s[w11, 0:3, vgx2], { z21.b, z22.b }, z13.b
+c1200400 smlall_za_zzv_1              smlall za.s[w8, 0:3], z0.b, z0.b
+c1270780 smlall_za_zzv_1              smlall za.s[w8, 0:3], z28.b, z7.b
+c1200810 bfmlal_za_zzv_2x1            bfmlal za.s[w8, 0:1, vgx2], { z0.h, z1.h }, z0.h
+c12f0af1 bfmlal_za_zzv_2x1            bfmlal za.s[w8, 2:3, vgx2], { z23.h, z24.h }, z15.h
+c1600800 smlal_za_zzv_2x1             smlal za.s[w8, 0:1, vgx2], { z0.h, z1.h }, z0.h
+c1620b63 smlal_za_zzv_2x1             smlal za.s[w8, 6:7, vgx2], { z27.h, z28.h }, z2.h
+c1200c10 bfmlal_za_zzv_1              bfmlal za.s[w8, 0:1], z0.h, z0.h
+c1280f11 bfmlal_za_zzv_1              bfmlal za.s[w8, 2:3], z24.h, z8.h
+c1600c00 smlal_za_zzv_1               smlal za.s[w8, 0:1], z0.h, z0.h
+c1656d04 smlal_za_zzv_1               smlal za.s[w11, 8:9], z8.h, z5.h
+c1201000 fdot_za_zzv_2x1              fdot za.s[w8, 0, vgx2], { z0.h, z1.h }, z0.h
+c1245200 fdot_za_zzv_2x1              fdot za.s[w10, 0, vgx2], { z16.h, z17.h }, z4.h
+c1201400 sdot_za_zzv_2x1              sdot za.s[w8, 0, vgx2], { z0.b, z1.b }, z0.b
+c1671586 sdot_za_zzv_2x1              sdot za.d[w8, 6, vgx2], { z12.h, z13.h }, z7.h
+c1201408 usdot_za_zzv_s2x1            usdot za.s[w8, 0, vgx2], { z0.b, z1.b }, z0.b
+c127162a usdot_za_zzv_s2x1            usdot za.s[w8, 2, vgx2], { z17.b, z18.b }, z7.b
+c1601408 sdot_za32_zzv_2x1            sdot za.s[w8, 0, vgx2], { z0.h, z1.h }, z0.h
+c163742b sdot_za32_zzv_2x1            sdot za.s[w11, 3, vgx2], { z1.h, z2.h }, z3.h
+c1201800 fmla_za_zzv_2x1              fmla za.s[w8, 0, vgx2], { z0.s, z1.s }, z0.s
+c1667b43 fmla_za_zzv_2x1              fmla za.d[w11, 3, vgx2], { z26.d, z27.d }, z6.d
+c1201810 add_za_zzv_2x1               add za.s[w8, 0, vgx2], { z0.s, z1.s }, z0.s
+c16d7bb1 add_za_zzv_2x1               add za.d[w11, 1, vgx2], { z29.d, z30.d }, z13.d
+c1201c00 fmla_za_zzv_2x1_16           fmla za.h[w8, 0, vgx2], { z0.h, z1.h }, z0.h
+c1263e04 fmla_za_zzv_2x1_16           fmla za.h[w9, 4, vgx2], { z16.h, z17.h }, z6.h
+c1300000 smlall_za_zzv_4x1            smlall za.s[w8, 0:3, vgx4], { z0.b-z3.b }, z0.b
+c1720021 smlall_za_zzv_4x1            smlall za.d[w8, 4:7, vgx4], { z1.h-z4.h }, z2.h
+c1300002 fmlall_za32_z8z8v_4x1        fmlall za.s[w8, 0:3, vgx4], { z0.b-z3.b }, z0.b
+c1316003 fmlall_za32_z8z8v_4x1        fmlall za.s[w11, 4:7, vgx4], { z0.b-z3.b }, z1.b
+c1300400 fmlall_za32_z8z8v_1          fmlall za.s[w8, 0:3], z0.b, z0.b
+c13e47e2 fmlall_za32_z8z8v_1          fmlall za.s[w10, 8:0xb], z31.b, z14.b
+c1300810 bfmlal_za_zzv_4x1            bfmlal za.s[w8, 0:1, vgx4], { z0.h-z3.h }, z0.h
+c1330a10 bfmlal_za_zzv_4x1            bfmlal za.s[w8, 0:1, vgx4], { z16.h-z19.h }, z3.h
+c1700800 smlal_za_zzv_4x1             smlal za.s[w8, 0:1, vgx4], { z0.h-z3.h }, z0.h
+c17128a3 smlal_za_zzv_4x1             smlal za.s[w9, 6:7, vgx4], { z5.h-z8.h }, z1.h
+c1300c00 fmlal_za_z8z8v_1             fmlal za.h[w8, 0:1], z0.b, z0.b
+c1314e87 fmlal_za_z8z8v_1             fmlal za.h[w10, 0xe:0xf], z20.b, z1.b
+c1301000 fdot_za_zzv_4x1              fdot za.s[w8, 0, vgx4], { z0.h-z3.h }, z0.h
+c13b3187 fdot_za_zzv_4x1              fdot za.s[w9, 7, vgx4], { z12.h-z15.h }, z11.h
+c1301400 sdot_za_zzv_4x1              sdot za.s[w8, 0, vgx4], { z0.b-z3.b }, z0.b
+c1717625 sdot_za_zzv_4x1              sdot za.d[w11, 5, vgx4], { z17.h-z20.h }, z1.h
+c1301408 usdot_za_zzv_s4x1            usdot za.s[w8, 0, vgx4], { z0.b-z3.b }, z0.b
+c13817c9 usdot_za_zzv_s4x1            usdot za.s[w8, 1, vgx4], { z30.b, z31.b, z0.b, z1.b }, z8.b
+c1701408 sdot_za32_zzv_4x1            sdot za.s[w8, 0, vgx4], { z0.h-z3.h }, z0.h
+c17a740a sdot_za32_zzv_4x1            sdot za.s[w11, 2, vgx4], { z0.h-z3.h }, z10.h
+c1301800 fmla_za_zzv_4x1              fmla za.s[w8, 0, vgx4], { z0.s-z3.s }, z0.s
+c17f1a07 fmla_za_zzv_4x1              fmla za.d[w8, 7, vgx4], { z16.d-z19.d }, z15.d
+c1301810 add_za_zzv_4x1               add za.s[w8, 0, vgx4], { z0.s-z3.s }, z0.s
+c13878f5 add_za_zzv_4x1               add za.s[w11, 5, vgx4], { z7.s-z10.s }, z8.s
+c1301c00 fmla_za_zzv_4x1_16           fmla za.h[w8, 0, vgx4], { z0.h-z3.h }, z0.h
+c1345e65 fmla_za_zzv_4x1_16           fmla za.h[w10, 5, vgx4], { z19.h-z22.h }, z4.h
+c1a00000 smlall_za_zzw_2x2            smlall za.s[w8, 0:3, vgx2], { z0.b, z1.b }, { z0.b, z1.b }
+c1fc62c1 smlall_za_zzw_2x2            smlall za.d[w11, 4:7, vgx2], { z22.h, z23.h }, { z28.h, z29.h }
+c1a00020 fmlall_za32_z8z8w_2x2        fmlall za.s[w8, 0:3, vgx2], { z0.b, z1.b }, { z0.b, z1.b }
+c1ac41a0 fmlall_za32_z8z8w_2x2        fmlall za.s[w10, 0:3, vgx2], { z12.b, z13.b }, { z12.b, z13.b }
+c1a00810 bfmlal_za_zzw_2x2            bfmlal za.s[w8, 0:1, vgx2], { z0.h, z1.h }, { z0.h, z1.h }
+c1b02b12 bfmlal_za_zzw_2x2            bfmlal za.s[w9, 4:5, vgx2], { z24.h, z25.h }, { z16.h, z17.h }
+c1a00820 fmlal_za_z8z8w_2x2           fmlal za.h[w8, 0:1, vgx2], { z0.b, z1.b }, { z0.b, z1.b }
+c1ae28e1 fmlal_za_z8z8w_2x2           fmlal za.h[w9, 2:3, vgx2], { z6.b, z7.b }, { z14.b, z15.b }
+c1e00800 smlal_za_zzw_2x2             smlal za.s[w8, 0:1, vgx2], { z0.h, z1.h }, { z0.h, z1.h }
+c1ec4ac1 smlal_za_zzw_2x2             smlal za.s[w10, 2:3, vgx2], { z22.h, z23.h }, { z12.h, z13.h }
+c1a01000 fdot_za_zzw_2x2              fdot za.s[w8, 0, vgx2], { z0.h, z1.h }, { z0.h, z1.h }
+c1a011c1 fdot_za_zzw_2x2              fdot za.s[w8, 1, vgx2], { z14.h, z15.h }, { z0.h, z1.h }
+c1a01008 fmla_za_zzw_2x2_16           fmla za.h[w8, 0, vgx2], { z0.h, z1.h }, { z0.h, z1.h }
+c1b210cb fmla_za_zzw_2x2_16           fmla za.h[w8, 3, vgx2], { z6.h, z7.h }, { z18.h, z19.h }
+c1a01400 sdot_za_zzw_2x2              sdot za.s[w8, 0, vgx2], { z0.b, z1.b }, { z0.b, z1.b }
+c1e03640 sdot_za_zzw_2x2              sdot za.d[w9, 0, vgx2], { z18.h, z19.h }, { z0.h, z1.h }
+c1a01408 usdot_za_zzw_s2x2            usdot za.s[w8, 0, vgx2], { z0.b, z1.b }, { z0.b, z1.b }
+c1b8764b usdot_za_zzw_s2x2            usdot za.s[w11, 3, vgx2], { z18.b, z19.b }, { z24.b, z25.b }
+c1e01408 sdot_za32_zzw_2x2            sdot za.s[w8, 0, vgx2], { z0.h, z1.h }, { z0.h, z1.h }
+c1e4558e sdot_za32_zzw_2x2            sdot za.s[w10, 6, vgx2], { z12.h, z13.h }, { z4.h, z5.h }
+c1a01800 fmla_za_zzw_2x2              fmla za.s[w8, 0, vgx2], { z0.s, z1.s }, { z0.s, z1.s }
+c1ea5b04 fmla_za_zzw_2x2              fmla za.d[w10, 4, vgx2], { z24.d, z25.d }, { z10.d, z11.d }
+c1a01810 add_za_zzw_2x2               add za.s[w8, 0, vgx2], { z0.s, z1.s }, { z0.s, z1.s }
+c1be3a17 add_za_zzw_2x2               add za.s[w9, 7, vgx2], { z16.s, z17.s }, { z30.s, z31.s }
+c1a01c00 fadd_za_zw_2x2               fadd za.s[w8, 0, vgx2], { z0.s, z1.s }
+c1e01f83 fadd_za_zw_2x2               fadd za.d[w8, 3, vgx2], { z28.d, z29.d }
+c1a01c10 add_za_zw_2x2                add za.s[w8, 0, vgx2], { z0.s, z1.s }
+c1a01d12 add_za_zw_2x2                add za.s[w8, 2, vgx2], { z8.s, z9.s }
+c1a41c00 fadd_za_zw_2x2_16            fadd za.h[w8, 0, vgx2], { z0.h, z1.h }
+c1a45f40 fadd_za_zw_2x2_16            fadd za.h[w10, 0, vgx2], { z26.h, z27.h }
+c1a10000 smlall_za_zzw_4x4            smlall za.s[w8, 0:3, vgx4], { z0.b-z3.b }, { z0.b-z3.b }
+c1f14080 smlall_za_zzw_4x4            smlall za.d[w10, 0:3, vgx4], { z4.h-z7.h }, { z16.h-z19.h }
+c1a10020 fmlall_za32_z8z8w_4x4        fmlall za.s[w8, 0:3, vgx4], { z0.b-z3.b }, { z0.b-z3.b }
+c1b563a1 fmlall_za32_z8z8w_4x4        fmlall za.s[w11, 4:7, vgx4], { z28.b-z31.b }, { z20.b-z23.b }
+c1a10810 bfmlal_za_zzw_4x4            bfmlal za.s[w8, 0:1, vgx4], { z0.h-z3.h }, { z0.h-z3.h }
+c1b56911 bfmlal_za_zzw_4x4            bfmlal za.s[w11, 2:3, vgx4], { z8.h-z11.h }, { z20.h-z23.h }
+c1a10820 fmlal_za_z8z8w_4x4           fmlal za.h[w8, 0:1, vgx4], { z0.b-z3.b }, { z0.b-z3.b }
+c1ad6920 fmlal_za_z8z8w_4x4           fmlal za.h[w11, 0:1, vgx4], { z8.b-z11.b }, { z12.b-z15.b }
+c1e10800 smlal_za_zzw_4x4             smlal za.s[w8, 0:1, vgx4], { z0.h-z3.h }, { z0.h-z3.h }
+c1e52b01 smlal_za_zzw_4x4             smlal za.s[w9, 2:3, vgx4], { z24.h-z27.h }, { z4.h-z7.h }
+c1a11000 fdot_za_zzw_4x4              fdot za.s[w8, 0, vgx4], { z0.h-z3.h }, { z0.h-z3.h }
+c1ad1305 fdot_za_zzw_4x4              fdot za.s[w8, 5, vgx4], { z24.h-z27.h }, { z12.h-z15.h }
+c1a11008 fmla_za_zzw_4x4_16           fmla za.h[w8, 0, vgx4], { z0.h-z3.h }, { z0.h-z3.h }
+c1bd718a fmla_za_zzw_4x4_16           fmla za.h[w11, 2, vgx4], { z12.h-z15.h }, { z28.h-z31.h }
+c1a11400 sdot_za_zzw_4x4              sdot za.s[w8, 0, vgx4], { z0.b-z3.b }, { z0.b-z3.b }
+c1ad7404 sdot_za_zzw_4x4              sdot za.s[w11, 4, vgx4], { z0.b-z3.b }, { z12.b-z15.b }
+c1a11408 usdot_za_zzw_s4x4            usdot za.s[w8, 0, vgx4], { z0.b-z3.b }, { z0.b-z3.b }
+c1b5360a usdot_za_zzw_s4x4            usdot za.s[w9, 2, vgx4], { z16.b-z19.b }, { z20.b-z23.b }
+c1e11408 sdot_za32_zzw_4x4            sdot za.s[w8, 0, vgx4], { z0.h-z3.h }, { z0.h-z3.h }
+c1f9748a sdot_za32_zzw_4x4            sdot za.s[w11, 2, vgx4], { z4.h-z7.h }, { z24.h-z27.h }
+c1a11800 fmla_za_zzw_4x4              fmla za.s[w8, 0, vgx4], { z0.s-z3.s }, { z0.s-z3.s }
+c1b51987 fmla_za_zzw_4x4              fmla za.s[w8, 7, vgx4], { z12.s-z15.s }, { z20.s-z23.s }
+c1a11810 add_za_zzw_4x4               add za.s[w8, 0, vgx4], { z0.s-z3.s }, { z0.s-z3.s }
+c1a93910 add_za_zzw_4x4               add za.s[w9, 0, vgx4], { z8.s-z11.s }, { z8.s-z11.s }
+c1a11c00 fadd_za_zw_4x4               fadd za.s[w8, 0, vgx4], { z0.s-z3.s }
+c1a11c05 fadd_za_zw_4x4               fadd za.s[w8, 5, vgx4], { z0.s-z3.s }
+c1a11c10 add_za_zw_4x4                add za.s[w8, 0, vgx4], { z0.s-z3.s }
+c1e17d91 add_za_zw_4x4                add za.d[w11, 1, vgx4], { z12.d-z15.d }
+c1a51c00 fadd_za_zw_4x4_16            fadd za.h[w8, 0, vgx4], { z0.h-z3.h }
+c1a51f04 fadd_za_zw_4x4_16            fadd za.h[w8, 4, vgx4], { z24.h-z27.h }
 c1208000 sel_mz_p_zz_2                sel { z0.b, z1.b }, pn8, { z0.b, z1.b }, { z0.b, z1.b }
-c1a69a0a sel_mz_p_zz_2                sel { z10.s, z11.s }, pn14, { z16.s, z17.s }, { z6.s, z7.s }
+c1f6845c sel_mz_p_zz_2                sel { z28.d, z29.d }, pn9, { z2.d, z3.d }, { z22.d, z23.d }
 c1218000 sel_mz_p_zz_4                sel { z0.b-z3.b }, pn8, { z0.b-z3.b }, { z0.b-z3.b }
-c1799498 sel_mz_p_zz_4                sel { z24.h-z27.h }, pn13, { z4.h-z7.h }, { z24.h-z27.h }
+c1bd8514 sel_mz_p_zz_4                sel { z20.s-z23.s }, pn9, { z8.s-z11.s }, { z28.s-z31.s }
 c120a000 smax_mz_zzv_2x1              smax { z0.b, z1.b }, { z0.b, z1.b }, z0.b
-c1ada014 smax_mz_zzv_2x1              smax { z20.s, z21.s }, { z20.s, z21.s }, z13.s
+c164a016 smax_mz_zzv_2x1              smax { z22.h, z23.h }, { z22.h, z23.h }, z4.h
 c120a100 bfmax_mz_zzv_2x1             bfmax { z0.h, z1.h }, { z0.h, z1.h }, z0.h
-c165a118 fmax_mz_zzv_2x1              fmax { z24.h, z25.h }, { z24.h, z25.h }, z5.h
+c1a3a100 fmax_mz_zzv_2x1              fmax { z0.s, z1.s }, { z0.s, z1.s }, z3.s
 c120a180 bfscale_mz_zzv_2x1           bfscale { z0.h, z1.h }, { z0.h, z1.h }, z0.h
-c1eba186 fscale_mz_zzv_2x1            fscale { z6.d, z7.d }, { z6.d, z7.d }, z11.d
+c16ca19c fscale_mz_zzv_2x1            fscale { z28.h, z29.h }, { z28.h, z29.h }, z12.h
 c120a220 srshl_mz_zzv_2x1             srshl { z0.b, z1.b }, { z0.b, z1.b }, z0.b
-c16ca236 srshl_mz_zzv_2x1             srshl { z22.h, z23.h }, { z22.h, z23.h }, z12.h
+c126a23a srshl_mz_zzv_2x1             srshl { z26.b, z27.b }, { z26.b, z27.b }, z6.b
 c120a300 add_mz_zzv_2x1               add { z0.b, z1.b }, { z0.b, z1.b }, z0.b
-c16da306 add_mz_zzv_2x1               add { z6.h, z7.h }, { z6.h, z7.h }, z13.h
+c16aa30e add_mz_zzv_2x1               add { z14.h, z15.h }, { z14.h, z15.h }, z10.h
 c120a400 sqdmulh_mz_zzv_2x1           sqdmulh { z0.b, z1.b }, { z0.b, z1.b }, z0.b
-c1eea404 sqdmulh_mz_zzv_2x1           sqdmulh { z4.d, z5.d }, { z4.d, z5.d }, z14.d
+c166a416 sqdmulh_mz_zzv_2x1           sqdmulh { z22.h, z23.h }, { z22.h, z23.h }, z6.h
 c120a800 smax_mz_zzv_4x1              smax { z0.b-z3.b }, { z0.b-z3.b }, z0.b
-c1aaa814 smax_mz_zzv_4x1              smax { z20.s-z23.s }, { z20.s-z23.s }, z10.s
+c1aaa818 smax_mz_zzv_4x1              smax { z24.s-z27.s }, { z24.s-z27.s }, z10.s
 c120a900 bfmax_mz_zzv_4x1             bfmax { z0.h-z3.h }, { z0.h-z3.h }, z0.h
-c169a904 fmax_mz_zzv_4x1              fmax { z4.h-z7.h }, { z4.h-z7.h }, z9.h
+c12ca914 bfmax_mz_zzv_4x1             bfmax { z20.h-z23.h }, { z20.h-z23.h }, z12.h
 c120a980 bfscale_mz_zzv_4x1           bfscale { z0.h-z3.h }, { z0.h-z3.h }, z0.h
-c1eda98c fscale_mz_zzv_4x1            fscale { z12.d-z15.d }, { z12.d-z15.d }, z13.d
+c1e5a984 fscale_mz_zzv_4x1            fscale { z4.d-z7.d }, { z4.d-z7.d }, z5.d
 c120aa20 srshl_mz_zzv_4x1             srshl { z0.b-z3.b }, { z0.b-z3.b }, z0.b
-c1a7aa34 srshl_mz_zzv_4x1             srshl { z20.s-z23.s }, { z20.s-z23.s }, z7.s
+c161aa24 srshl_mz_zzv_4x1             srshl { z4.h-z7.h }, { z4.h-z7.h }, z1.h
 c120ab00 add_mz_zzv_4x1               add { z0.b-z3.b }, { z0.b-z3.b }, z0.b
-c1acab14 add_mz_zzv_4x1               add { z20.s-z23.s }, { z20.s-z23.s }, z12.s
+c161ab08 add_mz_zzv_4x1               add { z8.h-z11.h }, { z8.h-z11.h }, z1.h
 c120ac00 sqdmulh_mz_zzv_4x1           sqdmulh { z0.b-z3.b }, { z0.b-z3.b }, z0.b
-c161ac04 sqdmulh_mz_zzv_4x1           sqdmulh { z4.h-z7.h }, { z4.h-z7.h }, z1.h
+c167ac0c sqdmulh_mz_zzv_4x1           sqdmulh { z12.h-z15.h }, { z12.h-z15.h }, z7.h
 c120b000 smax_mz_zzw_2x2              smax { z0.b, z1.b }, { z0.b, z1.b }, { z0.b, z1.b }
-c1eab008 smax_mz_zzw_2x2              smax { z8.d, z9.d }, { z8.d, z9.d }, { z10.d, z11.d }
+c132b00c smax_mz_zzw_2x2              smax { z12.b, z13.b }, { z12.b, z13.b }, { z18.b, z19.b }
 c120b100 bfmax_mz_zzw_2x2             bfmax { z0.h, z1.h }, { z0.h, z1.h }, { z0.h, z1.h }
-c1b4b104 fmax_mz_zzw_2x2              fmax { z4.s, z5.s }, { z4.s, z5.s }, { z20.s, z21.s }
+c126b118 bfmax_mz_zzw_2x2             bfmax { z24.h, z25.h }, { z24.h, z25.h }, { z6.h, z7.h }
 c120b180 bfscale_mz_zzw_2x2           bfscale { z0.h, z1.h }, { z0.h, z1.h }, { z0.h, z1.h }
-c1bcb192 fscale_mz_zzw_2x2            fscale { z18.s, z19.s }, { z18.s, z19.s }, { z28.s, z29.s }
+c1bab19e fscale_mz_zzw_2x2            fscale { z30.s, z31.s }, { z30.s, z31.s }, { z26.s, z27.s }
 c120b220 srshl_mz_zzw_2x2             srshl { z0.b, z1.b }, { z0.b, z1.b }, { z0.b, z1.b }
-c1f4b23e srshl_mz_zzw_2x2             srshl { z30.d, z31.d }, { z30.d, z31.d }, { z20.d, z21.d }
+c124b232 srshl_mz_zzw_2x2             srshl { z18.b, z19.b }, { z18.b, z19.b }, { z4.b, z5.b }
 c120b400 sqdmulh_mz_zzw_2x2           sqdmulh { z0.b, z1.b }, { z0.b, z1.b }, { z0.b, z1.b }
-c168b408 sqdmulh_mz_zzw_2x2           sqdmulh { z8.h, z9.h }, { z8.h, z9.h }, { z8.h, z9.h }
+c1f4b408 sqdmulh_mz_zzw_2x2           sqdmulh { z8.d, z9.d }, { z8.d, z9.d }, { z20.d, z21.d }
 c120b800 smax_mz_zzw_4x4              smax { z0.b-z3.b }, { z0.b-z3.b }, { z0.b-z3.b }
-c178b800 smax_mz_zzw_4x4              smax { z0.h-z3.h }, { z0.h-z3.h }, { z24.h-z27.h }
+c174b814 smax_mz_zzw_4x4              smax { z20.h-z23.h }, { z20.h-z23.h }, { z20.h-z23.h }
 c120b900 bfmax_mz_zzw_4x4             bfmax { z0.h-z3.h }, { z0.h-z3.h }, { z0.h-z3.h }
-c1a4b908 fmax_mz_zzw_4x4              fmax { z8.s-z11.s }, { z8.s-z11.s }, { z4.s-z7.s }
+c1acb908 fmax_mz_zzw_4x4              fmax { z8.s-z11.s }, { z8.s-z11.s }, { z12.s-z15.s }
 c120b980 bfscale_mz_zzw_4x4           bfscale { z0.h-z3.h }, { z0.h-z3.h }, { z0.h-z3.h }
-c1b8b998 fscale_mz_zzw_4x4            fscale { z24.s-z27.s }, { z24.s-z27.s }, { z24.s-z27.s }
+c1b8b99c fscale_mz_zzw_4x4            fscale { z28.s-z31.s }, { z28.s-z31.s }, { z24.s-z27.s }
 c120ba20 srshl_mz_zzw_4x4             srshl { z0.b-z3.b }, { z0.b-z3.b }, { z0.b-z3.b }
-c1e0ba24 srshl_mz_zzw_4x4             srshl { z4.d-z7.d }, { z4.d-z7.d }, { z0.d-z3.d }
+c1ecba20 srshl_mz_zzw_4x4             srshl { z0.d-z3.d }, { z0.d-z3.d }, { z12.d-z15.d }
 c120bc00 sqdmulh_mz_zzw_4x4           sqdmulh { z0.b-z3.b }, { z0.b-z3.b }, { z0.b-z3.b }
-c130bc10 sqdmulh_mz_zzw_4x4           sqdmulh { z16.b-z19.b }, { z16.b-z19.b }, { z16.b-z19.b }
+c13cbc18 sqdmulh_mz_zzw_4x4           sqdmulh { z24.b-z27.b }, { z24.b-z27.b }, { z28.b-z31.b }
 c120c000 bfclamp_mz_zz_2              bfclamp { z0.h, z1.h }, z0.h, z0.h
-c1b2c222 fclamp_mz_zz_2               fclamp { z2.s, z3.s }, z17.s, z18.s
+c1fbc264 fclamp_mz_zz_2               fclamp { z4.d, z5.d }, z19.d, z27.d
 c120c400 sclamp_mz_zz_2               sclamp { z0.b, z1.b }, z0.b, z0.b
-c165c5fa sclamp_mz_zz_2               sclamp { z26.h, z27.h }, z15.h, z5.h
+c13dc5b6 sclamp_mz_zz_2               sclamp { z22.b, z23.b }, z13.b, z29.b
 c120c800 bfclamp_mz_zz_4              bfclamp { z0.h-z3.h }, z0.h, z0.h
-c1b2c9dc fclamp_mz_zz_4               fclamp { z28.s-z31.s }, z14.s, z18.s
+c176c82c fclamp_mz_zz_4               fclamp { z12.h-z15.h }, z1.h, z22.h
 c120cc00 sclamp_mz_zz_4               sclamp { z0.b-z3.b }, z0.b, z0.b
-c1fccca8 sclamp_mz_zz_4               sclamp { z8.d-z11.d }, z5.d, z28.d
+c1a0cdd4 sclamp_mz_zz_4               sclamp { z20.s-z23.s }, z14.s, z0.s
 c120d000 zip_mz_zz_2                  zip { z0.b, z1.b }, z0.b, z0.b
-c1b2d138 zip_mz_zz_2                  zip { z24.s, z25.s }, z9.s, z18.s
+c1f3d2c0 zip_mz_zz_2                  zip { z0.d, z1.d }, z22.d, z19.d
 c120d400 zip_mz_zz_2q                 zip { z0.q, z1.q }, z0.q, z0.q
-c121d568 zip_mz_zz_2q                 zip { z8.q, z9.q }, z11.q, z1.q
+c120d4f6 zip_mz_zz_2q                 zip { z22.q, z23.q }, z7.q, z0.q
 c1e0d400 sqrshr_z_mz2_                sqrshr z0.h, { z0.s, z1.s }, #0x10
-c1e9d600 sqrshr_z_mz2_                sqrshr z0.h, { z16.s, z17.s }, #7
+c1ead400 sqrshr_z_mz2_                sqrshr z0.h, { z0.s, z1.s }, #6
 c120d800 INVALID                      .inst 0xc120d800
-c1e6d98a sqrshr_z_mz4_                sqrshr z10.h, { z12.d-z15.d }, #0x1a
+c1a4da09 sqrshr_z_mz4_                sqrshr z9.h, { z16.d-z19.d }, #0x3c
 c160e000 bfcvt_z_mz2_                 bfcvt z0.h, { z0.s, z1.s }
-c160e05e bfcvt_z_mz2_                 bfcvt z30.h, { z2.s, z3.s }
+c160e04f bfcvt_z_mz2_                 bfcvt z15.h, { z2.s, z3.s }
 c121e000 fcvtzs_mz_z_2                fcvtzs { z0.s, z1.s }, { z0.s, z1.s }
-c121e0d2 fcvtzs_mz_z_2                fcvtzs { z18.s, z19.s }, { z6.s, z7.s }
+c121e0d6 fcvtzs_mz_z_2                fcvtzs { z22.s, z23.s }, { z6.s, z7.s }
 c122e000 scvtf_mz_z_2                 scvtf { z0.s, z1.s }, { z0.s, z1.s }
-c122e050 scvtf_mz_z_2                 scvtf { z16.s, z17.s }, { z2.s, z3.s }
+c122e394 scvtf_mz_z_2                 scvtf { z20.s, z21.s }, { z28.s, z29.s }
 c123e000 sqcvt_z_mz2_                 sqcvt z0.h, { z0.s, z1.s }
-c123e013 sqcvt_z_mz2_                 sqcvt z19.h, { z0.s, z1.s }
+c123e217 sqcvt_z_mz2_                 sqcvt z23.h, { z16.s, z17.s }
 c164e000 bfcvt_z8_mz2_                bfcvt z0.b, { z0.h, z1.h }
-c164e2d9 bfcvt_z8_mz2_                bfcvt z25.b, { z22.h, z23.h }
+c164e315 bfcvt_z8_mz2_                bfcvt z21.b, { z24.h, z25.h }
 c125e000 INVALID                      .inst 0xc125e000
-c1a5e344 sunpk_mz_z_2                 sunpk { z4.s, z5.s }, z26.h
+c125e110 INVALID                      .inst 0xc125e110
 c126e000 f1cvt_mz2_z8_                f1cvt { z0.h, z1.h }, z0.b
-c126e0b6 f1cvt_mz2_z8_                f1cvt { z22.h, z23.h }, z5.b
+c126e058 f1cvt_mz2_z8_                f1cvt { z24.h, z25.h }, z2.b
 c1a8e000 frintn_mz_z_2                frintn { z0.s, z1.s }, { z0.s, z1.s }
-c1a8e14c frintn_mz_z_2                frintn { z12.s, z13.s }, { z10.s, z11.s }
+c1a8e3c6 frintn_mz_z_2                frintn { z6.s, z7.s }, { z30.s, z31.s }
 c1a0e000 fcvt_mz2_z_                  fcvt { z0.s, z1.s }, z0.h
-c1a0e1d6 fcvt_mz2_z_                  fcvt { z22.s, z23.s }, z14.h
+c1a0e2f4 fcvt_mz2_z_                  fcvt { z20.s, z21.s }, z23.h
 c131e000 fcvtzs_mz_z_4                fcvtzs { z0.s-z3.s }, { z0.s-z3.s }
-c131e11c fcvtzs_mz_z_4                fcvtzs { z28.s-z31.s }, { z8.s-z11.s }
+c131e308 fcvtzs_mz_z_4                fcvtzs { z8.s-z11.s }, { z24.s-z27.s }
 c132e000 scvtf_mz_z_4                 scvtf { z0.s-z3.s }, { z0.s-z3.s }
-c132e09c scvtf_mz_z_4                 scvtf { z28.s-z31.s }, { z4.s-z7.s }
+c132e190 scvtf_mz_z_4                 scvtf { z16.s-z19.s }, { z12.s-z15.s }
 c133e000 sqcvt_z_mz4_                 sqcvt z0.b, { z0.s-z3.s }
-c133e313 sqcvt_z_mz4_                 sqcvt z19.b, { z24.s-z27.s }
+c1b3e317 sqcvt_z_mz4_                 sqcvt z23.h, { z24.d-z27.d }
 c134e000 fcvt_z8_mz4_                 fcvt z0.b, { z0.s-z3.s }
-c134e094 fcvt_z8_mz4_                 fcvt z20.b, { z4.s-z7.s }
+c134e087 fcvt_z8_mz4_                 fcvt z7.b, { z4.s-z7.s }
 c135e000 INVALID                      .inst 0xc135e000
-c135e34c INVALID                      .inst 0xc135e34c
+c135e250 INVALID                      .inst 0xc135e250
 c136e000 zip_mz_z_4                   zip { z0.b-z3.b }, { z0.b-z3.b }
-c176e214 zip_mz_z_4                   zip { z20.h-z23.h }, { z16.h-z19.h }
+c1b6e000 zip_mz_z_4                   zip { z0.s-z3.s }, { z0.s-z3.s }
 c137e000 zip_mz_z_4q                  zip { z0.q-z3.q }, { z0.q-z3.q }
-c137e318 zip_mz_z_4q                  zip { z24.q-z27.q }, { z24.q-z27.q }
+c137e38c zip_mz_z_4q                  zip { z12.q-z15.q }, { z28.q-z31.q }
 c1b8e000 frintn_mz_z_4                frintn { z0.s-z3.s }, { z0.s-z3.s }
-c1b8e280 frintn_mz_z_4                frintn { z0.s-z3.s }, { z20.s-z23.s }
+c1b8e300 frintn_mz_z_4                frintn { z0.s-z3.s }, { z24.s-z27.s }
 c120e400 bfmul_mz_zzw_2x2             bfmul { z0.h, z1.h }, { z0.h, z1.h }, { z0.h, z1.h }
-c1eee7cc fmul_mz_zzw_2x2              fmul { z12.d, z13.d }, { z30.d, z31.d }, { z14.d, z15.d }
+c120e590 bfmul_mz_zzw_2x2             bfmul { z16.h, z17.h }, { z12.h, z13.h }, { z0.h, z1.h }
 c121e400 bfmul_mz_zzw_4x4             bfmul { z0.h-z3.h }, { z0.h-z3.h }, { z0.h-z3.h }
-c17de78c fmul_mz_zzw_4x4              fmul { z12.h-z15.h }, { z28.h-z31.h }, { z28.h-z31.h }
+c13de680 bfmul_mz_zzw_4x4             bfmul { z0.h-z3.h }, { z20.h-z23.h }, { z28.h-z31.h }
 c120e800 bfmul_mz_zzv_2x1             bfmul { z0.h, z1.h }, { z0.h, z1.h }, z0.h
-c128eb98 bfmul_mz_zzv_2x1             bfmul { z24.h, z25.h }, { z28.h, z29.h }, z4.h
+c1e6e98e fmul_mz_zzv_2x1              fmul { z14.d, z15.d }, { z12.d, z13.d }, z3.d
 c121e800 bfmul_mz_zzv_4x1             bfmul { z0.h-z3.h }, { z0.h-z3.h }, z0.h
-c13de994 bfmul_mz_zzv_4x1             bfmul { z20.h-z23.h }, { z12.h-z15.h }, z14.h
+c1e1e810 fmul_mz_zzv_4x1              fmul { z16.d-z19.d }, { z0.d-z3.d }, z0.d
 c120f400 luti6_mz4_zmz2_1             luti6 { z0.h-z3.h }, { z0.h, z1.h }, { z0, z1 }[0]
-c166f668 luti6_mz4_zmz2_1             luti6 { z8.h-z11.h }, { z19.h, z20.h }, { z6, z7 }[1]
+c17ff5b4 luti6_mz4_zmz2_1             luti6 { z20.h-z23.h }, { z13.h, z14.h }, { z31, z0 }[1]
 c120fc00 luti6_mz4_zmz2_4             luti6 { z0.h, z4.h, z8.h, z12.h }, { z0.h, z1.h }, { z0, z1 }[0]
-c17bfd33 luti6_mz4_zmz2_4             luti6 { z19.h, z23.h, z27.h, z31.h }, { z9.h, z10.h }, { z27, z28 }[1]
+c124fd33 luti6_mz4_zmz2_4             luti6 { z19.h, z23.h, z27.h, z31.h }, { z9.h, z10.h }, { z4, z5 }[0]
+e0000000 ld1b_za_p_rrr_               ld1b { za0h.b[w12, 0] }, p0/z, [x0, x0]
+e01609aa ld1b_za_p_rrr_               ld1b { za0h.b[w12, 0xa] }, p2/z, [x13, x22]
+e0200000 st1b_za_p_rrr_               st1b { za0h.b[w12, 0] }, p0, [x0, x0]
+e03cf2e1 st1b_za_p_rrr_               st1b { za0v.b[w15, 1] }, p4, [x23, x28]
+e1000000 ldr_za_ri_                   ldr za[w12, 0], [x0]
+e1006103 ldr_za_ri_                   ldr za[w15, 3], [x8, #3, mul vl]
+e11f8000 ldr_zt_br_                   ldr zt0, [x0]
+e11f80c0 ldr_zt_br_                   ldr zt0, [x6]
+e1c00000 ld1q_za_p_rrr_               ld1q { za0h.q[w12, 0] }, p0/z, [x0, x0, lsl #4]
+e1d9e183 ld1q_za_p_rrr_               ld1q { za3v.q[w15, 0] }, p0/z, [x12, x25, lsl #4]
+e1e00000 st1q_za_p_rrr_               st1q { za0h.q[w12, 0] }, p0, [x0, x0, lsl #4]
+e1e7ad8f st1q_za_p_rrr_               st1q { za15v.q[w13, 0] }, p3, [x12, x7, lsl #4]

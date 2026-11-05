@@ -455,6 +455,59 @@ fn sve_lists() -> Result<(), EncodeError> {
     Ok(())
 }
 
+/// SME operands built from operands: tiles, slices, array vectors, ZT0, the mask.
+#[test]
+fn sme() -> Result<(), EncodeError> {
+    use aarch64_isa::{PredQual as Q, Register as R};
+    let mut a = CodeAssembler::new(0);
+    a.fmopa(
+        O::za_tile(R::ZAS0),
+        O::pred(p1, Q::Merging),
+        O::pred(p5, Q::Merging),
+        O::vec(z18, A::S),
+        O::vec(z0, A::S),
+    )?
+    .mov_3(
+        O::za_slice(R::ZAB0, false, w12, 7, 1),
+        O::pred(p3, Q::Merging),
+        O::vec(z25, A::B),
+    )?
+    .ld1d(
+        O::za_slice(R::ZAD2, true, w13, 1, 1).braced(),
+        O::pred(p6, Q::Zeroing),
+        O::mem_index(x18, x2, ExtendKind::Lsl, Some(3)),
+    )?
+    .ldr(O::za_array(A::None, w15, 3, 1, 0), O::mem_mul_vl(x8, 3))?
+    .fmla(
+        O::za_array(A::S, w9, 7, 1, 2),
+        O::list(z8, 2, A::S),
+        O::elem(z10, A::S, 3),
+    )?
+    .zero(O::za_mask(0xc6))?
+    .movt(xzr, O::elem(R::ZT0, A::None, 56))?;
+    assert_eq!(
+        a.words(),
+        [
+            0x8080_a640,
+            0xc000_0f27,
+            0xe0c2_ba45,
+            0xe100_6103,
+            0xc15a_2d07,
+            0xc008_00c6,
+            0xc04c_73ff
+        ]
+    );
+    // The two offsets of `LDR ZA` share a field: they must agree.
+    let mut b = CodeAssembler::new(0);
+    assert!(
+        b.ldr(O::za_array(A::None, w15, 3, 1, 0), O::mem_mul_vl(x8, 2))
+            .is_err()
+    );
+    // A ZT0 byte offset is a multiple of 8.
+    assert!(b.movt(xzr, O::elem(R::ZT0, A::None, 5)).is_err());
+    Ok(())
+}
+
 #[test]
 fn errors() {
     let a = CodeAssembler::new(0x1000);

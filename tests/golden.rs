@@ -442,3 +442,59 @@ fn sve2_and_multi_vector() {
         assert_eq!(i.encode(), Ok(w), "{w:08x} {text}");
     }
 }
+
+/// SME: tiles, horizontal and vertical slices (single and ranges), array vectors
+/// with vector groups, `ZT0` forms, the `ZERO` mask and braced single operands (as
+/// the templates write them: no `#` in ZA indices).
+#[test]
+fn sme_operands() {
+    for (w, text) in [
+        (0x8080_a640u32, "fmopa za0.s, p1/m, p5/m, z18.s, z0.s"),
+        (0xc090_00a2, "addha za2.s, p0/m, p0/m, z5.s"),
+        (0xc0c3_81c8, "mov z8.q, p0/m, za14v.q[w12, 0]"),
+        (0xc000_0f27, "mov za0h.b[w12, 7], p3/m, z25.b"),
+        (0xc004_0400, "mov za0h.b[w12, 0:3], { z0.b-z3.b }"),
+        (0xc006_0a00, "movaz { z0.d, z1.d }, za.d[w8, 0, vgx2]"),
+        (
+            0xe0c2_ba45,
+            "ld1d { za2v.d[w13, 1] }, p6/z, [x18, x2, lsl #3]",
+        ),
+        (
+            0xe1d9_e183,
+            "ld1q { za3v.q[w15, 0] }, p0/z, [x12, x25, lsl #4]",
+        ),
+        (0xe100_6103, "ldr za[w15, 3], [x8, #3, mul vl]"),
+        (
+            0xc15a_2d07,
+            "fmla za.s[w9, 7, vgx2], { z8.s, z9.s }, z10.s[3]",
+        ),
+        (
+            0xc195_5a97,
+            "bfmlal za.s[w10, 6:7, vgx2], { z20.h, z21.h }, z5.h[5]",
+        ),
+        (
+            0xc117_0141,
+            "smlall za.s[w8, 4:7, vgx2], { z10.b, z11.b }, z7.b[0]",
+        ),
+        (0xc00c_0000, "zero za.d[w8, 0, vgx2]"),
+        (0xc008_0000, "zero { }"),
+        (0xc008_00ff, "zero { za }"),
+        (0xc008_00c6, "zero { za2.s, za1.d, za7.d }"),
+        (0xc048_0001, "zero { zt0 }"),
+        (0xc04c_73ff, "movt xzr, zt0[0x38]"),
+        (0xc04f_13e8, "movt zt0[1, mul vl], z8"),
+        (0xe11f_80c0, "ldr zt0, [x6]"),
+        (0xc0cc_e2aa, "luti2 z10.s, zt0, z21[3]"),
+        // Quarter-tile outer products: Zn in Z0-Z14, Zm in Z16-Z30; K:Zk in
+        // Z20-Z23 and Z28-Z31.
+        (0xa0ce_001b, "smop4s za3.d, z0.h, z30.h"),
+        (0x8053_979b, "stmopa za3.s, { z28.h, z29.h }, z19.h, z29[1]"),
+    ] {
+        let i = decode_word(w, 0x1000, &DecoderOptions::default());
+        assert_eq!(i.to_string(), text, "{w:08x}");
+        assert_eq!(i.encode(), Ok(w), "{w:08x} {text}");
+    }
+    // A ZT0 byte offset is a multiple of 8.
+    let i = decode_word(0xc04c_73ff, 0, &DecoderOptions::default());
+    assert_eq!(i.op(1).index(), Some(56));
+}

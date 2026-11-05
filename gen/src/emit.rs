@@ -312,7 +312,10 @@ fn ident(s: &str) -> String {
 
 /// `CodeAssembler` methods, one per mnemonic (and suffix) and operand count, and the
 /// lower-case register constants.
-pub fn code_asm(asm: &BTreeMap<(String, String), std::collections::BTreeSet<usize>>) -> String {
+/// The method without a count suffix has the smallest operand count of the
+/// encodings outside SVE/SME (so their methods keep their names as SVE and SME
+/// forms are added), or of all when there are none.
+pub fn code_asm(asm: &BTreeMap<(String, String), BTreeMap<usize, bool>>) -> String {
     let mut out = String::new();
     out.push_str(
         "use crate::code_asm::CodeAssembler;\nuse crate::encoder::EncodeError;\nuse crate::generated::Mnemonic;\nuse crate::operand::Operand;\n\n\
@@ -321,10 +324,14 @@ pub fn code_asm(asm: &BTreeMap<(String, String), std::collections::BTreeSet<usiz
     let mut seen = std::collections::BTreeSet::new();
     for ((m, s), arities) in asm {
         let base = format!("{}{}", m.to_ascii_lowercase(), s.to_ascii_lowercase());
-        let min = *arities.iter().min().unwrap_or(&0);
+        let min = arities
+            .iter()
+            .find(|(_, base)| **base)
+            .or_else(|| arities.iter().next())
+            .map_or(0, |(n, _)| *n);
         // `_cond` names a condition-suffix form; it is passed as an operand.
         let s = if s == "_cond" { "" } else { s.as_str() };
-        for &n in arities {
+        for &n in arities.keys() {
             let name = if n == min {
                 base.clone()
             } else {

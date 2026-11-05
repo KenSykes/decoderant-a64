@@ -16,14 +16,14 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | ldst | 1015 | 1015 |
 | reserved | 1 | 1 |
 | simd_dp | 867 | 867 |
-| sme | 842 | 286 |
+| sme | 842 | 842 |
 | sve | 1346 | 1346 |
 
 129 encodings overlap a higher-priority encoding (listed in `OpCodeInfo::precedence()`).
 
 ## Operand mapping
 
-3873 encodings with operand support, 556 without. 3025 symbol value tables taken from the spec's rule names; 126 distinct hand rules (symbol meanings the spec does not give in machine-readable form), used 11731 times.
+4429 encodings with operand support, 0 without. 3182 symbol value tables taken from the spec's rule names; 135 distinct hand rules (symbol meanings the spec does not give in machine-readable form), used 14147 times.
 
 ### Hand rules
 
@@ -70,35 +70,43 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `NB on the variable op1 bit` | 6 |
 | `PSTATE field` | 1 |
 | `Q table in alternative order` | 2 |
-| `SME2 strided register list` | 65 |
+| `SME2 strided register list` | 71 |
 | `SMSTART/SMSTOP option` | 2 |
 | `SVE FP constant pair` | 8 |
 | `SVE FP immediate` | 4 |
 | `SVE MUL VL offset in multiples of the list length` | 94 |
 | `SVE element size from tsz (one-hot) or imm13` | 132 |
-| `SVE immediate, signed as the spec's number token says` | 98 |
+| `SVE immediate, signed as the spec's number token says` | 100 |
 | `SVE index above the lowest set bit of tsz` | 4 |
-| `SVE index fields` | 123 |
+| `SVE index fields` | 261 |
 | `SVE indexed register <PN..>` | 2 |
-| `SVE indexed register <Z..>` | 122 |
+| `SVE indexed register <Z..>` | 247 |
 | `SVE logical immediate (one element)` | 8 |
 | `SVE memory offset scaled by the access size` | 65 |
-| `SVE memory operand` | 488 |
+| `SVE memory operand` | 502 |
 | `SVE narrowing shift 2^width - imm` | 9 |
 | `SVE optional index, left out at 0` | 6 |
 | `SVE pattern and MUL #imm, left out at ALL and 1` | 62 |
 | `SVE pattern, left out at ALL` | 2 |
 | `SVE predicate pattern` | 64 |
 | `SVE prefetch operations` | 28 |
-| `SVE register <P..>` | 1012 |
+| `SVE register <P..>` | 1122 |
 | `SVE register <PN..>` | 140 |
-| `SVE register <Z..>` | 1997 |
+| `SVE register <Z..>` | 2236 |
+| `SVE register numbered by a map` | 153 |
 | `SVE register width: X iff size = 11` | 11 |
 | `SVE shift tsize:imm right` | 9 |
 | `SVE shift tsz:imm3 left` | 10 |
 | `SVE shift tsz:imm3 right` | 29 |
-| `SVE size table: element size code, others RESERVED` | 559 |
-| `SVE table: alternatives in allowed-value order` | 1009 |
+| `SVE size table: element size code, others RESERVED` | 568 |
+| `SVE table: alternatives in allowed-value order` | 1157 |
+| `ZA array vectors` | 298 |
+| `ZA index register and offset` | 373 |
+| `ZA tile` | 191 |
+| `ZA tile slice` | 75 |
+| `ZERO tile mask` | 1 |
+| `ZT0 element, a byte offset in eights` | 2 |
+| `ZT0 optional index in vector lengths` | 1 |
 | `alias -immr MOD datasize` | 8 |
 | `alias LSL shift (immr and imms)` | 2 |
 | `alias MOV wide immediate` | 4 |
@@ -113,7 +121,7 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `byte register offset LSL #0 on S` | 12 |
 | `cond suffix` | 3 |
 | `condition` | 25 |
-| `consecutive register list` | 340 |
+| `consecutive register list` | 408 |
 | `extend register width: X iff option<1:0> = 11` | 6 |
 | `extended register` | 12 |
 | `fixed register` | 1 |
@@ -131,7 +139,8 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `label PC - imm16*4` | 4 |
 | `ldsttags offset*16` | 13 |
 | `memory writeback, no offset` | 228 |
-| `multi-vector register list, a multiple of its length` | 415 |
+| `multi-vector register list, a multiple of its length` | 865 |
+| `one operand in braces` | 11 |
 | `optional operand default` | 18 |
 | `pair offset scaled` | 62 |
 | `pimm scaled by access size` | 24 |
@@ -144,7 +153,7 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `register <S..>` | 268 |
 | `register <W..>` | 893 |
 | `register <WSp..>` | 46 |
-| `register <X..>` | 1007 |
+| `register <X..>` | 1009 |
 | `register <XSp..>` | 96 |
 | `register indexed by W12-W15 and an immediate` | 1 |
 | `register list` | 164 |
@@ -158,100 +167,7 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 
 ### Encodings without operand support, by reason
 
-- 109 × SME ZA or ZT0 operand <ZAda>.S (e.g. fmop4a_za_zz_s1x1, fmop4s_za_zz_s1x1, fmop4a_za_zz_s1x2)
-- 52 × SME ZA or ZT0 operand <ZAda>.D (e.g. fmopa_za_pp_zz_64, fmops_za_pp_zz_64, smopa_za_pp_zz_64)
-- 30 × SME ZA or ZT0 operand <ZAda>.H (e.g. fmop4a_za16_z8z8_b1x1, fmop4a_za16_z8z8_b1x2, fmop4a_za16_z8z8_b2x1)
-- 28 × SME ZA or ZT0 operand ZA.S[<Wv>, <offs>{, VGx2}] (e.g. fmla_za_zzi_s2xi, fvdot_za_zzi_2xi, bfvdot_za_zzi_2xi)
-- 28 × SME ZA or ZT0 operand ZA.S[<Wv>, <offs>{, VGx4}] (e.g. fmla_za_zzi_s4xi, fdot_za32_z8z8i_4xi, svdot_za_zzi_s4xi)
-- 24 × SME ZA or ZT0 operand ZA.S[<Wv>, <offs1>:<offs2>{, VGx2}] (e.g. bfmlal_za_zzi_2xi, fmlal_za_zzi_2xi, bfmlsl_za_zzi_2xi)
-- 24 × SME ZA or ZT0 operand ZA.S[<Wv>, <offs1>:<offs2>{, VGx4}] (e.g. bfmlal_za_zzi_4xi, fmlal_za_zzi_4xi, bfmlsl_za_zzi_4xi)
-- 22 × SME ZA or ZT0 operand ZA.H[<Wv>, <offs>{, VGx2}] (e.g. fdot_za16_zz8i_2xi, fvdot_za16_zz8i_2xi, fmla_za_zzi_h2xi)
-- 19 × SME ZA or ZT0 operand ZA.H[<Wv>, <offs>{, VGx4}] (e.g. fmla_za_zzi_h4xi, bfmla_za_zzi_h4xi, fmls_za_zzi_h4xi)
-- 17 × SME ZA or ZT0 operand ZT0 (e.g. luti2_mz2_ztz_1, luti4_mz2_ztz_1, luti2_mz4_ztz_1)
-- 16 × SME ZA or ZT0 operand ZA.<T>[<Wv>, <offs>{, VGx2}] (e.g. sdot_za_zzv_2x1, udot_za_zzv_2x1, fmla_za_zzv_2x1)
-- 16 × SME ZA or ZT0 operand ZA.<T>[<Wv>, <offs>{, VGx4}] (e.g. sdot_za_zzv_4x1, udot_za_zzv_4x1, fmla_za_zzv_4x1)
-- 16 × SME ZA or ZT0 operand ZA.S[<Wv>, <offs1>:<offs2>] (e.g. bfmlal_za_zzi_1, fmlal_za_zzi_1, bfmlsl_za_zzi_1)
-- 12 × SME ZA or ZT0 operand ZA.S[<Wv>, <offs1>:<offs4>{, VGx2}] (e.g. smlall_za_zzi_s2xi, usmlall_za_zzi_s2xi, smlsll_za_zzi_s2xi)
-- 12 × SME ZA or ZT0 operand ZA.S[<Wv>, <offs1>:<offs4>{, VGx4}] (e.g. smlall_za_zzi_s4xi, usmlall_za_zzi_s4xi, smlsll_za_zzi_s4xi)
-- 9 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs>{, VGx4}] (e.g. mova_za_mz4_1, mova_mz_za4_1, movaz_mz_za4_1)
-- 9 × SME ZA or ZT0 operand ZA.S[<Wv>, <offs1>:<offs4>] (e.g. smlall_za_zzi_s, usmlall_za_zzi_s, smlsll_za_zzi_s)
-- 8 × SME ZA or ZT0 operand ZA.<T>[<Wv>, <offs1>:<offs4>{, VGx2}] (e.g. smlall_za_zzv_2x1, smlsll_za_zzv_2x1, umlall_za_zzv_2x1)
-- 8 × SME ZA or ZT0 operand ZA.<T>[<Wv>, <offs1>:<offs4>{, VGx4}] (e.g. smlall_za_zzv_4x1, smlsll_za_zzv_4x1, umlall_za_zzv_4x1)
-- 7 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs>{, VGx2}] (e.g. mova_za_mz2_1, mova_mz_za2_1, movaz_mz_za2_1)
-- 5 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs1>:<offs4>] (e.g. zero_za4_ri_1, smlall_za_zzi_d, smlsll_za_zzi_d)
-- 4 × SME ZA or ZT0 operand ZA.<T>[<Wv>, <offs1>:<offs4>] (e.g. smlall_za_zzv_1, smlsll_za_zzv_1, umlall_za_zzv_1)
-- 4 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs1>:<offs4>{, VGx2}] (e.g. smlall_za_zzi_d2xi, smlsll_za_zzi_d2xi, umlall_za_zzi_d2xi)
-- 4 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs1>:<offs4>{, VGx4}] (e.g. smlall_za_zzi_d4xi, smlsll_za_zzi_d4xi, umlall_za_zzi_d4xi)
-- 3 × SME ZA or ZT0 operand ZA.H[<Wv>, <offs1>:<offs2>{, VGx2}] (e.g. fmlal_za_z8z8i_2xi, fmlal_za_z8z8v_2x1, fmlal_za_z8z8w_2x2)
-- 3 × SME ZA or ZT0 operand ZA.H[<Wv>, <offs1>:<offs2>{, VGx4}] (e.g. fmlal_za_z8z8i_4xi, fmlal_za_z8z8v_4x1, fmlal_za_z8z8w_4x4)
-- 3 × SME ZA or ZT0 operand ZA0<HV>.B[<Ws>, <offs1>:<offs2>] (e.g. mova_za2_z_b1, mova_mz2_za_b1, movaz_mz2_za_b1)
-- 3 × SME ZA or ZT0 operand ZA0<HV>.B[<Ws>, <offs1>:<offs4>] (e.g. mova_za4_z_b1, mova_mz4_za_b1, movaz_mz4_za_b1)
-- 3 × SME ZA or ZT0 operand ZA0<HV>.B[<Ws>, <offs>] (e.g. mova_za_p_rz_b, mova_z_p_rza_b, movaz_z_rza_b)
-- 2 × SME ZA or ZT0 operand <ZAn><HV>.D[<Ws>, <offs1>:<offs2>] (e.g. mova_mz2_za_d1, movaz_mz2_za_d1)
-- 2 × SME ZA or ZT0 operand <ZAn><HV>.D[<Ws>, <offs1>:<offs4>] (e.g. mova_mz4_za_d1, movaz_mz4_za_d1)
-- 2 × SME ZA or ZT0 operand <ZAn><HV>.D[<Ws>, <offs>] (e.g. mova_z_p_rza_d, movaz_z_rza_d)
-- 2 × SME ZA or ZT0 operand <ZAn><HV>.H[<Ws>, <offs1>:<offs2>] (e.g. mova_mz2_za_h1, movaz_mz2_za_h1)
-- 2 × SME ZA or ZT0 operand <ZAn><HV>.H[<Ws>, <offs1>:<offs4>] (e.g. mova_mz4_za_h1, movaz_mz4_za_h1)
-- 2 × SME ZA or ZT0 operand <ZAn><HV>.H[<Ws>, <offs>] (e.g. mova_z_p_rza_h, movaz_z_rza_h)
-- 2 × SME ZA or ZT0 operand <ZAn><HV>.Q[<Ws>, <offs>] (e.g. mova_z_p_rza_q, movaz_z_rza_q)
-- 2 × SME ZA or ZT0 operand <ZAn><HV>.S[<Ws>, <offs1>:<offs2>] (e.g. mova_mz2_za_w1, movaz_mz2_za_w1)
-- 2 × SME ZA or ZT0 operand <ZAn><HV>.S[<Ws>, <offs1>:<offs4>] (e.g. mova_mz4_za_w1, movaz_mz4_za_w1)
-- 2 × SME ZA or ZT0 operand <ZAn><HV>.S[<Ws>, <offs>] (e.g. mova_z_p_rza_w, movaz_z_rza_w)
-- 2 × SME ZA or ZT0 operand ZA.H[<Wv>, <offs1>:<offs2>] (e.g. fmlal_za_z8z8i_1, fmlal_za_z8z8v_1)
-- 2 × SME ZA or ZT0 operand ZA.S[<Wv>, <offs>, VGx4] (e.g. fvdotb_za32_z8z8i_2xi, fvdott_za32_z8z8i_2xi)
-- 2 × SME ZA or ZT0 operand ZA[<Wv>, <offs>] (e.g. ldr_za_ri_, str_za_ri_)
-- 2 × SME ZA or ZT0 operand ZT0[<offs>] (e.g. movt_r_zt_, movt_zt_r_)
-- 2 × list element <ZAt><HV>.D[<Ws> (e.g. ld1d_za_p_rrr_, st1d_za_p_rrr_)
-- 2 × list element <ZAt><HV>.H[<Ws> (e.g. ld1h_za_p_rrr_, st1h_za_p_rrr_)
-- 2 × list element <ZAt><HV>.Q[<Ws> (e.g. ld1q_za_p_rrr_, st1q_za_p_rrr_)
-- 2 × list element <ZAt><HV>.S[<Ws> (e.g. ld1w_za_p_rrr_, st1w_za_p_rrr_)
-- 2 × list element ZA0<HV>.B[<Ws> (e.g. ld1b_za_p_rrr_, st1b_za_p_rrr_)
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.D[<Ws>, <offs1>:<offs2>] (e.g. mova_za2_z_d1)
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.D[<Ws>, <offs1>:<offs4>] (e.g. mova_za4_z_d1)
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.D[<Ws>, <offs>] (e.g. mova_za_p_rz_d)
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.H[<Ws>, <offs1>:<offs2>] (e.g. mova_za2_z_h1)
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.H[<Ws>, <offs1>:<offs4>] (e.g. mova_za4_z_h1)
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.H[<Ws>, <offs>] (e.g. mova_za_p_rz_h)
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.Q[<Ws>, <offs>] (e.g. mova_za_p_rz_q)
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.S[<Ws>, <offs1>:<offs2>] (e.g. mova_za2_z_w1)
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.S[<Ws>, <offs1>:<offs4>] (e.g. mova_za4_z_w1)
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.S[<Ws>, <offs>] (e.g. mova_za_p_rz_w)
-- 1 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs1>:<offs2>, VGx2] (e.g. zero_za2_ri_2)
-- 1 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs1>:<offs2>, VGx4] (e.g. zero_za2_ri_4)
-- 1 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs1>:<offs2>] (e.g. zero_za2_ri_1)
-- 1 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs1>:<offs4>, VGx2] (e.g. zero_za4_ri_2)
-- 1 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs1>:<offs4>, VGx4] (e.g. zero_za4_ri_4)
-- 1 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs>, VGx2] (e.g. zero_za1_ri_2)
-- 1 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs>, VGx4] (e.g. zero_za1_ri_4)
-- 1 × SME ZA or ZT0 operand ZT0{[<offs>, MUL VL]} (e.g. movt_zt_z_)
-- 1 × list element <mask> (e.g. zero_za_i_)
-- 1 × list element ZT0 (e.g. zero_zt_i_)
 
 ### Aliases without operand support, by reason
 
-- 2 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs>{, VGx2}] (e.g. MOV (mova_za_mz2_1), MOV (mova_mz_za2_1))
-- 2 × SME ZA or ZT0 operand ZA.D[<Wv>, <offs>{, VGx4}] (e.g. MOV (mova_za_mz4_1), MOV (mova_mz_za4_1))
-- 2 × SME ZA or ZT0 operand ZA0<HV>.B[<Ws>, <offs1>:<offs2>] (e.g. MOV (mova_za2_z_b1), MOV (mova_mz2_za_b1))
-- 2 × SME ZA or ZT0 operand ZA0<HV>.B[<Ws>, <offs1>:<offs4>] (e.g. MOV (mova_za4_z_b1), MOV (mova_mz4_za_b1))
-- 2 × SME ZA or ZT0 operand ZA0<HV>.B[<Ws>, <offs>] (e.g. MOV (mova_za_p_rz_b), MOV (mova_z_p_rza_b))
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.D[<Ws>, <offs1>:<offs2>] (e.g. MOV (mova_za2_z_d1))
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.D[<Ws>, <offs1>:<offs4>] (e.g. MOV (mova_za4_z_d1))
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.D[<Ws>, <offs>] (e.g. MOV (mova_za_p_rz_d))
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.H[<Ws>, <offs1>:<offs2>] (e.g. MOV (mova_za2_z_h1))
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.H[<Ws>, <offs1>:<offs4>] (e.g. MOV (mova_za4_z_h1))
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.H[<Ws>, <offs>] (e.g. MOV (mova_za_p_rz_h))
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.Q[<Ws>, <offs>] (e.g. MOV (mova_za_p_rz_q))
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.S[<Ws>, <offs1>:<offs2>] (e.g. MOV (mova_za2_z_w1))
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.S[<Ws>, <offs1>:<offs4>] (e.g. MOV (mova_za4_z_w1))
-- 1 × SME ZA or ZT0 operand <ZAd><HV>.S[<Ws>, <offs>] (e.g. MOV (mova_za_p_rz_w))
-- 1 × SME ZA or ZT0 operand <ZAn><HV>.D[<Ws>, <offs1>:<offs2>] (e.g. MOV (mova_mz2_za_d1))
-- 1 × SME ZA or ZT0 operand <ZAn><HV>.D[<Ws>, <offs1>:<offs4>] (e.g. MOV (mova_mz4_za_d1))
-- 1 × SME ZA or ZT0 operand <ZAn><HV>.D[<Ws>, <offs>] (e.g. MOV (mova_z_p_rza_d))
-- 1 × SME ZA or ZT0 operand <ZAn><HV>.H[<Ws>, <offs1>:<offs2>] (e.g. MOV (mova_mz2_za_h1))
-- 1 × SME ZA or ZT0 operand <ZAn><HV>.H[<Ws>, <offs1>:<offs4>] (e.g. MOV (mova_mz4_za_h1))
-- 1 × SME ZA or ZT0 operand <ZAn><HV>.H[<Ws>, <offs>] (e.g. MOV (mova_z_p_rza_h))
-- 1 × SME ZA or ZT0 operand <ZAn><HV>.Q[<Ws>, <offs>] (e.g. MOV (mova_z_p_rza_q))
-- 1 × SME ZA or ZT0 operand <ZAn><HV>.S[<Ws>, <offs1>:<offs2>] (e.g. MOV (mova_mz2_za_w1))
-- 1 × SME ZA or ZT0 operand <ZAn><HV>.S[<Ws>, <offs1>:<offs4>] (e.g. MOV (mova_mz4_za_w1))
-- 1 × SME ZA or ZT0 operand <ZAn><HV>.S[<Ws>, <offs>] (e.g. MOV (mova_z_p_rza_w))
 

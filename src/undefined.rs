@@ -94,12 +94,20 @@ pub(crate) const fn pinned(d: &EncodingData) -> (u32, u32) {
         "ursqrte_z_p_z_z",
     ];
     const SVE_SIZE_00: &[&str] = &["histseg_z_zz_"];
+    // SME2 LUTI4 with a fixed element size: `size` (bits 13:12) must be 00 for
+    // bytes, 01 for halfwords.
+    const LUTI_SIZE_00: &[&str] = &["luti4_mz4_ztmz2_1", "luti4_mz4_ztmz2_4"];
+    const LUTI_SIZE_01: &[&str] = &["luti4_mz4_ztz_4"];
     if any_eq(SIZE_10, d.name) || any_eq(SVE_SIZE_10, d.name) {
         (3 << 22, 2 << 22)
     } else if any_eq(SVE_SIZE_11, d.name) {
         (3 << 22, 3 << 22)
     } else if any_eq(SVE_SIZE_00, d.name) {
         (3 << 22, 0)
+    } else if any_eq(LUTI_SIZE_00, d.name) {
+        (3 << 12, 0)
+    } else if any_eq(LUTI_SIZE_01, d.name) {
+        (3 << 12, 1 << 12)
     } else {
         (0, 0)
     }

@@ -360,6 +360,9 @@ fn role(insn: &Instruction) -> Role {
     if accumulates(m) || (suffix2 && accumulates(&concat2(m))) {
         return Role::Accum;
     }
+    if is_sve_sme(insn) && sme_accumulates(insn) {
+        return Role::Accum;
+    }
     // SVE2 narrowing into the top halves (`SQXTNT`, `SHRNT`, `ADDHNT`, `FCVTNT`, ...)
     // keeps the bottom halves, as `XTN2` keeps the lower half.
     let narrow_top = m.ends_with("NT") && m != "CNT";
@@ -367,6 +370,21 @@ fn role(insn: &Instruction) -> Role {
         return Role::Accum;
     }
     Role::Dest
+}
+
+/// SME instructions that accumulate into ZA array vectors or tile slices (`FMLA
+/// ZA.S[W8, 0, VGx2], ...`, `ADD ZA.D[...]`, `SMLAL`, `FDOT`, ...): every one but
+/// the moves and `ZERO`, which only write; and `MOVT` into part of `ZT0`.
+fn sme_accumulates(insn: &Instruction) -> bool {
+    let m = insn.mnemonic().name();
+    let Some(d) = insn.operands().first() else {
+        return false;
+    };
+    match d.kind {
+        OpKind::ZaArray | OpKind::ZaSlice => !matches!(m, "MOVA" | "MOV" | "ZERO"),
+        OpKind::Register => m == "MOVT" && d.reg == Register::ZT0,
+        _ => false,
+    }
 }
 
 /// SVE `ADR`: a memory-shaped operand without an access.
@@ -471,6 +489,16 @@ fn operand_regs(o: &Operand, mut f: impl FnMut(Register)) {
             }
         }
         OpKind::RegisterList => list_regs(o).for_each(f),
+        // The ZA storage an SME operand names: a tile, or ZA for array vectors.
+        OpKind::ZaTile | OpKind::ZaSlice => f(o.reg),
+        OpKind::ZaArray => f(Register::ZA),
+        OpKind::ZaMask => {
+            for t in 0..8 {
+                if o.imm >> t & 1 == 1 {
+                    f(Register::za_tile(3, t).unwrap_or(Register::None));
+                }
+            }
+        }
         _ => {}
     }
 }
@@ -591,7 +619,19 @@ fn compute(insn: &Instruction) -> InstructionInfo {
         } else {
             access
         };
+        // `MOVAZ` reads a tile slice and zeroes it.
+        let access = if matches!(o.kind, OpKind::ZaSlice | OpKind::ZaArray)
+            && insn.mnemonic().name() == "MOVAZ"
+        {
+            OpAccess::ReadWrite
+        } else {
+            access
+        };
         operand_regs(o, |r| info.add_reg(r, access));
+        // The index register of a tile slice or array vectors is only read.
+        if matches!(o.kind, OpKind::ZaSlice | OpKind::ZaArray) {
+            info.add_reg(o.index_reg, OpAccess::Read);
+        }
     }
     if let Some(mi) = mem_index.filter(|_| is_sve_adr(insn)) {
         let m = ops[mi];

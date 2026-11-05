@@ -330,3 +330,78 @@ fn sve_lists_and_psel() {
         ]
     );
 }
+
+/// SME: tiles and slices report their tile, array vectors ZA; accumulating forms
+/// read it too; slice and array index registers are read; `ZERO` writes the tiles of
+/// its mask; `MOVAZ` reads and zeroes.
+#[test]
+fn sme_za() {
+    use OpAccess::{Read as Rd, ReadWrite as Rw, Write as Wr};
+    use aarch64_isa::Register as R;
+    let regs = |w: u32| {
+        let i = decode_word(w, PC, &DecoderOptions::default());
+        let mut f = InstructionInfoFactory::new();
+        let mut v: Vec<(R, OpAccess)> = f
+            .info(&i)
+            .used_registers()
+            .iter()
+            .map(|u| (u.register, u.access))
+            .collect();
+        v.sort_by_key(|x| x.0 as u16);
+        (i.to_string(), v)
+    };
+    for (w, text, expect) in [
+        (
+            0x8080_a640u32,
+            "fmopa za0.s, p1/m, p5/m, z18.s, z0.s",
+            vec![
+                (R::Z0, Rd),
+                (R::Z18, Rd),
+                (R::P1, Rd),
+                (R::P5, Rd),
+                (R::ZAS0, Rw),
+            ],
+        ),
+        (
+            0xc000_0f27,
+            "mov za0h.b[w12, 7], p3/m, z25.b",
+            // Merging: inactive elements of the slice are kept.
+            vec![(R::W12, Rd), (R::Z25, Rd), (R::P3, Rd), (R::ZAB0, Rw)],
+        ),
+        (
+            0xc15a_2d07,
+            "fmla za.s[w9, 7, vgx2], { z8.s, z9.s }, z10.s[3]",
+            vec![
+                (R::W9, Rd),
+                (R::Z8, Rd),
+                (R::Z9, Rd),
+                (R::Z10, Rd),
+                (R::ZA, Rw),
+            ],
+        ),
+        (
+            0xc006_0a00,
+            "movaz { z0.d, z1.d }, za.d[w8, 0, vgx2]",
+            vec![(R::W8, Rd), (R::Z0, Wr), (R::Z1, Wr), (R::ZA, Rw)],
+        ),
+        (
+            0xc008_00c6,
+            "zero { za2.s, za1.d, za7.d }",
+            vec![(R::ZAD1, Wr), (R::ZAD2, Wr), (R::ZAD6, Wr), (R::ZAD7, Wr)],
+        ),
+        (
+            0xe100_6103,
+            "ldr za[w15, 3], [x8, #3, mul vl]",
+            vec![(R::W15, Rd), (R::X8, Rd), (R::ZA, Wr)],
+        ),
+        (
+            0xc04f_13e8,
+            "movt zt0[1, mul vl], z8",
+            vec![(R::Z8, Rd), (R::ZT0, Rw)],
+        ),
+    ] {
+        let (t, v) = regs(w);
+        assert_eq!(t, text, "{w:08x}");
+        assert_eq!(v, expect, "{w:08x} {text}");
+    }
+}

@@ -146,7 +146,9 @@ pub fn generate(
     let mut aliases: Vec<Vec<AliasOut>> = Vec::new();
     let mut unsupported_alias_conds = BTreeMap::<String, usize>::new();
     let mut mapping = operands::Report::default();
-    let mut asm: BTreeMap<(String, String), BTreeSet<usize>> = BTreeMap::new();
+    // Assembler methods: (mnemonic, suffix) to the operand counts, each with whether
+    // an encoding outside SVE/SME has it.
+    let mut asm: BTreeMap<(String, String), BTreeMap<usize, bool>> = BTreeMap::new();
     for leaf in &model.leaves {
         let scope = NodeScope {
             model,
@@ -174,7 +176,7 @@ pub fn generate(
                     };
                     let ops = operands::map_alias(model, leaf, a.json, &t, &am, &env, &mut mapping);
                     if ops.is_some() {
-                        asm_add(&mut asm, &am, &mapping);
+                        asm_add(&mut asm, &am, &mapping, !sve_sme_leaf(model, leaf.node));
                     }
                     v.push(AliasOut {
                         mnemonic: am,
@@ -241,7 +243,12 @@ pub fn generate(
             &mut mapping,
         );
         if o.is_some() {
-            asm_add(&mut asm, &leaves[i].mnemonic, &mapping);
+            asm_add(
+                &mut asm,
+                &leaves[i].mnemonic,
+                &mapping,
+                !sve_sme_leaf(model, leaf.node),
+            );
         }
         op_text.push(o);
     }
@@ -643,11 +650,19 @@ fn path_conds(model: &Model<'_>, node: usize, node_cond: &[Option<u32>]) -> Vec<
         .collect()
 }
 
-/// Records an assembler method for a mapped operand list.
+/// Whether a node is in the SVE or SME groups.
+fn sve_sme_leaf(model: &Model<'_>, node: usize) -> bool {
+    let p = model.path(node);
+    matches!(model.nodes[p[p.len() - 2]].name.as_str(), "sve" | "sme")
+}
+
+/// Records an assembler method for a mapped operand list (`base`: from an encoding
+/// outside SVE/SME).
 fn asm_add(
-    asm: &mut BTreeMap<(String, String), BTreeSet<usize>>,
+    asm: &mut BTreeMap<(String, String), BTreeMap<usize, bool>>,
     mnemonic: &str,
     rep: &operands::Report,
+    base: bool,
 ) {
     let suffixes = if rep.last_cond {
         vec!["_cond".to_string()]
@@ -657,9 +672,10 @@ fn asm_add(
         rep.last_suffixes.clone()
     };
     for s in suffixes {
-        asm.entry((mnemonic.to_string(), s))
+        *asm.entry((mnemonic.to_string(), s))
             .or_default()
-            .insert(rep.last_arity);
+            .entry(rep.last_arity)
+            .or_default() |= base;
     }
 }
 

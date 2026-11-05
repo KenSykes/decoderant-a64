@@ -14,7 +14,8 @@ use crate::desc::{
 use crate::generated::{Code, Register};
 use crate::instruction::Instruction;
 use crate::operand::{
-    Arrangement, ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, PredQual, ShiftKind,
+    ARR_ES, Arrangement, ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, PredQual,
+    ShiftKind,
 };
 use crate::regs::RegisterClass;
 
@@ -202,6 +203,13 @@ fn index(w: &mut W, idx: Idx, es: Arrangement, i: u8) -> R {
                 i
             },
         ),
+        Idx::Mul(f, k) => {
+            let k = u32::from(k);
+            if i % k != 0 {
+                return Err(EncodeError::Unrepresentable(w.op));
+            }
+            w.put(f, i / k)
+        }
     }
 }
 
@@ -437,6 +445,38 @@ fn bitmask(w: &mut W, n: Fs, immr: Fs, imms: Fs, size: u32, v: u64, raw: Option<
     }
     w.put(immr, er)?;
     w.put(imms, es)
+}
+
+/// The index register (`base`..`base + 3`) and the offset of a ZA slice or array:
+/// the offset is a multiple of the number of slices or vectors.
+fn za_index(w: &mut W, f: Fs, base: u8, o: &Operand, count: u8, offs: Fs) -> R {
+    let i = w.op;
+    let n = o.index_reg.number();
+    let base = u32::from(base);
+    if o.index_reg.class() != RegisterClass::Gp32 || !(base..base + 4).contains(&n) {
+        return Err(EncodeError::Register(i));
+    }
+    if o.count.max(1) != count.max(1) {
+        return Err(EncodeError::WrongKind(i));
+    }
+    let c = u64::from(count.max(1));
+    if o.imm % c != 0 {
+        return Err(EncodeError::Unrepresentable(i));
+    }
+    w.put(f, n - base)?;
+    if offs.is_none() {
+        // A constant offset (`<offs1>:<offs4>` of `0:3`).
+        return if o.imm == 0 {
+            Ok(())
+        } else {
+            Err(EncodeError::Range(i))
+        };
+    }
+    let v = o.imm / c;
+    if v >> offs.width() != 0 {
+        return Err(EncodeError::Range(i));
+    }
+    w.put(offs, v as u32)
 }
 
 /// A predicate qualifier: what the encoding fixes, or a table entry.
@@ -836,6 +876,61 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
             want(o, OpKind::Immediate, i)?;
             imm(w, x, o.imm)
         }
+        Op::ZrMap(f, rn, a, idx) => {
+            want(o, OpKind::Register, i)?;
+            if o.reg.class() != RegisterClass::Z || (o.lane != Operand::NO_LANE) != idx.is_some() {
+                return Err(EncodeError::Register(i));
+            }
+            arr(w, a, o.arr)?;
+            let v = rn.field(o.reg.number()).ok_or(EncodeError::Register(i))?;
+            w.put(f, v)?;
+            match idx {
+                Some(x) => index(w, x, o.arr, o.lane),
+                None => Ok(()),
+            }
+        }
+        Op::ZaTile(f, a) => {
+            want(o, OpKind::ZaTile, i)?;
+            let (es, n) = o.reg.za_tile_info().ok_or(EncodeError::Register(i))?;
+            arr(w, a, ARR_ES[es as usize])?;
+            w.put(f, n)
+        }
+        Op::ZaSlice(t, a, hv, ws, base, offs, count) => {
+            want(o, OpKind::ZaSlice, i)?;
+            let (es, n) = o.reg.za_tile_info().ok_or(EncodeError::Register(i))?;
+            arr(w, a, ARR_ES[es as usize])?;
+            w.put(t, n)?;
+            w.put(hv, u32::from(o.vertical))?;
+            za_index(w, ws, base, o, count, offs)
+        }
+        Op::ZaArray(a, wv, base, offs, count, vg) => {
+            want(o, OpKind::ZaArray, i)?;
+            // `{, VGx2}` may be left out.
+            if o.reg != Register::ZA || (o.vg != vg && o.vg != 0) {
+                return Err(EncodeError::WrongKind(i));
+            }
+            arr(w, a, o.arr)?;
+            za_index(w, wv, base, o, count, offs)
+        }
+        Op::ZaMask(f) => {
+            want(o, OpKind::ZaMask, i)?;
+            w.put(f, o.imm as u32)
+        }
+        Op::Braced(inner) => encode_one(w, inner, o, pc),
+        Op::Zt0Vl(f) => {
+            want(o, OpKind::Register, i)?;
+            if o.reg != Register::ZT0 {
+                return Err(EncodeError::Register(i));
+            }
+            w.put(
+                f,
+                if o.lane == Operand::NO_LANE {
+                    0
+                } else {
+                    u32::from(o.lane)
+                },
+            )
+        }
         Op::ZSel(f, k, a, v, idx) => {
             want(o, OpKind::Register, i)?;
             let wn = o.index_reg.number();
@@ -851,7 +946,7 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
             w.put(v, wn - 12)?;
             index(w, idx, o.arr, o.lane)
         }
-        Op::ZList(f, k, n, stride, mul, a, idx) => {
+        Op::ZList(f, k, n, stride, mul, add, a, idx) => {
             want(o, OpKind::RegisterList, i)?;
             if o.count != n
                 || o.list_stride() != stride.max(1)
@@ -866,7 +961,11 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
                 return Err(EncodeError::Register(i));
             }
             arr(w, a, o.arr)?;
-            let first = o.reg.number();
+            let first = o
+                .reg
+                .number()
+                .checked_sub(u32::from(add))
+                .ok_or(EncodeError::Register(i))?;
             let v = if stride <= 1 {
                 if first % u32::from(mul) != 0 {
                     return Err(EncodeError::Register(i));

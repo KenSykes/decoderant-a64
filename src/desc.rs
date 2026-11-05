@@ -70,9 +70,11 @@ pub(crate) enum Rk {
     Z,
     P,
     PN,
+    /// `ZT0` (SME2), whatever the field.
+    Zt0,
 }
 
-pub(crate) const RK: [Rk; 13] = [
+pub(crate) const RK: [Rk; 14] = [
     Rk::X,
     Rk::W,
     Rk::XSp,
@@ -86,6 +88,7 @@ pub(crate) const RK: [Rk; 13] = [
     Rk::Z,
     Rk::P,
     Rk::PN,
+    Rk::Zt0,
 ];
 
 impl Rk {
@@ -104,6 +107,7 @@ impl Rk {
             Rk::Z => Register::z(n),
             Rk::P => Register::p(n),
             Rk::PN => Register::pn(n),
+            Rk::Zt0 => Register::ZT0,
         }
     }
 }
@@ -184,6 +188,41 @@ pub(crate) enum Idx {
     Const(u8),
     /// An optional index, left out when 0 (`PMOV <Zd>{[<imm>]}, <Pn>.H`).
     Opt(Fs),
+    /// The field times a constant (`MOVT ZT0[<offs>]`: bytes, in eights).
+    Mul(Fs, u8),
+}
+
+/// How a register number comes from its field.
+#[derive(Debug, Clone, Copy)]
+pub(crate) enum Rn {
+    /// `base + mul * field` (`FMOP4A`: `Zn` is `Z0`-`Z14` even, `Zm` `Z16`-`Z30`).
+    Lin(u8, u8),
+    /// `base + field<1:0> + 8 * field<2>` (`FTMOPA ..., <Zk>[<index>]`: `K:Zk` names
+    /// `Z20`-`Z23` and `Z28`-`Z31`).
+    K8(u8),
+}
+
+impl Rn {
+    pub(crate) fn number(self, v: u32) -> u32 {
+        match self {
+            Rn::Lin(base, mul) => u32::from(base) + u32::from(mul) * v,
+            Rn::K8(base) => u32::from(base) + (v & 3) + 8 * (v >> 2),
+        }
+    }
+
+    /// The field value for register number `n`.
+    pub(crate) fn field(self, n: u32) -> Option<u32> {
+        match self {
+            Rn::Lin(base, mul) => {
+                let d = n.checked_sub(u32::from(base))?;
+                (d % u32::from(mul) == 0).then_some(d / u32::from(mul))
+            }
+            Rn::K8(base) => {
+                let d = n.checked_sub(u32::from(base))?;
+                (d & 4 == 0).then_some((d & 3) | (d >> 3) << 2)
+            }
+        }
+    }
 }
 
 impl Idx {
@@ -229,6 +268,7 @@ impl Idx {
                 0 => Operand::NO_LANE,
                 v => v as u8,
             },
+            Idx::Mul(f, k) => (f.get(word) * u32::from(k)) as u8,
         })
     }
 }
@@ -555,12 +595,32 @@ pub(crate) enum Op {
     /// (consecutive lists; SME2 multi-vector lists start at a multiple of their
     /// length), or for a stride of 4 or 8 the field's top bit gives bit 4 and its
     /// other bits the low bits (`{ Z0.S, Z8.S }`, `{ Z17.S, Z21.S, Z25.S, Z29.S }`).
-    /// Consecutive lists wrap from Z31 to Z0.
-    ZList(Fs, Rk, u8, u8, u8, Arr, Option<Idx>),
+    /// Consecutive lists wrap from Z31 to Z0. The last number is added to the first
+    /// register (`FMOP4A ..., { <Zm1>.S-<Zm2>.S }`: `Z16`-`Z30`).
+    ZList(Fs, Rk, u8, u8, u8, u8, Arr, Option<Idx>),
+    /// A `Z` register numbered by a map from its field, optionally indexed
+    /// (`FMOP4A ..., <Zm>.S`, `FTMOPA ..., <Zk>[<index>]`).
+    ZrMap(Fs, Rn, Arr, Option<Idx>),
     /// A register indexed by a `W` register and an immediate (`PSEL ..., <Pm>.<T>[<Wv>,
     /// <imm>]`): field, kind, element size, the index register field (a number
     /// added to `W12`), the immediate.
     ZSel(Fs, Rk, Arr, Fs, Idx),
+    /// An SME ZA tile: the tile number field and the element size (`<ZAda>.S`).
+    ZaTile(Fs, Arr),
+    /// A ZA tile slice: tile number field (`F::NONE` for `ZA0.B`), element size, the
+    /// H/V bit, the index register field and the first register it numbers (W12),
+    /// the offset field, and the number of slices (the offset is the field times
+    /// it: `[<Ws>, <offs1>:<offs2>]`).
+    ZaSlice(Fs, Arr, Fs, Fs, u8, Fs, u8),
+    /// ZA array vectors: element size, index register field and first register (W8
+    /// or W12), offset field, number of vectors, vector group (`VGx2`; 0: none).
+    ZaArray(Arr, Fs, u8, Fs, u8, u8),
+    /// The `ZERO` tile mask.
+    ZaMask(Fs),
+    /// An operand printed in braces as a list of one (`{ ZT0 }`).
+    Braced(&'static Op),
+    /// `ZT0{[<offs>, MUL VL]}`: an optional index in multiples of the vector length.
+    Zt0Vl(Fs),
 }
 
 fn reg_op(r: Register) -> Operand {
@@ -772,11 +832,11 @@ fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
             name: "MUL",
             ..Operand::none()
         },
-        Op::ZList(f, k, n, stride, mul, a, idx) => {
+        Op::ZList(f, k, n, stride, mul, add, a, idx) => {
             let arr = a.get(word)?;
             Operand {
                 kind: OpKind::RegisterList,
-                reg: k.reg(zlist_first(f.get(word), stride, mul)),
+                reg: k.reg(zlist_first(f.get(word), stride, mul) + u32::from(add)),
                 arr,
                 count: n,
                 stride: if stride > 1 { stride } else { 0 },
@@ -785,6 +845,66 @@ fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
                     None => Operand::NO_LANE,
                 },
                 ..Operand::none()
+            }
+        }
+        Op::ZaTile(f, a) => {
+            let es = a.get(word)?;
+            Operand {
+                kind: OpKind::ZaTile,
+                reg: Register::za_tile(es.element_bytes().trailing_zeros(), f.get(word))?,
+                arr: es,
+                ..Operand::none()
+            }
+        }
+        Op::ZaSlice(t, a, hv, ws, base, offs, count) => {
+            let es = a.get(word)?;
+            Operand {
+                kind: OpKind::ZaSlice,
+                reg: Register::za_tile(es.element_bytes().trailing_zeros(), t.get(word))?,
+                arr: es,
+                vertical: hv.get(word) != 0,
+                index_reg: Register::w(u32::from(base) + ws.get(word)),
+                imm: u64::from(offs.get(word) * u32::from(count)),
+                count,
+                ..Operand::none()
+            }
+        }
+        Op::ZaArray(a, wv, base, offs, count, vg) => Operand {
+            kind: OpKind::ZaArray,
+            reg: Register::ZA,
+            arr: a.get(word)?,
+            index_reg: Register::w(u32::from(base) + wv.get(word)),
+            imm: u64::from(offs.get(word) * u32::from(count)),
+            count,
+            vg,
+            ..Operand::none()
+        },
+        Op::ZaMask(f) => Operand {
+            kind: OpKind::ZaMask,
+            imm: u64::from(f.get(word)),
+            ..Operand::none()
+        },
+        Op::Braced(inner) => Operand {
+            braced: true,
+            ..decode_one(inner, word, pc)?
+        },
+        Op::Zt0Vl(f) => Operand {
+            lane: match f.get(word) {
+                0 => Operand::NO_LANE,
+                v => v as u8,
+            },
+            mul_vl: true,
+            ..reg_op(Register::ZT0)
+        },
+        Op::ZrMap(f, rn, a, idx) => {
+            let es = a.get(word)?;
+            Operand {
+                arr: es,
+                lane: match idx {
+                    Some(i) => i.get(word, es)?,
+                    None => Operand::NO_LANE,
+                },
+                ..reg_op(Register::z(rn.number(f.get(word))))
             }
         }
         Op::ZSel(f, k, a, v, idx) => {
@@ -1030,8 +1150,17 @@ fn op_cover(op: &Op, word: u32) -> Option<u32> {
         }
         Op::ZElem(..) => return None,
         Op::MulImm(i) => imm_cover(i, word)?,
-        Op::ZList(f, _, _, _, _, a, None) => f.mask() | arr_cover(a, word)?,
+        Op::ZList(f, _, _, _, _, _, a, None) => f.mask() | arr_cover(a, word)?,
         Op::ZList(.., Some(_)) | Op::ZSel(..) => return None,
+        Op::ZrMap(f, _, a, None) => f.mask() | arr_cover(a, word)?,
+        Op::ZrMap(..) => return None,
+        Op::ZaTile(f, a) => f.mask() | arr_cover(a, word)?,
+        Op::ZaSlice(t, a, hv, ws, _, offs, _) => {
+            t.mask() | arr_cover(a, word)? | hv.mask() | ws.mask() | offs.mask()
+        }
+        Op::ZaArray(a, wv, _, offs, _, _) => arr_cover(a, word)? | wv.mask() | offs.mask(),
+        Op::ZaMask(f) | Op::Zt0Vl(f) => f.mask(),
+        Op::Braced(inner) => op_cover(inner, word)?,
         Op::Cond(..) | Op::SysReg(_) | Op::SysOperation(_) => return None,
     })
 }
@@ -1212,8 +1341,18 @@ const fn op_cover_const(op: &Op) -> Option<u32> {
         ),
         Op::ZElem(..) => None,
         Op::MulImm(i) => imm_cover_const(i),
-        Op::ZList(f, _, _, _, _, a, None) => or(Some(f.mask()), arr_cover_const(a)),
+        Op::ZList(f, _, _, _, _, _, a, None) => or(Some(f.mask()), arr_cover_const(a)),
         Op::ZList(.., Some(_)) | Op::ZSel(..) => None,
+        Op::ZrMap(f, _, a, None) => or(Some(f.mask()), arr_cover_const(a)),
+        Op::ZrMap(..) => None,
+        Op::ZaTile(f, a) => or(Some(f.mask()), arr_cover_const(a)),
+        Op::ZaSlice(t, a, hv, ws, _, offs, _) => or(
+            Some(t.mask() | hv.mask() | ws.mask() | offs.mask()),
+            arr_cover_const(a),
+        ),
+        Op::ZaArray(a, wv, _, offs, _, _) => or(Some(wv.mask() | offs.mask()), arr_cover_const(a)),
+        Op::ZaMask(f) | Op::Zt0Vl(f) => Some(f.mask()),
+        Op::Braced(inner) => op_cover_const(inner),
         Op::Cond(..) | Op::SysReg(_) | Op::SysOperation(_) => None,
     }
 }

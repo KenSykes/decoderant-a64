@@ -46,6 +46,20 @@ pub enum OpKind {
     Prefetch,
     /// A fixed name that is part of the syntax (`CSYNC`, BTI targets, `PH`, ...).
     Name,
+    /// An SME ZA tile (`ZA3.S`): the tile register.
+    ZaTile,
+    /// A horizontal or vertical slice of a ZA tile (`ZA1H.S[W12, 3]`, `ZA0V.D[W13,
+    /// 0:1]`): the tile register, [`Operand::is_vertical`], the index register
+    /// ([`Operand::index_register`]), the first offset ([`Operand::immediate`]) and
+    /// the number of slices ([`Operand::list_len`]).
+    ZaSlice,
+    /// ZA array vectors (`ZA.D[W8, 1, VGx4]`, `ZA[W12, 0]`): as a slice, with
+    /// `ZA` as the register, the element size if any, and the vector group
+    /// ([`Operand::vector_group`]).
+    ZaArray,
+    /// The `ZERO` tile mask: bit `n` names the 64-bit tile `ZA<n>.D`
+    /// ([`Operand::immediate`]).
+    ZaMask,
 }
 
 /// A vector arrangement or element size.
@@ -153,6 +167,15 @@ impl Arrangement {
         }
     }
 }
+
+/// The element size `Arrangement`s by log2 bytes.
+pub(crate) const ARR_ES: [Arrangement; 5] = [
+    Arrangement::B,
+    Arrangement::H,
+    Arrangement::S,
+    Arrangement::D,
+    Arrangement::Q,
+];
 
 /// A shift applied to a register or immediate.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
@@ -369,6 +392,13 @@ pub struct Operand {
     /// Memory: the immediate offset is in multiples of the vector length (`#1, MUL
     /// VL`).
     pub(crate) mul_vl: bool,
+    /// ZA slices: vertical (`ZA0V.S`) rather than horizontal.
+    pub(crate) vertical: bool,
+    /// ZA array vectors: the vector group (`VGx2`: 2, `VGx4`: 4; 0: none).
+    pub(crate) vg: u8,
+    /// The operand is printed in braces as a list of one (`{ ZA0H.B[W12, 0] }`, `{
+    /// ZT0 }`).
+    pub(crate) braced: bool,
 }
 
 impl Operand {
@@ -403,6 +433,27 @@ impl Operand {
     /// Memory: whether the offset is in multiples of the vector length (`MUL VL`).
     pub fn mul_vl(&self) -> bool {
         self.mul_vl
+    }
+
+    /// ZA slices: whether the slice is vertical.
+    pub fn is_vertical(&self) -> bool {
+        self.vertical
+    }
+
+    /// ZA array vectors: the vector group (2 for `VGx2`, 4 for `VGx4`, 0 for none).
+    pub fn vector_group(&self) -> u8 {
+        self.vg
+    }
+
+    /// The index register of a memory operand, a ZA slice or array, or `PSEL`'s
+    /// predicate.
+    pub fn index_register(&self) -> Register {
+        self.index_reg
+    }
+
+    /// Whether the operand is printed in braces as a list of one.
+    pub fn in_braces(&self) -> bool {
+        self.braced
     }
 
     pub fn immediate(&self) -> u64 {
@@ -658,6 +709,70 @@ impl Operand {
     pub fn mem_vec(mut m: Operand, es: Arrangement) -> Operand {
         m.arr = es;
         m
+    }
+
+    /// A ZA tile: `ZA3.S` is `Operand::za_tile(Register::ZAS3)`.
+    pub fn za_tile(tile: Register) -> Operand {
+        Operand {
+            kind: OpKind::ZaTile,
+            reg: tile,
+            ..Operand::none()
+        }
+    }
+
+    /// A ZA tile slice: `ZA1H.S[W12, 3]` is `za_slice(ZAS1, false, W12, 3, 1)`; a
+    /// range `[W12, 2:3]` has `count` 2.
+    pub fn za_slice(
+        tile: Register,
+        vertical: bool,
+        index: Register,
+        offset: u64,
+        count: u8,
+    ) -> Operand {
+        let es = tile.za_tile_info().map_or(0, |t| t.0);
+        Operand {
+            kind: OpKind::ZaSlice,
+            reg: tile,
+            arr: ARR_ES[es as usize],
+            vertical,
+            index_reg: index,
+            imm: offset,
+            count,
+            ..Operand::none()
+        }
+    }
+
+    /// ZA array vectors: `ZA.D[W8, 1, VGx4]` is `za_array(Arrangement::D, W8, 1, 1,
+    /// 4)`; `ZA[W12, 0]` has no element size and no vector group.
+    pub fn za_array(es: Arrangement, index: Register, offset: u64, count: u8, vg: u8) -> Operand {
+        Operand {
+            kind: OpKind::ZaArray,
+            reg: Register::ZA,
+            arr: es,
+            index_reg: index,
+            imm: offset,
+            count,
+            vg,
+            ..Operand::none()
+        }
+    }
+
+    /// The `ZERO` tile mask (bit `n`: `ZA<n>.D`).
+    pub fn za_mask(mask: u8) -> Operand {
+        Operand {
+            kind: OpKind::ZaMask,
+            imm: u64::from(mask),
+            ..Operand::none()
+        }
+    }
+
+    /// The operand in braces, as a list of one (`{ ZT0 }`, `{ ZA0H.B[W12, 0] }`).
+    #[must_use]
+    pub fn braced(self) -> Operand {
+        Operand {
+            braced: true,
+            ..self
+        }
     }
 
     /// A list of `count` registers `stride` apart (SME2 strided lists).

@@ -230,6 +230,22 @@ impl Formatter {
         mnemonic: Mnemonic,
         o: &mut Out<'_>,
     ) {
+        // `{ ZT0 }`, `{ ZA0H.B[W12, 0] }`: one operand printed as a list.
+        if op.braced {
+            o.raw("{ ", FormatterTextKind::Punctuation);
+            self.operand(
+                &Operand {
+                    braced: false,
+                    ..*op
+                },
+                all,
+                _i,
+                mnemonic,
+                o,
+            );
+            o.raw(" }", FormatterTextKind::Punctuation);
+            return;
+        }
         match op.kind {
             OpKind::Register => {
                 self.reg(op.reg, o);
@@ -249,6 +265,11 @@ impl Formatter {
                         o.raw(", ", FormatterTextKind::Punctuation);
                     }
                     self.number(u64::from(l), false, o);
+                    // `ZT0[1, MUL VL]` (MOVT).
+                    if op.mul_vl {
+                        o.raw(", ", FormatterTextKind::Punctuation);
+                        o.put("MUL VL", FormatterTextKind::Keyword);
+                    }
                     o.raw("]", FormatterTextKind::Punctuation);
                 }
                 if op.writeback {
@@ -438,8 +459,61 @@ impl Formatter {
                     None => self.imm(op.imm, false, o),
                 }
             }
+            OpKind::ZaTile => self.reg(op.reg, o),
+            OpKind::ZaSlice => {
+                let (es, n) = op.reg.za_tile_info().unwrap_or((0, 0));
+                let mut b = Buf::new();
+                let hv = if op.vertical { 'v' } else { 'h' };
+                let _ = write!(
+                    b,
+                    "za{n}{hv}.{}",
+                    crate::operand::ARR_ES[es as usize].name()
+                );
+                o.put(b.as_str(), FormatterTextKind::Register);
+                self.za_index(op, o);
+            }
+            OpKind::ZaArray => {
+                o.put("za", FormatterTextKind::Register);
+                if !op.arr.name().is_empty() {
+                    o.raw(".", FormatterTextKind::Punctuation);
+                    o.put(op.arr.name(), FormatterTextKind::Keyword);
+                }
+                self.za_index(op, o);
+            }
+            OpKind::ZaMask => {
+                o.raw("{", FormatterTextKind::Punctuation);
+                let mut first = true;
+                for t in za_mask_tiles(op.imm as u8) {
+                    o.raw(
+                        if first { " " } else { ", " },
+                        FormatterTextKind::Punctuation,
+                    );
+                    first = false;
+                    self.reg(t, o);
+                }
+                o.raw(" }", FormatterTextKind::Punctuation);
+            }
             OpKind::None => {}
         }
+    }
+
+    /// `[W12, 3]`, `[W8, 0:1, VGx2]`: the index register, the offset or offset range
+    /// (as the template writes them, without `#`), and the vector group.
+    fn za_index(&self, op: &Operand, o: &mut Out<'_>) {
+        o.raw("[", FormatterTextKind::Punctuation);
+        self.reg(op.index_reg, o);
+        o.raw(", ", FormatterTextKind::Punctuation);
+        self.number(op.imm, false, o);
+        if op.count > 1 {
+            o.raw(":", FormatterTextKind::Punctuation);
+            self.number(op.imm + u64::from(op.count) - 1, false, o);
+        }
+        if op.vg != 0 {
+            let mut b = Buf::new();
+            let _ = write!(b, ", VGx{}", op.vg);
+            o.put(b.as_str(), FormatterTextKind::Keyword);
+        }
+        o.raw("]", FormatterTextKind::Punctuation);
     }
 
     /// A vector base or index of an SVE memory operand carries the element size.
@@ -498,6 +572,37 @@ impl Formatter {
             o.raw("!", FormatterTextKind::Punctuation);
         }
     }
+}
+
+/// The tiles a `ZERO` mask names, as the largest tiles that cover it: `{ ZA }` for
+/// all, else the halfword tiles (`ZA0.H` is the doubleword tiles 0, 2, 4, 6), word
+/// tiles (`ZA1.S` is 1 and 5), then doubleword tiles.
+fn za_mask_tiles(mask: u8) -> impl Iterator<Item = Register> {
+    let mut out = [Register::None; 8];
+    let mut n = 0;
+    let mut left = mask;
+    if mask == 0xff {
+        out[0] = Register::ZA;
+        n = 1;
+        left = 0;
+    }
+    for (es, unit, count) in [(1u32, 0x55u8, 2u32), (2, 0x11, 4)] {
+        for t in 0..count {
+            let m = unit << t;
+            if left & m == m {
+                out[n] = Register::za_tile(es, t).unwrap_or(Register::None);
+                n += 1;
+                left &= !m;
+            }
+        }
+    }
+    for t in 0..8 {
+        if left >> t & 1 == 1 {
+            out[n] = Register::za_tile(3, t).unwrap_or(Register::None);
+            n += 1;
+        }
+    }
+    out.into_iter().take(n)
 }
 
 impl fmt::Display for Instruction {

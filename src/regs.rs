@@ -94,6 +94,26 @@ impl Register {
         Self::at(PN0 + (n & 15) as usize)
     }
 
+    /// The ZA tile `ZA<n>.<size>` (`es_log2`: 0 for B .. 4 for Q), if it exists.
+    pub fn za_tile(es_log2: u32, n: u32) -> Option<Register> {
+        if es_log2 > 4 || n >= 1 << es_log2 {
+            return None;
+        }
+        // ZAB0, ZAH0-1, ZAS0-3, ZAD0-7, ZAQ0-15 follow ZA and ZT0.
+        let first = Register::ZAB0 as usize + (1 << es_log2) - 1;
+        Register::from_index(first + n as usize)
+    }
+
+    /// A ZA tile's element size (log2 bytes) and number.
+    pub fn za_tile_info(self) -> Option<(u32, u32)> {
+        let i = (self as usize).checked_sub(Register::ZAB0 as usize)?;
+        if self.class() != RegisterClass::Za {
+            return None;
+        }
+        let es = (i as u32 + 1).ilog2();
+        Some((es, i as u32 + 1 - (1 << es)))
+    }
+
     pub fn class(self) -> RegisterClass {
         let i = self as usize;
         match i {
@@ -212,6 +232,12 @@ mod tests {
         assert_eq!(Register::W5.full_register(), Register::X5);
         assert_eq!(Register::S9.full_register(), Register::V9);
         assert_eq!(Register::ZAD7.class(), RegisterClass::Za);
+        assert_eq!(Register::za_tile(2, 3), Some(Register::ZAS3));
+        assert_eq!(Register::za_tile(3, 8), None);
+        assert_eq!(Register::za_tile(4, 15), Some(Register::ZAQ15));
+        assert_eq!(Register::ZAH1.za_tile_info(), Some((1, 1)));
+        assert_eq!(Register::ZAB0.za_tile_info(), Some((0, 0)));
+        assert_eq!(Register::ZT0.za_tile_info(), None);
         assert_eq!(Register::NZCV.class(), RegisterClass::Special);
         assert_eq!(Register::X3.name(), "x3");
     }

@@ -116,7 +116,35 @@ fn arr(cx: &mut Cx<'_>, t: &str) -> R<String> {
     cx.arr(t)
 }
 
+/// Register numbers that are not the field: the SME quarter-tile outer products'
+/// three-bit fields (rules `*_mortlach`: `Zn` is `Z0`-`Z14` even, `Zm` `Z16`-`Z30`
+/// even) and `K:Zk` (`Z20`-`Z23`, `Z28`-`Z31`).
+fn zmap(cx: &Cx<'_>, d: &str) -> R<Option<&'static str>> {
+    let s = cx.sym(d)?;
+    let names: Vec<&str> = s.fields.iter().map(|f| f.name.as_str()).collect();
+    if names == ["K", "Zk"] {
+        return Ok(Some("Rn::K8(20)"));
+    }
+    if s.alts.iter().any(|a| a.rule.ends_with("_mortlach")) {
+        return Ok(Some(if d.starts_with("<Zm") {
+            "Rn::Lin(16, 2)"
+        } else {
+            "Rn::Lin(0, 2)"
+        }));
+    }
+    Ok(None)
+}
+
 fn zr(cx: &mut Cx<'_>, d: &str, t: &str, pq: &str) -> R<String> {
+    if let Some(rn) = zmap(cx, d)? {
+        if pq != "Pq::None" {
+            return Err(format!("mapped register {d} with a qualifier"));
+        }
+        let a = arr(cx, t)?;
+        let f = cx.field(d)?;
+        cx.hand("SVE register numbered by a map");
+        return Ok(format!("Op::ZrMap({f}, {rn}, {a}, None)"));
+    }
     let Some((k, add)) = zreg(cx, d)? else {
         return Err(format!("register {d}"));
     };
@@ -145,6 +173,13 @@ fn zindex(cx: &mut Cx<'_>, idx: &str) -> R<String> {
 }
 
 fn zelem(cx: &mut Cx<'_>, d: &str, t: &str, idx: &str) -> R<String> {
+    if let Some(rn) = zmap(cx, d)? {
+        let a = arr(cx, t)?;
+        let f = cx.field(d)?;
+        let i = zindex(cx, idx)?;
+        cx.hand("SVE register numbered by a map");
+        return Ok(format!("Op::ZrMap({f}, {rn}, {a}, Some({i}))"));
+    }
     let Some((k, add)) = zreg(cx, d)? else {
         return Err(format!("indexed register {d}"));
     };
@@ -291,9 +326,8 @@ pub(crate) fn group(cx: &mut Cx<'_>, g: &str) -> Option<R<String>> {
     if g.starts_with('⟪') {
         return Some(list(cx, g));
     }
-    // Later stages.
     if g.starts_with("ZA") || g.starts_with("<ZA") || g.starts_with("ZT0") {
-        return Some(Err(format!("SME ZA or ZT0 operand {g}")));
+        return Some(za(cx, g));
     }
     if let Some(c) = m("%", g) {
         return match zreg(cx, &c[0]) {
@@ -714,6 +748,19 @@ fn list(cx: &mut Cx<'_>, g: &str) -> R<String> {
         .and_then(|x| x.rsplit_once('⟫'))
         .ok_or_else(|| format!("SVE/SME register list {g}"))?;
     let body = body.trim();
+    // `ZERO { <mask> }`, `ZERO { ZT0 }`, `LD1D { <ZAt><HV>.D[<Ws>, <offs>] }`.
+    if idx.is_empty() {
+        if body == "<mask>" {
+            cx.hand("ZERO tile mask");
+            return Ok(format!("Op::ZaMask({})", cx.field(body)?));
+        }
+        if body == "ZT0" || body.starts_with("ZA") || body.starts_with("<ZA") {
+            let inner = za(cx, body)?;
+            cx.hand("one operand in braces");
+            return Ok(format!("Op::Braced(&{inner})"));
+        }
+    }
+    let body = body.trim();
     // `⟪ <Zm1>-<Zm2> ⟫[<index>]`.
     let idx = if idx.is_empty() {
         "None".to_string()
@@ -764,11 +811,26 @@ fn list(cx: &mut Cx<'_>, g: &str) -> R<String> {
     let regs: u32 = if kind == "Z" { 32 } else { 16 };
     // `T:Zt` or `D:Zd`: an SME2 strided list.
     let strided = fields.len() == 2 && fields[0].width == 1 && n > 1;
+    let mortlach = cx
+        .sym(sym)?
+        .alts
+        .iter()
+        .any(|a| a.rule.ends_with("_mortlach"));
+    let mut add = 0;
     let (stride, mul) = if strided {
         (16 / n, 1)
+    } else if mortlach && width == 3 && n == 2 {
+        // The quarter-tile outer products: `{ <Zn1>-<Zn2> }` in `Z0`-`Z15`, `{
+        // <Zm1>-<Zm2> }` in `Z16`-`Z31`.
+        if sym.starts_with("<Zm") {
+            add = 16;
+        }
+        (1, 2)
     } else {
+        // A multiple of the length, rounded up to a power of two (`LUTI6 ..., ZT0, {
+        // <Zn1>-<Zn3> }` from a three-bit field: Z0, Z4, ... Z28).
         let mul = regs >> width;
-        if mul == 0 || (mul != 1 && mul != u32::from(n)) {
+        if mul == 0 || (mul != 1 && mul != u32::from(n).next_power_of_two()) {
             return Err(format!("list {body}: {width}-bit field for {n} registers"));
         }
         (1, mul as u8)
@@ -781,6 +843,134 @@ fn list(cx: &mut Cx<'_>, g: &str) -> R<String> {
         "consecutive register list"
     });
     Ok(format!(
-        "Op::ZList({f}, Rk::{kind}, {n}, {stride}, {mul}, {a}, {idx})"
+        "Op::ZList({f}, Rk::{kind}, {n}, {stride}, {mul}, {add}, {a}, {idx})"
+    ))
+}
+
+/// The first register a ZA index symbol numbers: `<Ws>` and the SME `<Wv>` (rule
+/// `Wv__2`: `LDR ZA[<Wv>, ...]`) are W12-W15, the SME2 `<Wv>` (rule `Wv`) W8-W11.
+fn za_wbase(cx: &Cx<'_>, d: &str) -> R<u8> {
+    let s = cx.sym(d)?;
+    let rule = s.alts.first().map_or("", |a| a.rule.as_str());
+    Ok(match (d, rule) {
+        ("<Ws>", _) | ("<Wv>", "Wv__2") => 12,
+        ("<Wv>", "Wv") => 8,
+        _ => return Err(format!("ZA index register {d} ({rule})")),
+    })
+}
+
+/// The inside of a ZA index (`<Ws>, <offs>`, `<Wv>, <offs1>:<offs4>{, VGx2}`): the
+/// index register field and first register, the offset field (none for a
+/// constant 0), the number of slices or vectors, the vector group.
+fn za_index(cx: &mut Cx<'_>, inner: &str) -> R<(String, u8, String, u8, u8)> {
+    let (inner, vg) = if let Some(x) = inner.strip_suffix("{, VGx2}") {
+        (x, 2)
+    } else if let Some(x) = inner.strip_suffix("{, VGx4}") {
+        (x, 4)
+    } else if let Some(x) = inner.strip_suffix(", VGx2") {
+        (x, 2)
+    } else if let Some(x) = inner.strip_suffix(", VGx4") {
+        (x, 4)
+    } else {
+        (inner, 0)
+    };
+    let (w, offs) = inner
+        .split_once(", ")
+        .ok_or_else(|| format!("ZA index [{inner}]"))?;
+    let base = za_wbase(cx, w)?;
+    let wf = cx.field(w)?;
+    // `<offs1>:<offs2>`: aligned ranges, the field counts in twos (or fours).
+    let (first, count) = match offs.split_once(':') {
+        Some((a, b)) => {
+            let n = b
+                .trim_end_matches('>')
+                .chars()
+                .last()
+                .and_then(|c| c.to_digit(10))
+                .ok_or_else(|| format!("ZA offset range {offs}"))?;
+            (a, n as u8)
+        }
+        None => (offs, 1),
+    };
+    let s = cx.sym(first)?;
+    let f = if s.fields.is_empty() {
+        // `offs1__6=0`: a constant first offset of 0 (`ZA0H.D[<Ws>, 0:3]`).
+        if s.alts.iter().any(|a| a.text != "0") {
+            return Err(format!("ZA offset {first}"));
+        }
+        "Fs::NONE".to_string()
+    } else {
+        cx.field(first)?
+    };
+    cx.hand("ZA index register and offset");
+    Ok((wf, base, f, count, vg))
+}
+
+/// SME operands: ZA tiles, tile slices, array vectors and `ZT0`.
+fn za(cx: &mut Cx<'_>, g: &str) -> R<String> {
+    // `ZT0`, `ZT0[<offs>]`, `ZT0{[<offs>, MUL VL]}`.
+    if g == "ZT0" {
+        return Ok("Op::RegFixed(Register::ZT0)".into());
+    }
+    if let Some(c) = m("ZT0[%]", g) {
+        // `MOVT <Xt>, ZT0[<offs>]`: a byte offset, in eights.
+        let f = cx.field(&c[0])?;
+        cx.hand("ZT0 element, a byte offset in eights");
+        return Ok(format!(
+            "Op::ZElem(Fs::NONE, Rk::Zt0, Arr::Fixed(Arrangement::None), Idx::Mul({f}, 8), 0)"
+        ));
+    }
+    if let Some(c) = m("ZT0{[%, MUL VL]}", g) {
+        cx.hand("ZT0 optional index in vector lengths");
+        return Ok(format!("Op::Zt0Vl({})", cx.field(&c[0])?));
+    }
+    // A tile: `<ZAda>.S`, `<ZAda>.<T>`.
+    if let Some(c) = m("%.%w", g).or_else(|| m("%.%", g))
+        && c[0].starts_with("<ZA")
+    {
+        let a = cx.arr(&c[1])?;
+        cx.hand("ZA tile");
+        return Ok(format!("Op::ZaTile({}, {a})", cx.field(&c[0])?));
+    }
+    let (head, inner) = g
+        .strip_suffix(']')
+        .and_then(|x| x.split_once('['))
+        .ok_or_else(|| format!("SME operand {g}"))?;
+    // A tile slice: `<ZAd><HV>.H[...]`, `ZA0<HV>.B[...]`.
+    let slice = m("%%.%w", head)
+        .map(|c| (Some(c[0].clone()), c[1].clone(), c[2].clone()))
+        .or_else(|| m("ZA0%.%w", head).map(|c| (None, c[0].clone(), c[1].clone())));
+    if let Some((tile, hv, es)) = slice {
+        let hs = cx.sym(&hv)?;
+        if hs.alts.iter().map(|a| a.text.as_str()).collect::<Vec<_>>() != ["H", "V"] {
+            return Err(format!("slice direction {hv}"));
+        }
+        let hvf = cx.field(&hv)?;
+        let tf = match tile {
+            Some(t) => cx.field(&t)?,
+            None => "Fs::NONE".into(),
+        };
+        let a = cx.arr(&es)?;
+        let (wf, base, of, count, vg) = za_index(cx, inner)?;
+        if vg != 0 {
+            return Err(format!("tile slice with a vector group {g}"));
+        }
+        cx.hand("ZA tile slice");
+        return Ok(format!(
+            "Op::ZaSlice({tf}, {a}, {hvf}, {wf}, {base}, {of}, {count})"
+        ));
+    }
+    // Array vectors: `ZA.S[...]`, `ZA.<T>[...]`, `ZA[...]`.
+    let a = if head == "ZA" {
+        "Arr::Fixed(Arrangement::None)".to_string()
+    } else if let Some(es) = head.strip_prefix("ZA.") {
+        cx.arr(es)?
+    } else {
+        return Err(format!("SME operand {g}"));
+    };
+    let (wf, base, of, count, vg) = za_index(cx, inner)?;
+    cx.hand("ZA array vectors");
+    Ok(format!(
+        "Op::ZaArray({a}, {wf}, {base}, {of}, {count}, {vg})"
     ))
 }

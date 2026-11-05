@@ -677,3 +677,175 @@ whilels_pn_rr_ registers isa sets NZCV from the predicate result (PredTest); fAR
 whilelt_pn_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it; and the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
 pext_pn_rr_ registers isa PEXT writes Pd and reads the predicate-as-counter PNn (PN8-PN15); fARM64 names PNn as Pn and merges it with the destination
 pext_pp_rr_ registers isa PEXT writes the pair and reads the predicate-as-counter PNn (PN8-PN15); fARM64 names PNn as Pn and merges it with the destination
+add_za_zw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+add_za_zw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+add_za_zzv_2x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+add_za_zzv_4x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+add_za_zzw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+add_za_zzw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfadd_za_zw_2x2_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfadd_za_zw_4x4_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmla_za_zzi_h2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmla_za_zzi_h4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmla_za_zzv_2x1_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmla_za_zzv_4x1_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmla_za_zzw_2x2_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmla_za_zzw_4x4_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlal_za_zzi_1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlal_za_zzi_2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlal_za_zzi_4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlal_za_zzv_1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlal_za_zzv_2x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlal_za_zzv_4x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlal_za_zzw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlal_za_zzw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmls_za_zzi_h2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmls_za_zzi_h4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmls_za_zzv_2x1_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmls_za_zzv_4x1_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmls_za_zzw_2x2_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmls_za_zzw_4x4_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlsl_za_zzi_1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlsl_za_zzi_2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlsl_za_zzi_4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlsl_za_zzv_1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlsl_za_zzv_2x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlsl_za_zzv_4x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlsl_za_zzw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfmlsl_za_zzw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfsub_za_zw_2x2_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bfsub_za_zw_4x4_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+bftmopa_za32_zzzi_h2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+bftmopa_za_zzzi_h2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+bfvdot_za_zzi_2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fadd_za_zw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fadd_za_zw_2x2_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fadd_za_zw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fadd_za_zw_4x4_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fmlall_za32_z8z8i_1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fmlall_za32_z8z8i_2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fmlall_za32_z8z8i_4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fmlall_za32_z8z8v_1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fmlall_za32_z8z8v_2x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fmlall_za32_z8z8v_4x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fmlall_za32_z8z8w_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fmlall_za32_z8z8w_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fsub_za_zw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fsub_za_zw_2x2_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fsub_za_zw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fsub_za_zw_4x4_16 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+ftmopa_za16_z8z8zi_b2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+ftmopa_za32_z8z8zi_b2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+ftmopa_za32_zzzi_h2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+ftmopa_za_zzzi_h2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+ftmopa_za_zzzi_s2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+fvdot_za_z8z8i_2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fvdot_za_zzi_2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fvdotb_za32_z8z8i_2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+fvdott_za32_z8z8i_2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+mova_mz2_za_b1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_mz2_za_d1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_mz2_za_h1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_mz2_za_w1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_mz4_za_b1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_mz4_za_d1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_mz4_za_h1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_mz4_za_w1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_za2_z_b1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_za2_z_d1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_za2_z_h1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_za2_z_w1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_za4_z_b1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_za4_z_d1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_za4_z_h1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+mova_za4_z_w1 registers isa we report the ZA tile the instruction names (za3.s), as decided; fARM64 reports all of ZA
+movaz_mz2_za_b1 registers isa MOVAZ reads the ZA tile slice or array vectors and zeroes them (read and written; we report the tile, or ZA for array vectors); fARM64 reports all of ZA read only
+movaz_mz2_za_d1 registers isa MOVAZ reads the ZA tile slice or array vectors and zeroes them (read and written; we report the tile, or ZA for array vectors); fARM64 reports all of ZA read only
+movaz_mz2_za_h1 registers isa MOVAZ reads the ZA tile slice or array vectors and zeroes them (read and written; we report the tile, or ZA for array vectors); fARM64 reports all of ZA read only
+movaz_mz2_za_w1 registers isa MOVAZ reads the ZA tile slice or array vectors and zeroes them (read and written; we report the tile, or ZA for array vectors); fARM64 reports all of ZA read only
+movaz_mz4_za_b1 registers isa MOVAZ reads the ZA tile slice or array vectors and zeroes them (read and written; we report the tile, or ZA for array vectors); fARM64 reports all of ZA read only
+movaz_mz4_za_d1 registers isa MOVAZ reads the ZA tile slice or array vectors and zeroes them (read and written; we report the tile, or ZA for array vectors); fARM64 reports all of ZA read only
+movaz_mz4_za_h1 registers isa MOVAZ reads the ZA tile slice or array vectors and zeroes them (read and written; we report the tile, or ZA for array vectors); fARM64 reports all of ZA read only
+movaz_mz4_za_w1 registers isa MOVAZ reads the ZA tile slice or array vectors and zeroes them (read and written; we report the tile, or ZA for array vectors); fARM64 reports all of ZA read only
+movaz_mz_za2_1 registers isa MOVAZ reads the ZA tile slice or array vectors and zeroes them (read and written; we report the tile, or ZA for array vectors); fARM64 reports all of ZA read only
+movaz_mz_za4_1 registers isa MOVAZ reads the ZA tile slice or array vectors and zeroes them (read and written; we report the tile, or ZA for array vectors); fARM64 reports all of ZA read only
+movt_zt_r_ registers isa MOVT writes 64 bits of ZT0 and keeps the rest (read and written); fARM64 reports a write only
+movt_zt_z_ registers isa MOVT writes one vector length of ZT0 and keeps the rest (read and written); fARM64 reports a write only
+smlall_za_zzi_d registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlall_za_zzi_d2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlall_za_zzi_d4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlall_za_zzi_s registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlall_za_zzi_s2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlall_za_zzi_s4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlall_za_zzv_1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlall_za_zzv_2x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlall_za_zzv_4x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlall_za_zzw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlall_za_zzw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlsll_za_zzi_d registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlsll_za_zzi_d2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlsll_za_zzi_d4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlsll_za_zzi_s registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlsll_za_zzi_s2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlsll_za_zzi_s4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlsll_za_zzv_1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlsll_za_zzv_2x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlsll_za_zzv_4x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlsll_za_zzw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+smlsll_za_zzw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+stmopa_za32_zzzi_h2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+stmopa_za_zzzi_b2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+sub_za_zw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+sub_za_zw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+sub_za_zzv_2x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+sub_za_zzv_4x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+sub_za_zzw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+sub_za_zzw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+sumlall_za_zzi_s registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+sumlall_za_zzi_s2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+sumlall_za_zzi_s4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+sumlall_za_zzv_s2x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+sumlall_za_zzv_s4x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+sutmopa_za_zzzi_b2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+suvdot_za_zzi_s4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+svdot_za32_zzi_2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+svdot_za_zzi_d4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+svdot_za_zzi_s4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlall_za_zzi_d registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlall_za_zzi_d2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlall_za_zzi_d4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlall_za_zzi_s registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlall_za_zzi_s2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlall_za_zzi_s4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlall_za_zzv_1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlall_za_zzv_2x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlall_za_zzv_4x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlall_za_zzw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlall_za_zzw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlsll_za_zzi_d registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlsll_za_zzi_d2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlsll_za_zzi_d4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlsll_za_zzi_s registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlsll_za_zzi_s2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlsll_za_zzi_s4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlsll_za_zzv_1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlsll_za_zzv_2x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlsll_za_zzv_4x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlsll_za_zzw_2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+umlsll_za_zzw_4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+usmlall_za_zzi_s registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+usmlall_za_zzi_s2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+usmlall_za_zzi_s4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+usmlall_za_zzv_s registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+usmlall_za_zzv_s2x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+usmlall_za_zzv_s4x1 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+usmlall_za_zzw_s2x2 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+usmlall_za_zzw_s4x4 registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+ustmopa_za_zzzi_b2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+usvdot_za_zzi_s4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+utmopa_za32_zzzi_h2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+utmopa_za_zzzi_b2x1 registers isa the outer product accumulates into the tile (read and written; we report the tile, fARM64 all of ZA, written only)
+uvdot_za32_zzi_2xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+uvdot_za_zzi_d4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+uvdot_za_zzi_s4xi registers isa the instruction accumulates into ZA (read and written); fARM64 reports a write only
+zero_za_i_ registers isa ZERO { <mask> } writes the doubleword tiles the mask names (none for { }); fARM64 reports all of ZA written
