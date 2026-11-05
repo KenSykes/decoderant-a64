@@ -1476,6 +1476,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Csneg, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
+    /// `CTERMEQ` with 2 operands.
+    pub fn ctermeq(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ctermeq, "", &[a0.into(), a1.into()])
+    }
+
+    /// `CTERMNE` with 2 operands.
+    pub fn ctermne(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ctermne, "", &[a0.into(), a1.into()])
+    }
+
     /// `CTZ` with 2 operands.
     pub fn ctz(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Ctz, "", &[a0.into(), a1.into()])
@@ -2161,6 +2171,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Gcspopcx, "", &[])
     }
 
+    /// `GCSPOPM` with 1 operands.
+    pub fn gcspopm(&mut self, a0: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Gcspopm, "", &[a0.into()])
+    }
+
     /// `GCSPOPX` with 0 operands.
     pub fn gcspopx(&mut self) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Gcspopx, "", &[])
@@ -2199,6 +2214,11 @@ impl CodeAssembler {
     /// `GIC` with 2 operands.
     pub fn gic(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Gic, "", &[a0.into(), a1.into()])
+    }
+
+    /// `GICR` with 2 operands.
+    pub fn gicr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Gicr, "", &[a0.into(), a1.into()])
     }
 
     /// `GMI` with 3 operands.
@@ -5809,6 +5829,11 @@ impl CodeAssembler {
     /// `TENTER` with 2 operands.
     pub fn tenter(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Tenter, "", &[a0.into(), a1.into()])
+    }
+
+    /// `TEXIT` with 1 operands.
+    pub fn texit(&mut self, a0: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Texit, "", &[a0.into()])
     }
 
     /// `TFLTNZ` with 3 operands.

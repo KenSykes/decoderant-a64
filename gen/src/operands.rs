@@ -879,6 +879,16 @@ fn map_inner(
             i += 1;
             continue;
         }
+        // `TEXIT { <nb>}`, `GCSPOPM { <Xt>}`: an optional last operand.
+        if let Some(inner) = g.strip_prefix("{ ").and_then(|x| x.strip_suffix('}'))
+            && i + 1 == groups.len()
+            && m("%", inner).is_some()
+        {
+            let o = single(&mut cx, inner)?;
+            ops.push(optional(&mut cx, &o, inner)?);
+            i += 1;
+            continue;
+        }
         if g.starts_with('{') {
             return Err(format!("optional group {g}"));
         }
@@ -994,6 +1004,20 @@ fn r_table(cx: &mut Cx<'_>, size: &str) -> R<String> {
             "extend register width: X iff option<1:0> = 11",
             &o,
             &[(0b011, 0b011, 0), (0, 0, 1)],
+            &[],
+        ));
+    }
+    if size == "<R>"
+        && cx
+            .fields(size)
+            .is_ok_and(|v| v.len() == 1 && v[0].name == "sz")
+    {
+        // CTERMEQ/CTERMNE: the rule names carry no values; `sz` 1 is X.
+        let o = cx.fields(size)?;
+        return Ok(cx.hand_table(
+            "CTERM register width: X iff sz = 1",
+            &o,
+            &[(1, 1, 0), (0, 1, 1)],
             &[],
         ));
     }

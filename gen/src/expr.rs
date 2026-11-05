@@ -59,7 +59,7 @@ fn is_sysop_test(v: &Value) -> bool {
         )
         && v["right"]["value"]
             .as_str()
-            .is_some_and(|s| s.starts_with("Sys_"))
+            .is_some_and(|s| s.starts_with("Sys_") || s.starts_with("Sysl_"))
 }
 
 pub const KNOWN_FUNCS: &[&str] = &[
@@ -146,10 +146,12 @@ impl Arena {
                     "SysLOp" => 1,
                     _ => 2,
                 };
-                let name = v["right"]["value"]
-                    .as_str()
-                    .unwrap_or("")
-                    .trim_start_matches("Sys_");
+                // `Sys_DC`, or `Sysl_GICR` (the one `SysLOp` test spells it so).
+                let name = v["right"]["value"].as_str().unwrap_or("");
+                let name = name
+                    .strip_prefix("Sysl_")
+                    .or_else(|| name.strip_prefix("Sys_"))
+                    .unwrap_or(name);
                 let Some(k) = SYSOP_NAMES.iter().position(|n| *n == name) else {
                     bail!("unknown system operation Sys_{name}");
                 };

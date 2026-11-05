@@ -236,3 +236,36 @@ fn constraints_and_determinism_from_the_hardware_replay() {
     // MRS X0, FPCR stays deterministic.
     assert!(i(0xd53b_4400).nondeterminism_reason().is_none());
 }
+
+/// The four encodings and alias outside SVE/SME that had no operand support:
+/// `TEXIT {NB}`, `CTERMEQ`/`CTERMNE` (`<R>` from `sz`), `GCSPOPM {<Xt>}` and the
+/// `GICR` alias of `SYSL` (its condition names `Sysl_GICR`). Text checked against
+/// the Arm ARM syntax (and fARM64, which agrees); each word re-encodes bit-exactly
+/// and from its operands alone.
+#[test]
+fn stragglers() {
+    for (w, text, min_el) in [
+        (0xd6ff_03e0u32, "texit", 0),
+        (0xd6ff_07e0, "texit nb", 0),
+        (0x25a0_2000, "ctermeq w0, w0", 0),
+        (0x25e3_2040, "ctermeq x2, x3", 0),
+        (0x25e3_2050, "ctermne x2, x3", 0),
+        (0x25bf_23f0, "ctermne wzr, wzr", 0),
+        (0xd52b_773f, "gcspopm", 0),
+        (0xd52b_7725, "gcspopm x5", 0),
+        (0xd52b_7765, "gcsss2 x5", 0),
+        (0xd528_c300, "gicr x0, cdia", 1),
+        (0xd528_c325, "gicr x5, cdnmia", 1),
+        // SYSL with an operation no alias names stays SYSL (an unknown operation
+        // outside the `S1_*` space: EL1).
+        (0xd528_c345, "sysl x5, #0, c12, c3, #2", 1),
+    ] {
+        let i = decode_word(w, 0x1000, &DecoderOptions::default());
+        assert!(i.has_operands(), "{w:08x}");
+        assert_eq!(i.to_string(), text, "{w:08x}");
+        assert_eq!(i.min_el(), min_el, "{w:08x} {text}");
+        assert_eq!(i.encode(), Ok(w), "{w:08x} {text}");
+        let built = aarch64_isa::Instruction::with(i.code(), i.operands(), 0x1000).unwrap();
+        assert_eq!(built.encode(), Ok(w), "{w:08x} {text} from operands");
+    }
+}

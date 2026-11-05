@@ -329,7 +329,7 @@ pub(crate) fn call(f: Func, args: &[Val]) -> Val {
                 _ => crate::sysreg::SysKind::Sysp,
             };
             let want = SYSOP_NAMES.get(a(5) as usize).copied().unwrap_or("");
-            let have = crate::sysreg::lookup(kind, enc).map_or("SYS", |e| e.insn);
+            let have = crate::sysreg::lookup_insn(kind, enc).map_or("SYS", |e| e.insn);
             Val::Bool(have == want)
         }
         Func::ZeroExtend => {

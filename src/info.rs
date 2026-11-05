@@ -2,7 +2,7 @@
 
 use crate::generated::{Code, Mnemonic};
 use crate::instruction::{FlowControl, Instruction};
-use crate::sysreg::{SysEntry, SysKind, lookup, sys_encoding};
+use crate::sysreg::{SysEntry, SysKind, sys_encoding};
 
 /// The system-register access kind of an encoding, by iclass.
 pub(crate) fn sys_kind(code: Code, word: u32) -> Option<SysKind> {
@@ -50,7 +50,7 @@ pub(crate) fn sys_fields(word: u32) -> u16 {
 /// The system register or operation the instance names, if any.
 pub(crate) fn sys_entry(insn: &Instruction) -> Option<&'static SysEntry> {
     let kind = sys_kind(insn.code, insn.word)?;
-    lookup(kind, sys_fields(insn.word))
+    crate::sysreg::lookup_insn(kind, sys_fields(insn.word))
 }
 
 /// Encodings that are UNDEFINED at EL0 whatever their operands.

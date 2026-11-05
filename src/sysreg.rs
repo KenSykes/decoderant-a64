@@ -58,6 +58,21 @@ pub fn lookup(kind: SysKind, enc: u16) -> Option<&'static SysEntry> {
         .max_by_key(|e| e.mask.count_ones())
 }
 
+/// The `SYSL` aliases. `Registers.json` names their accessors after the alias
+/// (`A64.GICR`), so their operations are filed under [`SysKind::Sys`].
+const SYSL_ALIASES: &[&str] = &["GCSPOPM", "GCSSS2", "GICR"];
+
+/// [`lookup`] for an instruction of `kind`: a `SYSL` also finds the operations of
+/// the `SYSL` aliases, which are filed under [`SysKind::Sys`].
+pub(crate) fn lookup_insn(kind: SysKind, enc: u16) -> Option<&'static SysEntry> {
+    if kind == SysKind::Sysl
+        && let Some(e) = lookup(SysKind::Sys, enc).filter(|e| SYSL_ALIASES.contains(&e.insn))
+    {
+        return Some(e);
+    }
+    lookup(kind, enc)
+}
+
 /// Every entry, sorted by kind and encoding.
 pub fn entries() -> &'static [SysEntry] {
     &SYSREGS

@@ -4,26 +4,26 @@
 
 ## Encodings
 
-4429 A64 encodings, 5219 decode-tree nodes, 579 condition expressions, 408 features, 1688 mnemonics, 3218 system registers and operations.
+4429 A64 encodings, 5219 decode-tree nodes, 581 condition expressions, 408 features, 1689 mnemonics, 3218 system registers and operations.
 
 Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 tables and 0.82 candidates on average, at most 3 candidates.
 
 | Group | Encodings | With operand support |
 |---|---|---|
-| control | 163 | 162 |
+| control | 163 | 163 |
 | dpimm | 44 | 44 |
 | dpreg | 151 | 151 |
 | ldst | 1015 | 1015 |
 | reserved | 1 | 1 |
 | simd_dp | 867 | 867 |
 | sme | 842 | 0 |
-| sve | 1346 | 7 |
+| sve | 1346 | 9 |
 
 129 encodings overlap a higher-priority encoding (listed in `OpCodeInfo::precedence()`).
 
 ## Operand mapping
 
-2247 encodings with operand support, 2182 without. 1325 symbol value tables taken from the spec's rule names; 91 distinct hand rules (symbol meanings the spec does not give in machine-readable form), used 4691 times.
+2250 encodings with operand support, 2179 without. 1325 symbol value tables taken from the spec's rule names; 92 distinct hand rules (symbol meanings the spec does not give in machine-readable form), used 4700 times.
 
 ### Hand rules
 
@@ -56,6 +56,7 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `AdvSIMD FP immediate` | 3 |
 | `AdvSIMD imm8` | 2 |
 | `CRn/CRm` | 6 |
+| `CTERM register width: X iff sz = 1` | 4 |
 | `EXT index imm4` | 1 |
 | `FCMLA by element index` | 1 |
 | `FP immediate` | 3 |
@@ -63,7 +64,7 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `LDRAA offset *8` | 4 |
 | `LSL-only shift` | 2 |
 | `MSR (immediate) value in CRm` | 1 |
-| `NB on the variable op1 bit` | 5 |
+| `NB on the variable op1 bit` | 6 |
 | `PSTATE field` | 1 |
 | `Q table in alternative order` | 2 |
 | `SMSTART/SMSTOP option` | 2 |
@@ -98,7 +99,7 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `label PC - imm16*4` | 4 |
 | `ldsttags offset*16` | 13 |
 | `memory writeback, no offset` | 228 |
-| `optional operand default` | 17 |
+| `optional operand default` | 18 |
 | `pair offset scaled` | 62 |
 | `pimm scaled by access size` | 24 |
 | `post-index` | 147 |
@@ -110,13 +111,13 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `register <S..>` | 268 |
 | `register <W..>` | 873 |
 | `register <WSp..>` | 42 |
-| `register <X..>` | 921 |
+| `register <X..>` | 923 |
 | `register <XSp..>` | 92 |
 | `register list` | 164 |
 | `register offset W/X by option<0>` | 24 |
 | `register pair from one field` | 2 |
 | `register writeback` | 132 |
-| `system operation name` | 9 |
+| `system operation name` | 10 |
 | `system register` | 4 |
 | `unscaled signed offset` | 106 |
 | `vector element` | 82 |
@@ -252,7 +253,6 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 - 2 × operand shape ZA[<Wv>, <offs>] (e.g. ldr_za_ri_, str_za_ri_)
 - 2 × operand shape ZT0[<offs>] (e.g. movt_r_zt_, movt_zt_r_)
 - 2 × table <R>: rule R_X__2 carries no field values (e.g. clasta_r_p_z_, clastb_r_p_z_)
-- 2 × table <R>: rule R_X__4 carries no field values (e.g. ctermeq_rr_, ctermne_rr_)
 - 2 × table <R>: rule R_X__9 carries no field values (e.g. lasta_r_p_z_, lastb_r_p_z_)
 - 2 × table <T>: rule T_D__5 carries no field values (e.g. adr_z_az_sd_same_scaled, histcnt_z_p_zz_)
 - 2 × table <T>: rule T_D__53 carries no field values (e.g. pmullb_z_zz_, pmullt_z_zz_)
@@ -293,7 +293,6 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 - 1 × operand shape ZA0<HV>.B[<Ws>, <offs1>:<offs4>] (e.g. mova_za4_z_b1)
 - 1 × operand shape ZA0<HV>.B[<Ws>, <offs>] (e.g. mova_za_p_rz_b)
 - 1 × operand shape ZT0{[<offs>, MUL VL]} (e.g. movt_zt_z_)
-- 1 × optional group { <nb>} (e.g. TEXIT_te_branch_reg)
 - 1 × table <T>: rule T_H__18 carries no field values (e.g. cntp_r_pn_)
 - 1 × table <T>: rule T_H__21 carries no field values (e.g. cpy_z_p_v_)
 - 1 × table <T>: rule T_H__41 carries no field values (e.g. index_z_ii_)
@@ -348,11 +347,6 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 - 1 × operand shape ZA0<HV>.B[<Ws>, <offs1>:<offs2>] (e.g. MOV (mova_za2_z_b1))
 - 1 × operand shape ZA0<HV>.B[<Ws>, <offs1>:<offs4>] (e.g. MOV (mova_za4_z_b1))
 - 1 × operand shape ZA0<HV>.B[<Ws>, <offs>] (e.g. MOV (mova_za_p_rz_b))
-- 1 × optional group { <Xt>} (e.g. GCSPOPM (SYSL_RC_systeminstrs))
 - 1 × table <T>: rule T_H__21 carries no field values (e.g. MOV (cpy_z_p_v_))
 - 1 × table <T>: rule T_H__63 carries no field values (e.g. MOV (sel_z_p_zz_))
-
-## Alias conditions not compiled
-
-- 1 × unknown function SysLOp
 
