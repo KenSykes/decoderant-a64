@@ -349,3 +349,65 @@ fn sve_data_processing() {
         );
     }
 }
+
+/// SVE patterns, counts, prefetches and memory operands (text per the Arm ARM
+/// syntax; fARM64 agrees except where `tests/triage/farm64.txt` says otherwise).
+#[test]
+fn sve_patterns_and_memory() {
+    for (w, text) in [
+        // `{, <pattern>{, MUL #<imm>}}`: left out at ALL and 1; unnamed patterns
+        // are immediates.
+        (0x0420_e3e0u32, "cntb x0"),
+        (0x0420_e000, "cntb x0, pow2"),
+        (0x0431_e063, "incb x3, vl3, mul #2"),
+        (0x042e_e20d, "cntb x13, #0x10, mul #0xf"),
+        (0x042a_f281, "sqincb x1, w1, #0x14, mul #0xb"),
+        (0x047e_c332, "inch z18.h, #0x19, mul #0xf"),
+        (0x2598_e3e0, "ptrue p0.s"),
+        (0x2558_e060, "ptrue p0.h, vl3"),
+        // Prefetch operations: named, or an immediate.
+        (0x8468_192c, "prfb pstl3keep, p6, [x9, z8.s, sxtw]"),
+        (0x85d5_1c4f, "prfb #0xf, p7, [x2, #0x15, mul vl]"),
+        // Contiguous: `MUL VL`, scalar index with LSL, multiples of a list's length.
+        (0xa540_a000, "ld1w { z0.s }, p0/z, [x0]"),
+        (0xa40e_a4ae, "ld1b { z14.b }, p1/z, [x5, #-2, mul vl]"),
+        (0xa50b_8095, "ld1w { z21.q }, p0/z, [x4, x11, lsl #2]"),
+        (
+            0xa424_e5d9,
+            "ld2b { z25.b, z26.b }, p1/z, [x14, #8, mul vl]",
+        ),
+        (0xa560_f67a, "ld4w { z26.s-z29.s }, p5/z, [x19]"),
+        (
+            0xe57a_fd9d,
+            "st4w { z29.s, z30.s, z31.s, z0.s }, p7, [x12, #-0x18, mul vl]",
+        ),
+        // Gather and scatter: vector index with extend and amount, vector base.
+        (0x8531_48d5, "ld1w { z21.s }, p2/z, [x6, z17.s, uxtw #2]"),
+        (0xc5e0_c000, "ld1d { z0.d }, p0/z, [x0, z0.d, lsl #3]"),
+        (0x8401_e2c0, "prfb pldl1keep, p0, [z22.s, #1]"),
+        // The optional index, left out when it is XZR.
+        (0xa41f_7fff, "ldff1b { z31.b }, p7/z, [sp]"),
+        (0xc59f_d956, "ldnt1d { z22.d }, p6/z, [z10.d]"),
+        // Replicating loads: scaled by the access size, by 16 (`LD1RQ`), by 32.
+        (0xa403_20b3, "ld1rqb { z19.b }, p0/z, [x5, #0x30]"),
+        (0xa42f_36a4, "ld1rob { z4.b }, p5/z, [x21, #-0x20]"),
+        // Whole registers.
+        (0x85b2_4bec, "ldr z12, [sp, #-0x6e, mul vl]"),
+        (0xe5a9_1860, "str p0, [x3, #-0xb2, mul vl]"),
+        // SME2 multi-vector and strided lists with a predicate-as-counter.
+        (
+            0xa00f_b010,
+            "ld1h { z16.h-z19.h }, pn12/z, [x0, x15, lsl #1]",
+        ),
+        (
+            0xa147_37c1,
+            "ld1h { z1.h, z9.h }, pn13/z, [x30, #0xe, mul vl]",
+        ),
+        // ADR: vector base and index.
+        (0x043e_abb6, "adr z22.d, [z29.d, z30.d, sxtw #2]"),
+    ] {
+        let i = decode_word(w, 0x1000, &DecoderOptions::default());
+        assert_eq!(i.to_string(), text, "{w:08x}");
+        assert_eq!(i.encode(), Ok(w), "{w:08x} {text}");
+    }
+}

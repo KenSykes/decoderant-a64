@@ -6,6 +6,7 @@ use crate::desc;
 use crate::generated::{Mnemonic, Register};
 use crate::instruction::{Instruction, MAX_OPERANDS};
 use crate::operand::{ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, PredQual, ShiftKind};
+use crate::regs::RegisterClass;
 use crate::sysreg::{SysKind, lookup};
 
 /// Formatter options.
@@ -252,13 +253,34 @@ impl Formatter {
             OpKind::RegisterList => {
                 o.raw("{ ", FormatterTextKind::Punctuation);
                 let n = op.reg.number();
-                for k in 0..u32::from(op.count) {
-                    if k > 0 {
-                        o.raw(", ", FormatterTextKind::Punctuation);
+                let (count, stride) = (u32::from(op.count), u32::from(op.list_stride()));
+                let elem = |k: u32| match op.reg.class() {
+                    RegisterClass::Z => Register::z((n + k * stride) % 32),
+                    RegisterClass::P => Register::p((n + k * stride) % 16),
+                    RegisterClass::PN => Register::pn((n + k * stride) % 16),
+                    _ => Register::v((n + k) % 32),
+                };
+                let sized = |r: Register, o: &mut Out<'_>| {
+                    self.reg(r, o);
+                    if !op.arr.name().is_empty() {
+                        o.raw(".", FormatterTextKind::Punctuation);
+                        o.put(op.arr.name(), FormatterTextKind::Keyword);
                     }
-                    self.reg(Register::v((n + k) % 32), o);
-                    o.raw(".", FormatterTextKind::Punctuation);
-                    o.put(op.arr.name(), FormatterTextKind::Keyword);
+                };
+                // SVE and SME: three or more consecutive registers as a range
+                // (`{ Z0.S-Z3.S }`), unless the list wraps from Z31 to Z0.
+                let sve = op.reg.class() != RegisterClass::V;
+                if sve && count >= 3 && stride == 1 && n + count <= 32 {
+                    sized(elem(0), o);
+                    o.raw("-", FormatterTextKind::Punctuation);
+                    sized(elem(count - 1), o);
+                } else {
+                    for k in 0..count {
+                        if k > 0 {
+                            o.raw(", ", FormatterTextKind::Punctuation);
+                        }
+                        sized(elem(k), o);
+                    }
                 }
                 o.raw(" }", FormatterTextKind::Punctuation);
                 if let Some(l) = op.index() {
@@ -268,6 +290,11 @@ impl Formatter {
                 }
             }
             OpKind::Immediate => {
+                // `MUL #3` after an SVE pattern.
+                if !op.name.is_empty() {
+                    o.put(op.name, FormatterTextKind::Keyword);
+                    o.raw(" ", FormatterTextKind::Text);
+                }
                 self.imm(op.imm, op.signed, o);
                 if op.has_amount && (op.amount != 0 || op.shift == ShiftKind::Msl) {
                     o.raw(", ", FormatterTextKind::Punctuation);
@@ -410,9 +437,18 @@ impl Formatter {
         }
     }
 
+    /// A vector base or index of an SVE memory operand carries the element size.
+    fn mem_reg(&self, r: Register, m: &Operand, o: &mut Out<'_>) {
+        self.reg(r, o);
+        if r.class() == RegisterClass::Z && !m.arr.name().is_empty() {
+            o.raw(".", FormatterTextKind::Punctuation);
+            o.put(m.arr.name(), FormatterTextKind::Keyword);
+        }
+    }
+
     fn memory(&self, m: &Operand, o: &mut Out<'_>) {
         o.raw("[", FormatterTextKind::Punctuation);
-        self.reg(m.reg, o);
+        self.mem_reg(m.reg, m, o);
         let off = m.imm as i64;
         match m.mode {
             MemoryMode::PostIndex => {
@@ -434,7 +470,7 @@ impl Formatter {
         }
         if m.index_reg != Register::None {
             o.raw(", ", FormatterTextKind::Punctuation);
-            self.reg(m.index_reg, o);
+            self.mem_reg(m.index_reg, m, o);
             let lsl = m.extend == ExtendKind::Lsl;
             if !(lsl && !m.has_amount) {
                 o.raw(", ", FormatterTextKind::Punctuation);
@@ -447,6 +483,10 @@ impl Formatter {
         } else if off != 0 {
             o.raw(", ", FormatterTextKind::Punctuation);
             self.imm(m.imm, true, o);
+            if m.mul_vl {
+                o.raw(", ", FormatterTextKind::Punctuation);
+                o.put("MUL VL", FormatterTextKind::Keyword);
+            }
         }
         o.raw("]", FormatterTextKind::Punctuation);
         if m.writeback {

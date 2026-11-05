@@ -83,7 +83,9 @@ pub fn tokens(s: &str) -> Vec<Tok> {
         .to_ascii_lowercase()
         .replace('\t', " ")
         .replace("{ ", "{")
-        .replace(" }", "}");
+        .replace(" }", "}")
+        // Register ranges: `{ z0.s-z3.s }` and `{ z0.s - z3.s }`.
+        .replace(" - ", "-");
     // Condition spellings: CS is HS, CC is LO.
     let s = replace_word(&replace_word(&s, "cs", "hs"), "cc", "lo");
     let b = s.as_bytes();
@@ -223,16 +225,20 @@ impl Rng {
 }
 
 /// Per SVE and SME encoding with operand support, `n` random fillings of the
-/// variable bits plus all-zero and all-one (a generator of its own, so the base
-/// groups' samples are unchanged).
+/// variable bits plus all-zero and all-one. Each encoding has a generator of its
+/// own, seeded from its name, so the samples of one encoding (and the base groups')
+/// do not change as others gain operands.
 pub fn sve_sample_words(n: u32) -> Vec<(u32, String)> {
-    let mut rng = Rng::new(0x5be5_0000_57e5_0001);
     let mut out = Vec::new();
     for c in Code::values().skip(1) {
         let oc = c.op_code();
         if !SVE_GROUPS.contains(&oc.group()) || !oc.has_operands() {
             continue;
         }
+        let seed = oc.name().bytes().fold(0x5be5_0000_57e5_0001u64, |h, b| {
+            (h ^ u64::from(b)).wrapping_mul(0x100_0000_01b3)
+        });
+        let mut rng = Rng::new(seed);
         let var = !oc.mask();
         out.push((oc.value(), oc.name().to_string()));
         out.push((oc.value() | var, oc.name().to_string()));

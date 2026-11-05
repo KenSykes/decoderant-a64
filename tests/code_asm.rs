@@ -363,6 +363,63 @@ fn sve() -> Result<(), EncodeError> {
     Ok(())
 }
 
+/// SVE memory operands, patterns and register lists, built from operands.
+#[test]
+fn sve_memory_and_patterns() -> Result<(), EncodeError> {
+    use aarch64_isa::PredQual as Q;
+    let z = O::vec;
+    let zl = |r, a| O::list(r, 1, a);
+    let mut a = CodeAssembler::new(0x1000);
+    a.ld1w(zl(z0, A::S), O::pred(p0, Q::Zeroing), O::mem(x0))?
+        .ld1w(
+            zl(z21, A::S),
+            O::pred(p2, Q::Zeroing),
+            O::mem_vec(O::mem_index(x6, z17, ExtendKind::Uxtw, Some(2)), A::S),
+        )?
+        .ld4w(O::list(z26, 4, A::S), O::pred(p5, Q::Zeroing), O::mem(x19))?
+        .ldr(z12, O::mem_mul_vl(sp, -0x6e))?
+        .ldff1b(zl(z31, A::B), O::pred(p7, Q::Zeroing), O::mem(sp))?
+        .prfb(O::prefetch(0), p0, O::mem_vec(O::mem_off(z22, 1), A::S))?
+        .cntb(x13, O::named(16), O::imm(15))?
+        .cntb(x0, O::named(31), O::imm(1))?
+        .ptrue_2(z(p0, A::S), O::named(31))?;
+    assert_eq!(
+        a.words(),
+        [
+            0xa540_a000,
+            0x8531_48d5,
+            0xa560_f67a,
+            0x85b2_4bec,
+            0xa41f_7fff,
+            0x8401_e2c0,
+            0x042e_e20d,
+            0x0420_e3e0,
+            0x2598_e3e0,
+        ]
+    );
+    assert_eq!(text(a.words()[7], 0), "cntb x0");
+    // `MUL VL` offsets of a list are multiples of its length; a vector index needs
+    // its element size.
+    let mut b = CodeAssembler::new(0);
+    assert!(
+        b.ld4w(
+            O::list(z0, 4, A::S),
+            O::pred(p0, Q::Zeroing),
+            O::mem_mul_vl(x0, 2)
+        )
+        .is_err()
+    );
+    assert!(
+        b.ld1w(
+            zl(z0, A::S),
+            O::pred(p0, Q::Zeroing),
+            O::mem_index(x0, z1, ExtendKind::Uxtw, Some(2))
+        )
+        .is_err()
+    );
+    Ok(())
+}
+
 #[test]
 fn errors() {
     let a = CodeAssembler::new(0x1000);

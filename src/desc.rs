@@ -182,6 +182,8 @@ pub(crate) enum Idx {
     Imm4(Fs, Fs),
     /// A constant (`<Vd>.D[1]`).
     Const(u8),
+    /// An optional index, left out when 0 (`PMOV <Zd>{[<imm>]}, <Pn>.H`).
+    Opt(Fs),
 }
 
 impl Idx {
@@ -223,6 +225,10 @@ impl Idx {
                 (imm4.get(word) >> low) as u8
             }
             Idx::Const(c) => c,
+            Idx::Opt(f) => match f.get(word) {
+                0 => Operand::NO_LANE,
+                v => v as u8,
+            },
         })
     }
 }
@@ -277,6 +283,9 @@ pub(crate) enum Imm {
         inv: bool,
         size: u8,
     },
+    /// Signed field value times a constant (`LD3B ..., #<imm>, MUL VL`: in multiples
+    /// of the three registers).
+    SMul(Fs, u8),
     /// SVE logical immediate (`DUPM`, `AND`, ...): `N:immr:imms` as a 64-bit
     /// `DecodeBitMasks`, shown as one element (the size `N:imms` gives).
     SveBitmask {
@@ -292,6 +301,7 @@ impl Imm {
             Imm::Const(c) => c as u64,
             Imm::U(f, shl) => u64::from(f.get(word)) << shl,
             Imm::S(f, shl) => (sext(u64::from(f.get(word)), f.width()) << shl) as u64,
+            Imm::SMul(f, k) => (sext(u64::from(f.get(word)), f.width()) * i64::from(k)) as u64,
             Imm::Add(f, k) => (i64::from(f.get(word)) + i64::from(k)) as u64,
             Imm::Rsub(k, f) => (i64::from(k) - i64::from(f.get(word))) as u64,
             Imm::NegMod(f, m) => {
@@ -390,6 +400,9 @@ pub(crate) enum MemOff {
         ext: Option<&'static Tab>,
         amount: Amount,
     },
+    /// An optional `X` index with a fixed `LSL` amount (0: none), left out when it is
+    /// XZR (`[<Xn|SP>{, <Xm>, LSL #1}]`, `[<Zn>.D{, <Xm>}]`).
+    OptReg(Fs, u8),
 }
 
 /// The shift amount of a register offset. (`None` and `Fixed` are for operand
@@ -418,6 +431,11 @@ pub(crate) struct Mem {
     pub post: Post,
     /// `[Xn]!` without an offset (`CPY*`, `SET*`).
     pub writeback: bool,
+    /// The element size of a vector base or index (`[<Zn>.D]`, `[<Xn|SP>, <Zm>.S,
+    /// SXTW]`).
+    pub arr: Arr,
+    /// The immediate offset is in multiples of the vector length (`MUL VL`).
+    pub mul_vl: bool,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -434,6 +452,9 @@ pub(crate) enum NameKind {
     Barrier,
     Prefetch,
     Plain,
+    /// An SVE predicate pattern (`VL4`, `ALL`); a value without a name is an
+    /// immediate (`#14`).
+    SvePattern,
 }
 
 /// The qualifier of a governing predicate.
@@ -525,8 +546,17 @@ pub(crate) enum Op {
     /// An SVE or SME register (`Z`, `P` or `PN`; field + `add`) with an element size
     /// and a predicate qualifier: `Z0.S`, `P1/M`, `PN8.B`.
     Zr(Fs, Rk, Arr, u8, Pq),
-    /// An indexed SVE or SME register: `Z1.S[2]`, `Z3[1]`, `PN9[0]`.
-    ZElem(Fs, Rk, Arr, Idx),
+    /// An indexed SVE or SME register (field + `add`): `Z1.S[2]`, `Z3[1]`, `PN9[0]`.
+    ZElem(Fs, Rk, Arr, Idx, u8),
+    /// `MUL #<imm>` after an SVE pattern: an immediate printed with `MUL`.
+    MulImm(Imm),
+    /// A list of SVE or SME registers: field, kind, count, stride and multiplier,
+    /// element size. The first register is the field times the multiplier
+    /// (consecutive lists; SME2 multi-vector lists start at a multiple of their
+    /// length), or for a stride of 4 or 8 the field's top bit gives bit 4 and its
+    /// other bits the low bits (`{ Z0.S, Z8.S }`, `{ Z17.S, Z21.S, Z25.S, Z29.S }`).
+    /// Consecutive lists wrap from Z31 to Z0.
+    ZList(Fs, Rk, u8, u8, u8, Arr),
 }
 
 fn reg_op(r: Register) -> Operand {
@@ -698,6 +728,8 @@ fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
                     NameKind::Barrier => OpKind::Barrier,
                     NameKind::Prefetch => OpKind::Prefetch,
                     NameKind::Plain => OpKind::Name,
+                    NameKind::SvePattern if name.is_none() => OpKind::Immediate,
+                    NameKind::SvePattern => OpKind::Name,
                 },
                 imm: u64::from(v),
                 name: name.unwrap_or(""),
@@ -722,16 +754,40 @@ fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
             pred: pq.get(word)?,
             ..reg_op(k.reg(plus(f, word, add)))
         },
-        Op::ZElem(f, k, a, idx) => {
+        Op::ZElem(f, k, a, idx, add) => {
             let es = a.get(word)?;
             Operand {
                 arr: es,
                 lane: idx.get(word, es)?,
-                ..reg_op(k.reg(f.get(word)))
+                ..reg_op(k.reg(plus(f, word, add)))
             }
         }
+        Op::MulImm(i) => Operand {
+            kind: OpKind::Immediate,
+            imm: i.get(word)?,
+            name: "MUL",
+            ..Operand::none()
+        },
+        Op::ZList(f, k, n, stride, mul, a) => Operand {
+            kind: OpKind::RegisterList,
+            reg: k.reg(zlist_first(f.get(word), stride, mul)),
+            arr: a.get(word)?,
+            count: n,
+            stride: if stride > 1 { stride } else { 0 },
+            ..Operand::none()
+        },
         Op::Suffix(_) => return None,
     })
+}
+
+/// The first register of an `Op::ZList` from its field value.
+pub(crate) fn zlist_first(v: u32, stride: u8, mul: u8) -> u32 {
+    if stride <= 1 {
+        v * u32::from(mul)
+    } else {
+        let s = u32::from(stride).trailing_zeros();
+        (v >> s) << 4 | (v & ((1 << s) - 1))
+    }
 }
 
 pub(crate) fn shift_kind(code: u8) -> ShiftKind {
@@ -750,11 +806,24 @@ fn decode_mem(m: &Mem, word: u32) -> Option<Operand> {
         reg: m.base_k.reg(m.base.get(word)),
         mode: m.mode,
         writeback: m.writeback,
+        arr: m.arr.get(word)?,
+        mul_vl: m.mul_vl,
         ..Operand::none()
     };
     match m.off {
         MemOff::None => {}
         MemOff::Imm(i) => o.imm = i.get(word)?,
+        MemOff::OptReg(f, a) => {
+            let n = f.get(word);
+            if n != 31 {
+                o.index_reg = Register::x(n);
+                o.extend = ExtendKind::Lsl;
+                if a != 0 {
+                    o.amount = a;
+                    o.has_amount = true;
+                }
+            }
+        }
         MemOff::Reg {
             m: f,
             k,
@@ -843,6 +912,7 @@ fn imm_cover(i: Imm, word: u32) -> Option<u32> {
         Imm::Const(_) => 0,
         Imm::U(f, _)
         | Imm::S(f, _)
+        | Imm::SMul(f, _)
         | Imm::Add(f, _)
         | Imm::Rsub(_, f)
         | Imm::NegU(f, _)
@@ -896,6 +966,7 @@ fn op_cover(op: &Op, word: u32) -> Option<u32> {
         Op::Mem(ref m) => {
             let off = match m.off {
                 MemOff::None => 0,
+                MemOff::OptReg(f, _) => f.mask(),
                 MemOff::Imm(i) => imm_cover(i, word)?,
                 MemOff::Reg {
                     m: f,
@@ -920,7 +991,7 @@ fn op_cover(op: &Op, word: u32) -> Option<u32> {
                 Post::Imm(i) => imm_cover(i, word)?,
                 Post::Reg(f) => f.mask(),
             };
-            m.base.mask() | off | post
+            m.base.mask() | off | post | arr_cover(m.arr, word)?
         }
         Op::Cond(f, ..) if f.width() <= 4 => f.mask(),
         Op::SysReg(f) if f.width() <= 15 => f.mask(),
@@ -938,6 +1009,8 @@ fn op_cover(op: &Op, word: u32) -> Option<u32> {
                 }
         }
         Op::ZElem(..) => return None,
+        Op::MulImm(i) => imm_cover(i, word)?,
+        Op::ZList(f, _, _, _, _, a) => f.mask() | arr_cover(a, word)?,
         Op::Cond(..) | Op::SysReg(_) | Op::SysOperation(_) => return None,
     })
 }
@@ -1006,6 +1079,7 @@ const fn imm_cover_const(i: Imm) -> Option<u32> {
         Imm::Const(_) => Some(0),
         Imm::U(f, _)
         | Imm::S(f, _)
+        | Imm::SMul(f, _)
         | Imm::Add(f, _)
         | Imm::Rsub(_, f)
         | Imm::NegU(f, _)
@@ -1071,6 +1145,7 @@ const fn op_cover_const(op: &Op) -> Option<u32> {
         Op::Mem(ref m) => {
             let off = match m.off {
                 MemOff::None => Some(0),
+                MemOff::OptReg(f, _) => Some(f.mask()),
                 MemOff::Imm(i) => imm_cover_const(i),
                 MemOff::Reg {
                     m: f,
@@ -1095,7 +1170,10 @@ const fn op_cover_const(op: &Op) -> Option<u32> {
                 Post::Imm(i) => imm_cover_const(i),
                 Post::Reg(f) => Some(f.mask()),
             };
-            or(Some(m.base.mask()), or(off, post))
+            or(
+                or(Some(m.base.mask()), arr_cover_const(m.arr)),
+                or(off, post),
+            )
         }
         Op::Cond(f, ..) if f.width() <= 4 => Some(f.mask()),
         Op::SysReg(f) if f.width() <= 15 => Some(f.mask()),
@@ -1112,6 +1190,8 @@ const fn op_cover_const(op: &Op) -> Option<u32> {
             },
         ),
         Op::ZElem(..) => None,
+        Op::MulImm(i) => imm_cover_const(i),
+        Op::ZList(f, _, _, _, _, a) => or(Some(f.mask()), arr_cover_const(a)),
         Op::Cond(..) | Op::SysReg(_) | Op::SysOperation(_) => None,
     }
 }

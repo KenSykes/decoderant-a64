@@ -123,7 +123,7 @@ pub(crate) struct Cx<'r> {
     pat_value: u32,
     env: &'r Env<'r>,
     /// Symbols in template order.
-    order: Vec<String>,
+    pub(crate) order: Vec<String>,
     iclass: String,
     /// The top-level group (`sve`, `sme`, `ldst`, ...).
     group: String,
@@ -302,9 +302,10 @@ impl Cx<'_> {
         // like bits (`T_B__10`).
         if self.sve() {
             let full = ((1u64 << widths.iter().sum::<u32>()) - 1) as u32;
-            // An immediate that shares the fields' low bits (`tsz:imm3`).
+            // An immediate that shares the fields' low bits (`tsz:imm3`, `tsize:imm5`):
+            // a symbol over these fields and more.
             let with_imm = self.syms.values().any(|s| {
-                s.fields.iter().any(|f| f.name == "imm3")
+                s.fields.len() > tf.len()
                     && s.fields.iter().any(|f| tf.iter().any(|t| t.lsb == f.lsb))
             });
             let pairs: Vec<Vec<(u32, u32)>> = match crate::sve::onehot(&tf, &alts, with_imm) {
@@ -380,6 +381,11 @@ impl Cx<'_> {
         Ok(self.rep.tabs.add(body))
     }
 
+    /// A table body of the generator's own (`Tab { ... }`), shared like the others.
+    pub(crate) fn tab(&mut self, body: String) -> String {
+        self.rep.tabs.add(body)
+    }
+
     /// An SVE or SME encoding.
     pub(crate) fn sve(&self) -> bool {
         matches!(self.group.as_str(), "sve" | "sme")
@@ -453,7 +459,6 @@ impl Cx<'_> {
                 .filter(|c| c.len() == n)
                 .max_by_key(|c| c.last().copied());
             if let Some(c) = anchor
-                && c.windows(2).all(|w| w[1] == w[0] + 1)
                 && c.iter().all(|v| a.contains(v))
             {
                 self.hand("SVE size table: element size code, others RESERVED");
@@ -1020,6 +1025,13 @@ fn map_inner(
             i += 1;
             continue;
         }
+        if cx.sve()
+            && let Some(r) = crate::sve::multi(&mut cx, g)
+        {
+            ops.extend(r?);
+            i += 1;
+            continue;
+        }
         if g.starts_with('{') {
             return Err(format!("optional group {g}"));
         }
@@ -1127,6 +1139,21 @@ fn r_table(cx: &mut Cx<'_>, size: &str) -> R<String> {
             "extend register width: X iff option<1:0> = 11",
             &o,
             &[(0b011, 0b011, 0), (0, 0, 1)],
+            &[],
+        ));
+    }
+    if size == "<R>"
+        && cx.sve()
+        && cx
+            .fields(size)
+            .is_ok_and(|v| v.len() == 1 && v[0].name == "size")
+    {
+        // INDEX, LASTA, CLASTA, ...: X for doubleword elements, else W.
+        let o = cx.fields(size)?;
+        return Ok(cx.hand_table(
+            "SVE register width: X iff size = 11",
+            &o,
+            &[(0b11, 0b11, 0), (0, 0, 1)],
             &[],
         ));
     }
@@ -1868,7 +1895,7 @@ fn named(cx: &mut Cx<'_>, name: &str, imm: &str) -> R<String> {
 fn mem(cx: &mut Cx<'_>, g: &str, mode: &str) -> R<String> {
     let mk = |base: String, k: &str, off: String, mode: &str, wb: bool| {
         format!(
-            "Op::Mem(Mem {{ base: {base}, base_k: Rk::{k}, off: {off}, mode: {mode}, post: Post::None, writeback: {wb} }})"
+            "Op::Mem(Mem {{ base: {base}, base_k: Rk::{k}, off: {off}, mode: {mode}, post: Post::None, writeback: {wb}, arr: Arr::Fixed(Arrangement::None), mul_vl: false }})"
         )
     };
     let base_of = |cx: &mut Cx<'_>, d: &str| -> R<(String, &'static str)> {
@@ -2094,7 +2121,7 @@ fn post_index(cx: &mut Cx<'_>, g: &str, next: &str) -> R<Option<String>> {
     };
     cx.hand("post-index");
     Ok(Some(format!(
-        "Op::Mem(Mem {{ base: {base}, base_k: Rk::{k}, off: MemOff::None, mode: MemoryMode::PostIndex, post: {post}, writeback: false }})"
+        "Op::Mem(Mem {{ base: {base}, base_k: Rk::{k}, off: MemOff::None, mode: MemoryMode::PostIndex, post: {post}, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false }})"
     )))
 }
 

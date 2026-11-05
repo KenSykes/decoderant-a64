@@ -279,7 +279,6 @@ cpy_z_o_i_ operands both we print the template form #<imm>, LSL #8 (MOV alias); 
 cpy_z_p_i_ operands both we print the template form #<imm>, LSL #8 (MOV alias); fARM64 (like LLVM) prints the shifted value
 decp_z_p_z_ operands isa Arm ARM syntax is DECP <Zdn>.<T>, <Pm>.<T>; fARM64 leaves out the predicate's element size
 dup_z_i_ operands both we print the template form #<imm>, LSL #8 (MOV alias); fARM64 (like LLVM) prints the shifted value
-dupm_z_i_ mnemonic isa SVEMoveMaskPreferred (Arm pseudocode) prefers MOV when no DUP (immediate) gives the pattern (0xf8 in words, 0xff01 in halfwords); fARM64 prints DUPM
 fdot_z_zz8z8i_ operands isa the index is i3h:i3l (bits 20:19 and 11, 0-7); fARM64 reads i3h only
 incp_z_p_z_ operands isa Arm ARM syntax is INCP <Zdn>.<T>, <Pm>.<T>; fARM64 leaves out the predicate's element size
 sdot_z16_zzzi_h operands isa fARM64 ignores bit 23 and decodes the halfword-accumulating SDOT (indexed; bit 22 is i3h) as the S/D forms (44a00000/44e00000)
@@ -294,3 +293,93 @@ uqadd_z_zi_ operands both we print the template form #<imm>, LSL #8; fARM64 (lik
 uqdecp_z_p_z_ operands isa Arm ARM syntax is UQDECP <Zdn>.<T>, <Pm>.<T>; fARM64 leaves out the predicate's element size
 uqincp_z_p_z_ operands isa Arm ARM syntax is UQINCP <Zdn>.<T>, <Pm>.<T>; fARM64 leaves out the predicate's element size
 uqsub_z_zi_ operands both we print the template form #<imm>, LSL #8; fARM64 (like LLVM) prints the shifted value
+ld1rob_z_p_bi_u8 operands isa the offset is a multiple of 32 (-256 to 224, imm4 * 32 per the Arm ARM); fARM64 prints imm4 unscaled
+ld1rod_z_p_bi_u64 operands isa the offset is a multiple of 32 (-256 to 224, imm4 * 32 per the Arm ARM); fARM64 prints imm4 unscaled
+ld1roh_z_p_bi_u16 operands isa the offset is a multiple of 32 (-256 to 224, imm4 * 32 per the Arm ARM); fARM64 prints imm4 unscaled
+ld1row_z_p_bi_u32 operands isa the offset is a multiple of 32 (-256 to 224, imm4 * 32 per the Arm ARM); fARM64 prints imm4 unscaled
+ld3b_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld3b_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld3d_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld3d_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld3h_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld3h_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld3q_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld3q_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld3w_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld3w_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld4b_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld4b_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld4d_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld4d_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld4h_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld4h_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld4q_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld4q_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld4w_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ld4w_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+ldff1b_z_p_br_u16 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1b_z_p_br_u32 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1b_z_p_br_u64 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1b_z_p_br_u8 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1d_z_p_br_u64 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1h_z_p_br_u16 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1h_z_p_br_u32 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1h_z_p_br_u64 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1sb_z_p_br_s16 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1sb_z_p_br_s32 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1sb_z_p_br_s64 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1sh_z_p_br_s32 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1sh_z_p_br_s64 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1sw_z_p_br_s64 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1w_z_p_br_u32 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldff1w_z_p_br_u64 operands both the optional index (<Xm>, default XZR) is left out at its default, as the template's braces allow; fARM64 prints xzr
+ldnt1b_z_p_ar_d_64_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ldnt1b_z_p_ar_s_x32_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ldnt1d_z_p_ar_d_64_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ldnt1h_z_p_ar_d_64_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ldnt1h_z_p_ar_s_x32_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ldnt1sb_z_p_ar_d_64_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ldnt1sb_z_p_ar_s_x32_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ldnt1sh_z_p_ar_d_64_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ldnt1sh_z_p_ar_s_x32_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ldnt1sw_z_p_ar_d_64_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ldnt1w_z_p_ar_d_64_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ldnt1w_z_p_ar_s_x32_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+st3b_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st3b_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st3d_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st3d_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st3h_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st3h_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st3q_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st3q_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st3w_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st3w_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st4b_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st4b_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st4d_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st4d_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st4h_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st4h_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st4q_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st4q_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st4w_z_p_bi_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+st4w_z_p_br_contiguous operands both three or more consecutive registers print as a range ({ z0.s-z3.s }), as decided; fARM64 lists them
+stnt1b_z_p_ar_d_64_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+stnt1b_z_p_ar_s_x32_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+stnt1d_z_p_ar_d_64_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+stnt1h_z_p_ar_d_64_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+stnt1h_z_p_ar_s_x32_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+stnt1w_z_p_ar_d_64_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+stnt1w_z_p_ar_s_x32_unscaled operands both the optional scalar offset of [<Zn>.<T>{, <Xm>}] is left out when it is XZR; fARM64 prints xzr
+ext_z_zi_con operands isa constructive EXT has two operands before the immediate ({ Zn1, Zn2 }); fARM64 adds a third register
+adr_z_az_d_s32_scaled operands isa the template is [<Zn>.D, <Zm>.D, SXTW<amount>]: SXTW is printed even without an amount; fARM64 leaves it out
+adr_z_az_d_u32_scaled operands isa the template is [<Zn>.D, <Zm>.D, UXTW<amount>]: UXTW is printed even without an amount; fARM64 leaves it out
+ldapro_z_bi_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE_LRCPC)
+pmov_p_zi_d operands both the index of <Zd>{[<imm>]} / <Zn>{[<imm>]} is optional and left out at 0, as the template's braces allow; fARM64 prints [0]
+pmov_p_zi_h operands both the index of <Zd>{[<imm>]} / <Zn>{[<imm>]} is optional and left out at 0, as the template's braces allow; fARM64 prints [0]
+pmov_p_zi_s operands both the index of <Zd>{[<imm>]} / <Zn>{[<imm>]} is optional and left out at 0, as the template's braces allow; fARM64 prints [0]
+pmov_z_pi_d operands both the index of <Zd>{[<imm>]} / <Zn>{[<imm>]} is optional and left out at 0, as the template's braces allow; fARM64 prints [0]
+pmov_z_pi_h operands both the index of <Zd>{[<imm>]} / <Zn>{[<imm>]} is optional and left out at 0, as the template's braces allow; fARM64 prints [0]
+pmov_z_pi_s operands both the index of <Zd>{[<imm>]} / <Zn>{[<imm>]} is optional and left out at 0, as the template's braces allow; fARM64 prints [0]
+stlro_z_bi_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE_LRCPC)

@@ -204,3 +204,80 @@ fn sve_predication_and_implicit_registers() {
         assert_eq!(v, expect, "{w:08x} {text}");
     }
 }
+
+/// SVE loads, stores and prefetches: transfer lists written by loads and read by
+/// stores, the governing predicate read, the base and a vector index read, and the
+/// access size unknown (0: it depends on the vector length). `ADR` accesses no
+/// memory.
+#[test]
+fn sve_memory() {
+    use OpAccess::{Read as Rd, ReadWrite as Rw, Write as Wr};
+    use aarch64_isa::Register as R;
+    let info = |w: u32| {
+        let i = decode_word(w, PC, &DecoderOptions::default());
+        let mut f = InstructionInfoFactory::new();
+        let info = f.info(&i);
+        let mut v: Vec<(R, OpAccess)> = info
+            .used_registers()
+            .iter()
+            .map(|u| (u.register, u.access))
+            .collect();
+        v.sort_by_key(|x| x.0 as u16);
+        let m: Vec<(R, R, u32, OpAccess)> = info
+            .used_memory()
+            .iter()
+            .map(|m| (m.base, m.index, m.size, m.access))
+            .collect();
+        (i.to_string(), v, m)
+    };
+    for (w, text, regs, mem) in [
+        (
+            0x8531_48d5u32,
+            "ld1w { z21.s }, p2/z, [x6, z17.s, uxtw #2]",
+            vec![(R::X6, Rd), (R::Z17, Rd), (R::Z21, Wr), (R::P2, Rd)],
+            vec![(R::X6, R::Z17, 0, Rd)],
+        ),
+        (
+            0xe57a_fd9d,
+            "st4w { z29.s, z30.s, z31.s, z0.s }, p7, [x12, #-0x18, mul vl]",
+            vec![
+                (R::X12, Rd),
+                (R::Z0, Rd),
+                (R::Z29, Rd),
+                (R::Z30, Rd),
+                (R::Z31, Rd),
+                (R::P7, Rd),
+            ],
+            vec![(R::X12, R::None, 0, Wr)],
+        ),
+        (
+            0xa41f_7fff,
+            "ldff1b { z31.b }, p7/z, [sp]",
+            vec![(R::SP, Rd), (R::Z31, Wr), (R::P7, Rd), (R::FFR, Rw)],
+            vec![(R::SP, R::None, 0, Rd)],
+        ),
+        (
+            0x8468_192c,
+            "prfb pstl3keep, p6, [x9, z8.s, sxtw]",
+            vec![(R::X9, Rd), (R::Z8, Rd), (R::P6, Rd)],
+            vec![(R::X9, R::Z8, 0, OpAccess::None)],
+        ),
+        (
+            0x043e_abb6,
+            "adr z22.d, [z29.d, z30.d, sxtw #2]",
+            vec![(R::Z22, Wr), (R::Z29, Rd), (R::Z30, Rd)],
+            vec![],
+        ),
+        (
+            0x85b2_4bec,
+            "ldr z12, [sp, #-0x6e, mul vl]",
+            vec![(R::SP, Rd), (R::Z12, Wr)],
+            vec![(R::SP, R::None, 0, Rd)],
+        ),
+    ] {
+        let (t, v, m) = info(w);
+        assert_eq!(t, text, "{w:08x}");
+        assert_eq!(v, regs, "{w:08x} {text}");
+        assert_eq!(m, mem, "{w:08x} {text}");
+    }
+}

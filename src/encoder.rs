@@ -8,7 +8,7 @@
 
 use crate::bits::{Fs, encode_bit_mask, fp_imm8_encode, highest_set_bit};
 use crate::desc::{
-    ARR, Amount, Arr, Idx, Imm, ImmShift, Mem, MemOff, Op, Post, Pq, RK, RegSel, Rk, Tab,
+    ARR, Amount, Arr, Idx, Imm, ImmShift, Mem, MemOff, NameKind, Op, Post, Pq, RK, RegSel, Rk, Tab,
     sve_bitmask_esize,
 };
 use crate::generated::{Code, Register};
@@ -194,6 +194,14 @@ fn index(w: &mut W, idx: Idx, es: Arrangement, i: u8) -> R {
             }
             Ok(())
         }
+        Idx::Opt(f) => w.put(
+            f,
+            if i == u32::from(Operand::NO_LANE) {
+                0
+            } else {
+                i
+            },
+        ),
     }
 }
 
@@ -232,6 +240,19 @@ fn imm(w: &mut W, i: Imm, v: u64) -> R {
             let width = f.width();
             let (lo, hi) = (-(1i64 << (width - 1)), (1i64 << (width - 1)) - 1);
             if x < lo || x > hi {
+                return Err(EncodeError::Range(op));
+            }
+            w.put(f, (x as u32) & ((1u64 << width) - 1) as u32)
+        }
+        Imm::SMul(f, k) => {
+            let s = v as i64;
+            let k = i64::from(k);
+            if s % k != 0 {
+                return Err(EncodeError::Unrepresentable(op));
+            }
+            let x = s / k;
+            let width = f.width();
+            if x < -(1i64 << (width - 1)) || x >= 1i64 << (width - 1) {
                 return Err(EncodeError::Range(op));
             }
             w.put(f, (x as u32) & ((1u64 << width) - 1) as u32)
@@ -474,26 +495,58 @@ fn extend_code(e: ExtendKind) -> u8 {
 fn mem(w: &mut W, m: &Mem, o: &Operand, pc: u64) -> R {
     let i = w.op;
     want(o, OpKind::Memory, i)?;
-    if o.mode != m.mode || o.writeback != m.writeback {
+    // `[x0]` is `[x0, #0, MUL VL]`.
+    let vl_ok = o.mul_vl == m.mul_vl || (m.mul_vl && o.imm == 0);
+    if o.mode != m.mode || o.writeback != m.writeback || !vl_ok {
         return Err(EncodeError::WrongKind(i));
     }
     if !fits(o.reg, m.base_k) {
         return Err(EncodeError::Register(i));
     }
     w.put(m.base, o.reg.number())?;
+    arr(w, m.arr, o.arr)?;
     match m.off {
         MemOff::None => {
             if m.mode != MemoryMode::PostIndex && (o.imm != 0 || o.index_reg != Register::None) {
                 return Err(EncodeError::Range(i));
             }
         }
-        MemOff::Imm(x) => imm(w, x, o.imm)?,
+        MemOff::Imm(x) => {
+            // An index the encoding has no place for is not silently dropped.
+            if o.index_reg != Register::None {
+                return Err(EncodeError::WrongKind(i));
+            }
+            imm(w, x, o.imm)?
+        }
+        MemOff::OptReg(f, a) => {
+            if o.imm != 0 {
+                return Err(EncodeError::WrongKind(i));
+            }
+            if o.index_reg == Register::None || o.index_reg == Register::XZR {
+                if o.has_amount {
+                    return Err(EncodeError::Range(i));
+                }
+                w.put(f, 31)?;
+            } else {
+                if !fits(o.index_reg, Rk::X)
+                    || o.extend != ExtendKind::Lsl
+                    || o.has_amount != (a != 0)
+                    || (a != 0 && o.amount != a)
+                {
+                    return Err(EncodeError::Register(i));
+                }
+                w.put(f, o.index_reg.number())?;
+            }
+        }
         MemOff::Reg {
             m: f,
             k,
             ext,
             amount,
         } => {
+            if o.imm != 0 && m.mode != MemoryMode::PostIndex {
+                return Err(EncodeError::WrongKind(i));
+            }
             reg(w, f, k, 0, o.index_reg)?;
             match ext {
                 Some(t) => {
@@ -752,8 +805,10 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
             want(o, OpKind::ControlRegister, i)?;
             w.put(f, o.imm as u32)
         }
-        Op::Name(t, _) => {
-            if !matches!(o.kind, OpKind::Barrier | OpKind::Prefetch | OpKind::Name) {
+        Op::Name(t, kind) => {
+            let pattern_imm = kind == NameKind::SvePattern && o.kind == OpKind::Immediate;
+            if !matches!(o.kind, OpKind::Barrier | OpKind::Prefetch | OpKind::Name) && !pattern_imm
+            {
                 return Err(EncodeError::WrongKind(i));
             }
             w.put(t.f, o.imm as u32)
@@ -777,13 +832,42 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
             pred(w, pq, o.pred)?;
             w.put(f, (o.reg.number() + 32 - u32::from(add)) % 32)
         }
-        Op::ZElem(f, k, a, idx) => {
-            want(o, OpKind::Register, i)?;
-            if o.lane == Operand::NO_LANE || !fits(o.reg, k) || o.pred != PredQual::None {
+        Op::MulImm(x) => {
+            want(o, OpKind::Immediate, i)?;
+            imm(w, x, o.imm)
+        }
+        Op::ZList(f, k, n, stride, mul, a) => {
+            want(o, OpKind::RegisterList, i)?;
+            if o.count != n || o.list_stride() != stride.max(1) || o.lane != Operand::NO_LANE {
+                return Err(EncodeError::WrongKind(i));
+            }
+            if !fits(o.reg, k) {
                 return Err(EncodeError::Register(i));
             }
             arr(w, a, o.arr)?;
-            w.put(f, o.reg.number())?;
+            let first = o.reg.number();
+            let v = if stride <= 1 {
+                if first % u32::from(mul) != 0 {
+                    return Err(EncodeError::Register(i));
+                }
+                first / u32::from(mul)
+            } else {
+                let s = u32::from(stride).trailing_zeros();
+                if (first & 15) >> s != 0 {
+                    return Err(EncodeError::Register(i));
+                }
+                (first >> 4) << s | (first & ((1 << s) - 1))
+            };
+            w.put(f, v)
+        }
+        Op::ZElem(f, k, a, idx, add) => {
+            want(o, OpKind::Register, i)?;
+            let no_lane = o.lane == Operand::NO_LANE && !matches!(idx, Idx::Opt(_));
+            if no_lane || !fits(o.reg, k) || o.pred != PredQual::None {
+                return Err(EncodeError::Register(i));
+            }
+            arr(w, a, o.arr)?;
+            w.put(f, (o.reg.number() + 32 - u32::from(add)) % 32)?;
             index(w, idx, o.arr, o.lane)
         }
     }

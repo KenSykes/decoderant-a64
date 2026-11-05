@@ -303,10 +303,16 @@ fn role(insn: &Instruction) -> Role {
     let oc = insn.op_code();
     let m = mnemonic_str(insn.mnemonic());
     let ic = oc.iclass();
-    let mem = insn.operands().iter().any(|o| o.kind == OpKind::Memory);
+    // SVE `ADR <Zd>.D, [<Zn>.D, <Zm>.D, ...]` computes addresses; it does not access
+    // memory.
+    let mem = insn.operands().iter().any(|o| o.kind == OpKind::Memory) && !is_sve_adr(insn);
     let suffix2 = has_suffix_2(insn);
     if mem {
-        if m.starts_with("PRFM") || m.starts_with("PRFUM") || m == "RPRFM" {
+        if m.starts_with("PRFM")
+            || m.starts_with("PRFUM")
+            || m == "RPRFM"
+            || is_sve_sme(insn) && m.starts_with("PRF")
+        {
             return Role::Read;
         }
         if m.starts_with("CAS") || m.starts_with("RCWCAS") || m.starts_with("RCWSCAS") {
@@ -361,6 +367,11 @@ fn role(insn: &Instruction) -> Role {
         return Role::Accum;
     }
     Role::Dest
+}
+
+/// SVE `ADR`: a memory-shaped operand without an access.
+fn is_sve_adr(insn: &Instruction) -> bool {
+    is_sve_sme(insn) && insn.mnemonic() == Mnemonic::Adr
 }
 
 /// An SVE or SME encoding.
@@ -439,8 +450,11 @@ mod heapless_name {
 /// Registers a register-list operand names.
 fn list_regs(o: &Operand) -> impl Iterator<Item = Register> + '_ {
     let n = o.reg.number();
+    let s = u32::from(o.list_stride());
     (0..u32::from(o.count)).map(move |k| match o.reg.class() {
-        RegisterClass::Z => Register::z((n + k) % 32),
+        RegisterClass::Z => Register::z((n + k * s) % 32),
+        RegisterClass::P => Register::p((n + k * s) % 16),
+        RegisterClass::PN => Register::pn((n + k * s) % 16),
         _ => Register::v((n + k) % 32),
     })
 }
@@ -565,9 +579,19 @@ fn compute(insn: &Instruction) -> InstructionInfo {
         } else {
             access
         };
+        // A governing predicate is read, also before the memory operand of a load.
+        let access = if o.pred != crate::operand::PredQual::None {
+            OpAccess::Read
+        } else {
+            access
+        };
         operand_regs(o, |r| info.add_reg(r, access));
     }
-    if let Some(mi) = mem_index {
+    if let Some(mi) = mem_index.filter(|_| is_sve_adr(insn)) {
+        let m = ops[mi];
+        info.add_reg(m.reg, OpAccess::Read);
+        info.add_reg(m.index_reg, OpAccess::Read);
+    } else if let Some(mi) = mem_index {
         let m = ops[mi];
         let wb = matches!(m.mode, MemoryMode::PreIndex | MemoryMode::PostIndex) || m.writeback;
         info.add_reg(
@@ -585,7 +609,13 @@ fn compute(insn: &Instruction) -> InstructionInfo {
             Role::Atomic | Role::CompareSwap | Role::AtomicPair => OpAccess::ReadWrite,
             _ => OpAccess::None,
         };
-        let size = access_size(insn, &ops[..mi]);
+        // SVE and SME accesses depend on the vector length (and the predicate): their
+        // size is unknown (0).
+        let size = if is_sve_sme(insn) {
+            0
+        } else {
+            access_size(insn, &ops[..mi])
+        };
         info.add_mem(UsedMemory {
             base: m.reg,
             index: m.index_reg,

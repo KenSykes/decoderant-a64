@@ -363,6 +363,12 @@ pub struct Operand {
     pub(crate) raw_fields: u16,
     /// The qualifier of a governing predicate (`P0/Z`, `P0/M`).
     pub(crate) pred: PredQual,
+    /// Register lists: the distance between registers (0 or 1: consecutive; SME2
+    /// strided lists `{ Z0.S, Z8.S }`: 8).
+    pub(crate) stride: u8,
+    /// Memory: the immediate offset is in multiples of the vector length (`#1, MUL
+    /// VL`).
+    pub(crate) mul_vl: bool,
 }
 
 impl Operand {
@@ -387,6 +393,16 @@ impl Operand {
 
     pub fn list_len(&self) -> u8 {
         self.count
+    }
+
+    /// The distance between the registers of a list (1 for consecutive lists).
+    pub fn list_stride(&self) -> u8 {
+        self.stride.max(1)
+    }
+
+    /// Memory: whether the offset is in multiples of the vector length (`MUL VL`).
+    pub fn mul_vl(&self) -> bool {
+        self.mul_vl
     }
 
     pub fn immediate(&self) -> u64 {
@@ -618,6 +634,29 @@ impl Operand {
             amount: amount.unwrap_or(0),
             has_amount: amount.is_some(),
             ..Operand::mem(base)
+        }
+    }
+
+    /// `[base, #offset, MUL VL]` (SVE): the offset in multiples of the vector length.
+    pub fn mem_mul_vl(base: Register, offset: i64) -> Operand {
+        Operand {
+            mul_vl: true,
+            ..Operand::mem_off(base, offset)
+        }
+    }
+
+    /// `[Zn.D{, #offset}]` (SVE vector base) or `[Xn, Zm.D, SXTW #2]` (vector index):
+    /// the element size of the vector base or index.
+    pub fn mem_vec(mut m: Operand, es: Arrangement) -> Operand {
+        m.arr = es;
+        m
+    }
+
+    /// A list of `count` registers `stride` apart (SME2 strided lists).
+    pub fn list_strided(first: Register, count: u8, stride: u8, arr: Arrangement) -> Operand {
+        Operand {
+            stride,
+            ..Operand::list(first, count, arr)
         }
     }
 

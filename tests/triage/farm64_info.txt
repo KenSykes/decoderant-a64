@@ -448,3 +448,232 @@ whilels_p_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fA
 whilelt_p_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
 whilerw_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
 whilewr_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+bfcvtn_z8_mz2_bf2b registers isa the multi-vector conversion writes every element of the destination; fARM64 reports it read as well
+bfcvtn_z_mz2_ registers isa the multi-vector conversion writes every element of the destination; fARM64 reports it read as well
+decb_r_rs_ registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+decd_r_rs_ registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+decd_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+dech_r_rs_ registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+dech_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+decw_r_rs_ registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+decw_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+fcvtnt_z8_mz2_s2b registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+incb_r_rs_ registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+incd_r_rs_ registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+incd_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+inch_r_rs_ registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+inch_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+incw_r_rs_ registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+incw_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+ld1b_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1b_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1b_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1b_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1b_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1b_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1b_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1b_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1d_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1d_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1d_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1d_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1d_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1d_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1d_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1d_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1h_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1h_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1h_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1h_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1h_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1h_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1h_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1h_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1w_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1w_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1w_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1w_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1w_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1w_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1w_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ld1w_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnf1b_z_p_bi_u16 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1b_z_p_bi_u32 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1b_z_p_bi_u64 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1b_z_p_bi_u8 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1d_z_p_bi_u64 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1h_z_p_bi_u16 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1h_z_p_bi_u32 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1h_z_p_bi_u64 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1sb_z_p_bi_s16 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1sb_z_p_bi_s32 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1sb_z_p_bi_s64 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1sh_z_p_bi_s32 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1sh_z_p_bi_s64 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1sw_z_p_bi_s64 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1w_z_p_bi_u32 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnf1w_z_p_bi_u64 registers isa first-fault and non-fault loads update FFR (read and written); fARM64 reports a read only
+ldnt1b_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1b_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1b_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1b_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1b_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1b_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1b_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1b_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1d_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1d_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1d_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1d_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1d_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1d_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1d_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1d_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1h_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1h_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1h_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1h_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1h_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1h_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1h_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1h_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1w_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1w_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1w_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1w_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1w_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1w_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1w_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+ldnt1w_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+pmlal_mz_zzzw_1x2 registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+ptrues_p_s_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+sel_mz_p_zz_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+sel_mz_p_zz_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+sqdecb_r_rs_sx registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqdecb_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqdecd_r_rs_sx registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqdecd_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqdecd_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdech_r_rs_sx registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqdech_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqdech_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdecw_r_rs_sx registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqdecw_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqdecw_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqincb_r_rs_sx registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqincb_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqincd_r_rs_sx registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqincd_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqincd_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqinch_r_rs_sx registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqinch_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqinch_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqincw_r_rs_sx registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqincw_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+sqincw_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+st1b_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1b_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1b_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1b_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1b_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1b_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1b_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1b_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1d_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1d_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1d_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1d_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1d_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1d_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1d_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1d_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1h_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1h_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1h_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1h_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1h_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1h_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1h_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1h_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1w_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1w_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1w_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1w_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1w_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1w_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1w_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+st1w_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1b_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1b_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1b_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1b_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1b_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1b_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1b_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1b_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1d_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1d_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1d_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1d_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1d_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1d_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1d_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1d_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1h_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1h_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1h_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1h_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1h_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1h_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1h_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1h_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1w_mz_p_bi_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1w_mz_p_bi_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1w_mz_p_br_2 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1w_mz_p_br_4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1w_mzx_p_bi_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1w_mzx_p_bi_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1w_mzx_p_br_2x8 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+stnt1w_mzx_p_br_4x4 registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+uqdecb_r_rs_uw registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqdecb_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqdecd_r_rs_uw registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqdecd_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqdecd_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uqdech_r_rs_uw registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqdech_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqdech_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uqdecw_r_rs_uw registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqdecw_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqdecw_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uqincb_r_rs_uw registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqincb_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqincd_r_rs_uw registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqincd_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqincd_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uqinch_r_rs_uw registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqinch_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqinch_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uqincw_r_rs_uw registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqincw_r_rs_x registers isa <Xdn>/<Wdn> is incremented or decremented by an element count: read and written; fARM64 reports a write only
+uqincw_z_zs_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+whilege_pp_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilegt_pp_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilehi_pp_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilehs_pp_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilele_pp_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilelo_pp_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilels_pp_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilelt_pp_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cntp_r_pn_ registers isa the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+insr_z_r_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+whilege_pn_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it; and the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+whilegt_pn_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it; and the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+whilehi_pn_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it; and the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+whilehs_pn_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it; and the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+whilele_pn_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it; and the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+whilelo_pn_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it; and the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+whilels_pn_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it; and the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+whilelt_pn_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it; and the governing or destination predicate is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+pext_pn_rr_ registers isa PEXT writes Pd and reads the predicate-as-counter PNn (PN8-PN15); fARM64 names PNn as Pn and merges it with the destination
+pext_pp_rr_ registers isa PEXT writes the pair and reads the predicate-as-counter PNn (PN8-PN15); fARM64 names PNn as Pn and merges it with the destination
