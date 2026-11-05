@@ -26,7 +26,7 @@ workspace = true
 
 [dev-dependencies]
 # Independent oracles for the differential tests (hand-written decode trees).
-fARM64 = { version = "0.1", features = ["alloc", "crypto"] }
+fARM64 = { version = "0.1", features = ["alloc", "crypto", "sve", "sme"] }
 yaxpeax-arm = "0.5"
 yaxpeax-arch = { version = "0.3", default-features = false }
 

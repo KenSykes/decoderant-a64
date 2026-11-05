@@ -115,6 +115,8 @@ struct Cx<'r> {
     /// Symbols in template order.
     order: Vec<String>,
     iclass: String,
+    /// The top-level group (`sve`, `sme`, `ldst`, ...).
+    group: String,
     mnemonic: String,
     syms: BTreeMap<String, Sym>,
     rep: &'r mut Report,
@@ -663,7 +665,7 @@ pub fn map(
     mnemonic: &str,
     rep: &mut Report,
 ) -> Option<String> {
-    let res = map_inner(model, leaf, leaf.json, t, mnemonic, rep);
+    let res = map_atomic(model, leaf, leaf.json, t, mnemonic, rep);
     match res {
         Ok(s) => {
             rep.mapped += 1;
@@ -691,7 +693,7 @@ pub fn map_alias(
 ) -> Option<String> {
     // Alias failures are not counted against the encoding.
     let (mapped, unmapped, failures) = (rep.mapped, rep.unmapped, rep.failures.clone());
-    let r = map_inner(model, leaf, alias, t, mnemonic, rep);
+    let r = map_atomic(model, leaf, alias, t, mnemonic, rep);
     rep.mapped = mapped;
     rep.unmapped = unmapped;
     rep.failures = failures;
@@ -706,6 +708,30 @@ pub fn map_alias(
             None
         }
     }
+}
+
+/// [`map_inner`], leaving no tables or hand-rule counts behind when it fails.
+fn map_atomic(
+    model: &Model<'_>,
+    leaf: &Leaf<'_>,
+    json: &Value,
+    t: &[T],
+    mnemonic: &str,
+    rep: &mut Report,
+) -> R<String> {
+    let (tabs, data, hand) = (
+        rep.tabs.bodies.len(),
+        rep.data_tables,
+        rep.hand_rules.clone(),
+    );
+    let r = map_inner(model, leaf, json, t, mnemonic, rep);
+    if r.is_err() {
+        rep.tabs.bodies.truncate(tabs);
+        rep.tabs.index.retain(|_, i| *i < tabs);
+        rep.data_tables = data;
+        rep.hand_rules = hand;
+    }
+    r
 }
 
 fn map_inner(
@@ -736,17 +762,15 @@ fn map_inner(
         pat_mask: model.full_pattern(leaf.node).mask,
         order,
         iclass: leaf.iclass.clone(),
+        group: {
+            let p = model.path(leaf.node);
+            model.nodes[p[p.len() - 2]].name.clone()
+        },
         mnemonic: mnemonic.to_string(),
         syms,
         rep,
     };
-    if cx
-        .syms
-        .keys()
-        .any(|k| k.starts_with("<Z") || k.starts_with("<P") || k.starts_with("<ZA"))
-    {
-        return Err("SVE/SME operands (not supported yet)".into());
-    }
+    dump(&cx, t);
     let s = shape(t);
     // The mnemonic part runs to the first space outside brackets and symbols.
     let split = {
@@ -864,6 +888,14 @@ fn map_inner(
     }
     if ops.len() > 8 {
         return Err("more than 8 operands".into());
+    }
+    if matches!(cx.group.as_str(), "sve" | "sme")
+        && cx
+            .syms
+            .keys()
+            .any(|k| k.starts_with("<Z") || k.starts_with("<P"))
+    {
+        return Err("SVE/SME: every symbol recognised (operand rules not reviewed yet)".into());
     }
     cx.rep.last_arity = ops.iter().filter(|o| !o.starts_with("Op::Suffix")).count();
     Ok(ops.join(", "))
@@ -2016,4 +2048,36 @@ fn immh_bits(d: &str, fields: &[&str], text: &str) -> Option<(u32, u32)> {
 /// names).
 fn cx_field(cx: &Cx<'_>, name: &str) -> Option<Field> {
     cx.leaf_fields.iter().find(|f| f.name == name).cloned()
+}
+
+/// With `AARCH64_ISA_GEN_DUMP=<file>`, appends each template mapped and its symbols
+/// (fields, rule names and texts) to the file: the raw material for new hand rules.
+fn dump(cx: &Cx<'_>, t: &[T]) {
+    use std::io::Write as _;
+    let Ok(p) = std::env::var("AARCH64_ISA_GEN_DUMP") else {
+        return;
+    };
+    let Ok(mut f) = std::fs::OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(p)
+    else {
+        return;
+    };
+    let kind = if cx.alias { "alias" } else { "encoding" };
+    let _ = writeln!(f, "{} {kind} | {}", cx.name, shape(t));
+    for k in &cx.order {
+        let s = &cx.syms[k];
+        let fl: Vec<String> = s
+            .fields
+            .iter()
+            .map(|f| format!("{}:{}+{}", f.name, f.lsb, f.width))
+            .collect();
+        let al: Vec<String> = s
+            .alts
+            .iter()
+            .map(|a| format!("{}={}", a.rule, a.text))
+            .collect();
+        let _ = writeln!(f, "    {k} [{}] {}", fl.join(" "), al.join(" ; "));
+    }
 }
