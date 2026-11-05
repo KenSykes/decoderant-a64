@@ -3,9 +3,11 @@
 //! The SVE/SME rule names carry no field values (`T_B__2`, not `T_00_8B`), so
 //! every value table is a hand rule: in general the alternatives, in spec order,
 //! are the values the encoding allows in ascending order (`Cx::allowed`); the
-//! element sizes from `tsz` are one-hot (`onehot`). Register symbols are `Z`, `P`
-//! and `PN` registers numbered by their field, with `PN` fields of three bits
-//! naming `PN8`-`PN15`.
+//! element sizes from `tsz` and `imm13` are one-hot (`onehot`). Register symbols
+//! are `Z`, `P` and `PN` registers numbered by their field, with `PN` fields of three
+//! bits naming `PN8`-`PN15`, and a few maps (`zmap`). Also here: SVE memory operands
+//! (`mem`), register lists (`list`), patterns (`multi`) and the SME ZA and `ZT0`
+//! operands (`za`).
 
 use crate::model::Field;
 use crate::operands::{Cx, R, fs, imm, m};

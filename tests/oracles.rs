@@ -12,7 +12,10 @@
 //! - `AARCH64_ISA_SAMPLES=<n>` changes the samples per encoding (default 48).
 //!
 //! Scope: the base, FP and Advanced SIMD groups (`control`, `dpimm`, `dpreg`,
-//! `ldst`, `simd_dp`). SVE and SME come later (docs/arch/aarch64-isa.md, "Scope").
+//! `ldst`, `simd_dp`) for both oracles, and the SVE and SME groups (`sve`, `sme`)
+//! for fARM64, which decodes them with its `sve` and `sme` features (yaxpeax-arm
+//! 0.5 decodes neither). SVE/SME samples come from one generator per encoding, so
+//! the base groups' samples and triage are independent of them.
 
 mod common;
 

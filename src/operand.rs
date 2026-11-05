@@ -9,11 +9,13 @@ pub enum OpKind {
     #[default]
     None,
     /// A register: general-purpose, scalar SIMD&FP (`B`..`Q`), or a vector with an
-    /// [`Arrangement`] (`V0.4S`), or a vector element (`V0.S[1]`, see
-    /// [`Operand::index`]).
+    /// [`Arrangement`] (`V0.4S`, `Z0.S`, `P0.B`), or a vector element (`V0.S[1]`, see
+    /// [`Operand::index`]); SVE predicates carry a qualifier
+    /// ([`Operand::predicate`]), and `ZT0` is a register.
     Register,
-    /// A list of consecutive vector registers (`{ V0.16B, V1.16B }`), optionally
-    /// with an element index.
+    /// A list of registers (`{ V0.16B, V1.16B }`, `{ Z0.S-Z3.S }`, `{ P0.H, P1.H }`):
+    /// consecutive, or `Operand::list_stride` apart (SME2 `{ Z0.S, Z8.S }`),
+    /// optionally with an element index.
     RegisterList,
     /// An integer immediate, possibly shifted (`#1, LSL #12`).
     Immediate,

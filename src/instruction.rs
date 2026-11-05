@@ -129,8 +129,8 @@ impl Instruction {
         self.code.op_code()
     }
 
-    /// Whether operands are decoded for this encoding (operand support is built
-    /// group by group; see docs/arch/aarch64-isa.md).
+    /// Whether operands are decoded for this encoding (every encoding of the pinned
+    /// release has them; false for `Code::Invalid`).
     pub fn has_operands(&self) -> bool {
         self.has_operands
     }
