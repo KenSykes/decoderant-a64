@@ -16,14 +16,14 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | ldst | 1015 | 1015 |
 | reserved | 1 | 1 |
 | simd_dp | 867 | 867 |
-| sme | 842 | 284 |
-| sve | 1346 | 1345 |
+| sme | 842 | 286 |
+| sve | 1346 | 1346 |
 
 129 encodings overlap a higher-priority encoding (listed in `OpCodeInfo::precedence()`).
 
 ## Operand mapping
 
-3870 encodings with operand support, 559 without. 3024 symbol value tables taken from the spec's rule names; 125 distinct hand rules (symbol meanings the spec does not give in machine-readable form), used 11718 times.
+3873 encodings with operand support, 556 without. 3025 symbol value tables taken from the spec's rule names; 126 distinct hand rules (symbol meanings the spec does not give in machine-readable form), used 11731 times.
 
 ### Hand rules
 
@@ -70,15 +70,15 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `NB on the variable op1 bit` | 6 |
 | `PSTATE field` | 1 |
 | `Q table in alternative order` | 2 |
-| `SME2 strided register list` | 64 |
+| `SME2 strided register list` | 65 |
 | `SMSTART/SMSTOP option` | 2 |
 | `SVE FP constant pair` | 8 |
 | `SVE FP immediate` | 4 |
 | `SVE MUL VL offset in multiples of the list length` | 94 |
-| `SVE element size from tsz (one-hot) or imm13` | 131 |
+| `SVE element size from tsz (one-hot) or imm13` | 132 |
 | `SVE immediate, signed as the spec's number token says` | 98 |
-| `SVE index above the lowest set bit of tsz` | 3 |
-| `SVE index fields` | 121 |
+| `SVE index above the lowest set bit of tsz` | 4 |
+| `SVE index fields` | 123 |
 | `SVE indexed register <PN..>` | 2 |
 | `SVE indexed register <Z..>` | 122 |
 | `SVE logical immediate (one element)` | 8 |
@@ -90,7 +90,7 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `SVE pattern, left out at ALL` | 2 |
 | `SVE predicate pattern` | 64 |
 | `SVE prefetch operations` | 28 |
-| `SVE register <P..>` | 1010 |
+| `SVE register <P..>` | 1012 |
 | `SVE register <PN..>` | 140 |
 | `SVE register <Z..>` | 1997 |
 | `SVE register width: X iff size = 11` | 11 |
@@ -113,7 +113,7 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `byte register offset LSL #0 on S` | 12 |
 | `cond suffix` | 3 |
 | `condition` | 25 |
-| `consecutive register list` | 336 |
+| `consecutive register list` | 340 |
 | `extend register width: X iff option<1:0> = 11` | 6 |
 | `extended register` | 12 |
 | `fixed register` | 1 |
@@ -131,7 +131,7 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `label PC - imm16*4` | 4 |
 | `ldsttags offset*16` | 13 |
 | `memory writeback, no offset` | 228 |
-| `multi-vector register list, a multiple of its length` | 414 |
+| `multi-vector register list, a multiple of its length` | 415 |
 | `optional operand default` | 18 |
 | `pair offset scaled` | 62 |
 | `pimm scaled by access size` | 24 |
@@ -146,6 +146,7 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 | `register <WSp..>` | 46 |
 | `register <X..>` | 1007 |
 | `register <XSp..>` | 96 |
+| `register indexed by W12-W15 and an immediate` | 1 |
 | `register list` | 164 |
 | `register offset W/X by option<0>` | 24 |
 | `register pair from one field` | 2 |
@@ -200,7 +201,6 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 - 2 × SME ZA or ZT0 operand ZA.S[<Wv>, <offs>, VGx4] (e.g. fvdotb_za32_z8z8i_2xi, fvdott_za32_z8z8i_2xi)
 - 2 × SME ZA or ZT0 operand ZA[<Wv>, <offs>] (e.g. ldr_za_ri_, str_za_ri_)
 - 2 × SME ZA or ZT0 operand ZT0[<offs>] (e.g. movt_r_zt_, movt_zt_r_)
-- 2 × SVE/SME register list ⟪ <Zm1>-<Zm2> ⟫[<index>] (e.g. luti6_mz4_zmz2_1, luti6_mz4_zmz2_4)
 - 2 × list element <ZAt><HV>.D[<Ws> (e.g. ld1d_za_p_rrr_, st1d_za_p_rrr_)
 - 2 × list element <ZAt><HV>.H[<Ws> (e.g. ld1h_za_p_rrr_, st1h_za_p_rrr_)
 - 2 × list element <ZAt><HV>.Q[<Ws> (e.g. ld1q_za_p_rrr_, st1q_za_p_rrr_)
@@ -226,7 +226,6 @@ Decode dispatch: 25892 slots, 5168 candidate entries; over all words, 1.59 table
 - 1 × SME ZA or ZT0 operand ZT0{[<offs>, MUL VL]} (e.g. movt_zt_z_)
 - 1 × list element <mask> (e.g. zero_za_i_)
 - 1 × list element ZT0 (e.g. zero_zt_i_)
-- 1 × operand shape <Pm>.<T>[<Wv>, <imm>] (e.g. psel_p_ppi_)
 
 ### Aliases without operand support, by reason
 

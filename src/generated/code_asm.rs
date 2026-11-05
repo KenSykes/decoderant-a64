@@ -5366,6 +5366,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Psb, "", &[a0.into()])
     }
 
+    /// `PSEL` with 3 operands.
+    pub fn psel(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Psel, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `PSSBB` with 0 operands.
     pub fn pssbb(&mut self) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Pssbb, "", &[])

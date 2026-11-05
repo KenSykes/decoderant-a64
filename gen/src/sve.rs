@@ -130,7 +130,7 @@ fn zr(cx: &mut Cx<'_>, d: &str, t: &str, pq: &str) -> R<String> {
 fn zindex(cx: &mut Cx<'_>, idx: &str) -> R<String> {
     let fields = cx.fields(idx)?;
     let names: Vec<&str> = fields.iter().map(|f| f.name.as_str()).collect();
-    if names.last() == Some(&"tsz") {
+    if names.last().is_some_and(|n| n.starts_with("tsz")) {
         // `DUP <Zd>.<T>, <Zn>.<T>[<imm>]`: `imm2:tsz`, the bits above the lowest set
         // bit of `tsz`.
         cx.hand("SVE index above the lowest set bit of tsz");
@@ -334,6 +334,21 @@ pub(crate) fn group(cx: &mut Cx<'_>, g: &str) -> Option<R<String>> {
             Ok(None) => None,
             Err(e) => Some(Err(e)),
         };
+    }
+    if let Some(c) = m("%.%[%, %]", g) {
+        // `PSEL <Pd>, <Pn>, <Pm>.<T>[<Wv>, <imm>]`: `Wv` is W12-W15.
+        let r = (|| {
+            let Some((k, 0)) = zreg(cx, &c[0])? else {
+                return Err(format!("indexed register {}", c[0]));
+            };
+            let a = cx.arr(&c[1])?;
+            let f = cx.field(&c[0])?;
+            let v = cx.field(&c[2])?;
+            let i = zindex(cx, &c[3])?;
+            cx.hand("register indexed by W12-W15 and an immediate");
+            Ok(format!("Op::ZSel({f}, Rk::{k}, {a}, {v}, {i})"))
+        })();
+        return Some(r);
     }
     if let Some(c) = m("%.%[%]", g).or_else(|| m("%.%w[%]", g)) {
         return match zreg(cx, &c[0]) {
@@ -694,18 +709,32 @@ fn mem(cx: &mut Cx<'_>, g: &str) -> R<String> {
 /// A list of SVE or SME registers (`⟪ <Zt>.D ⟫`, `⟪ <Zt1>.B, <Zt2>.B ⟫`,
 /// `⟪ <Zdn1>.<T>-<Zdn4>.<T> ⟫`, `⟪ <Pd1>.<T>, <Pd2>.<T> ⟫`).
 fn list(cx: &mut Cx<'_>, g: &str) -> R<String> {
-    let body = g
+    let (body, idx) = g
         .strip_prefix('⟪')
-        .and_then(|x| x.strip_suffix('⟫'))
-        .ok_or_else(|| format!("SVE/SME register list {g}"))?
-        .trim();
+        .and_then(|x| x.rsplit_once('⟫'))
+        .ok_or_else(|| format!("SVE/SME register list {g}"))?;
+    let body = body.trim();
+    // `⟪ <Zm1>-<Zm2> ⟫[<index>]`.
+    let idx = if idx.is_empty() {
+        "None".to_string()
+    } else {
+        let c = m("[%]", idx).ok_or_else(|| format!("list index {idx}"))?;
+        format!("Some({})", zindex(cx, &c[0])?)
+    };
     let (elems, range): (Vec<&str>, bool) = match body.split_once('-') {
         Some((a, b)) if !body.contains(", ") => (vec![a, b], true),
         _ => (body.split(", ").collect(), false),
     };
     let first = elems[0];
+    // Elements without an element size (`LUTI6 ..., ⟪ <Zm1>-<Zm2> ⟫[<index>]`).
     let c = m("%.%", first)
         .or_else(|| m("%.%w", first))
+        .or_else(|| {
+            m("%", first).map(|mut c| {
+                c.push("NONE".into());
+                c
+            })
+        })
         .ok_or_else(|| format!("list element {first}"))?;
     let n: u8 = if range {
         // `<Zdn4>`: the last register's number is the length.
@@ -752,6 +781,6 @@ fn list(cx: &mut Cx<'_>, g: &str) -> R<String> {
         "consecutive register list"
     });
     Ok(format!(
-        "Op::ZList({f}, Rk::{kind}, {n}, {stride}, {mul}, {a})"
+        "Op::ZList({f}, Rk::{kind}, {n}, {stride}, {mul}, {a}, {idx})"
     ))
 }

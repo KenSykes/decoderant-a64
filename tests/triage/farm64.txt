@@ -383,3 +383,4 @@ pmov_z_pi_d operands both the index of <Zd>{[<imm>]} / <Zn>{[<imm>]} is optional
 pmov_z_pi_h operands both the index of <Zd>{[<imm>]} / <Zn>{[<imm>]} is optional and left out at 0, as the template's braces allow; fARM64 prints [0]
 pmov_z_pi_s operands both the index of <Zd>{[<imm>]} / <Zn>{[<imm>]} is optional and left out at 0, as the template's braces allow; fARM64 prints [0]
 stlro_z_bi_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE_LRCPC)
+psel_p_ppi_ operands isa the template is <Pm>.<T>[<Wv>, <imm>] with the immediate always present (LLVM also prints , 0); fARM64 leaves it out at 0

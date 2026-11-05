@@ -281,3 +281,52 @@ fn sve_memory() {
         assert_eq!(m, mem, "{w:08x} {text}");
     }
 }
+
+/// Register lists: every register of a multi-vector or strided list, and `PSEL`'s
+/// index register.
+#[test]
+fn sve_lists_and_psel() {
+    use OpAccess::{Read as Rd, Write as Wr};
+    use aarch64_isa::Register as R;
+    let regs = |w: u32| {
+        let i = decode_word(w, PC, &DecoderOptions::default());
+        let mut f = InstructionInfoFactory::new();
+        let mut v: Vec<(R, OpAccess)> = f
+            .info(&i)
+            .used_registers()
+            .iter()
+            .map(|u| (u.register, u.access))
+            .collect();
+        v.sort_by_key(|x| x.0 as u16);
+        (i.to_string(), v)
+    };
+    let (t, v) = regs(0xa111_9342);
+    assert_eq!(t, "ld1b { z2.b, z6.b, z10.b, z14.b }, pn12/z, [x26, x17]");
+    assert_eq!(
+        v,
+        [
+            (R::X17, Rd),
+            (R::X26, Rd),
+            (R::Z2, Wr),
+            (R::Z6, Wr),
+            (R::Z10, Wr),
+            (R::Z14, Wr),
+            (R::PN12, Rd)
+        ]
+    );
+    let (t, v) = regs(0x2571_5162);
+    assert_eq!(t, "psel p2, p4, p11.s[w13, 1]");
+    assert_eq!(v, [(R::W13, Rd), (R::P2, Wr), (R::P4, Rd), (R::P11, Rd)]);
+    let (t, v) = regs(0x257b_5010);
+    assert_eq!(t, "whilege { p0.h, p1.h }, x0, x27");
+    assert_eq!(
+        v,
+        [
+            (R::X0, Rd),
+            (R::X27, Rd),
+            (R::P0, Wr),
+            (R::P1, Wr),
+            (R::NZCV, Wr)
+        ]
+    );
+}

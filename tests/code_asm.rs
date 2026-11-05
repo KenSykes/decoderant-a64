@@ -420,6 +420,41 @@ fn sve_memory_and_patterns() -> Result<(), EncodeError> {
     Ok(())
 }
 
+/// Multi-vector, strided and predicate-pair lists, and `PSEL`.
+#[test]
+fn sve_lists() -> Result<(), EncodeError> {
+    use aarch64_isa::PredQual as Q;
+    let mut a = CodeAssembler::new(0);
+    let sel = O::elem_sel(p11, A::S, w13, 1);
+    a.add(
+        O::list(z20, 4, A::S),
+        O::list(z20, 4, A::S),
+        O::vec(z12, A::S),
+    )?
+    .ld1b(
+        O::list_strided(z2, 4, 4, A::B),
+        O::pred(pn12, Q::Zeroing),
+        O::mem_index(x26, x17, ExtendKind::Lsl, None),
+    )?
+    .whilege(O::list(p0, 2, A::H), x0, x27)?
+    .psel(p2, p4, sel)?;
+    assert_eq!(
+        a.words(),
+        [0xc1ac_ab14, 0xa111_9342, 0x257b_5010, 0x2571_5162]
+    );
+    // A strided list cannot start at a register its stride does not allow.
+    let mut b = CodeAssembler::new(0);
+    assert!(
+        b.ld1b(
+            O::list_strided(z5, 4, 4, A::B),
+            O::pred(pn12, Q::Zeroing),
+            O::mem_index(x26, x17, ExtendKind::Lsl, None),
+        )
+        .is_err()
+    );
+    Ok(())
+}
+
 #[test]
 fn errors() {
     let a = CodeAssembler::new(0x1000);

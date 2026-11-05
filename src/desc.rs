@@ -556,7 +556,11 @@ pub(crate) enum Op {
     /// length), or for a stride of 4 or 8 the field's top bit gives bit 4 and its
     /// other bits the low bits (`{ Z0.S, Z8.S }`, `{ Z17.S, Z21.S, Z25.S, Z29.S }`).
     /// Consecutive lists wrap from Z31 to Z0.
-    ZList(Fs, Rk, u8, u8, u8, Arr),
+    ZList(Fs, Rk, u8, u8, u8, Arr, Option<Idx>),
+    /// A register indexed by a `W` register and an immediate (`PSEL ..., <Pm>.<T>[<Wv>,
+    /// <imm>]`): field, kind, element size, the index register field (a number
+    /// added to `W12`), the immediate.
+    ZSel(Fs, Rk, Arr, Fs, Idx),
 }
 
 fn reg_op(r: Register) -> Operand {
@@ -768,14 +772,30 @@ fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
             name: "MUL",
             ..Operand::none()
         },
-        Op::ZList(f, k, n, stride, mul, a) => Operand {
-            kind: OpKind::RegisterList,
-            reg: k.reg(zlist_first(f.get(word), stride, mul)),
-            arr: a.get(word)?,
-            count: n,
-            stride: if stride > 1 { stride } else { 0 },
-            ..Operand::none()
-        },
+        Op::ZList(f, k, n, stride, mul, a, idx) => {
+            let arr = a.get(word)?;
+            Operand {
+                kind: OpKind::RegisterList,
+                reg: k.reg(zlist_first(f.get(word), stride, mul)),
+                arr,
+                count: n,
+                stride: if stride > 1 { stride } else { 0 },
+                lane: match idx {
+                    Some(i) => i.get(word, arr)?,
+                    None => Operand::NO_LANE,
+                },
+                ..Operand::none()
+            }
+        }
+        Op::ZSel(f, k, a, v, idx) => {
+            let es = a.get(word)?;
+            Operand {
+                arr: es,
+                lane: idx.get(word, es)?,
+                index_reg: Register::w(12 + v.get(word)),
+                ..reg_op(k.reg(f.get(word)))
+            }
+        }
         Op::Suffix(_) => return None,
     })
 }
@@ -1010,7 +1030,8 @@ fn op_cover(op: &Op, word: u32) -> Option<u32> {
         }
         Op::ZElem(..) => return None,
         Op::MulImm(i) => imm_cover(i, word)?,
-        Op::ZList(f, _, _, _, _, a) => f.mask() | arr_cover(a, word)?,
+        Op::ZList(f, _, _, _, _, a, None) => f.mask() | arr_cover(a, word)?,
+        Op::ZList(.., Some(_)) | Op::ZSel(..) => return None,
         Op::Cond(..) | Op::SysReg(_) | Op::SysOperation(_) => return None,
     })
 }
@@ -1191,7 +1212,8 @@ const fn op_cover_const(op: &Op) -> Option<u32> {
         ),
         Op::ZElem(..) => None,
         Op::MulImm(i) => imm_cover_const(i),
-        Op::ZList(f, _, _, _, _, a) => or(Some(f.mask()), arr_cover_const(a)),
+        Op::ZList(f, _, _, _, _, a, None) => or(Some(f.mask()), arr_cover_const(a)),
+        Op::ZList(.., Some(_)) | Op::ZSel(..) => None,
         Op::Cond(..) | Op::SysReg(_) | Op::SysOperation(_) => None,
     }
 }

@@ -463,7 +463,13 @@ fn list_regs(o: &Operand) -> impl Iterator<Item = Register> + '_ {
 /// included), for operands that are not memory.
 fn operand_regs(o: &Operand, mut f: impl FnMut(Register)) {
     match o.kind {
-        OpKind::Register | OpKind::ShiftedRegister | OpKind::ExtendedRegister => f(o.reg),
+        OpKind::Register | OpKind::ShiftedRegister | OpKind::ExtendedRegister => {
+            f(o.reg);
+            // `PSEL ..., <Pm>.<T>[<Wv>, <imm>]`: the index register (only read).
+            if o.kind == OpKind::Register && o.index_reg != Register::None {
+                f(o.index_reg);
+            }
+        }
         OpKind::RegisterList => list_regs(o).for_each(f),
         _ => {}
     }

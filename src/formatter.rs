@@ -243,6 +243,11 @@ impl Formatter {
                 }
                 if let Some(l) = op.index() {
                     o.raw("[", FormatterTextKind::Punctuation);
+                    // `P2.B[W12, 3]` (PSEL).
+                    if op.index_reg != Register::None {
+                        self.reg(op.index_reg, o);
+                        o.raw(", ", FormatterTextKind::Punctuation);
+                    }
                     self.number(u64::from(l), false, o);
                     o.raw("]", FormatterTextKind::Punctuation);
                 }

@@ -836,10 +836,31 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
             want(o, OpKind::Immediate, i)?;
             imm(w, x, o.imm)
         }
-        Op::ZList(f, k, n, stride, mul, a) => {
+        Op::ZSel(f, k, a, v, idx) => {
+            want(o, OpKind::Register, i)?;
+            let wn = o.index_reg.number();
+            if !fits(o.reg, k)
+                || o.lane == Operand::NO_LANE
+                || o.index_reg.class() != RegisterClass::Gp32
+                || !(12..=15).contains(&wn)
+            {
+                return Err(EncodeError::Register(i));
+            }
+            arr(w, a, o.arr)?;
+            w.put(f, o.reg.number())?;
+            w.put(v, wn - 12)?;
+            index(w, idx, o.arr, o.lane)
+        }
+        Op::ZList(f, k, n, stride, mul, a, idx) => {
             want(o, OpKind::RegisterList, i)?;
-            if o.count != n || o.list_stride() != stride.max(1) || o.lane != Operand::NO_LANE {
+            if o.count != n
+                || o.list_stride() != stride.max(1)
+                || (o.lane != Operand::NO_LANE) != idx.is_some()
+            {
                 return Err(EncodeError::WrongKind(i));
+            }
+            if let Some(x) = idx {
+                index(w, x, o.arr, o.lane)?;
             }
             if !fits(o.reg, k) {
                 return Err(EncodeError::Register(i));

@@ -479,6 +479,14 @@ impl Operand {
         }
     }
 
+    /// An element selected by a register and an immediate: `P11.S[W13, 1]` (PSEL).
+    pub fn elem_sel(r: Register, es: Arrangement, index_reg: Register, index: u8) -> Operand {
+        Operand {
+            index_reg,
+            ..Operand::elem(r, es, index)
+        }
+    }
+
     /// A register list: `{ V0.16B, V1.16B }`.
     pub fn list(first: Register, count: u8, arr: Arrangement) -> Operand {
         Operand {

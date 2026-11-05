@@ -411,3 +411,34 @@ fn sve_patterns_and_memory() {
         assert_eq!(i.encode(), Ok(w), "{w:08x} {text}");
     }
 }
+
+/// SVE2, SVE2.1 and the multi-vector forms: lists of two (element by element) and
+/// four (ranges), strided lists, predicate pairs and predicate-as-counter
+/// registers, indexed lists, and `PSEL`'s register-indexed predicate.
+#[test]
+fn sve2_and_multi_vector() {
+    for (w, text) in [
+        (0x2571_5162u32, "psel p2, p4, p11.s[w13, 1]"),
+        (0x45fc_ae8a, "luti6 z10.h, { z20.h, z21.h }, z28[1]"),
+        (0x453a_e886, "aese { z6.b, z7.b }, { z6.b, z7.b }, z4.q[3]"),
+        (0x4526_e888, "aese { z8.b-z11.b }, { z8.b-z11.b }, z4.q[0]"),
+        (
+            0xc179_9498,
+            "sel { z24.h-z27.h }, pn13, { z4.h-z7.h }, { z24.h-z27.h }",
+        ),
+        (0xc1ac_ab14, "add { z20.s-z23.s }, { z20.s-z23.s }, z12.s"),
+        (0xc1e6_d98a, "sqrshr z10.h, { z12.d-z15.d }, #0x1a"),
+        (0x0575_1ab3, "ext z19.b, { z21.b, z22.b }, #0xae"),
+        (0x257b_5010, "whilege { p0.h, p1.h }, x0, x27"),
+        (0x25e0_87fa, "cntp x26, pn15.d, vlx4"),
+        (
+            0xa111_9342,
+            "ld1b { z2.b, z6.b, z10.b, z14.b }, pn12/z, [x26, x17]",
+        ),
+        (0xa108_1281, "ld1b { z1.b, z9.b }, pn12/z, [x20, x8]"),
+    ] {
+        let i = decode_word(w, 0x1000, &DecoderOptions::default());
+        assert_eq!(i.to_string(), text, "{w:08x}");
+        assert_eq!(i.encode(), Ok(w), "{w:08x} {text}");
+    }
+}
