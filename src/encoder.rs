@@ -8,12 +8,13 @@
 
 use crate::bits::{Fs, encode_bit_mask, fp_imm8_encode, highest_set_bit};
 use crate::desc::{
-    ARR, Amount, Arr, Idx, Imm, ImmShift, Mem, MemOff, Op, Post, RK, RegSel, Rk, Tab,
+    ARR, Amount, Arr, Idx, Imm, ImmShift, Mem, MemOff, Op, Post, Pq, RK, RegSel, Rk, Tab,
+    sve_bitmask_esize,
 };
 use crate::generated::{Code, Register};
 use crate::instruction::Instruction;
 use crate::operand::{
-    Arrangement, ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, ShiftKind,
+    Arrangement, ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, PredQual, ShiftKind,
 };
 use crate::regs::RegisterClass;
 
@@ -176,8 +177,9 @@ fn index(w: &mut W, idx: Idx, es: Arrangement, i: u8) -> R {
             Ok(())
         }
         Idx::Imm5(f) => {
+            // Up to Q elements (`DUP <Zd>.Q, <Zn>.Q[<imm>]`: `tsz` = 10000).
             let low = es.element_bytes().trailing_zeros();
-            if low >= 4 {
+            if low > 4 || es.element_bytes() == 0 {
                 return Err(EncodeError::Arrangement(w.op));
             }
             w.put(f, (i << (low + 1)) | (1 << low))
@@ -331,7 +333,59 @@ fn imm(w: &mut W, i: Imm, v: u64) -> R {
             }
             Err(EncodeError::Unrepresentable(op))
         }
+        Imm::SveBitmask { n, immr, imms } => sve_bitmask(w, n, immr, imms, v, None),
     }
+}
+
+/// An SVE logical immediate: `v` is one element. The element size is the one whose
+/// encoding agrees with the bits already set (the arrangement sets `N` and the top
+/// of `imms`); the decoded fields are kept when they still give the value.
+fn sve_bitmask(w: &mut W, n: Fs, immr: Fs, imms: Fs, v: u64, raw: Option<u16>) -> R {
+    let op = w.op;
+    let value_of = |rn: u32, rr: u32, rs: u32| {
+        let full = crate::bits::decode_bit_masks(rn, rs, rr, true, 64)?.0;
+        let es = sve_bitmask_esize(rn, rs)?;
+        Some(if es == 64 {
+            full
+        } else {
+            full & ((1 << es) - 1)
+        })
+    };
+    let mut tries: [Option<(u32, u32, u32)>; 5] = [None; 5];
+    if let Some(raw) = raw {
+        let f = (
+            u32::from(raw >> 12 & 1),
+            u32::from(raw >> 6 & 63),
+            u32::from(raw & 63),
+        );
+        if value_of(f.0, f.1, f.2) == Some(v) {
+            tries[0] = Some(f);
+        }
+    }
+    for (k, es) in [64u32, 32, 16, 8].into_iter().enumerate() {
+        if es < 64 && v >> es != 0 {
+            continue;
+        }
+        let mut rep = v;
+        let mut s = es;
+        while s < 64 {
+            rep |= rep << s;
+            s *= 2;
+        }
+        if let Some(f) = encode_bit_mask(rep, 64)
+            && value_of(f.0, f.1, f.2) == Some(v)
+        {
+            tries[k + 1] = Some((f.0, f.1, f.2));
+        }
+    }
+    for (rn, rr, rs) in tries.into_iter().flatten() {
+        let mut t = W { ..*w };
+        if t.put(n, rn).is_ok() && t.put(immr, rr).is_ok() && t.put(imms, rs).is_ok() {
+            *w = t;
+            return Ok(());
+        }
+    }
+    Err(EncodeError::Unrepresentable(op))
 }
 
 fn bitmask(w: &mut W, n: Fs, immr: Fs, imms: Fs, size: u32, v: u64, raw: Option<u16>) -> R {
@@ -362,6 +416,27 @@ fn bitmask(w: &mut W, n: Fs, immr: Fs, imms: Fs, size: u32, v: u64, raw: Option<
     }
     w.put(immr, er)?;
     w.put(imms, es)
+}
+
+/// A predicate qualifier: what the encoding fixes, or a table entry.
+fn pred(w: &mut W, pq: Pq, have: PredQual) -> R {
+    let ok = match pq {
+        Pq::None => have == PredQual::None,
+        Pq::Zeroing => have == PredQual::Zeroing,
+        Pq::Merging => have == PredQual::Merging,
+        Pq::Tab(t) => {
+            return match have {
+                PredQual::Zeroing => w.tab(t, 0),
+                PredQual::Merging => w.tab(t, 1),
+                PredQual::None => Err(EncodeError::WrongKind(w.op)),
+            };
+        }
+    };
+    if ok {
+        Ok(())
+    } else {
+        Err(EncodeError::WrongKind(w.op))
+    }
 }
 
 fn want(o: &Operand, k: OpKind, i: usize) -> R {
@@ -610,6 +685,7 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
                     imms,
                     size,
                 } => bitmask(w, n, immr, imms, u32::from(size), o.imm, o.raw()),
+                Imm::SveBitmask { n, immr, imms } => sve_bitmask(w, n, immr, imms, o.imm, o.raw()),
                 other => imm(w, other, o.imm),
             }
         }
@@ -692,6 +768,24 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
         }
         Op::Opt(inner, _, _) => encode_one(w, inner, o, pc),
         Op::Suffix(_) => Ok(()),
+        Op::Zr(f, k, a, add, pq) => {
+            want(o, OpKind::Register, i)?;
+            if o.lane != Operand::NO_LANE || !fits(o.reg, k) {
+                return Err(EncodeError::Register(i));
+            }
+            arr(w, a, o.arr)?;
+            pred(w, pq, o.pred)?;
+            w.put(f, (o.reg.number() + 32 - u32::from(add)) % 32)
+        }
+        Op::ZElem(f, k, a, idx) => {
+            want(o, OpKind::Register, i)?;
+            if o.lane == Operand::NO_LANE || !fits(o.reg, k) || o.pred != PredQual::None {
+                return Err(EncodeError::Register(i));
+            }
+            arr(w, a, o.arr)?;
+            w.put(f, o.reg.number())?;
+            index(w, idx, o.arr, o.lane)
+        }
     }
 }
 

@@ -256,3 +256,41 @@ LDTSET_32_memop_unpriv mnemonic both STTSET is the spec's preferred alias of LDT
 LDTSET_64_memop_unpriv mnemonic both STTSET is the spec's preferred alias of LDTSET with Rt = ZR; fARM64 does not apply it
 LDTSETL_32_memop_unpriv mnemonic both STTSETL is the spec's preferred alias of LDTSETL with Rt = ZR; fARM64 does not apply it
 LDTSETL_64_memop_unpriv mnemonic both STTSETL is the spec's preferred alias of LDTSETL with Rt = ZR; fARM64 does not apply it
+
+# SVE and SME (fARM64 with its sve and sme features). Generated lines (fARM64 lacks
+# the encoding) were reviewed by sampling; the rest are triaged one by one.
+fcmtl_p_zz_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fcmtlmg_p_zz_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fmaxinm_z_p_zz_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fmaxinmv_v_p_z_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fmaxmg_z_p_zz_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fmaxmginm_z_p_zz_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fmaxmginmv_v_p_z_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fmaxmgv_v_p_z_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fmininm_z_p_zz_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fmininmv_v_p_z_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fminmg_z_p_zz_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fminmginm_z_p_zz_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fminmginmv_v_p_z_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+fminmgv_v_p_z_ valid-vs-invalid isa farm64 does not implement this encoding (FEAT_SVE2p3, FEAT_SME2p3, FEAT_FPv2)
+add_z_zi_ operands both we print the template form #<imm>, LSL #8; fARM64 (like LLVM) prints the shifted value
+compact_z_p_z_s operands isa fARM64 ignores bit 23 and decodes the FEAT_SVE2p2 byte/halfword COMPACT (bit 23 clear, <T> B/H on sz) as the word/doubleword one (05a18000)
+cpy_z_o_i_ operands both we print the template form #<imm>, LSL #8 (MOV alias); fARM64 (like LLVM) prints the shifted value
+cpy_z_p_i_ operands both we print the template form #<imm>, LSL #8 (MOV alias); fARM64 (like LLVM) prints the shifted value
+decp_z_p_z_ operands isa Arm ARM syntax is DECP <Zdn>.<T>, <Pm>.<T>; fARM64 leaves out the predicate's element size
+dup_z_i_ operands both we print the template form #<imm>, LSL #8 (MOV alias); fARM64 (like LLVM) prints the shifted value
+dupm_z_i_ mnemonic isa SVEMoveMaskPreferred (Arm pseudocode) prefers MOV when no DUP (immediate) gives the pattern (0xf8 in words, 0xff01 in halfwords); fARM64 prints DUPM
+fdot_z_zz8z8i_ operands isa the index is i3h:i3l (bits 20:19 and 11, 0-7); fARM64 reads i3h only
+incp_z_p_z_ operands isa Arm ARM syntax is INCP <Zdn>.<T>, <Pm>.<T>; fARM64 leaves out the predicate's element size
+sdot_z16_zzzi_h operands isa fARM64 ignores bit 23 and decodes the halfword-accumulating SDOT (indexed; bit 22 is i3h) as the S/D forms (44a00000/44e00000)
+sqadd_z_zi_ operands both we print the template form #<imm>, LSL #8; fARM64 (like LLVM) prints the shifted value
+sqdecp_z_p_z_ operands isa Arm ARM syntax is SQDECP <Zdn>.<T>, <Pm>.<T>; fARM64 leaves out the predicate's element size
+sqincp_z_p_z_ operands isa Arm ARM syntax is SQINCP <Zdn>.<T>, <Pm>.<T>; fARM64 leaves out the predicate's element size
+sqsub_z_zi_ operands both we print the template form #<imm>, LSL #8; fARM64 (like LLVM) prints the shifted value
+sub_z_zi_ operands both we print the template form #<imm>, LSL #8; fARM64 (like LLVM) prints the shifted value
+subr_z_zi_ operands both we print the template form #<imm>, LSL #8; fARM64 (like LLVM) prints the shifted value
+udot_z16_zzzi_h operands isa fARM64 ignores bit 23 and decodes the halfword-accumulating UDOT (indexed; bit 22 is i3h) as the S/D forms (44a00400/44e00400)
+uqadd_z_zi_ operands both we print the template form #<imm>, LSL #8; fARM64 (like LLVM) prints the shifted value
+uqdecp_z_p_z_ operands isa Arm ARM syntax is UQDECP <Zdn>.<T>, <Pm>.<T>; fARM64 leaves out the predicate's element size
+uqincp_z_p_z_ operands isa Arm ARM syntax is UQINCP <Zdn>.<T>, <Pm>.<T>; fARM64 leaves out the predicate's element size
+uqsub_z_zi_ operands both we print the template form #<imm>, LSL #8; fARM64 (like LLVM) prints the shifted value

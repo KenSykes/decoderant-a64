@@ -287,6 +287,28 @@ impl ConditionCode {
     }
 }
 
+/// The qualifier of a governing predicate (`P0/Z`, `P0/M`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
+pub enum PredQual {
+    #[default]
+    None,
+    /// `/Z`: inactive elements of the destination are set to zero.
+    Zeroing,
+    /// `/M`: inactive elements of the destination keep their value.
+    Merging,
+}
+
+impl PredQual {
+    /// The assembler suffix without the slash (`Z`, `M`; empty for none).
+    pub fn name(self) -> &'static str {
+        match self {
+            PredQual::None => "",
+            PredQual::Zeroing => "Z",
+            PredQual::Merging => "M",
+        }
+    }
+}
+
 /// Addressing mode of a memory operand.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub enum MemoryMode {
@@ -339,6 +361,8 @@ pub struct Operand {
     /// Bitmask immediates: the decoded `N:immr:imms` (bit 15 set when present), so
     /// re-encoding keeps `immr` bits the value does not depend on.
     pub(crate) raw_fields: u16,
+    /// The qualifier of a governing predicate (`P0/Z`, `P0/M`).
+    pub(crate) pred: PredQual,
 }
 
 impl Operand {
@@ -385,6 +409,11 @@ impl Operand {
         self.name
     }
 
+    /// The predicate qualifier of a governing predicate (`/Z`, `/M`).
+    pub fn predicate(&self) -> PredQual {
+        self.pred
+    }
+
     pub(crate) fn raw(&self) -> Option<u16> {
         (self.raw_fields >> 15 == 1).then_some(self.raw_fields & 0x7fff)
     }
@@ -413,6 +442,14 @@ impl Operand {
     pub fn vec(r: Register, arr: Arrangement) -> Operand {
         Operand {
             arr,
+            ..Operand::reg(r)
+        }
+    }
+
+    /// A governing predicate with a qualifier: `P0/Z`, `P1/M`.
+    pub fn pred(r: Register, q: PredQual) -> Operand {
+        Operand {
+            pred: q,
             ..Operand::reg(r)
         }
     }

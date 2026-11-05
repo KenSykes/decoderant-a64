@@ -17,6 +17,7 @@ use std::fmt::Write as _;
 
 use serde_json::Value;
 
+use crate::expr::Arena;
 use crate::model::{Field, Leaf, Model};
 use crate::template::{SymAlt, T};
 
@@ -99,12 +100,19 @@ impl Report {
     }
 }
 
-struct Sym {
-    fields: Vec<Field>,
-    alts: Vec<SymAlt>,
+/// What the mapping may evaluate about the encoding: its path conditions.
+pub struct Env<'a> {
+    pub arena: &'a Arena,
+    /// The conditions on the encoding's decode path.
+    pub conds: Vec<u32>,
 }
 
-struct Cx<'r> {
+pub(crate) struct Sym {
+    pub(crate) fields: Vec<Field>,
+    pub(crate) alts: Vec<SymAlt>,
+}
+
+pub(crate) struct Cx<'r> {
     name: String,
     /// The encoding's named fields.
     leaf_fields: Vec<Field>,
@@ -112,17 +120,19 @@ struct Cx<'r> {
     alias: bool,
     /// Fixed bits of the encoding.
     pat_mask: u32,
+    pat_value: u32,
+    env: &'r Env<'r>,
     /// Symbols in template order.
     order: Vec<String>,
     iclass: String,
     /// The top-level group (`sve`, `sme`, `ldst`, ...).
     group: String,
-    mnemonic: String,
+    pub(crate) mnemonic: String,
     syms: BTreeMap<String, Sym>,
     rep: &'r mut Report,
 }
 
-type R<T> = Result<T, String>;
+pub(crate) type R<T> = Result<T, String>;
 
 fn f1(f: &Field) -> String {
     format!("F::new({}, {})", f.lsb, f.width)
@@ -143,7 +153,7 @@ fn runs(fields: &[Field]) -> Vec<Field> {
     out
 }
 
-fn fs(fields: &[Field]) -> String {
+pub(crate) fn fs(fields: &[Field]) -> String {
     let mut parts: Vec<String> = runs(fields).iter().map(f1).collect();
     while parts.len() < 4 {
         parts.push("F::NONE".into());
@@ -232,17 +242,17 @@ fn rule_bits(rule: &str, widths: &[u32]) -> Option<(u32, u32)> {
 }
 
 impl Cx<'_> {
-    fn hand(&mut self, rule: &str) {
+    pub(crate) fn hand(&mut self, rule: &str) {
         *self.rep.hand_rules.entry(rule.to_string()).or_default() += 1;
     }
 
-    fn sym(&self, d: &str) -> R<&Sym> {
+    pub(crate) fn sym(&self, d: &str) -> R<&Sym> {
         self.syms
             .get(d)
             .ok_or_else(|| format!("symbol {d} not encoded"))
     }
 
-    fn fields(&self, d: &str) -> R<Vec<Field>> {
+    pub(crate) fn fields(&self, d: &str) -> R<Vec<Field>> {
         let s = self.sym(d)?;
         if s.fields.is_empty() || runs(&s.fields).len() > 4 {
             return Err(format!("symbol {d} has {} fields", s.fields.len()));
@@ -250,16 +260,16 @@ impl Cx<'_> {
         Ok(s.fields.clone())
     }
 
-    fn field(&self, d: &str) -> R<String> {
+    pub(crate) fn field(&self, d: &str) -> R<String> {
         Ok(fs(&self.fields(d)?))
     }
 
     /// A value table for a symbol, mapping each alternative's text to a code.
-    fn table(&mut self, d: &str, code: impl Fn(&str) -> Option<u8>) -> R<String> {
+    pub(crate) fn table(&mut self, d: &str, code: impl Fn(&str) -> Option<u8>) -> R<String> {
         self.table_full(d, code, &[], &[])
     }
 
-    fn table_full(
+    pub(crate) fn table_full(
         &mut self,
         d: &str,
         code: impl Fn(&str) -> Option<u8>,
@@ -284,10 +294,39 @@ impl Cx<'_> {
             _ => s.fields.clone(),
         };
         let widths: Vec<u32> = tf.iter().map(|f| f.width).collect();
-        let alts = s.alts.clone();
+        let mut alts = s.alts.clone();
         let mut entries = Vec::new();
         let mut catch_all = None;
         let no_bits = alts.iter().all(|a| rule_bits(&a.rule, &widths).is_none());
+        // SVE/SME rule names carry no values, though their numeric suffixes can look
+        // like bits (`T_B__10`).
+        if self.sve() {
+            let full = ((1u64 << widths.iter().sum::<u32>()) - 1) as u32;
+            // An immediate that shares the fields' low bits (`tsz:imm3`).
+            let with_imm = self.syms.values().any(|s| {
+                s.fields.iter().any(|f| f.name == "imm3")
+                    && s.fields.iter().any(|f| tf.iter().any(|t| t.lsb == f.lsb))
+            });
+            let pairs: Vec<Vec<(u32, u32)>> = match crate::sve::onehot(&tf, &alts, with_imm) {
+                Some(p) => {
+                    self.hand("SVE element size from tsz (one-hot) or imm13");
+                    p
+                }
+                None => self
+                    .allowed_entries(d, &tf, alts.len())?
+                    .into_iter()
+                    .map(|v| vec![(v, full)])
+                    .collect(),
+            };
+            for (a, p) in alts.iter().zip(pairs) {
+                let c = code(&a.text)
+                    .ok_or_else(|| format!("table {d}: no meaning for {:?}", a.text))?;
+                for (v, m) in p {
+                    entries.push(format!("({v:#x}, {m:#x}, {c})"));
+                }
+            }
+            alts.clear();
+        }
         for (i, a) in alts.iter().enumerate() {
             let Some(c) = code(&a.text) else {
                 return Err(format!("table {d}: no meaning for {:?}", a.text));
@@ -341,8 +380,94 @@ impl Cx<'_> {
         Ok(self.rep.tabs.add(body))
     }
 
+    /// An SVE or SME encoding.
+    pub(crate) fn sve(&self) -> bool {
+        matches!(self.group.as_str(), "sve" | "sme")
+    }
+
+    /// The values of the concatenated fields `f` (first field most significant)
+    /// that some word of the encoding has: words that match its fixed bits and
+    /// satisfy its path conditions, with the other variable bits sampled.
+    pub(crate) fn allowed(&self, f: &[Field]) -> Vec<u32> {
+        let total: u32 = f.iter().map(|x| x.width).sum();
+        let mut seed = 0x9e37_79b9_7f4a_7c15u64;
+        let mut fills = vec![0u32, u32::MAX];
+        for _ in 0..62 {
+            seed ^= seed << 13;
+            seed ^= seed >> 7;
+            seed ^= seed << 17;
+            fills.push((seed >> 16) as u32);
+        }
+        let mut out = Vec::new();
+        for v in 0..1u32 << total {
+            let ok = fills.iter().any(|&fill| {
+                let mut w = self.pat_value | (fill & !self.pat_mask);
+                let mut shift = total;
+                for x in f {
+                    shift -= x.width;
+                    let m = ((1u64 << x.width) - 1) as u32;
+                    w = (w & !(m << x.lsb)) | ((v >> shift & m) << x.lsb);
+                }
+                w & self.pat_mask == self.pat_value && self.env.arena.holds(&self.env.conds, w)
+            });
+            if ok {
+                out.push(v);
+            }
+        }
+        out
+    }
+
+    /// SVE/SME tables, whose rule names carry no field values: the alternatives, in
+    /// spec order, are the field values the encoding allows, in ascending order.
+    fn allowed_entries(&mut self, d: &str, tf: &[Field], n: usize) -> R<Vec<u32>> {
+        let total: u32 = tf.iter().map(|x| x.width).sum();
+        if total > 8 {
+            return Err(format!("table {d}: {total} bits of fields, no hand rule"));
+        }
+        let a = self.allowed(tf);
+        if a.len() == n {
+            self.hand("SVE table: alternatives in allowed-value order");
+            return Ok(a);
+        }
+        // More values than names: the rest are RESERVED by the decode pseudocode
+        // (`size` = 11 for byte to word reductions, ...), which the open-source spec
+        // omits. Element sizes on a two-bit `size` then take their size code (B 00,
+        // H 01, S 10, D 11), counted from the widest table on the same field so that
+        // `<Tb>` lines up with `<T>` (`H, S, D` with `B, H, S` is 01, 10, 11).
+        if let [f] = tf
+            && f.name == "size"
+            && f.width == 2
+        {
+            let codes = |s: &Sym| -> Option<Vec<u32>> {
+                (s.fields.len() == 1 && s.fields[0].lsb == f.lsb && s.fields[0].width == 2)
+                    .then_some(())?;
+                s.alts
+                    .iter()
+                    .map(|a| crate::sve::es_log2(&a.text))
+                    .collect()
+            };
+            let anchor = self
+                .syms
+                .values()
+                .filter_map(codes)
+                .filter(|c| c.len() == n)
+                .max_by_key(|c| c.last().copied());
+            if let Some(c) = anchor
+                && c.windows(2).all(|w| w[1] == w[0] + 1)
+                && c.iter().all(|v| a.contains(v))
+            {
+                self.hand("SVE size table: element size code, others RESERVED");
+                return Ok(c);
+            }
+        }
+        Err(format!(
+            "table {d}: {n} alternatives for {} allowed values",
+            a.len()
+        ))
+    }
+
     /// The bits of a field the encoding leaves variable, when they are contiguous.
-    fn variable_part(&self, f: &Field) -> Option<Field> {
+    pub(crate) fn variable_part(&self, f: &Field) -> Option<Field> {
         let full: u32 = ((1u64 << f.width) - 1) as u32;
         let var = !(self.pat_mask >> f.lsb) & full;
         if var == 0 {
@@ -360,7 +485,7 @@ impl Cx<'_> {
     }
 
     /// A hand-written table over explicit fields.
-    fn hand_table(
+    pub(crate) fn hand_table(
         &mut self,
         rule: &str,
         f: &[Field],
@@ -390,7 +515,7 @@ impl Cx<'_> {
     }
 
     /// `<T>` or a fixed arrangement word.
-    fn arr(&mut self, t: &str) -> R<String> {
+    pub(crate) fn arr(&mut self, t: &str) -> R<String> {
         if t == "NONE" {
             return Ok("Arr::Fixed(Arrangement::None)".into());
         }
@@ -404,7 +529,7 @@ impl Cx<'_> {
     }
 
     /// A number table (`#<imm>` from `Q`, `<amount>` from `S` or `cmode`).
-    fn num_table(&mut self, d: &str) -> R<String> {
+    pub(crate) fn num_table(&mut self, d: &str) -> R<String> {
         let s = self.sym(d)?;
         let mut nums: Vec<i64> = Vec::new();
         for a in &s.alts {
@@ -428,7 +553,7 @@ impl Cx<'_> {
         )
     }
 
-    fn is_table_sym(&self, d: &str) -> bool {
+    pub(crate) fn is_table_sym(&self, d: &str) -> bool {
         self.syms
             .get(d)
             .is_some_and(|s| !s.alts.is_empty() && s.alts.iter().all(|a| !a.text.contains("{N}")))
@@ -465,7 +590,7 @@ impl Cx<'_> {
 
 /// Parses a register symbol: `(kind letter, add)` for `<Xd>`, `<Wn|WSP>`, `<Hd>`,
 /// `<X(s+1)>`, `<Xt+1>`, `<Vn+2>`, `<Vt3>` (list member: add 2).
-fn reg_sym(d: &str) -> Option<(&'static str, u8)> {
+pub(crate) fn reg_sym(d: &str) -> Option<(&'static str, u8)> {
     let inner = d.strip_prefix('<')?.strip_suffix('>')?;
     let (body, sp) = match inner.split_once('|') {
         Some((b, "SP")) | Some((b, "WSP")) => (b, true),
@@ -521,7 +646,7 @@ fn reg_sym(d: &str) -> Option<(&'static str, u8)> {
 
 /// Matches `s` against `pat`: `%` captures a `<...>` symbol, `%w` an alphanumeric
 /// word, anything else is literal.
-fn m(pat: &str, s: &str) -> Option<Vec<String>> {
+pub(crate) fn m(pat: &str, s: &str) -> Option<Vec<String>> {
     let p = pat.as_bytes();
     let b = s.as_bytes();
     let (mut i, mut j) = (0, 0);
@@ -566,7 +691,7 @@ fn m(pat: &str, s: &str) -> Option<Vec<String>> {
 
 /// Renders a template for shape matching: `{...}` optional, `(a|b)` alternatives,
 /// `⟪ ⟫` the literal braces of register lists.
-fn shape(t: &[T]) -> String {
+pub(crate) fn shape(t: &[T]) -> String {
     let mut s = String::new();
     for x in t {
         match x {
@@ -663,9 +788,10 @@ pub fn map(
     leaf: &Leaf<'_>,
     t: &[T],
     mnemonic: &str,
+    env: &Env<'_>,
     rep: &mut Report,
 ) -> Option<String> {
-    let res = map_atomic(model, leaf, leaf.json, t, mnemonic, rep);
+    let res = map_atomic(model, leaf, leaf.json, t, mnemonic, env, rep);
     match res {
         Ok(s) => {
             rep.mapped += 1;
@@ -689,11 +815,12 @@ pub fn map_alias(
     alias: &Value,
     t: &[T],
     mnemonic: &str,
+    env: &Env<'_>,
     rep: &mut Report,
 ) -> Option<String> {
     // Alias failures are not counted against the encoding.
     let (mapped, unmapped, failures) = (rep.mapped, rep.unmapped, rep.failures.clone());
-    let r = map_atomic(model, leaf, alias, t, mnemonic, rep);
+    let r = map_atomic(model, leaf, alias, t, mnemonic, env, rep);
     rep.mapped = mapped;
     rep.unmapped = unmapped;
     rep.failures = failures;
@@ -717,6 +844,7 @@ fn map_atomic(
     json: &Value,
     t: &[T],
     mnemonic: &str,
+    env: &Env<'_>,
     rep: &mut Report,
 ) -> R<String> {
     let (tabs, data, hand) = (
@@ -724,7 +852,7 @@ fn map_atomic(
         rep.data_tables,
         rep.hand_rules.clone(),
     );
-    let r = map_inner(model, leaf, json, t, mnemonic, rep);
+    let r = map_inner(model, leaf, json, t, mnemonic, env, rep);
     if r.is_err() {
         rep.tabs.bodies.truncate(tabs);
         rep.tabs.index.retain(|_, i| *i < tabs);
@@ -740,6 +868,7 @@ fn map_inner(
     json: &Value,
     t: &[T],
     mnemonic: &str,
+    env: &Env<'_>,
     rep: &mut Report,
 ) -> R<String> {
     rep.last_suffixes.clear();
@@ -760,6 +889,8 @@ fn map_inner(
         leaf_fields: model.nodes[leaf.node].fields.clone(),
         alias: !std::ptr::eq(json, leaf.json),
         pat_mask: model.full_pattern(leaf.node).mask,
+        pat_value: model.full_pattern(leaf.node).value,
+        env,
         order,
         iclass: leaf.iclass.clone(),
         group: {
@@ -837,7 +968,7 @@ fn map_inner(
     while i < groups.len() {
         let g = groups[i].as_str();
         // A memory operand followed by a post-index part.
-        if g.starts_with('[') && g.ends_with(']') && i + 1 < groups.len() {
+        if !cx.sve() && g.starts_with('[') && g.ends_with(']') && i + 1 < groups.len() {
             if let Some(op) = post_index(&mut cx, g, &groups[i + 1])? {
                 ops.push(op);
                 i += 2;
@@ -898,14 +1029,6 @@ fn map_inner(
     }
     if ops.len() > 8 {
         return Err("more than 8 operands".into());
-    }
-    if matches!(cx.group.as_str(), "sve" | "sme")
-        && cx
-            .syms
-            .keys()
-            .any(|k| k.starts_with("<Z") || k.starts_with("<P"))
-    {
-        return Err("SVE/SME: every symbol recognised (operand rules not reviewed yet)".into());
     }
     cx.rep.last_arity = ops.iter().filter(|o| !o.starts_with("Op::Suffix")).count();
     Ok(ops.join(", "))
@@ -1025,13 +1148,20 @@ fn r_table(cx: &mut Cx<'_>, size: &str) -> R<String> {
 }
 
 /// The value of an immediate symbol.
-fn sym_imm(cx: &mut Cx<'_>, d: &str) -> R<String> {
+pub(crate) fn sym_imm(cx: &mut Cx<'_>, d: &str) -> R<String> {
     if let Some(r) = alias_imm(cx, d)? {
         return Ok(r);
     }
     if cx.is_table_sym(d) {
         let t = cx.num_table(d)?;
         return Ok(format!("Imm::Tab({t})"));
+    }
+    if cx.sve() {
+        // The spec says whether the number is signed (`SInteger`) or not.
+        let f = cx.field(d)?;
+        let signed = cx.sym(d)?.alts.iter().any(|a| a.signed);
+        cx.hand("SVE immediate, signed as the spec's number token says");
+        return Ok(format!("Imm::{}({f}, 0)", if signed { "S" } else { "U" }));
     }
     let fields = cx.fields(d)?;
     let f = fs(&fields);
@@ -1100,7 +1230,12 @@ fn bitmask(cx: &mut Cx<'_>, d: &str) -> R<String> {
 }
 
 /// One operand group.
-fn group(cx: &mut Cx<'_>, g: &str, _next: Option<&str>) -> R<String> {
+pub(crate) fn group(cx: &mut Cx<'_>, g: &str, _next: Option<&str>) -> R<String> {
+    if cx.sve()
+        && let Some(r) = crate::sve::group(cx, g)
+    {
+        return r;
+    }
     // Registers.
     if let Some(c) = m("%", g) {
         return single(cx, &c[0]);
@@ -1286,7 +1421,7 @@ fn group(cx: &mut Cx<'_>, g: &str, _next: Option<&str>) -> R<String> {
     Err(format!("operand shape {g}"))
 }
 
-fn single(cx: &mut Cx<'_>, d: &str) -> R<String> {
+pub(crate) fn single(cx: &mut Cx<'_>, d: &str) -> R<String> {
     match d {
         "<invcond>" => {
             cx.hand("alias inverted condition");
@@ -1431,7 +1566,7 @@ fn label(cx: &mut Cx<'_>) -> R<String> {
     Ok(format!("Op::Label(Imm::S({f}, 2), false)"))
 }
 
-fn imm(cx: &mut Cx<'_>, d: &str) -> R<String> {
+pub(crate) fn imm(cx: &mut Cx<'_>, d: &str) -> R<String> {
     let fields = cx.fields(d).unwrap_or_default();
     let names: Vec<&str> = fields.iter().map(|x| x.name.as_str()).collect();
     if names.contains(&"immr") && names.contains(&"imms") && d == "<imm>" {

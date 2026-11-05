@@ -6,7 +6,7 @@
 use crate::bits::{Fs, decode_bit_masks, fp_imm8_value, highest_set_bit, sext};
 use crate::generated::Register;
 use crate::operand::{
-    Arrangement, ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, ShiftKind,
+    Arrangement, ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, PredQual, ShiftKind,
 };
 
 /// A value table: the first entry whose bits match (`field & mask == value`) gives
@@ -277,6 +277,13 @@ pub(crate) enum Imm {
         inv: bool,
         size: u8,
     },
+    /// SVE logical immediate (`DUPM`, `AND`, ...): `N:immr:imms` as a 64-bit
+    /// `DecodeBitMasks`, shown as one element (the size `N:imms` gives).
+    SveBitmask {
+        n: Fs,
+        immr: Fs,
+        imms: Fs,
+    },
 }
 
 impl Imm {
@@ -345,6 +352,16 @@ impl Imm {
                 let v = u64::from(imm16.get(word)) << (16 * hw.get(word));
                 let v = if inv { !v } else { v };
                 if size == 32 { v & 0xffff_ffff } else { v }
+            }
+            Imm::SveBitmask { n, immr, imms } => {
+                let (n, imms) = (n.get(word), imms.get(word));
+                let v = decode_bit_masks(n, imms, immr.get(word), true, 64)?.0;
+                let esize = sve_bitmask_esize(n, imms)?;
+                if esize == 64 {
+                    v
+                } else {
+                    v & ((1 << esize) - 1)
+                }
             }
         })
     }
@@ -419,6 +436,40 @@ pub(crate) enum NameKind {
     Plain,
 }
 
+/// The qualifier of a governing predicate.
+#[derive(Debug, Clone, Copy)]
+pub(crate) enum Pq {
+    None,
+    Zeroing,
+    Merging,
+    /// From a table (`<Pg>/<ZM>`): code 0 is `/Z`, 1 is `/M`.
+    Tab(&'static Tab),
+}
+
+impl Pq {
+    fn get(self, word: u32) -> Option<PredQual> {
+        Some(match self {
+            Pq::None => PredQual::None,
+            Pq::Zeroing => PredQual::Zeroing,
+            Pq::Merging => PredQual::Merging,
+            Pq::Tab(t) => match t.find(word)? {
+                0 => PredQual::Zeroing,
+                _ => PredQual::Merging,
+            },
+        })
+    }
+}
+
+/// The element size `DecodeBitMasks` gives `N:imms`, at least 8 (the SVE
+/// logical immediates show 2- and 4-bit patterns as bytes).
+pub(crate) fn sve_bitmask_esize(n: u32, imms: u32) -> Option<u32> {
+    let len = highest_set_bit(n << 6 | (!imms & 0x3f))?;
+    if len < 1 {
+        return None;
+    }
+    Some((1u32 << len).max(8))
+}
+
 /// One operand descriptor.
 #[derive(Debug, Clone, Copy)]
 pub(crate) enum Op {
@@ -471,6 +522,11 @@ pub(crate) enum Op {
     /// A mnemonic suffix from a name table (`2` in `SADDL2`, `B`/`T` in `BFMLALB`).
     /// Not an operand: decoding only checks the value is allocated.
     Suffix(&'static Tab),
+    /// An SVE or SME register (`Z`, `P` or `PN`; field + `add`) with an element size
+    /// and a predicate qualifier: `Z0.S`, `P1/M`, `PN8.B`.
+    Zr(Fs, Rk, Arr, u8, Pq),
+    /// An indexed SVE or SME register: `Z1.S[2]`, `Z3[1]`, `PN9[0]`.
+    ZElem(Fs, Rk, Arr, Idx),
 }
 
 fn reg_op(r: Register) -> Operand {
@@ -554,7 +610,7 @@ fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
             kind: OpKind::BitmaskImmediate,
             imm: i.get(word)?,
             raw_fields: match i {
-                Imm::Bitmask { n, immr, imms, .. } => {
+                Imm::Bitmask { n, immr, imms, .. } | Imm::SveBitmask { n, immr, imms } => {
                     (1 << 15 | n.get(word) << 12 | immr.get(word) << 6 | imms.get(word)) as u16
                 }
                 _ => 0,
@@ -661,6 +717,19 @@ fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
             elide: f.get(word) == default,
             ..decode_one(inner, word, pc)?
         },
+        Op::Zr(f, k, a, add, pq) => Operand {
+            arr: a.get(word)?,
+            pred: pq.get(word)?,
+            ..reg_op(k.reg(plus(f, word, add)))
+        },
+        Op::ZElem(f, k, a, idx) => {
+            let es = a.get(word)?;
+            Operand {
+                arr: es,
+                lane: idx.get(word, es)?,
+                ..reg_op(k.reg(f.get(word)))
+            }
+        }
         Op::Suffix(_) => return None,
     })
 }
@@ -794,6 +863,7 @@ fn imm_cover(i: Imm, word: u32) -> Option<u32> {
             }
             t.cover(word)?
         }
+        Imm::SveBitmask { .. } => return None,
         Imm::NegMod(..) | Imm::LslShift { .. } | Imm::WideMov { .. } => return None,
     })
 }
@@ -859,6 +929,15 @@ fn op_cover(op: &Op, word: u32) -> Option<u32> {
         Op::Name(t, _) => t.f.mask(),
         Op::Opt(inner, ..) => op_cover(inner, word)?,
         Op::Suffix(t) => t.cover(word)?,
+        Op::Zr(f, _, a, _, pq) => {
+            f.mask()
+                | arr_cover(a, word)?
+                | match pq {
+                    Pq::Tab(t) => t.cover(word)?,
+                    _ => 0,
+                }
+        }
+        Op::ZElem(..) => return None,
         Op::Cond(..) | Op::SysReg(_) | Op::SysOperation(_) => return None,
     })
 }
@@ -952,6 +1031,7 @@ const fn imm_cover_const(i: Imm) -> Option<u32> {
             }
             tab_cover_const(t)
         }
+        Imm::SveBitmask { .. } => None,
         Imm::NegMod(..) | Imm::LslShift { .. } | Imm::WideMov { .. } => None,
     }
 }
@@ -1024,6 +1104,14 @@ const fn op_cover_const(op: &Op) -> Option<u32> {
         Op::Name(t, _) => Some(t.f.mask()),
         Op::Opt(inner, ..) => op_cover_const(inner),
         Op::Suffix(t) => tab_cover_const(t),
+        Op::Zr(f, _, a, _, pq) => or(
+            or(Some(f.mask()), arr_cover_const(a)),
+            match pq {
+                Pq::Tab(t) => tab_cover_const(t),
+                _ => Some(0),
+            },
+        ),
+        Op::ZElem(..) => None,
         Op::Cond(..) | Op::SysReg(_) | Op::SysOperation(_) => None,
     }
 }

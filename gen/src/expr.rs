@@ -334,3 +334,140 @@ impl Arena {
         }
     }
 }
+
+/// A value while evaluating an expression in the generator (as `cond::Val` does in
+/// the library).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum V {
+    Bool(bool),
+    Bits { value: u64, mask: u64, width: u32 },
+    Int(i64),
+}
+
+impl V {
+    fn bits(value: u64, width: u32) -> V {
+        let mask = if width >= 64 {
+            u64::MAX
+        } else {
+            (1u64 << width) - 1
+        };
+        V::Bits {
+            value: value & mask,
+            mask,
+            width,
+        }
+    }
+
+    fn truthy(self) -> bool {
+        match self {
+            V::Bool(b) => b,
+            V::Bits { value, .. } => value != 0,
+            V::Int(i) => i != 0,
+        }
+    }
+
+    fn int(self) -> i64 {
+        match self {
+            V::Bool(b) => b as i64,
+            V::Bits { value, .. } => value as i64,
+            V::Int(i) => i,
+        }
+    }
+
+    fn raw(self) -> (u64, u32) {
+        match self {
+            V::Bits { value, width, .. } => (value, width),
+            V::Bool(b) => (b as u64, 1),
+            V::Int(i) => (i as u64, 64),
+        }
+    }
+}
+
+fn equal(a: V, b: V) -> bool {
+    match (a, b) {
+        (
+            V::Bits {
+                value: av,
+                mask: am,
+                ..
+            },
+            V::Bits {
+                value: bv,
+                mask: bm,
+                ..
+            },
+        ) => {
+            let m = am & bm;
+            av & m == bv & m
+        }
+        (V::Bool(x), V::Bool(y)) => x == y,
+        _ => a.int() == b.int(),
+    }
+}
+
+impl Arena {
+    /// Evaluates an expression on a word, with every feature implemented. Helper
+    /// functions (alias preferences) count as true: this is for path conditions,
+    /// which name fields and features only.
+    fn eval(&self, id: u32, word: u32) -> V {
+        match &self.nodes[id as usize] {
+            E::Bool(b) => V::Bool(*b),
+            E::Field { lsb, width } => V::bits(u64::from(word >> lsb), *width),
+            E::Bits { value, mask, width } => V::Bits {
+                value: u64::from(*value),
+                mask: u64::from(*mask),
+                width: *width,
+            },
+            E::Int(i) => V::Int(*i),
+            E::Feature(_) | E::Call(..) => V::Bool(true),
+            E::Not(a) => V::Bool(!self.eval(*a, word).truthy()),
+            E::BitNot(a) => {
+                let (v, w) = self.eval(*a, word).raw();
+                V::bits(!v, w)
+            }
+            E::Bin(op, a, b) => {
+                let x = self.eval(*a, word);
+                match op.as_str() {
+                    "&&" => return V::Bool(x.truthy() && self.eval(*b, word).truthy()),
+                    "||" => return V::Bool(x.truthy() || self.eval(*b, word).truthy()),
+                    _ => {}
+                }
+                let y = self.eval(*b, word);
+                match op.as_str() {
+                    "==" => V::Bool(equal(x, y)),
+                    "!=" => V::Bool(!equal(x, y)),
+                    "<" => V::Bool(x.int() < y.int()),
+                    ">" => V::Bool(x.int() > y.int()),
+                    ">=" => V::Bool(x.int() >= y.int()),
+                    "<=" => V::Bool(x.int() <= y.int()),
+                    "+" => V::Int(x.int().wrapping_add(y.int())),
+                    "-" => V::Int(x.int().wrapping_sub(y.int())),
+                    "MOD" => V::Int(x.int().checked_rem_euclid(y.int()).unwrap_or(0)),
+                    "XOR" => {
+                        let ((a, w), (b, _)) = (x.raw(), y.raw());
+                        V::bits(a ^ b, w)
+                    }
+                    _ => {
+                        // `::`.
+                        let ((a, aw), (b, bw)) = (x.raw(), y.raw());
+                        V::bits(a << bw | b, aw + bw)
+                    }
+                }
+            }
+            E::In(a, m) => {
+                let x = self.eval(*a, word);
+                V::Bool(m.iter().any(|&m| equal(x, self.eval(m, word))))
+            }
+            E::Slice(a, hi, lo) => {
+                let (v, _) = self.eval(*a, word).raw();
+                V::bits(v >> lo, hi - lo + 1)
+            }
+            E::UInt(a) => V::Int(self.eval(*a, word).raw().0 as i64),
+        }
+    }
+
+    /// Whether every condition holds for the word.
+    pub fn holds(&self, conds: &[u32], word: u32) -> bool {
+        conds.iter().all(|&c| self.eval(c, word).truthy())
+    }
+}

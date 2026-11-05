@@ -13,6 +13,10 @@ pub const PC: u64 = 0x1000;
 /// The groups the differential tests cover.
 pub const GROUPS: &[&str] = &["control", "dpimm", "dpreg", "ldst", "simd_dp"];
 
+/// The SVE and SME groups, which only fARM64 decodes (with its `sve` and `sme`
+/// features; yaxpeax-arm 0.5 has neither).
+pub const SVE_GROUPS: &[&str] = &["sve", "sme"];
+
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
 pub enum Oracle {
     Farm64,
@@ -25,6 +29,11 @@ impl Oracle {
             Oracle::Farm64 => "farm64",
             Oracle::Yaxpeax => "yaxpeax",
         }
+    }
+
+    /// Whether the oracle decodes SVE and SME.
+    pub fn has_sve(self) -> bool {
+        self == Oracle::Farm64
     }
 
     /// The oracle's text for `w`, or `None` when it rejects the word.
@@ -213,6 +222,27 @@ impl Rng {
     }
 }
 
+/// Per SVE and SME encoding with operand support, `n` random fillings of the
+/// variable bits plus all-zero and all-one (a generator of its own, so the base
+/// groups' samples are unchanged).
+pub fn sve_sample_words(n: u32) -> Vec<(u32, String)> {
+    let mut rng = Rng::new(0x5be5_0000_57e5_0001);
+    let mut out = Vec::new();
+    for c in Code::values().skip(1) {
+        let oc = c.op_code();
+        if !SVE_GROUPS.contains(&oc.group()) || !oc.has_operands() {
+            continue;
+        }
+        let var = !oc.mask();
+        out.push((oc.value(), oc.name().to_string()));
+        out.push((oc.value() | var, oc.name().to_string()));
+        for _ in 0..n {
+            out.push((oc.value() | (rng.next() & var), oc.name().to_string()));
+        }
+    }
+    out
+}
+
 /// The words compared: per encoding in scope, `n` random fillings of the
 /// variable bits plus all-zero and all-one; then random words.
 pub fn sample_words(n: u32) -> Vec<(u32, String)> {
@@ -238,13 +268,16 @@ pub fn sample_words(n: u32) -> Vec<(u32, String)> {
 }
 
 /// The encoding a word is filed under: ours when we decode it, else the one it was
-/// sampled from; random words we reject are filed as `UNALLOCATED`.
-fn file_under(w: u32, sampled: &str) -> Option<String> {
+/// sampled from; random words we reject are filed as `UNALLOCATED`. SVE and SME
+/// words are in scope for an oracle that decodes them, when we decode their
+/// operands.
+fn file_under(oracle: Oracle, w: u32, sampled: &str) -> Option<String> {
     let i = decode_word(w, PC, &DecoderOptions::default());
     let name = i.op_code().name();
     if !i.is_invalid() {
         let g = i.op_code().group();
-        return GROUPS.contains(&g).then(|| name.to_string());
+        let sve = oracle.has_sve() && SVE_GROUPS.contains(&g) && i.has_operands();
+        return (GROUPS.contains(&g) || sve).then(|| name.to_string());
     }
     if !sampled.is_empty() {
         return Some(sampled.to_string());
@@ -255,7 +288,11 @@ fn file_under(w: u32, sampled: &str) -> Option<String> {
 }
 
 pub fn compare_groups(oracle: Oracle, n: u32) -> BTreeMap<(String, String), Group> {
-    let (groups, accepted) = tally(oracle, sample_words(n).into_iter());
+    let mut words = sample_words(n);
+    if oracle.has_sve() {
+        words.extend(sve_sample_words(n));
+    }
+    let (groups, accepted) = tally(oracle, words.into_iter());
     finish(groups, &accepted)
 }
 
@@ -270,7 +307,7 @@ pub fn tally(
     let mut groups: Groups = BTreeMap::new();
     let mut accepted: BTreeMap<String, usize> = BTreeMap::new();
     for (w, sampled) in words {
-        let Some(enc) = file_under(w, &sampled) else {
+        let Some(enc) = file_under(oracle, w, &sampled) else {
             continue;
         };
         let mine = ours(w);

@@ -14,7 +14,7 @@ use std::fmt::Write as _;
 use aarch64_isa::{
     Code, DecoderOptions, Feature, FeatureSet, SysKind, decode_word, system::entries,
 };
-use common::{GROUPS, Rng};
+use common::{GROUPS, Rng, SVE_GROUPS};
 
 fn snapshot(name: &str, actual: &str) {
     let path = format!("{}/tests/golden/{name}", env!("CARGO_MANIFEST_DIR"));
@@ -51,6 +51,26 @@ fn formatter_per_iclass() {
         }
     }
     snapshot("format.txt", &out);
+}
+
+/// The same for the SVE and SME encodings with operand support (a snapshot of its
+/// own, so the base one is unchanged as encodings gain operands).
+#[test]
+fn formatter_per_iclass_sve_sme() {
+    let mut rng = Rng::new(11);
+    let mut seen = BTreeSet::new();
+    let mut out = String::new();
+    for c in Code::values().skip(1) {
+        let oc = c.op_code();
+        if !SVE_GROUPS.contains(&oc.group()) || !oc.has_operands() || !seen.insert(oc.iclass()) {
+            continue;
+        }
+        for w in [oc.value(), oc.value() | (rng.next() & !oc.mask())] {
+            let i = decode_word(w, 0x1000, &DecoderOptions::default());
+            let _ = writeln!(out, "{w:08x} {:<28} {}", i.op_code().name(), i);
+        }
+    }
+    snapshot("format_sve.txt", &out);
 }
 
 #[test]
@@ -267,5 +287,65 @@ fn stragglers() {
         assert_eq!(i.encode(), Ok(w), "{w:08x} {text}");
         let built = aarch64_isa::Instruction::with(i.code(), i.operands(), 0x1000).unwrap();
         assert_eq!(built.encode(), Ok(w), "{w:08x} {text} from operands");
+    }
+}
+
+/// SVE data processing, one word per operand family (text per the Arm ARM syntax;
+/// fARM64 agrees except where `tests/triage/farm64.txt` says otherwise).
+#[test]
+fn sve_data_processing() {
+    for (w, text) in [
+        // Predicated, merging and zeroing; destructive `<Zdn>`.
+        (0x0400_0597u32, "add z23.b, p1/m, z23.b, z12.b"),
+        (0x04d0_3ad5, "movprfx z21.d, p6/z, z22.d"),
+        // `<Pg>/<ZM>` from the `M` bit (CPY, SEL as MOV).
+        (0x057e_c5de, "mov z30.h, p1/m, z14.h"),
+        // Unpredicated, wide elements, `<Tb>` from the same `size`.
+        (0x0418_8d24, "asr z4.b, p3/m, z4.b, z9.d"),
+        (0x45d4_43e6, "saddwb z6.d, z31.d, z20.s"),
+        (0x45cc_0044, "saddlb z4.d, z2.s, z12.s"),
+        // Element size and shift from `tsz:imm3`; narrowing (exact one-hot `tsz`).
+        (0x04b0_934f, "asr z15.d, z26.d, #0x30"),
+        (0x4574_022e, "sqshrunb z14.s, z17.d, #0xc"),
+        (0x4560_410a, "sqxtnb z10.s, z8.d"),
+        // Indexed elements: `i2`, `i3h:i3l`, and `imm2:tsz` (DUP as MOV).
+        (0x44b0_028b, "sdot z11.s, z20.b, z0.b[2]"),
+        (0x4467_0874, "mla z20.h, z3.h, z7.h[4]"),
+        (0x05fe_220d, "mov z13.h, z16.h[0x1f]"),
+        // Immediates: signed and unsigned, `LSL #8`, logical, FP.
+        (0x25d9_094c, "cmpge p12.d, p2/z, z10.d, #-7"),
+        (0x24b5_8e0e, "cmphs p14.s, p3/z, z16.s, #0x56"),
+        (0x2568_d460, "smax z0.h, z0.h, #-0x5d"),
+        (0x2563_e0cb, "subr z11.h, z11.h, #6, lsl #8"),
+        (0x0428_5741, "addvl x1, x8, #-6"),
+        (0x0502_40ad, "orr z13.d, z13.d, #0x3f00000000000000"),
+        (0x05c0_0000, "dupm z0.s, #0x1"),
+        (0x05c2_a6f6, "mov z22.d, #0xfffff00fffffffff"),
+        (0x0554_d205, "fmov z5.h, p4/m, #-4.0"),
+        (0x6558_8c1c, "fadd z28.h, p3/m, z28.h, #0.5"),
+        (0x6550_2222, "fcmge p2.h, p0/z, z17.h, #0.0"),
+        // Rotations.
+        (0x44a3_6dc4, "cmla z4.h, z14.h, z3.h[0], #0x10e"),
+        // Predicates, scalars and vectors of SIMD&FP registers.
+        (0x2508_68cc, "and p12.b, p10/z, p6.b, p8.b"),
+        (0x2558_c10a, "pfirst p10.b, p8, p10.b"),
+        (0x2560_9da7, "cntp x7, p7, p13.h"),
+        (0x25e8_80e5, "sqincp z5.d, p7.d"),
+        (0x2520_7810, "ptrue pn8.b"),
+        (0x04c5_29d7, "addqv v23.2d, p2, z14.d"),
+        (0x65d8_32b6, "fadda d22, p4, d22, z21.d"),
+        (0x0574_3952, "insr z18.h, h10"),
+    ] {
+        let i = decode_word(w, 0x1000, &DecoderOptions::default());
+        assert_eq!(i.to_string(), text, "{w:08x}");
+        assert_eq!(i.encode(), Ok(w), "{w:08x} {text}");
+    }
+    // RESERVED sizes the decode pseudocode rejects: a byte immediate shifted by 8,
+    // SXTW of a non-doubleword, HISTSEG of a non-byte, SADDV of doublewords.
+    for w in [0x2520_e06fu32, 0x0404_a000, 0x45e9_a2ac, 0x04c0_2000] {
+        assert!(
+            decode_word(w, 0, &DecoderOptions::default()).is_invalid(),
+            "{w:08x}"
+        );
     }
 }

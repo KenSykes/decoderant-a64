@@ -51,12 +51,22 @@ pub(crate) fn undefined(d: &EncodingData, w: u32) -> bool {
         "asimdext" => !bit(30) && bit(14),
         // SYSP: `if t<0> == '1' && t != 31 then UNDEFINED;` (Rt names a pair).
         "syspairinstrs" => w & 1 == 1 && w & 31 != 31,
+        // SVE unsigned and signed immediates with an optional `LSL #8`, `DUP` and
+        // `CPY` (immediate): `if size:sh == '001' then UNDEFINED;` (no byte shift).
+        "sve_int_arith_imm0" | "sve_int_dup_imm" | "sve_int_dup_imm_pred" => {
+            w >> 22 & 3 == 0 && bit(13)
+        }
+        _ if matches!(d.group, "sve" | "sme") => {
+            let (m, v) = pinned(d);
+            m != 0 && w & m != v
+        }
         _ => false,
     }
 }
 
 /// Fields the decode pseudocode pins to one value but no operand sets: the encoder
-/// starts from these bits (`mask`, `value`).
+/// starts from these bits (`mask`, `value`). Outside the AdvSIMD classes that
+/// check it themselves above, another value is UNDEFINED.
 pub(crate) const fn pinned(d: &EncodingData) -> (u32, u32) {
     // SDOT/UDOT: `size` must be 10.
     const SIZE_10: &[&str] = &[
@@ -65,8 +75,31 @@ pub(crate) const fn pinned(d: &EncodingData) -> (u32, u32) {
         "SDOT_asimdelem_D",
         "UDOT_asimdelem_D",
     ];
-    if any_eq(SIZE_10, d.name) {
+    // SVE encodings whose operands have a fixed element size and whose `size`
+    // field no operand reads: `if size != '11' then UNDEFINED;` (SXTW, UXTW, REVW:
+    // doublewords), `if size != '10' ...` (URECPE, URSQRTE: words), `if size !=
+    // '00' ...` (HISTSEG: bytes).
+    const SVE_SIZE_11: &[&str] = &[
+        "sxtw_z_p_z_m",
+        "sxtw_z_p_z_z",
+        "uxtw_z_p_z_m",
+        "uxtw_z_p_z_z",
+        "revw_z_z_m",
+        "revw_z_z_z",
+    ];
+    const SVE_SIZE_10: &[&str] = &[
+        "urecpe_z_p_z_m",
+        "urecpe_z_p_z_z",
+        "ursqrte_z_p_z_m",
+        "ursqrte_z_p_z_z",
+    ];
+    const SVE_SIZE_00: &[&str] = &["histseg_z_zz_"];
+    if any_eq(SIZE_10, d.name) || any_eq(SVE_SIZE_10, d.name) {
         (3 << 22, 2 << 22)
+    } else if any_eq(SVE_SIZE_11, d.name) {
+        (3 << 22, 3 << 22)
+    } else if any_eq(SVE_SIZE_00, d.name) {
+        (3 << 22, 0)
     } else {
         (0, 0)
     }

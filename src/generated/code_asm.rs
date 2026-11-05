@@ -16,9 +16,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Abs, "", &[a0.into(), a1.into()])
     }
 
+    /// `ABS` with 3 operands.
+    pub fn abs_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Abs, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `ADC` with 3 operands.
     pub fn adc(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Adc, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ADCLB` with 3 operands.
+    pub fn adclb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Adclb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ADCLT` with 3 operands.
+    pub fn adclt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Adclt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `ADCS` with 3 operands.
@@ -29,6 +44,11 @@ impl CodeAssembler {
     /// `ADD` with 3 operands.
     pub fn add(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Add, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ADD` with 4 operands.
+    pub fn add_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Add, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `ADDG` with 4 operands.
@@ -46,6 +66,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Addhn, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `ADDHNB` with 3 operands.
+    pub fn addhnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Addhnb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ADDHNT` with 3 operands.
+    pub fn addhnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Addhnt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `ADDP` with 2 operands.
     pub fn addp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Addp, "", &[a0.into(), a1.into()])
@@ -54,6 +84,11 @@ impl CodeAssembler {
     /// `ADDP` with 3 operands.
     pub fn addp_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Addp, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ADDP` with 4 operands.
+    pub fn addp_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Addp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `ADDPL` with 3 operands.
@@ -66,6 +101,21 @@ impl CodeAssembler {
         self.emit(Mnemonic::Addpt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `ADDPT` with 4 operands.
+    pub fn addpt_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Addpt, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `ADDQP` with 3 operands.
+    pub fn addqp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Addqp, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ADDQV` with 3 operands.
+    pub fn addqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Addqv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `ADDS` with 3 operands.
     pub fn adds(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Adds, "", &[a0.into(), a1.into(), a2.into()])
@@ -74,6 +124,11 @@ impl CodeAssembler {
     /// `ADDSPL` with 3 operands.
     pub fn addspl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Addspl, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ADDSUBP` with 3 operands.
+    pub fn addsubp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Addsubp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `ADDSVL` with 3 operands.
@@ -106,9 +161,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Aesd, "", &[a0.into(), a1.into()])
     }
 
+    /// `AESD` with 3 operands.
+    pub fn aesd_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Aesd, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `AESE` with 2 operands.
     pub fn aese(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Aese, "", &[a0.into(), a1.into()])
+    }
+
+    /// `AESE` with 3 operands.
+    pub fn aese_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Aese, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `AESIMC` with 2 operands.
@@ -126,9 +191,29 @@ impl CodeAssembler {
         self.emit(Mnemonic::And, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `AND` with 4 operands.
+    pub fn and_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::And, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `ANDQV` with 3 operands.
+    pub fn andqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Andqv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `ANDS` with 3 operands.
     pub fn ands(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Ands, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ANDS` with 4 operands.
+    pub fn ands_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ands, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `ANDV` with 3 operands.
+    pub fn andv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Andv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `APAS` with 1 operands.
@@ -139,6 +224,21 @@ impl CodeAssembler {
     /// `ASR` with 3 operands.
     pub fn asr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Asr, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ASR` with 4 operands.
+    pub fn asr_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Asr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `ASRD` with 4 operands.
+    pub fn asrd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Asrd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `ASRR` with 4 operands.
+    pub fn asrr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Asrr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `ASRV` with 3 operands.
@@ -276,6 +376,21 @@ impl CodeAssembler {
         self.emit(Mnemonic::Bcax, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
+    /// `BDEP` with 3 operands.
+    pub fn bdep(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bdep, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BEXT` with 3 operands.
+    pub fn bext(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bext, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BF1CVT` with 2 operands.
+    pub fn bf1cvt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bf1cvt, "", &[a0.into(), a1.into()])
+    }
+
     /// `BF1CVTL` with 2 operands.
     pub fn bf1cvtl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Bf1cvtl, "", &[a0.into(), a1.into()])
@@ -284,6 +399,16 @@ impl CodeAssembler {
     /// `BF1CVTL2` with 2 operands.
     pub fn bf1cvtl2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Bf1cvtl, "2", &[a0.into(), a1.into()])
+    }
+
+    /// `BF1CVTLT` with 2 operands.
+    pub fn bf1cvtlt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bf1cvtlt, "", &[a0.into(), a1.into()])
+    }
+
+    /// `BF2CVT` with 2 operands.
+    pub fn bf2cvt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bf2cvt, "", &[a0.into(), a1.into()])
     }
 
     /// `BF2CVTL` with 2 operands.
@@ -296,14 +421,39 @@ impl CodeAssembler {
         self.emit(Mnemonic::Bf2cvtl, "2", &[a0.into(), a1.into()])
     }
 
+    /// `BF2CVTLT` with 2 operands.
+    pub fn bf2cvtlt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bf2cvtlt, "", &[a0.into(), a1.into()])
+    }
+
+    /// `BFADD` with 3 operands.
+    pub fn bfadd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfadd, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BFADD` with 4 operands.
+    pub fn bfadd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `BFC` with 3 operands.
     pub fn bfc(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Bfc, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `BFCLAMP` with 3 operands.
+    pub fn bfclamp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfclamp, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `BFCVT` with 2 operands.
     pub fn bfcvt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Bfcvt, "", &[a0.into(), a1.into()])
+    }
+
+    /// `BFCVT` with 3 operands.
+    pub fn bfcvt_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfcvt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `BFCVTN` with 2 operands.
@@ -314,6 +464,11 @@ impl CodeAssembler {
     /// `BFCVTN2` with 2 operands.
     pub fn bfcvtn2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Bfcvtn, "2", &[a0.into(), a1.into()])
+    }
+
+    /// `BFCVTNT` with 3 operands.
+    pub fn bfcvtnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfcvtnt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `BFDOT` with 3 operands.
@@ -331,6 +486,36 @@ impl CodeAssembler {
         self.emit(Mnemonic::Bfm, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
+    /// `BFMAX` with 4 operands.
+    pub fn bfmax(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfmax, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BFMAXNM` with 4 operands.
+    pub fn bfmaxnm(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfmaxnm, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BFMIN` with 4 operands.
+    pub fn bfmin(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfmin, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BFMINNM` with 4 operands.
+    pub fn bfminnm(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfminnm, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BFMLA` with 3 operands.
+    pub fn bfmla(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfmla, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BFMLA` with 4 operands.
+    pub fn bfmla_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfmla, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `BFMLALB` with 3 operands.
     pub fn bfmlalb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Bfmlal, "B", &[a0.into(), a1.into(), a2.into()])
@@ -341,14 +526,64 @@ impl CodeAssembler {
         self.emit(Mnemonic::Bfmlal, "T", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `BFMLS` with 3 operands.
+    pub fn bfmls(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfmls, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BFMLS` with 4 operands.
+    pub fn bfmls_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfmls, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BFMLSLB` with 3 operands.
+    pub fn bfmlslb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfmlslb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BFMLSLT` with 3 operands.
+    pub fn bfmlslt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfmlslt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `BFMMLA` with 3 operands.
     pub fn bfmmla(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Bfmmla, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `BFMUL` with 3 operands.
+    pub fn bfmul(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfmul, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BFMUL` with 4 operands.
+    pub fn bfmul_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfmul, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BFSCALE` with 4 operands.
+    pub fn bfscale(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfscale, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BFSUB` with 3 operands.
+    pub fn bfsub(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfsub, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BFSUB` with 4 operands.
+    pub fn bfsub_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bfsub, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `BFXIL` with 4 operands.
     pub fn bfxil(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Bfxil, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BGRP` with 3 operands.
+    pub fn bgrp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bgrp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `BIC` with 2 operands.
@@ -361,9 +596,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Bic, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `BIC` with 4 operands.
+    pub fn bic_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bic, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `BICS` with 3 operands.
     pub fn bics(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Bics, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BICS` with 4 operands.
+    pub fn bics_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bics, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `BIF` with 3 operands.
@@ -441,14 +686,84 @@ impl CodeAssembler {
         self.emit(Mnemonic::Brk, "", &[a0.into()])
     }
 
+    /// `BRKA` with 3 operands.
+    pub fn brka(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Brka, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BRKAS` with 3 operands.
+    pub fn brkas(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Brkas, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BRKB` with 3 operands.
+    pub fn brkb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Brkb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BRKBS` with 3 operands.
+    pub fn brkbs(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Brkbs, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `BRKN` with 4 operands.
+    pub fn brkn(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Brkn, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BRKNS` with 4 operands.
+    pub fn brkns(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Brkns, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BRKPA` with 4 operands.
+    pub fn brkpa(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Brkpa, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BRKPAS` with 4 operands.
+    pub fn brkpas(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Brkpas, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BRKPB` with 4 operands.
+    pub fn brkpb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Brkpb, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BRKPBS` with 4 operands.
+    pub fn brkpbs(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Brkpbs, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `BSL` with 3 operands.
     pub fn bsl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Bsl, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `BSL` with 4 operands.
+    pub fn bsl_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bsl, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BSL1N` with 4 operands.
+    pub fn bsl1n(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bsl1n, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `BSL2N` with 4 operands.
+    pub fn bsl2n(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Bsl2n, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `BTI` with 1 operands.
     pub fn bti(&mut self, a0: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Bti, "", &[a0.into()])
+    }
+
+    /// `CADD` with 4 operands.
+    pub fn cadd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `CAS` with 3 operands.
@@ -741,6 +1056,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Ccmp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
+    /// `CDOT` with 4 operands.
+    pub fn cdot(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cdot, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `CFINV` with 0 operands.
     pub fn cfinv(&mut self) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Cfinv, "", &[])
@@ -826,6 +1146,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Cinv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `CLASTA` with 4 operands.
+    pub fn clasta(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Clasta, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `CLASTB` with 4 operands.
+    pub fn clastb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Clastb, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `CLRBHB` with 0 operands.
     pub fn clrbhb(&mut self) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Clrbhb, "", &[])
@@ -841,9 +1171,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Cls, "", &[a0.into(), a1.into()])
     }
 
+    /// `CLS` with 3 operands.
+    pub fn cls_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cls, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `CLZ` with 2 operands.
     pub fn clz(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Clz, "", &[a0.into(), a1.into()])
+    }
+
+    /// `CLZ` with 3 operands.
+    pub fn clz_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Clz, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `CMEQ` with 3 operands.
@@ -871,6 +1211,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Cmhs, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `CMLA` with 4 operands.
+    pub fn cmla(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cmla, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `CMLE` with 3 operands.
     pub fn cmle(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Cmle, "", &[a0.into(), a1.into(), a2.into()])
@@ -891,6 +1236,56 @@ impl CodeAssembler {
         self.emit(Mnemonic::Cmp, "", &[a0.into(), a1.into()])
     }
 
+    /// `CMPEQ` with 4 operands.
+    pub fn cmpeq(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cmpeq, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `CMPGE` with 4 operands.
+    pub fn cmpge(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cmpge, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `CMPGT` with 4 operands.
+    pub fn cmpgt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cmpgt, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `CMPHI` with 4 operands.
+    pub fn cmphi(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cmphi, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `CMPHS` with 4 operands.
+    pub fn cmphs(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cmphs, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `CMPLE` with 4 operands.
+    pub fn cmple(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cmple, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `CMPLO` with 4 operands.
+    pub fn cmplo(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cmplo, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `CMPLS` with 4 operands.
+    pub fn cmpls(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cmpls, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `CMPLT` with 4 operands.
+    pub fn cmplt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cmplt, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `CMPNE` with 4 operands.
+    pub fn cmpne(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cmpne, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `CMPP` with 2 operands.
     pub fn cmpp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Cmpp, "", &[a0.into(), a1.into()])
@@ -906,9 +1301,29 @@ impl CodeAssembler {
         self.emit(Mnemonic::Cneg, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `CNOT` with 3 operands.
+    pub fn cnot(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cnot, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `CNT` with 2 operands.
     pub fn cnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Cnt, "", &[a0.into(), a1.into()])
+    }
+
+    /// `CNT` with 3 operands.
+    pub fn cnt_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cnt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `CNTP` with 3 operands.
+    pub fn cntp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cntp, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `COMPACT` with 3 operands.
+    pub fn compact(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Compact, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `COSP` with 2 operands.
@@ -919,6 +1334,11 @@ impl CodeAssembler {
     /// `CPP` with 2 operands.
     pub fn cpp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Cpp, "", &[a0.into(), a1.into()])
+    }
+
+    /// `CPY` with 3 operands.
+    pub fn cpy(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Cpy, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `CPYE` with 3 operands.
@@ -1511,6 +1931,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Dcps3, "", &[a0.into()])
     }
 
+    /// `DECP` with 2 operands.
+    pub fn decp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Decp, "", &[a0.into(), a1.into()])
+    }
+
     /// `DGH` with 0 operands.
     pub fn dgh(&mut self) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Dgh, "", &[])
@@ -1536,6 +1961,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Dup, "", &[a0.into(), a1.into()])
     }
 
+    /// `DUPM` with 2 operands.
+    pub fn dupm(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Dupm, "", &[a0.into(), a1.into()])
+    }
+
+    /// `DUPQ` with 2 operands.
+    pub fn dupq(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Dupq, "", &[a0.into(), a1.into()])
+    }
+
     /// `DVP` with 2 operands.
     pub fn dvp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Dvp, "", &[a0.into(), a1.into()])
@@ -1551,9 +1986,39 @@ impl CodeAssembler {
         self.emit(Mnemonic::Eor, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `EOR` with 4 operands.
+    pub fn eor_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Eor, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `EOR3` with 4 operands.
     pub fn eor3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Eor3, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `EORBT` with 3 operands.
+    pub fn eorbt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Eorbt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `EORQV` with 3 operands.
+    pub fn eorqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Eorqv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `EORS` with 4 operands.
+    pub fn eors(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Eors, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `EORTB` with 3 operands.
+    pub fn eortb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Eortb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `EORV` with 3 operands.
+    pub fn eorv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Eorv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `ERET` with 0 operands.
@@ -1576,14 +2041,29 @@ impl CodeAssembler {
         self.emit(Mnemonic::Esb, "", &[])
     }
 
+    /// `EXPAND` with 3 operands.
+    pub fn expand(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Expand, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `EXT` with 4 operands.
     pub fn ext(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Ext, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
+    /// `EXTQ` with 4 operands.
+    pub fn extq(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Extq, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `EXTR` with 4 operands.
     pub fn extr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Extr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `F1CVT` with 2 operands.
+    pub fn f1cvt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::F1cvt, "", &[a0.into(), a1.into()])
     }
 
     /// `F1CVTL` with 2 operands.
@@ -1596,6 +2076,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::F1cvtl, "2", &[a0.into(), a1.into()])
     }
 
+    /// `F1CVTLT` with 2 operands.
+    pub fn f1cvtlt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::F1cvtlt, "", &[a0.into(), a1.into()])
+    }
+
+    /// `F2CVT` with 2 operands.
+    pub fn f2cvt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::F2cvt, "", &[a0.into(), a1.into()])
+    }
+
     /// `F2CVTL` with 2 operands.
     pub fn f2cvtl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::F2cvtl, "", &[a0.into(), a1.into()])
@@ -1606,9 +2096,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::F2cvtl, "2", &[a0.into(), a1.into()])
     }
 
+    /// `F2CVTLT` with 2 operands.
+    pub fn f2cvtlt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::F2cvtlt, "", &[a0.into(), a1.into()])
+    }
+
     /// `FABD` with 3 operands.
     pub fn fabd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fabd, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FABD` with 4 operands.
+    pub fn fabd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fabd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FABS` with 2 operands.
@@ -1616,9 +2116,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fabs, "", &[a0.into(), a1.into()])
     }
 
+    /// `FABS` with 3 operands.
+    pub fn fabs_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fabs, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FACGE` with 3 operands.
     pub fn facge(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Facge, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FACGE` with 4 operands.
+    pub fn facge_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Facge, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FACGT` with 3 operands.
@@ -1626,9 +2136,34 @@ impl CodeAssembler {
         self.emit(Mnemonic::Facgt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FACGT` with 4 operands.
+    pub fn facgt_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Facgt, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FACLE` with 4 operands.
+    pub fn facle(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Facle, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FACLT` with 4 operands.
+    pub fn faclt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Faclt, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FADD` with 3 operands.
     pub fn fadd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fadd, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FADD` with 4 operands.
+    pub fn fadd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FADDA` with 4 operands.
+    pub fn fadda(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fadda, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FADDP` with 2 operands.
@@ -1641,9 +2176,29 @@ impl CodeAssembler {
         self.emit(Mnemonic::Faddp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FADDP` with 4 operands.
+    pub fn faddp_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Faddp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FADDQV` with 3 operands.
+    pub fn faddqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Faddqv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FADDV` with 3 operands.
+    pub fn faddv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Faddv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FAMAX` with 3 operands.
     pub fn famax(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Famax, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FAMAX` with 4 operands.
+    pub fn famax_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Famax, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FAMIN` with 3 operands.
@@ -1651,9 +2206,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Famin, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FAMIN` with 4 operands.
+    pub fn famin_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Famin, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FCADD` with 4 operands.
     pub fn fcadd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fcadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FCADD` with 5 operands.
+    pub fn fcadd_5(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>, a4: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcadd, "", &[a0.into(), a1.into(), a2.into(), a3.into(), a4.into()])
     }
 
     /// `FCCMP` with 4 operands.
@@ -1666,9 +2231,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fccmpe, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
+    /// `FCLAMP` with 3 operands.
+    pub fn fclamp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fclamp, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FCMEQ` with 3 operands.
     pub fn fcmeq(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fcmeq, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FCMEQ` with 4 operands.
+    pub fn fcmeq_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcmeq, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FCMGE` with 3 operands.
@@ -1676,9 +2251,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fcmge, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FCMGE` with 4 operands.
+    pub fn fcmge_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcmge, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FCMGT` with 3 operands.
     pub fn fcmgt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fcmgt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FCMGT` with 4 operands.
+    pub fn fcmgt_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcmgt, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FCMLA` with 4 operands.
@@ -1686,14 +2271,34 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fcmla, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
+    /// `FCMLA` with 5 operands.
+    pub fn fcmla_5(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>, a4: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcmla, "", &[a0.into(), a1.into(), a2.into(), a3.into(), a4.into()])
+    }
+
     /// `FCMLE` with 3 operands.
     pub fn fcmle(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fcmle, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FCMLE` with 4 operands.
+    pub fn fcmle_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcmle, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FCMLT` with 3 operands.
     pub fn fcmlt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fcmlt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FCMLT` with 4 operands.
+    pub fn fcmlt_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcmlt, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FCMNE` with 4 operands.
+    pub fn fcmne(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcmne, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FCMP` with 2 operands.
@@ -1711,9 +2316,29 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fcmtl, "", &[a0.into(), a1.into()])
     }
 
+    /// `FCMTL` with 3 operands.
+    pub fn fcmtl_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcmtl, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FCMTLMG` with 2 operands.
     pub fn fcmtlmg(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fcmtlmg, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FCMTLMG` with 3 operands.
+    pub fn fcmtlmg_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcmtlmg, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FCMUO` with 4 operands.
+    pub fn fcmuo(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcmuo, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FCPY` with 3 operands.
+    pub fn fcpy(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcpy, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FCSEL` with 4 operands.
@@ -1724,6 +2349,11 @@ impl CodeAssembler {
     /// `FCVT` with 2 operands.
     pub fn fcvt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fcvt, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FCVT` with 3 operands.
+    pub fn fcvt_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcvt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FCVTAS` with 2 operands.
@@ -1744,6 +2374,11 @@ impl CodeAssembler {
     /// `FCVTL2` with 2 operands.
     pub fn fcvtl2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fcvtl, "2", &[a0.into(), a1.into()])
+    }
+
+    /// `FCVTLT` with 3 operands.
+    pub fn fcvtlt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcvtlt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FCVTMS` with 2 operands.
@@ -1781,6 +2416,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fcvtns, "", &[a0.into(), a1.into()])
     }
 
+    /// `FCVTNT` with 3 operands.
+    pub fn fcvtnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcvtnt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FCVTNU` with 2 operands.
     pub fn fcvtnu(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fcvtnu, "", &[a0.into(), a1.into()])
@@ -1796,6 +2436,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fcvtpu, "", &[a0.into(), a1.into()])
     }
 
+    /// `FCVTX` with 3 operands.
+    pub fn fcvtx(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcvtx, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FCVTXN` with 2 operands.
     pub fn fcvtxn(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fcvtxn, "", &[a0.into(), a1.into()])
@@ -1804,6 +2449,11 @@ impl CodeAssembler {
     /// `FCVTXN2` with 2 operands.
     pub fn fcvtxn2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fcvtxn, "2", &[a0.into(), a1.into()])
+    }
+
+    /// `FCVTXNT` with 3 operands.
+    pub fn fcvtxnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fcvtxnt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FCVTZS` with 2 operands.
@@ -1831,9 +2481,34 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fdiv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FDIV` with 4 operands.
+    pub fn fdiv_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fdiv, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FDIVR` with 4 operands.
+    pub fn fdivr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fdivr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FDOT` with 3 operands.
     pub fn fdot(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fdot, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FDUP` with 2 operands.
+    pub fn fdup(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fdup, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FEXPA` with 2 operands.
+    pub fn fexpa(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fexpa, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FIRSTP` with 3 operands.
+    pub fn firstp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Firstp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FJCVTZS` with 2 operands.
@@ -1841,9 +2516,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fjcvtzs, "", &[a0.into(), a1.into()])
     }
 
+    /// `FLOGB` with 3 operands.
+    pub fn flogb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Flogb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FLT` with 2 operands.
     pub fn flt_cond(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Flt, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FMAD` with 4 operands.
+    pub fn fmad(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmad, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FMADD` with 4 operands.
@@ -1856,9 +2541,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fmax, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMAX` with 4 operands.
+    pub fn fmax_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmax, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FMAXINM` with 3 operands.
     pub fn fmaxinm(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fmaxinm, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FMAXINM` with 4 operands.
+    pub fn fmaxinm_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxinm, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FMAXINMV` with 3 operands.
+    pub fn fmaxinmv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxinmv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FMAXMG` with 3 operands.
@@ -1866,14 +2566,39 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fmaxmg, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMAXMG` with 4 operands.
+    pub fn fmaxmg_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxmg, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FMAXMGINM` with 3 operands.
     pub fn fmaxmginm(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fmaxmginm, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMAXMGINM` with 4 operands.
+    pub fn fmaxmginm_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxmginm, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FMAXMGINMV` with 3 operands.
+    pub fn fmaxmginmv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxmginmv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FMAXMGV` with 3 operands.
+    pub fn fmaxmgv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxmgv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FMAXNM` with 3 operands.
     pub fn fmaxnm(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fmaxnm, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FMAXNM` with 4 operands.
+    pub fn fmaxnm_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxnm, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FMAXNMP` with 2 operands.
@@ -1886,9 +2611,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fmaxnmp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMAXNMP` with 4 operands.
+    pub fn fmaxnmp_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxnmp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FMAXNMQV` with 3 operands.
+    pub fn fmaxnmqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxnmqv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FMAXNMV` with 2 operands.
     pub fn fmaxnmv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fmaxnmv, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FMAXNMV` with 3 operands.
+    pub fn fmaxnmv_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxnmv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FMAXP` with 2 operands.
@@ -1901,9 +2641,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fmaxp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMAXP` with 4 operands.
+    pub fn fmaxp_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FMAXQV` with 3 operands.
+    pub fn fmaxqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxqv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FMAXV` with 2 operands.
     pub fn fmaxv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fmaxv, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FMAXV` with 3 operands.
+    pub fn fmaxv_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmaxv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FMIN` with 3 operands.
@@ -1911,9 +2666,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fmin, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMIN` with 4 operands.
+    pub fn fmin_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmin, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FMININM` with 3 operands.
     pub fn fmininm(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fmininm, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FMININM` with 4 operands.
+    pub fn fmininm_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmininm, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FMININMV` with 3 operands.
+    pub fn fmininmv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmininmv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FMINMG` with 3 operands.
@@ -1921,14 +2691,39 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fminmg, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMINMG` with 4 operands.
+    pub fn fminmg_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fminmg, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FMINMGINM` with 3 operands.
     pub fn fminmginm(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fminmginm, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMINMGINM` with 4 operands.
+    pub fn fminmginm_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fminmginm, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FMINMGINMV` with 3 operands.
+    pub fn fminmginmv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fminmginmv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FMINMGV` with 3 operands.
+    pub fn fminmgv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fminmgv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FMINNM` with 3 operands.
     pub fn fminnm(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fminnm, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FMINNM` with 4 operands.
+    pub fn fminnm_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fminnm, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FMINNMP` with 2 operands.
@@ -1941,9 +2736,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fminnmp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMINNMP` with 4 operands.
+    pub fn fminnmp_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fminnmp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FMINNMQV` with 3 operands.
+    pub fn fminnmqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fminnmqv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FMINNMV` with 2 operands.
     pub fn fminnmv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fminnmv, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FMINNMV` with 3 operands.
+    pub fn fminnmv_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fminnmv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FMINP` with 2 operands.
@@ -1956,14 +2766,34 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fminp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMINP` with 4 operands.
+    pub fn fminp_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fminp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FMINQV` with 3 operands.
+    pub fn fminqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fminqv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FMINV` with 2 operands.
     pub fn fminv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fminv, "", &[a0.into(), a1.into()])
     }
 
+    /// `FMINV` with 3 operands.
+    pub fn fminv_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fminv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FMLA` with 3 operands.
     pub fn fmla(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fmla, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FMLA` with 4 operands.
+    pub fn fmla_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmla, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FMLAL` with 3 operands.
@@ -2011,6 +2841,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fmls, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMLS` with 4 operands.
+    pub fn fmls_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmls, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FMLSL` with 3 operands.
     pub fn fmlsl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fmlsl, "", &[a0.into(), a1.into(), a2.into()])
@@ -2019,6 +2854,16 @@ impl CodeAssembler {
     /// `FMLSL2` with 3 operands.
     pub fn fmlsl2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fmlsl2, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FMLSLB` with 3 operands.
+    pub fn fmlslb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmlslb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FMLSLT` with 3 operands.
+    pub fn fmlslt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmlslt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FMMLA` with 3 operands.
@@ -2031,6 +2876,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fmov, "", &[a0.into(), a1.into()])
     }
 
+    /// `FMOV` with 3 operands.
+    pub fn fmov_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmov, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FMSB` with 4 operands.
+    pub fn fmsb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmsb, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FMSUB` with 4 operands.
     pub fn fmsub(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fmsub, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
@@ -2041,9 +2896,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fmul, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FMUL` with 4 operands.
+    pub fn fmul_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmul, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FMULX` with 3 operands.
     pub fn fmulx(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fmulx, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FMULX` with 4 operands.
+    pub fn fmulx_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fmulx, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FNEG` with 2 operands.
@@ -2051,9 +2916,34 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fneg, "", &[a0.into(), a1.into()])
     }
 
+    /// `FNEG` with 3 operands.
+    pub fn fneg_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fneg, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FNMAD` with 4 operands.
+    pub fn fnmad(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fnmad, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FNMADD` with 4 operands.
     pub fn fnmadd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fnmadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FNMLA` with 4 operands.
+    pub fn fnmla(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fnmla, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FNMLS` with 4 operands.
+    pub fn fnmls(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fnmls, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FNMSB` with 4 operands.
+    pub fn fnmsb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fnmsb, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `FNMSUB` with 4 operands.
@@ -2081,9 +2971,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Frecpx, "", &[a0.into(), a1.into()])
     }
 
+    /// `FRECPX` with 3 operands.
+    pub fn frecpx_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frecpx, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FRINT32X` with 2 operands.
     pub fn frint32x(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Frint32x, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FRINT32X` with 3 operands.
+    pub fn frint32x_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frint32x, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FRINT32Z` with 2 operands.
@@ -2091,9 +2991,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Frint32z, "", &[a0.into(), a1.into()])
     }
 
+    /// `FRINT32Z` with 3 operands.
+    pub fn frint32z_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frint32z, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FRINT64X` with 2 operands.
     pub fn frint64x(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Frint64x, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FRINT64X` with 3 operands.
+    pub fn frint64x_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frint64x, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FRINT64Z` with 2 operands.
@@ -2101,9 +3011,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Frint64z, "", &[a0.into(), a1.into()])
     }
 
+    /// `FRINT64Z` with 3 operands.
+    pub fn frint64z_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frint64z, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FRINTA` with 2 operands.
     pub fn frinta(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Frinta, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FRINTA` with 3 operands.
+    pub fn frinta_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frinta, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FRINTI` with 2 operands.
@@ -2111,9 +3031,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Frinti, "", &[a0.into(), a1.into()])
     }
 
+    /// `FRINTI` with 3 operands.
+    pub fn frinti_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frinti, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FRINTM` with 2 operands.
     pub fn frintm(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Frintm, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FRINTM` with 3 operands.
+    pub fn frintm_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frintm, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FRINTN` with 2 operands.
@@ -2121,9 +3051,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Frintn, "", &[a0.into(), a1.into()])
     }
 
+    /// `FRINTN` with 3 operands.
+    pub fn frintn_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frintn, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FRINTP` with 2 operands.
     pub fn frintp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Frintp, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FRINTP` with 3 operands.
+    pub fn frintp_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frintp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FRINTX` with 2 operands.
@@ -2131,9 +3071,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Frintx, "", &[a0.into(), a1.into()])
     }
 
+    /// `FRINTX` with 3 operands.
+    pub fn frintx_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frintx, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FRINTZ` with 2 operands.
     pub fn frintz(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Frintz, "", &[a0.into(), a1.into()])
+    }
+
+    /// `FRINTZ` with 3 operands.
+    pub fn frintz_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Frintz, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `FRSQRTE` with 2 operands.
@@ -2151,14 +3101,49 @@ impl CodeAssembler {
         self.emit(Mnemonic::Fscale, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `FSCALE` with 4 operands.
+    pub fn fscale_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fscale, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `FSQRT` with 2 operands.
     pub fn fsqrt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fsqrt, "", &[a0.into(), a1.into()])
     }
 
+    /// `FSQRT` with 3 operands.
+    pub fn fsqrt_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fsqrt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `FSUB` with 3 operands.
     pub fn fsub(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Fsub, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FSUB` with 4 operands.
+    pub fn fsub_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fsub, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FSUBR` with 4 operands.
+    pub fn fsubr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Fsubr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FTMAD` with 4 operands.
+    pub fn ftmad(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ftmad, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `FTSMUL` with 3 operands.
+    pub fn ftsmul(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ftsmul, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `FTSSEL` with 3 operands.
+    pub fn ftssel(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ftssel, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `GCSB` with 1 operands.
@@ -2241,6 +3226,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Hinte, "", &[a0.into()])
     }
 
+    /// `HISTCNT` with 4 operands.
+    pub fn histcnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Histcnt, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `HISTSEG` with 3 operands.
+    pub fn histseg(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Histseg, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `HLT` with 1 operands.
     pub fn hlt(&mut self, a0: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Hlt, "", &[a0.into()])
@@ -2256,9 +3251,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Ic, "", &[a0.into(), a1.into()])
     }
 
+    /// `INCP` with 2 operands.
+    pub fn incp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Incp, "", &[a0.into(), a1.into()])
+    }
+
+    /// `INDEX` with 3 operands.
+    pub fn index(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Index, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `INS` with 2 operands.
     pub fn ins(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Ins, "", &[a0.into(), a1.into()])
+    }
+
+    /// `INSR` with 2 operands.
+    pub fn insr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Insr, "", &[a0.into(), a1.into()])
     }
 
     /// `IRG` with 3 operands.
@@ -2269,6 +3279,21 @@ impl CodeAssembler {
     /// `ISB` with 1 operands.
     pub fn isb(&mut self, a0: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Isb, "", &[a0.into()])
+    }
+
+    /// `LASTA` with 3 operands.
+    pub fn lasta(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Lasta, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `LASTB` with 3 operands.
+    pub fn lastb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Lastb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `LASTP` with 3 operands.
+    pub fn lastp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Lastp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `LD1` with 2 operands.
@@ -3386,6 +4411,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Lsl, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `LSL` with 4 operands.
+    pub fn lsl_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Lsl, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `LSLR` with 4 operands.
+    pub fn lslr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Lslr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `LSLV` with 3 operands.
     pub fn lslv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Lslv, "", &[a0.into(), a1.into(), a2.into()])
@@ -3394,6 +4429,16 @@ impl CodeAssembler {
     /// `LSR` with 3 operands.
     pub fn lsr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Lsr, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `LSR` with 4 operands.
+    pub fn lsr_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Lsr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `LSRR` with 4 operands.
+    pub fn lsrr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Lsrr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `LSRV` with 3 operands.
@@ -3411,6 +4456,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Luti4, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `MAD` with 4 operands.
+    pub fn mad(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Mad, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `MADD` with 4 operands.
     pub fn madd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Madd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
@@ -3421,14 +4471,39 @@ impl CodeAssembler {
         self.emit(Mnemonic::Maddpt, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
+    /// `MADPT` with 3 operands.
+    pub fn madpt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Madpt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `MATCH` with 4 operands.
+    pub fn r#match(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Match, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `MLA` with 3 operands.
     pub fn mla(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Mla, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `MLA` with 4 operands.
+    pub fn mla_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Mla, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `MLAPT` with 3 operands.
+    pub fn mlapt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Mlapt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `MLS` with 3 operands.
     pub fn mls(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Mls, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `MLS` with 4 operands.
+    pub fn mls_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Mls, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `MNEG` with 3 operands.
@@ -3439,6 +4514,11 @@ impl CodeAssembler {
     /// `MOV` with 2 operands.
     pub fn mov(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Mov, "", &[a0.into(), a1.into()])
+    }
+
+    /// `MOV` with 3 operands.
+    pub fn mov_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Mov, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `MOVI` with 2 operands.
@@ -3456,6 +4536,26 @@ impl CodeAssembler {
         self.emit(Mnemonic::Movn, "", &[a0.into(), a1.into()])
     }
 
+    /// `MOVPRFX` with 2 operands.
+    pub fn movprfx(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Movprfx, "", &[a0.into(), a1.into()])
+    }
+
+    /// `MOVPRFX` with 3 operands.
+    pub fn movprfx_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Movprfx, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `MOVS` with 2 operands.
+    pub fn movs(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Movs, "", &[a0.into(), a1.into()])
+    }
+
+    /// `MOVS` with 3 operands.
+    pub fn movs_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Movs, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `MOVZ` with 2 operands.
     pub fn movz(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Movz, "", &[a0.into(), a1.into()])
@@ -3469,6 +4569,11 @@ impl CodeAssembler {
     /// `MRS` with 2 operands.
     pub fn mrs(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Mrs, "", &[a0.into(), a1.into()])
+    }
+
+    /// `MSB` with 4 operands.
+    pub fn msb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Msb, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `MSR` with 2 operands.
@@ -3496,6 +4601,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Mul, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `MUL` with 4 operands.
+    pub fn mul_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Mul, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `MVN` with 2 operands.
     pub fn mvn(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Mvn, "", &[a0.into(), a1.into()])
@@ -3506,9 +4616,29 @@ impl CodeAssembler {
         self.emit(Mnemonic::Mvni, "", &[a0.into(), a1.into()])
     }
 
+    /// `NAND` with 4 operands.
+    pub fn nand(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Nand, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `NANDS` with 4 operands.
+    pub fn nands(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Nands, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `NBSL` with 4 operands.
+    pub fn nbsl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Nbsl, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `NEG` with 2 operands.
     pub fn neg(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Neg, "", &[a0.into(), a1.into()])
+    }
+
+    /// `NEG` with 3 operands.
+    pub fn neg_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Neg, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `NEGS` with 2 operands.
@@ -3526,9 +4656,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Ngcs, "", &[a0.into(), a1.into()])
     }
 
+    /// `NMATCH` with 4 operands.
+    pub fn nmatch(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Nmatch, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `NOP` with 0 operands.
     pub fn nop(&mut self) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Nop, "", &[])
+    }
+
+    /// `NOR` with 4 operands.
+    pub fn nor(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Nor, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `NORS` with 4 operands.
+    pub fn nors(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Nors, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `NOT` with 2 operands.
@@ -3536,9 +4681,34 @@ impl CodeAssembler {
         self.emit(Mnemonic::Not, "", &[a0.into(), a1.into()])
     }
 
+    /// `NOT` with 3 operands.
+    pub fn not_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Not, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `NOTS` with 3 operands.
+    pub fn nots(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Nots, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `ORN` with 3 operands.
     pub fn orn(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Orn, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ORN` with 4 operands.
+    pub fn orn_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Orn, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `ORNS` with 4 operands.
+    pub fn orns(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Orns, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `ORQV` with 3 operands.
+    pub fn orqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Orqv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `ORR` with 2 operands.
@@ -3549,6 +4719,21 @@ impl CodeAssembler {
     /// `ORR` with 3 operands.
     pub fn orr_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Orr, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ORR` with 4 operands.
+    pub fn orr_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Orr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `ORRS` with 4 operands.
+    pub fn orrs(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Orrs, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `ORV` with 3 operands.
+    pub fn orv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Orv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `PACDA` with 2 operands.
@@ -3661,9 +4846,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Pacnbibsppc, "", &[])
     }
 
+    /// `PFALSE` with 1 operands.
+    pub fn pfalse(&mut self, a0: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Pfalse, "", &[a0.into()])
+    }
+
+    /// `PFIRST` with 3 operands.
+    pub fn pfirst(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Pfirst, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `PLBI` with 2 operands.
     pub fn plbi(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Plbi, "", &[a0.into(), a1.into()])
+    }
+
+    /// `PMOV` with 2 operands.
+    pub fn pmov(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Pmov, "", &[a0.into(), a1.into()])
     }
 
     /// `PMUL` with 3 operands.
@@ -3679,6 +4879,21 @@ impl CodeAssembler {
     /// `PMULL2` with 3 operands.
     pub fn pmull2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Pmull, "2", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `PMULLB` with 3 operands.
+    pub fn pmullb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Pmullb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `PMULLT` with 3 operands.
+    pub fn pmullt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Pmullt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `PNEXT` with 3 operands.
+    pub fn pnext(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Pnext, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `PRFM` with 2 operands.
@@ -3701,6 +4916,26 @@ impl CodeAssembler {
         self.emit(Mnemonic::Pssbb, "", &[])
     }
 
+    /// `PTEST` with 2 operands.
+    pub fn ptest(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ptest, "", &[a0.into(), a1.into()])
+    }
+
+    /// `PTRUE` with 1 operands.
+    pub fn ptrue(&mut self, a0: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ptrue, "", &[a0.into()])
+    }
+
+    /// `PUNPKHI` with 2 operands.
+    pub fn punpkhi(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Punpkhi, "", &[a0.into(), a1.into()])
+    }
+
+    /// `PUNPKLO` with 2 operands.
+    pub fn punpklo(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Punpklo, "", &[a0.into(), a1.into()])
+    }
+
     /// `RADDHN` with 3 operands.
     pub fn raddhn(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Raddhn, "", &[a0.into(), a1.into(), a2.into()])
@@ -3711,6 +4946,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Raddhn, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `RADDHNB` with 3 operands.
+    pub fn raddhnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Raddhnb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `RADDHNT` with 3 operands.
+    pub fn raddhnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Raddhnt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `RAX1` with 3 operands.
     pub fn rax1(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Rax1, "", &[a0.into(), a1.into(), a2.into()])
@@ -3719,6 +4964,11 @@ impl CodeAssembler {
     /// `RBIT` with 2 operands.
     pub fn rbit(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Rbit, "", &[a0.into(), a1.into()])
+    }
+
+    /// `RBIT` with 3 operands.
+    pub fn rbit_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Rbit, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `RCWCAS` with 3 operands.
@@ -4041,6 +5291,21 @@ impl CodeAssembler {
         self.emit(Mnemonic::Rcwswppl, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `RDFFR` with 1 operands.
+    pub fn rdffr(&mut self, a0: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Rdffr, "", &[a0.into()])
+    }
+
+    /// `RDFFR` with 2 operands.
+    pub fn rdffr_2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Rdffr, "", &[a0.into(), a1.into()])
+    }
+
+    /// `RDFFRS` with 2 operands.
+    pub fn rdffrs(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Rdffrs, "", &[a0.into(), a1.into()])
+    }
+
     /// `RDSVL` with 2 operands.
     pub fn rdsvl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Rdsvl, "", &[a0.into(), a1.into()])
@@ -4106,6 +5371,26 @@ impl CodeAssembler {
         self.emit(Mnemonic::Rev64, "", &[a0.into(), a1.into()])
     }
 
+    /// `REVB` with 3 operands.
+    pub fn revb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Revb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `REVD` with 3 operands.
+    pub fn revd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Revd, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `REVH` with 3 operands.
+    pub fn revh(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Revh, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `REVW` with 3 operands.
+    pub fn revw(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Revw, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `RMIF` with 3 operands.
     pub fn rmif(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Rmif, "", &[a0.into(), a1.into(), a2.into()])
@@ -4136,6 +5421,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Rshrn, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `RSHRNB` with 3 operands.
+    pub fn rshrnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Rshrnb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `RSHRNT` with 3 operands.
+    pub fn rshrnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Rshrnt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `RSUBHN` with 3 operands.
     pub fn rsubhn(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Rsubhn, "", &[a0.into(), a1.into(), a2.into()])
@@ -4144,6 +5439,16 @@ impl CodeAssembler {
     /// `RSUBHN2` with 3 operands.
     pub fn rsubhn2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Rsubhn, "2", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `RSUBHNB` with 3 operands.
+    pub fn rsubhnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Rsubhnb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `RSUBHNT` with 3 operands.
+    pub fn rsubhnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Rsubhnt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SABA` with 3 operands.
@@ -4161,9 +5466,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sabal, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SABALB` with 3 operands.
+    pub fn sabalb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sabalb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SABALT` with 3 operands.
+    pub fn sabalt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sabalt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SABD` with 3 operands.
     pub fn sabd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sabd, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SABD` with 4 operands.
+    pub fn sabd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sabd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `SABDL` with 3 operands.
@@ -4176,9 +5496,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sabdl, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SABDLB` with 3 operands.
+    pub fn sabdlb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sabdlb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SABDLT` with 3 operands.
+    pub fn sabdlt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sabdlt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SADALP` with 2 operands.
     pub fn sadalp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sadalp, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SADALP` with 3 operands.
+    pub fn sadalp_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sadalp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SADDL` with 3 operands.
@@ -4191,14 +5526,34 @@ impl CodeAssembler {
         self.emit(Mnemonic::Saddl, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SADDLB` with 3 operands.
+    pub fn saddlb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Saddlb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SADDLBT` with 3 operands.
+    pub fn saddlbt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Saddlbt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SADDLP` with 2 operands.
     pub fn saddlp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Saddlp, "", &[a0.into(), a1.into()])
     }
 
+    /// `SADDLT` with 3 operands.
+    pub fn saddlt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Saddlt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SADDLV` with 2 operands.
     pub fn saddlv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Saddlv, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SADDV` with 3 operands.
+    pub fn saddv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Saddv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SADDW` with 3 operands.
@@ -4211,6 +5566,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Saddw, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SADDWB` with 3 operands.
+    pub fn saddwb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Saddwb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SADDWT` with 3 operands.
+    pub fn saddwt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Saddwt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SB` with 0 operands.
     pub fn sb(&mut self) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sb, "", &[])
@@ -4219,6 +5584,16 @@ impl CodeAssembler {
     /// `SBC` with 3 operands.
     pub fn sbc(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sbc, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SBCLB` with 3 operands.
+    pub fn sbclb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sbclb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SBCLT` with 3 operands.
+    pub fn sbclt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sbclt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SBCS` with 3 operands.
@@ -4241,6 +5616,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sbfx, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
+    /// `SCLAMP` with 3 operands.
+    pub fn sclamp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sclamp, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SCVTF` with 2 operands.
     pub fn scvtf(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Scvtf, "", &[a0.into(), a1.into()])
@@ -4251,14 +5631,34 @@ impl CodeAssembler {
         self.emit(Mnemonic::Scvtf, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SCVTFLT` with 2 operands.
+    pub fn scvtflt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Scvtflt, "", &[a0.into(), a1.into()])
+    }
+
     /// `SDIV` with 3 operands.
     pub fn sdiv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sdiv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SDIV` with 4 operands.
+    pub fn sdiv_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sdiv, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `SDIVR` with 4 operands.
+    pub fn sdivr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sdivr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `SDOT` with 3 operands.
     pub fn sdot(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sdot, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SEL` with 4 operands.
+    pub fn sel(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sel, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `SETE` with 3 operands.
@@ -4541,6 +5941,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Shadd, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SHADD` with 4 operands.
+    pub fn shadd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Shadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `SHL` with 3 operands.
     pub fn shl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Shl, "", &[a0.into(), a1.into(), a2.into()])
@@ -4566,9 +5971,29 @@ impl CodeAssembler {
         self.emit(Mnemonic::Shrn, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SHRNB` with 3 operands.
+    pub fn shrnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Shrnb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SHRNT` with 3 operands.
+    pub fn shrnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Shrnt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SHSUB` with 3 operands.
     pub fn shsub(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Shsub, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SHSUB` with 4 operands.
+    pub fn shsub_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Shsub, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `SHSUBR` with 4 operands.
+    pub fn shsubr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Shsubr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `SHUH` with 1 operands.
@@ -4626,6 +6051,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sm4e, "", &[a0.into(), a1.into()])
     }
 
+    /// `SM4E` with 3 operands.
+    pub fn sm4e_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sm4e, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SM4EKEY` with 3 operands.
     pub fn sm4ekey(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sm4ekey, "", &[a0.into(), a1.into(), a2.into()])
@@ -4641,14 +6071,34 @@ impl CodeAssembler {
         self.emit(Mnemonic::Smax, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SMAX` with 4 operands.
+    pub fn smax_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smax, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `SMAXP` with 3 operands.
     pub fn smaxp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Smaxp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SMAXP` with 4 operands.
+    pub fn smaxp_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smaxp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `SMAXQV` with 3 operands.
+    pub fn smaxqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smaxqv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SMAXV` with 2 operands.
     pub fn smaxv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Smaxv, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SMAXV` with 3 operands.
+    pub fn smaxv_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smaxv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SMC` with 1 operands.
@@ -4661,14 +6111,34 @@ impl CodeAssembler {
         self.emit(Mnemonic::Smin, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SMIN` with 4 operands.
+    pub fn smin_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smin, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `SMINP` with 3 operands.
     pub fn sminp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sminp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SMINP` with 4 operands.
+    pub fn sminp_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sminp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `SMINQV` with 3 operands.
+    pub fn sminqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sminqv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SMINV` with 2 operands.
     pub fn sminv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sminv, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SMINV` with 3 operands.
+    pub fn sminv_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sminv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SMLAL` with 3 operands.
@@ -4681,6 +6151,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Smlal, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SMLALB` with 3 operands.
+    pub fn smlalb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smlalb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SMLALT` with 3 operands.
+    pub fn smlalt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smlalt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SMLSL` with 3 operands.
     pub fn smlsl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Smlsl, "", &[a0.into(), a1.into(), a2.into()])
@@ -4689,6 +6169,16 @@ impl CodeAssembler {
     /// `SMLSL2` with 3 operands.
     pub fn smlsl2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Smlsl, "2", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SMLSLB` with 3 operands.
+    pub fn smlslb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smlslb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SMLSLT` with 3 operands.
+    pub fn smlslt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smlslt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SMMLA` with 3 operands.
@@ -4726,6 +6216,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Smulh, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SMULH` with 4 operands.
+    pub fn smulh_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smulh, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `SMULL` with 3 operands.
     pub fn smull(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Smull, "", &[a0.into(), a1.into(), a2.into()])
@@ -4736,14 +6231,54 @@ impl CodeAssembler {
         self.emit(Mnemonic::Smull, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SMULLB` with 3 operands.
+    pub fn smullb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smullb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SMULLT` with 3 operands.
+    pub fn smullt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Smullt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SPLICE` with 4 operands.
+    pub fn splice(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Splice, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `SQABS` with 2 operands.
     pub fn sqabs(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqabs, "", &[a0.into(), a1.into()])
     }
 
+    /// `SQABS` with 3 operands.
+    pub fn sqabs_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqabs, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SQADD` with 3 operands.
     pub fn sqadd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqadd, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQADD` with 4 operands.
+    pub fn sqadd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `SQCADD` with 4 operands.
+    pub fn sqcadd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqcadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `SQDECP` with 2 operands.
+    pub fn sqdecp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqdecp, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SQDECP` with 3 operands.
+    pub fn sqdecp_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqdecp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SQDMLAL` with 3 operands.
@@ -4756,6 +6291,21 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sqdmlal, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SQDMLALB` with 3 operands.
+    pub fn sqdmlalb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqdmlalb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQDMLALBT` with 3 operands.
+    pub fn sqdmlalbt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqdmlalbt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQDMLALT` with 3 operands.
+    pub fn sqdmlalt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqdmlalt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SQDMLSL` with 3 operands.
     pub fn sqdmlsl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqdmlsl, "", &[a0.into(), a1.into(), a2.into()])
@@ -4764,6 +6314,21 @@ impl CodeAssembler {
     /// `SQDMLSL2` with 3 operands.
     pub fn sqdmlsl2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqdmlsl, "2", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQDMLSLB` with 3 operands.
+    pub fn sqdmlslb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqdmlslb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQDMLSLBT` with 3 operands.
+    pub fn sqdmlslbt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqdmlslbt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQDMLSLT` with 3 operands.
+    pub fn sqdmlslt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqdmlslt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SQDMULH` with 3 operands.
@@ -4781,9 +6346,39 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sqdmull, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SQDMULLB` with 3 operands.
+    pub fn sqdmullb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqdmullb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQDMULLT` with 3 operands.
+    pub fn sqdmullt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqdmullt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQINCP` with 2 operands.
+    pub fn sqincp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqincp, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SQINCP` with 3 operands.
+    pub fn sqincp_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqincp, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SQNEG` with 2 operands.
     pub fn sqneg(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqneg, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SQNEG` with 3 operands.
+    pub fn sqneg_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqneg, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQRDCMLAH` with 4 operands.
+    pub fn sqrdcmlah(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqrdcmlah, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `SQRDMLAH` with 3 operands.
@@ -4806,6 +6401,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sqrshl, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SQRSHL` with 4 operands.
+    pub fn sqrshl_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqrshl, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `SQRSHLR` with 4 operands.
+    pub fn sqrshlr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqrshlr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `SQRSHRN` with 3 operands.
     pub fn sqrshrn(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqrshrn, "", &[a0.into(), a1.into(), a2.into()])
@@ -4814,6 +6419,16 @@ impl CodeAssembler {
     /// `SQRSHRN2` with 3 operands.
     pub fn sqrshrn2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqrshrn, "2", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQRSHRNB` with 3 operands.
+    pub fn sqrshrnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqrshrnb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQRSHRNT` with 3 operands.
+    pub fn sqrshrnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqrshrnt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SQRSHRUN` with 3 operands.
@@ -4826,14 +6441,39 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sqrshrun, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SQRSHRUNB` with 3 operands.
+    pub fn sqrshrunb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqrshrunb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQRSHRUNT` with 3 operands.
+    pub fn sqrshrunt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqrshrunt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SQSHL` with 3 operands.
     pub fn sqshl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqshl, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SQSHL` with 4 operands.
+    pub fn sqshl_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqshl, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `SQSHLR` with 4 operands.
+    pub fn sqshlr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqshlr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `SQSHLU` with 3 operands.
     pub fn sqshlu(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqshlu, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQSHLU` with 4 operands.
+    pub fn sqshlu_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqshlu, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `SQSHRN` with 3 operands.
@@ -4846,6 +6486,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sqshrn, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SQSHRNB` with 3 operands.
+    pub fn sqshrnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqshrnb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQSHRNT` with 3 operands.
+    pub fn sqshrnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqshrnt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SQSHRUN` with 3 operands.
     pub fn sqshrun(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqshrun, "", &[a0.into(), a1.into(), a2.into()])
@@ -4856,9 +6506,29 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sqshrun, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SQSHRUNB` with 3 operands.
+    pub fn sqshrunb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqshrunb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQSHRUNT` with 3 operands.
+    pub fn sqshrunt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqshrunt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SQSUB` with 3 operands.
     pub fn sqsub(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqsub, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SQSUB` with 4 operands.
+    pub fn sqsub_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqsub, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `SQSUBR` with 4 operands.
+    pub fn sqsubr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqsubr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `SQXTN` with 2 operands.
@@ -4871,6 +6541,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sqxtn, "2", &[a0.into(), a1.into()])
     }
 
+    /// `SQXTNB` with 2 operands.
+    pub fn sqxtnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqxtnb, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SQXTNT` with 2 operands.
+    pub fn sqxtnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqxtnt, "", &[a0.into(), a1.into()])
+    }
+
     /// `SQXTUN` with 2 operands.
     pub fn sqxtun(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sqxtun, "", &[a0.into(), a1.into()])
@@ -4881,9 +6561,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sqxtun, "2", &[a0.into(), a1.into()])
     }
 
+    /// `SQXTUNB` with 2 operands.
+    pub fn sqxtunb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqxtunb, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SQXTUNT` with 2 operands.
+    pub fn sqxtunt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sqxtunt, "", &[a0.into(), a1.into()])
+    }
+
     /// `SRHADD` with 3 operands.
     pub fn srhadd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Srhadd, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SRHADD` with 4 operands.
+    pub fn srhadd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Srhadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `SRI` with 3 operands.
@@ -4901,9 +6596,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Srshl, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SRSHL` with 4 operands.
+    pub fn srshl_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Srshl, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `SRSHLR` with 4 operands.
+    pub fn srshlr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Srshlr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `SRSHR` with 3 operands.
     pub fn srshr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Srshr, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SRSHR` with 4 operands.
+    pub fn srshr_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Srshr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `SRSRA` with 3 operands.
@@ -4931,6 +6641,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sshll, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SSHLLB` with 3 operands.
+    pub fn sshllb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sshllb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SSHLLT` with 3 operands.
+    pub fn sshllt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sshllt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SSHR` with 3 operands.
     pub fn sshr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sshr, "", &[a0.into(), a1.into(), a2.into()])
@@ -4951,6 +6671,26 @@ impl CodeAssembler {
         self.emit(Mnemonic::Ssubl, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SSUBLB` with 3 operands.
+    pub fn ssublb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ssublb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SSUBLBT` with 3 operands.
+    pub fn ssublbt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ssublbt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SSUBLT` with 3 operands.
+    pub fn ssublt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ssublt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SSUBLTB` with 3 operands.
+    pub fn ssubltb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ssubltb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SSUBW` with 3 operands.
     pub fn ssubw(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Ssubw, "", &[a0.into(), a1.into(), a2.into()])
@@ -4959,6 +6699,16 @@ impl CodeAssembler {
     /// `SSUBW2` with 3 operands.
     pub fn ssubw2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Ssubw, "2", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SSUBWB` with 3 operands.
+    pub fn ssubwb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ssubwb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SSUBWT` with 3 operands.
+    pub fn ssubwt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ssubwt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `ST1` with 2 operands.
@@ -5606,6 +7356,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sub, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SUB` with 4 operands.
+    pub fn sub_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sub, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `SUBG` with 4 operands.
     pub fn subg(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Subg, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
@@ -5621,9 +7376,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Subhn, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SUBHNB` with 3 operands.
+    pub fn subhnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Subhnb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SUBHNT` with 3 operands.
+    pub fn subhnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Subhnt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SUBP` with 3 operands.
     pub fn subp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Subp, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SUBP` with 4 operands.
+    pub fn subp_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Subp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `SUBPS` with 3 operands.
@@ -5636,6 +7406,21 @@ impl CodeAssembler {
         self.emit(Mnemonic::Subpt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SUBPT` with 4 operands.
+    pub fn subpt_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Subpt, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `SUBR` with 3 operands.
+    pub fn subr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Subr, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `SUBR` with 4 operands.
+    pub fn subr_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Subr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `SUBS` with 3 operands.
     pub fn subs(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Subs, "", &[a0.into(), a1.into(), a2.into()])
@@ -5646,9 +7431,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sudot, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `SUNPKHI` with 2 operands.
+    pub fn sunpkhi(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sunpkhi, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SUNPKLO` with 2 operands.
+    pub fn sunpklo(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sunpklo, "", &[a0.into(), a1.into()])
+    }
+
     /// `SUQADD` with 2 operands.
     pub fn suqadd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Suqadd, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SUQADD` with 4 operands.
+    pub fn suqadd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Suqadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `SVC` with 1 operands.
@@ -5761,9 +7561,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Sxtb, "", &[a0.into(), a1.into()])
     }
 
+    /// `SXTB` with 3 operands.
+    pub fn sxtb_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sxtb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `SXTH` with 2 operands.
     pub fn sxth(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sxth, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SXTH` with 3 operands.
+    pub fn sxth_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sxth, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SXTL` with 2 operands.
@@ -5779,6 +7589,11 @@ impl CodeAssembler {
     /// `SXTW` with 2 operands.
     pub fn sxtw(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Sxtw, "", &[a0.into(), a1.into()])
+    }
+
+    /// `SXTW` with 3 operands.
+    pub fn sxtw_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Sxtw, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `SYS` with 5 operands.
@@ -5809,6 +7624,11 @@ impl CodeAssembler {
     /// `TBX` with 3 operands.
     pub fn tbx(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Tbx, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `TBXQ` with 3 operands.
+    pub fn tbxq(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Tbxq, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `TBZ` with 3 operands.
@@ -5896,9 +7716,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Uabal, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UABALB` with 3 operands.
+    pub fn uabalb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uabalb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UABALT` with 3 operands.
+    pub fn uabalt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uabalt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UABD` with 3 operands.
     pub fn uabd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uabd, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UABD` with 4 operands.
+    pub fn uabd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uabd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `UABDL` with 3 operands.
@@ -5911,9 +7746,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Uabdl, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UABDLB` with 3 operands.
+    pub fn uabdlb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uabdlb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UABDLT` with 3 operands.
+    pub fn uabdlt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uabdlt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UADALP` with 2 operands.
     pub fn uadalp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uadalp, "", &[a0.into(), a1.into()])
+    }
+
+    /// `UADALP` with 3 operands.
+    pub fn uadalp_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uadalp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `UADDL` with 3 operands.
@@ -5926,14 +7776,29 @@ impl CodeAssembler {
         self.emit(Mnemonic::Uaddl, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UADDLB` with 3 operands.
+    pub fn uaddlb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uaddlb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UADDLP` with 2 operands.
     pub fn uaddlp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uaddlp, "", &[a0.into(), a1.into()])
     }
 
+    /// `UADDLT` with 3 operands.
+    pub fn uaddlt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uaddlt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UADDLV` with 2 operands.
     pub fn uaddlv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uaddlv, "", &[a0.into(), a1.into()])
+    }
+
+    /// `UADDV` with 3 operands.
+    pub fn uaddv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uaddv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `UADDW` with 3 operands.
@@ -5944,6 +7809,16 @@ impl CodeAssembler {
     /// `UADDW2` with 3 operands.
     pub fn uaddw2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uaddw, "2", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UADDWB` with 3 operands.
+    pub fn uaddwb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uaddwb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UADDWT` with 3 operands.
+    pub fn uaddwt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uaddwt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `UBFIZ` with 4 operands.
@@ -5961,6 +7836,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Ubfx, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
+    /// `UCLAMP` with 3 operands.
+    pub fn uclamp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uclamp, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UCVTF` with 2 operands.
     pub fn ucvtf(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Ucvtf, "", &[a0.into(), a1.into()])
@@ -5969,6 +7849,11 @@ impl CodeAssembler {
     /// `UCVTF` with 3 operands.
     pub fn ucvtf_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Ucvtf, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UCVTFLT` with 2 operands.
+    pub fn ucvtflt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ucvtflt, "", &[a0.into(), a1.into()])
     }
 
     /// `UDF` with 1 operands.
@@ -5981,6 +7866,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Udiv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UDIV` with 4 operands.
+    pub fn udiv_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Udiv, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `UDIVR` with 4 operands.
+    pub fn udivr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Udivr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `UDOT` with 3 operands.
     pub fn udot(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Udot, "", &[a0.into(), a1.into(), a2.into()])
@@ -5991,9 +7886,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Uhadd, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UHADD` with 4 operands.
+    pub fn uhadd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uhadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `UHSUB` with 3 operands.
     pub fn uhsub(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uhsub, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UHSUB` with 4 operands.
+    pub fn uhsub_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uhsub, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `UHSUBR` with 4 operands.
+    pub fn uhsubr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uhsubr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `UMADDL` with 4 operands.
@@ -6006,9 +7916,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Umax, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UMAX` with 4 operands.
+    pub fn umax_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umax, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `UMAXP` with 3 operands.
     pub fn umaxp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Umaxp, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UMAXP` with 4 operands.
+    pub fn umaxp_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umaxp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `UMAXQV` with 3 operands.
+    pub fn umaxqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umaxqv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `UMAXV` with 2 operands.
@@ -6016,9 +7941,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Umaxv, "", &[a0.into(), a1.into()])
     }
 
+    /// `UMAXV` with 3 operands.
+    pub fn umaxv_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umaxv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UMIN` with 3 operands.
     pub fn umin(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Umin, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UMIN` with 4 operands.
+    pub fn umin_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umin, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `UMINP` with 3 operands.
@@ -6026,9 +7961,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Uminp, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UMINP` with 4 operands.
+    pub fn uminp_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uminp, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `UMINQV` with 3 operands.
+    pub fn uminqv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uminqv, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UMINV` with 2 operands.
     pub fn uminv(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uminv, "", &[a0.into(), a1.into()])
+    }
+
+    /// `UMINV` with 3 operands.
+    pub fn uminv_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uminv, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `UMLAL` with 3 operands.
@@ -6041,6 +7991,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Umlal, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UMLALB` with 3 operands.
+    pub fn umlalb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umlalb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UMLALT` with 3 operands.
+    pub fn umlalt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umlalt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UMLSL` with 3 operands.
     pub fn umlsl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Umlsl, "", &[a0.into(), a1.into(), a2.into()])
@@ -6049,6 +8009,16 @@ impl CodeAssembler {
     /// `UMLSL2` with 3 operands.
     pub fn umlsl2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Umlsl, "2", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UMLSLB` with 3 operands.
+    pub fn umlslb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umlslb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UMLSLT` with 3 operands.
+    pub fn umlslt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umlslt, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `UMMLA` with 3 operands.
@@ -6076,6 +8046,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Umulh, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UMULH` with 4 operands.
+    pub fn umulh_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umulh, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `UMULL` with 3 operands.
     pub fn umull(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Umull, "", &[a0.into(), a1.into(), a2.into()])
@@ -6086,14 +8061,49 @@ impl CodeAssembler {
         self.emit(Mnemonic::Umull, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UMULLB` with 3 operands.
+    pub fn umullb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umullb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UMULLT` with 3 operands.
+    pub fn umullt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Umullt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UQADD` with 3 operands.
     pub fn uqadd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uqadd, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UQADD` with 4 operands.
+    pub fn uqadd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `UQDECP` with 2 operands.
+    pub fn uqdecp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqdecp, "", &[a0.into(), a1.into()])
+    }
+
+    /// `UQINCP` with 2 operands.
+    pub fn uqincp(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqincp, "", &[a0.into(), a1.into()])
+    }
+
     /// `UQRSHL` with 3 operands.
     pub fn uqrshl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uqrshl, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UQRSHL` with 4 operands.
+    pub fn uqrshl_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqrshl, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `UQRSHLR` with 4 operands.
+    pub fn uqrshlr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqrshlr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `UQRSHRN` with 3 operands.
@@ -6106,9 +8116,29 @@ impl CodeAssembler {
         self.emit(Mnemonic::Uqrshrn, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UQRSHRNB` with 3 operands.
+    pub fn uqrshrnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqrshrnb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UQRSHRNT` with 3 operands.
+    pub fn uqrshrnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqrshrnt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UQSHL` with 3 operands.
     pub fn uqshl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uqshl, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UQSHL` with 4 operands.
+    pub fn uqshl_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqshl, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `UQSHLR` with 4 operands.
+    pub fn uqshlr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqshlr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `UQSHRN` with 3 operands.
@@ -6121,9 +8151,29 @@ impl CodeAssembler {
         self.emit(Mnemonic::Uqshrn, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `UQSHRNB` with 3 operands.
+    pub fn uqshrnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqshrnb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UQSHRNT` with 3 operands.
+    pub fn uqshrnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqshrnt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UQSUB` with 3 operands.
     pub fn uqsub(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uqsub, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UQSUB` with 4 operands.
+    pub fn uqsub_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqsub, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `UQSUBR` with 4 operands.
+    pub fn uqsubr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqsubr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `UQXTN` with 2 operands.
@@ -6136,9 +8186,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Uqxtn, "2", &[a0.into(), a1.into()])
     }
 
+    /// `UQXTNB` with 2 operands.
+    pub fn uqxtnb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqxtnb, "", &[a0.into(), a1.into()])
+    }
+
+    /// `UQXTNT` with 2 operands.
+    pub fn uqxtnt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uqxtnt, "", &[a0.into(), a1.into()])
+    }
+
     /// `URECPE` with 2 operands.
     pub fn urecpe(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Urecpe, "", &[a0.into(), a1.into()])
+    }
+
+    /// `URECPE` with 3 operands.
+    pub fn urecpe_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Urecpe, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `URHADD` with 3 operands.
@@ -6146,9 +8211,24 @@ impl CodeAssembler {
         self.emit(Mnemonic::Urhadd, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `URHADD` with 4 operands.
+    pub fn urhadd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Urhadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `URSHL` with 3 operands.
     pub fn urshl(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Urshl, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `URSHL` with 4 operands.
+    pub fn urshl_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Urshl, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
+    /// `URSHLR` with 4 operands.
+    pub fn urshlr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Urshlr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `URSHR` with 3 operands.
@@ -6156,9 +8236,19 @@ impl CodeAssembler {
         self.emit(Mnemonic::Urshr, "", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `URSHR` with 4 operands.
+    pub fn urshr_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Urshr, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
+    }
+
     /// `URSQRTE` with 2 operands.
     pub fn ursqrte(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Ursqrte, "", &[a0.into(), a1.into()])
+    }
+
+    /// `URSQRTE` with 3 operands.
+    pub fn ursqrte_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ursqrte, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `URSRA` with 3 operands.
@@ -6186,6 +8276,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Ushll, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `USHLLB` with 3 operands.
+    pub fn ushllb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ushllb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `USHLLT` with 3 operands.
+    pub fn ushllt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Ushllt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `USHR` with 3 operands.
     pub fn ushr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Ushr, "", &[a0.into(), a1.into(), a2.into()])
@@ -6199,6 +8299,11 @@ impl CodeAssembler {
     /// `USQADD` with 2 operands.
     pub fn usqadd(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Usqadd, "", &[a0.into(), a1.into()])
+    }
+
+    /// `USQADD` with 4 operands.
+    pub fn usqadd_4(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>, a3: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Usqadd, "", &[a0.into(), a1.into(), a2.into(), a3.into()])
     }
 
     /// `USRA` with 3 operands.
@@ -6216,6 +8321,16 @@ impl CodeAssembler {
         self.emit(Mnemonic::Usubl, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `USUBLB` with 3 operands.
+    pub fn usublb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Usublb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `USUBLT` with 3 operands.
+    pub fn usublt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Usublt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `USUBW` with 3 operands.
     pub fn usubw(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Usubw, "", &[a0.into(), a1.into(), a2.into()])
@@ -6226,14 +8341,44 @@ impl CodeAssembler {
         self.emit(Mnemonic::Usubw, "2", &[a0.into(), a1.into(), a2.into()])
     }
 
+    /// `USUBWB` with 3 operands.
+    pub fn usubwb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Usubwb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `USUBWT` with 3 operands.
+    pub fn usubwt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Usubwt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UUNPKHI` with 2 operands.
+    pub fn uunpkhi(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uunpkhi, "", &[a0.into(), a1.into()])
+    }
+
+    /// `UUNPKLO` with 2 operands.
+    pub fn uunpklo(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uunpklo, "", &[a0.into(), a1.into()])
+    }
+
     /// `UXTB` with 2 operands.
     pub fn uxtb(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uxtb, "", &[a0.into(), a1.into()])
     }
 
+    /// `UXTB` with 3 operands.
+    pub fn uxtb_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uxtb, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UXTH` with 2 operands.
     pub fn uxth(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uxth, "", &[a0.into(), a1.into()])
+    }
+
+    /// `UXTH` with 3 operands.
+    pub fn uxth_3(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uxth, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `UXTL` with 2 operands.
@@ -6246,6 +8391,11 @@ impl CodeAssembler {
         self.emit(Mnemonic::Uxtl, "2", &[a0.into(), a1.into()])
     }
 
+    /// `UXTW` with 3 operands.
+    pub fn uxtw(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uxtw, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
     /// `UZP1` with 3 operands.
     pub fn uzp1(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uzp1, "", &[a0.into(), a1.into(), a2.into()])
@@ -6254,6 +8404,16 @@ impl CodeAssembler {
     /// `UZP2` with 3 operands.
     pub fn uzp2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Uzp2, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UZPQ1` with 3 operands.
+    pub fn uzpq1(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uzpq1, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `UZPQ2` with 3 operands.
+    pub fn uzpq2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Uzpq2, "", &[a0.into(), a1.into(), a2.into()])
     }
 
     /// `WFE` with 0 operands.
@@ -6274,6 +8434,61 @@ impl CodeAssembler {
     /// `WFIT` with 1 operands.
     pub fn wfit(&mut self, a0: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Wfit, "", &[a0.into()])
+    }
+
+    /// `WHILEGE` with 3 operands.
+    pub fn whilege(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Whilege, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `WHILEGT` with 3 operands.
+    pub fn whilegt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Whilegt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `WHILEHI` with 3 operands.
+    pub fn whilehi(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Whilehi, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `WHILEHS` with 3 operands.
+    pub fn whilehs(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Whilehs, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `WHILELE` with 3 operands.
+    pub fn whilele(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Whilele, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `WHILELO` with 3 operands.
+    pub fn whilelo(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Whilelo, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `WHILELS` with 3 operands.
+    pub fn whilels(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Whilels, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `WHILELT` with 3 operands.
+    pub fn whilelt(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Whilelt, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `WHILERW` with 3 operands.
+    pub fn whilerw(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Whilerw, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `WHILEWR` with 3 operands.
+    pub fn whilewr(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Whilewr, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `WRFFR` with 1 operands.
+    pub fn wrffr(&mut self, a0: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Wrffr, "", &[a0.into()])
     }
 
     /// `XAFLAG` with 0 operands.
@@ -6324,6 +8539,16 @@ impl CodeAssembler {
     /// `ZIP2` with 3 operands.
     pub fn zip2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Zip2, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ZIPQ1` with 3 operands.
+    pub fn zipq1(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Zipq1, "", &[a0.into(), a1.into(), a2.into()])
+    }
+
+    /// `ZIPQ2` with 3 operands.
+    pub fn zipq2(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>, a2: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
+        self.emit(Mnemonic::Zipq2, "", &[a0.into(), a1.into(), a2.into()])
     }
 
 }

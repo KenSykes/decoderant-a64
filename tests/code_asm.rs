@@ -301,6 +301,68 @@ fn aliases_and_forms() -> Result<(), EncodeError> {
     Ok(())
 }
 
+/// SVE: registers with element sizes, governing predicates, indexed elements and
+/// the immediate forms, built from operands.
+#[test]
+fn sve() -> Result<(), EncodeError> {
+    use aarch64_isa::PredQual as Q;
+    let z = O::vec;
+    let mut a = CodeAssembler::new(0x1000);
+    a.add_4(
+        z(z23, A::B),
+        O::pred(p1, Q::Merging),
+        z(z23, A::B),
+        z(z12, A::B),
+    )?
+    .movprfx_3(z(z21, A::D), O::pred(p6, Q::Zeroing), z(z22, A::D))?
+    .sdot(z(z11, A::S), z(z20, A::B), O::elem(z0, A::B, 2))?
+    .cmpge(z(p12, A::D), O::pred(p2, Q::Zeroing), z(z10, A::D), -7i64)?
+    .subr(z(z11, A::H), z(z11, A::H), O::imm_lsl(6, 8))?
+    .dupm(z(z0, A::S), O::bitmask(1))?
+    .and_4(
+        z(p12, A::B),
+        O::pred(p10, Q::Zeroing),
+        z(p6, A::B),
+        z(p8, A::B),
+    )?
+    .ptrue(z(pn8, A::B))?;
+    assert_eq!(
+        a.words(),
+        [
+            0x0400_0597,
+            0x04d0_3ad5,
+            0x44b0_028b,
+            0x25d9_094c,
+            0x2563_e0cb,
+            0x05c0_0000,
+            0x2508_68cc,
+            0x2520_7810,
+        ]
+    );
+    for (k, &w) in a.words().iter().enumerate() {
+        assert!(
+            !text(w, 0x1000 + 4 * k as u64).starts_with(".inst"),
+            "{w:08x}"
+        );
+    }
+    // The `MOV` alias of `DUPM` when no `DUP` gives the pattern; a merging `MOV`
+    // (`SEL` with the destination as the second source).
+    let mut b = CodeAssembler::new(0);
+    b.mov(z(z22, A::D), O::bitmask(0xffff_f00f_ffff_ffff))?;
+    assert_eq!(text(b.words()[0], 0), "mov z22.d, #0xfffff00fffffffff");
+    // A predicate where a vector is expected, or the wrong qualifier, is rejected.
+    let mut c = CodeAssembler::new(0);
+    assert!(
+        c.movprfx_3(z(z0, A::D), O::pred(p0, Q::Merging), z(p1, A::D))
+            .is_err()
+    );
+    assert!(
+        c.cmpge(z(p1, A::D), O::pred(p2, Q::Merging), z(z1, A::D), 1i64)
+            .is_err()
+    );
+    Ok(())
+}
+
 #[test]
 fn errors() {
     let a = CodeAssembler::new(0x1000);

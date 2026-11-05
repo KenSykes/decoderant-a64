@@ -280,3 +280,171 @@ USRA_asisdshf_R registers isa USRA reads its destination (accumulate, insert, ke
 WFET_only_systeminstrswithreg registers isa WFET/WFIT read Xt (the timeout); fARM64 reports it written
 WFIT_only_systeminstrswithreg registers isa WFET/WFIT read Xt (the timeout); fARM64 reports it written
 XTN_asimdmisc_N registers isa XTN reads its destination (accumulate, insert, keep the other half or lanes, or a crypto state update); fARM64 reports a plain write
+
+# SVE and SME. fARM64 reports accumulating, destructive, merging and top-narrowing
+# destinations as written only, and no NZCV for the flag-setting predicate
+# instructions; such groups were reviewed by sampling.
+adclb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+adclt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+addhnt_z_zz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+ands_p_p_pp_z registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+bfmla_z_zzzi_h registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+bfmlalb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+bfmlalb_z_zzzi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+bfmlalt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+bfmlalt_z_zzzi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+bfmls_z_zzzi_h registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+bfmlslb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+bfmlslb_z_zzzi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+bfmlslt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+bfmlslt_z_zzzi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+brkas_p_p_p_z registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+brkbs_p_p_p_z registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+brkns_p_p_pp_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+brkpas_p_p_pp_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+brkpbs_p_p_pp_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cdot_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+cdot_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+cdot_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+cmpeq_p_p_zi_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpeq_p_p_zw_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpeq_p_p_zz_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpge_p_p_zi_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpge_p_p_zw_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpge_p_p_zz_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpgt_p_p_zi_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpgt_p_p_zw_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpgt_p_p_zz_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmphi_p_p_zi_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmphi_p_p_zw_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmphi_p_p_zz_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmphs_p_p_zi_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmphs_p_p_zw_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmphs_p_p_zz_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmple_p_p_zi_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmple_p_p_zw_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmplo_p_p_zi_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmplo_p_p_zw_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpls_p_p_zi_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpls_p_p_zw_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmplt_p_p_zi_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmplt_p_p_zw_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpne_p_p_zi_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpne_p_p_zw_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+cmpne_p_p_zz_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+ctermeq_rr_ registers isa CTERMEQ compares its registers and sets NZCV; fARM64 reports the first register written
+ctermne_rr_ registers isa CTERMNE compares its registers and sets NZCV; fARM64 reports the first register written
+decp_r_p_r_ registers isa <Xdn>/<Wdn> is incremented or decremented by the active-element count: read and written; fARM64 reports a write only
+dup_z_zi_ registers both the MOV <Zd>.<T>, <V><n> alias names the low element of Zn as a scalar; we report the encoding's Z register
+eors_p_p_pp_z registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+fcvtnt_z_p_z_d2sz registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+fcvtnt_z_p_z_s2hz registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+fcvtxnt_z_p_z_d2sz registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+fmlallbb_z32_z8z8z8_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+fmlallbb_z32_z8z8z8i_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+fmlallbt_z32_z8z8z8_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+fmlallbt_z32_z8z8z8i_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+fmlalltb_z32_z8z8z8_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+fmlalltb_z32_z8z8z8i_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+fmlalltt_z32_z8z8z8_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+fmlalltt_z32_z8z8z8i_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+histcnt_z_p_zz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+incp_r_p_r_ registers isa <Xdn>/<Wdn> is incremented or decremented by the active-element count: read and written; fARM64 reports a write only
+insr_z_v_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+madpt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+match_p_p_zz_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+mlapt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+nands_p_p_pp_z registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+nmatch_p_p_zz_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+nors_p_p_pp_z registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+orns_p_p_pp_z registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+orrs_p_p_pp_z registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+pfirst_p_p_p_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+pnext_p_p_p_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+ptest__p_p_ registers isa PTEST reads both predicates and sets NZCV; fARM64 reports the governing predicate written
+ptrue_pn_i_ registers isa the destination is a predicate-as-counter register (PN8-PN15); fARM64 names it P8-P15
+raddhnt_z_zz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+rshrnt_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+rsubhnt_z_zz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+saba_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sabal_z_zz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sabalb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sabalt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sbclb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sbclt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+shrnt_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlalb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlalb_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlalb_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlalt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlalt_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlalt_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlslb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlslb_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlslb_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlslt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlslt_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+smlslt_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdecp_r_p_r_sx registers isa <Xdn>/<Wdn> is incremented or decremented by the active-element count: read and written; fARM64 reports a write only
+sqdecp_r_p_r_x registers isa <Xdn>/<Wdn> is incremented or decremented by the active-element count: read and written; fARM64 reports a write only
+sqdmlalb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlalb_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlalb_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlalbt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlalt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlalt_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlalt_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlslb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlslb_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlslb_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlslbt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlslt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlslt_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqdmlslt_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqincp_r_p_r_sx registers isa <Xdn>/<Wdn> is incremented or decremented by the active-element count: read and written; fARM64 reports a write only
+sqincp_r_p_r_x registers isa <Xdn>/<Wdn> is incremented or decremented by the active-element count: read and written; fARM64 reports a write only
+sqrshrnt_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqrshrunt_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqshrnt_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqshrunt_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqxtnt_z_zz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+sqxtunt_z_zz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+srsra_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+ssra_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+subhnt_z_zz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+tbx_z_zz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uaba_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uabal_z_zz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uabalb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uabalt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlalb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlalb_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlalb_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlalt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlalt_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlalt_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlslb_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlslb_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlslb_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlslt_z_zzz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlslt_z_zzzi_d registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+umlslt_z_zzzi_s registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uqdecp_r_p_r_uw registers isa <Xdn>/<Wdn> is incremented or decremented by the active-element count: read and written; fARM64 reports a write only
+uqdecp_r_p_r_x registers isa <Xdn>/<Wdn> is incremented or decremented by the active-element count: read and written; fARM64 reports a write only
+uqincp_r_p_r_uw registers isa <Xdn>/<Wdn> is incremented or decremented by the active-element count: read and written; fARM64 reports a write only
+uqincp_r_p_r_x registers isa <Xdn>/<Wdn> is incremented or decremented by the active-element count: read and written; fARM64 reports a write only
+uqrshrnt_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uqshrnt_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+uqxtnt_z_zz_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+ursra_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+usra_z_zi_ registers isa the destination is also read (accumulate, destructive, merging /M or top-narrowing form); fARM64 reports a write only
+whilege_p_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilegt_p_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilehi_p_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilehs_p_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilele_p_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilelo_p_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilels_p_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilelt_p_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilerw_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it
+whilewr_p_rr_ registers isa sets NZCV from the predicate result (PredTest); fARM64 does not report it

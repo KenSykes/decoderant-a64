@@ -19,6 +19,7 @@ mod model;
 mod names;
 mod operands;
 mod spec;
+mod sve;
 mod sysreg;
 mod tables;
 mod template;

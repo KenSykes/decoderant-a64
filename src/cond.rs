@@ -307,7 +307,15 @@ pub(crate) fn call(f: Func, args: &[Val]) -> Val {
                 immr as u32,
             ))
         }
-        Func::SVEMoveMaskPreferred => Val::Bool(false),
+        Func::SVEMoveMaskPreferred => {
+            let (imm13, _) = arg(args, 0);
+            let imm13 = imm13 as u32;
+            Val::Bool(sve_move_mask_preferred(
+                imm13 >> 12 & 1,
+                imm13 >> 6 & 63,
+                imm13 & 63,
+            ))
+        }
         Func::DecodeBitMasksCheckUndefined => {
             let (n, _) = arg(args, 0);
             let (imms, _) = arg(args, 1);
@@ -364,6 +372,31 @@ pub(crate) fn move_wide_preferred(sf: bool, n: u32, imms: u32, immr: u32) -> boo
 #[inline]
 pub(crate) fn holds(id: u16, cx: &Ctx<'_>) -> bool {
     CONDS[id as usize](cx)
+}
+
+/// The pseudocode's `SVEMoveMaskPreferred(imm13)`: whether `DUPM` should print as
+/// `MOV`, which it should not when a `DUP` (immediate) of a signed 8-bit value,
+/// optionally shifted left by 8, gives the same 64-bit pattern.
+pub(crate) fn sve_move_mask_preferred(n: u32, immr: u32, imms: u32) -> bool {
+    let Some((imm, _)) = decode_bit_masks(n, imms, immr, true, 64) else {
+        return false;
+    };
+    let bits = |hi: u32, lo: u32| imm >> lo & (u64::MAX >> (63 - (hi - lo)));
+    let zero = |hi: u32, lo: u32| bits(hi, lo) == 0;
+    let ones = |hi: u32, lo: u32| bits(hi, lo) == u64::MAX >> (63 - (hi - lo));
+    let rep32 = bits(63, 32) == bits(31, 0);
+    let rep16 = rep32 && bits(31, 16) == bits(15, 0);
+    if bits(7, 0) != 0 {
+        // `ffffffffffffffxy`, `ffffffxyffffffxy`, `ffxyffxyffxyffxy`, `xyxy...`.
+        !(zero(63, 7)
+            || ones(63, 7)
+            || rep32 && (zero(31, 7) || ones(31, 7))
+            || rep16 && (zero(15, 7) || ones(15, 7))
+            || rep16 && bits(15, 8) == bits(7, 0))
+    } else {
+        // `ffffffffffffxy00`, `ffffxy00ffffxy00`, `xy00xy00xy00xy00`.
+        !(zero(63, 15) || ones(63, 15) || rep32 && (zero(31, 15) || ones(31, 15)) || rep16)
+    }
 }
 
 #[cfg(test)]

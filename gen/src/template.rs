@@ -10,6 +10,8 @@ use serde_json::Value;
 pub struct SymAlt {
     pub rule: String,
     pub text: String,
+    /// A number in the text is signed (the `SInteger` token, not `UInteger`).
+    pub signed: bool,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -30,6 +32,8 @@ pub enum T {
 pub struct Flattener<'a> {
     pub rules: &'a Value,
     pub stack: std::cell::RefCell<Vec<String>>,
+    /// Set when [`Flattener::text`] meets an `SInteger` token.
+    pub signed: std::cell::Cell<bool>,
 }
 
 fn is_number_token(id: &str) -> bool {
@@ -152,20 +156,27 @@ impl Flattener<'_> {
                         _ => String::new(),
                     };
                     let mut text = String::new();
+                    self.signed.set(false);
                     for s in &syms {
                         self.text(s, &mut text)?;
                     }
-                    out.push(SymAlt { rule, text });
+                    out.push(SymAlt {
+                        rule,
+                        text,
+                        signed: self.signed.get(),
+                    });
                 }
             }
             _ => {
                 let mut text = String::new();
+                self.signed.set(false);
                 for s in r["symbols"]["symbols"].as_array().into_iter().flatten() {
                     self.text(s, &mut text)?;
                 }
                 out.push(SymAlt {
                     rule: id.to_string(),
                     text,
+                    signed: self.signed.get(),
                 });
             }
         }
@@ -199,6 +210,9 @@ impl Flattener<'_> {
         match r["_type"].as_str().unwrap_or("") {
             "Instruction.Rules.Token" => {
                 if is_number_token(id) {
+                    if id == "SInteger" {
+                        self.signed.set(true);
+                    }
                     out.push_str("{N}");
                 } else if id == "COMMA" {
                     out.push_str(", ");

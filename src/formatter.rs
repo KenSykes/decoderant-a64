@@ -5,7 +5,7 @@ use core::fmt::{self, Write};
 use crate::desc;
 use crate::generated::{Mnemonic, Register};
 use crate::instruction::{Instruction, MAX_OPERANDS};
-use crate::operand::{ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, ShiftKind};
+use crate::operand::{ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, PredQual, ShiftKind};
 use crate::sysreg::{SysKind, lookup};
 
 /// Formatter options.
@@ -235,6 +235,10 @@ impl Formatter {
                 if !op.arr.name().is_empty() {
                     o.raw(".", FormatterTextKind::Punctuation);
                     o.put(op.arr.name(), FormatterTextKind::Keyword);
+                }
+                if op.pred != PredQual::None {
+                    o.raw("/", FormatterTextKind::Punctuation);
+                    o.put(op.pred.name(), FormatterTextKind::Keyword);
                 }
                 if let Some(l) = op.index() {
                     o.raw("[", FormatterTextKind::Punctuation);

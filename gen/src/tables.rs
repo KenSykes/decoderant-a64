@@ -65,6 +65,7 @@ pub fn generate(
     let fl = Flattener {
         rules: model.rules,
         stack: Default::default(),
+        signed: Default::default(),
     };
     let mut arena = Arena::default();
     // Expression 0 is `true`, so an empty slot never reads garbage.
@@ -167,7 +168,11 @@ pub fn generate(
             match (cond, preferred) {
                 (Ok(cond), Ok(preferred)) => {
                     let am = mnemonic_of(&t)?;
-                    let ops = operands::map_alias(model, leaf, a.json, &t, &am, &mut mapping);
+                    let env = operands::Env {
+                        arena: &arena,
+                        conds: path_conds(model, leaf.node, &node_cond),
+                    };
+                    let ops = operands::map_alias(model, leaf, a.json, &t, &am, &env, &mut mapping);
                     if ops.is_some() {
                         asm_add(&mut asm, &am, &mapping);
                     }
@@ -223,11 +228,16 @@ pub fn generate(
     // Operands.
     let mut op_text: Vec<Option<String>> = Vec::new();
     for (i, leaf) in model.leaves.iter().enumerate() {
+        let env = operands::Env {
+            arena: &arena,
+            conds: path_conds(model, leaf.node, &node_cond),
+        };
         let o = operands::map(
             model,
             leaf,
             &leaves[i].template,
             &leaves[i].mnemonic,
+            &env,
             &mut mapping,
         );
         if o.is_some() {
@@ -622,6 +632,15 @@ pub fn generate(
     }
     change_report(previous, &list, &spec.release)?;
     Ok((r, list))
+}
+
+/// The conditions on the decode path of a node.
+fn path_conds(model: &Model<'_>, node: usize, node_cond: &[Option<u32>]) -> Vec<u32> {
+    model
+        .path(node)
+        .iter()
+        .filter_map(|&n| node_cond[n])
+        .collect()
 }
 
 /// Records an assembler method for a mapped operand list.

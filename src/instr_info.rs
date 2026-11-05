@@ -343,7 +343,9 @@ fn role(insn: &Instruction) -> Role {
         | "BLRAAZ" | "BLRABZ" | "WFET" | "WFIT" | "AUTIASPPCR" | "AUTIBSPPCR" | "RETAASPPCR"
         | "RETABSPPCR" | "AXFLAG" | "XAFLAG" | "CFINV" | "RMIF" | "SETF8" | "SETF16" | "CMPP"
         | "PLBI" | "GCSPUSHM" | "GCSSS1" | "APAS" | "BRB" | "CFP" | "CPP" | "DVP" | "COSP"
-        | "GIC" | "GICR" | "TRCIT" => return Role::Read,
+        | "GIC" | "GICR" | "TRCIT" | "CTERMEQ" | "CTERMNE" | "PTEST" | "WRFFR" => {
+            return Role::Read;
+        }
         _ => {}
     }
     if ic.starts_with("compbranch") || ic.starts_with("testbranch") || ic.starts_with("compfault") {
@@ -352,7 +354,42 @@ fn role(insn: &Instruction) -> Role {
     if accumulates(m) || (suffix2 && accumulates(&concat2(m))) {
         return Role::Accum;
     }
+    // SVE2 narrowing into the top halves (`SQXTNT`, `SHRNT`, `ADDHNT`, `FCVTNT`, ...)
+    // keeps the bottom halves, as `XTN2` keeps the lower half.
+    let narrow_top = m.ends_with("NT") && m != "CNT";
+    if is_sve_sme(insn) && (sve_rw_destination(oc.template()) || merging(insn) || narrow_top) {
+        return Role::Accum;
+    }
     Role::Dest
+}
+
+/// An SVE or SME encoding.
+fn is_sve_sme(insn: &Instruction) -> bool {
+    matches!(insn.op_code().group(), "sve" | "sme")
+}
+
+/// SVE and SME templates name a destination that is also a source `<Zda>`, `<Zdn>`,
+/// `<Pdn>`, `<Pdm>`, `<ZAda>`, `<Xdn>` (accumulate, destructive and insert forms:
+/// `FMLA <Zda>.S, ...`, `MAD <Zdn>.S, ...`, `INSR <Zdn>.S, <Xm>`).
+fn sve_rw_destination(template: &str) -> bool {
+    let Some(first) = template.split_once(' ').map(|(_, rest)| rest.trim_start()) else {
+        return false;
+    };
+    let first = first.trim_start_matches(['{', ' ']);
+    let Some(sym) = first.strip_prefix('<').and_then(|s| s.split('>').next()) else {
+        return false;
+    };
+    let name = sym.trim_start_matches(|c: char| c.is_ascii_uppercase());
+    let name = name.trim_end_matches(|c: char| c.is_ascii_digit());
+    matches!(name, "da" | "dn" | "dm")
+}
+
+/// Merging predication (`/M`): inactive elements of the destination are kept, so it
+/// is read as well.
+fn merging(insn: &Instruction) -> bool {
+    insn.operands()
+        .iter()
+        .any(|o| o.predicate() == crate::operand::PredQual::Merging)
 }
 
 /// `LDAPR`, `LDAR`, `LDXR` and friends are plain loads in the `memop` class.
@@ -618,12 +655,25 @@ fn implicit(insn: &Instruction, info: &mut InstructionInfo) {
                 | "SETF16"
         )
         || cond_flags;
+    // SVE: the predicate-generating instructions that set the flags from the result.
+    let sets_flags = sets_flags || is_sve_sme(insn) && sve_sets_flags(m);
     if reads_flags && sets_flags || cond_flags {
         info.add_reg(Register::NZCV, ReadWrite);
     } else if sets_flags {
         info.add_reg(Register::NZCV, Write);
     } else if reads_flags {
         info.add_reg(Register::NZCV, Read);
+    }
+    // The first-fault register.
+    if is_sve_sme(insn) {
+        match m {
+            "RDFFR" | "RDFFRS" => info.add_reg(Register::FFR, Read),
+            "SETFFR" | "WRFFR" => info.add_reg(Register::FFR, Write),
+            _ if m.starts_with("LDFF1") || m.starts_with("LDNF1") => {
+                info.add_reg(Register::FFR, ReadWrite)
+            }
+            _ => {}
+        }
     }
     // PC-relative addresses and literal loads read the PC.
     if insn.flow_control() == FlowControl::Next && insn.label_target().is_some() {
@@ -676,6 +726,39 @@ fn implicit(insn: &Instruction, info: &mut InstructionInfo) {
         "CHKFEAT" => info.add_reg(Register::X16, ReadWrite),
         _ => {}
     }
+}
+
+/// SVE instructions that set NZCV from a predicate result (the Arm ARM's
+/// `PredTest`): the integer compares into predicates, the `S` forms of the
+/// predicate logical and break instructions, `PTRUES`, `RDFFRS`, `PTEST`, `PFIRST`,
+/// `PNEXT`, `WHILE*`, `CTERM*` and `MATCH`/`NMATCH`.
+fn sve_sets_flags(m: &str) -> bool {
+    (m.starts_with("CMP") && m.len() == 5)
+        || m.starts_with("WHILE")
+        || matches!(
+            m,
+            "ANDS"
+                | "BICS"
+                | "EORS"
+                | "NANDS"
+                | "NORS"
+                | "ORNS"
+                | "ORRS"
+                | "BRKAS"
+                | "BRKBS"
+                | "BRKNS"
+                | "BRKPAS"
+                | "BRKPBS"
+                | "PTRUES"
+                | "RDFFRS"
+                | "PTEST"
+                | "PFIRST"
+                | "PNEXT"
+                | "CTERMEQ"
+                | "CTERMNE"
+                | "MATCH"
+                | "NMATCH"
+        )
 }
 
 /// `CB<cc>` and the other compare-and-branch forms carry a condition but compare

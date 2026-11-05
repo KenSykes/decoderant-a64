@@ -1,14 +1,17 @@
 //! Instruction info against `fARM64`'s `instruction_info()`: the registers read and
 //! written, per encoding, over the words both decoders agree on. Disagreement
 //! groups are triaged in `tests/triage/farm64_info.txt` (same format as the decode
-//! triage). `AARCH64_ISA_TRIAGE=print` lists untriaged groups.
+//! triage). `AARCH64_ISA_TRIAGE=print` lists untriaged groups. The base groups and,
+//! where we decode their operands, SVE and SME.
 
 mod common;
 
 use std::collections::{BTreeMap, BTreeSet};
 
 use aarch64_isa::{DecoderOptions, InstructionInfoFactory, OpAccess, decode_word};
-use common::{GROUPS, Oracle, PC, load_triage, ours, same, sample_words};
+use common::{
+    GROUPS, Oracle, PC, SVE_GROUPS, load_triage, ours, same, sample_words, sve_sample_words,
+};
 
 fn acc(read: bool, write: bool) -> &'static str {
     match (read, write) {
@@ -60,9 +63,13 @@ fn theirs(w: u32) -> BTreeSet<String> {
 #[test]
 fn farm64_instruction_info() {
     let mut groups: BTreeMap<(String, String), (usize, Vec<String>)> = BTreeMap::new();
-    for (w, _) in sample_words(16) {
+    // The base groups, then SVE and SME (fARM64 decodes them with its `sve` and
+    // `sme` features).
+    for (w, _) in sample_words(16).into_iter().chain(sve_sample_words(16)) {
         let i = decode_word(w, PC, &DecoderOptions::default());
-        if i.is_invalid() || !GROUPS.contains(&i.op_code().group()) {
+        let g = i.op_code().group();
+        let sve = SVE_GROUPS.contains(&g) && i.has_operands();
+        if i.is_invalid() || !(GROUPS.contains(&g) || sve) {
             continue;
         }
         // Only words both decoders read the same way.
@@ -131,4 +138,69 @@ fn load_triage_file(name: &str) -> BTreeMap<(String, String), String> {
             ((enc, cl), it.next().unwrap_or_default().to_string())
         })
         .collect()
+}
+
+/// SVE: merging predication reads the destination, zeroing does not; accumulating
+/// (`<Zda>`), destructive (`<Zdn>`) and top-narrowing destinations are read; the
+/// flag-setting predicate instructions write NZCV; FFR is implicit.
+#[test]
+fn sve_predication_and_implicit_registers() {
+    use aarch64_isa::Register as R;
+    let info = |w: u32| {
+        let i = decode_word(w, PC, &DecoderOptions::default());
+        assert!(i.has_operands(), "{w:08x}");
+        let mut f = InstructionInfoFactory::new();
+        let mut v: Vec<(R, OpAccess)> = f
+            .info(&i)
+            .used_registers()
+            .iter()
+            .map(|u| (u.register, u.access))
+            .collect();
+        v.sort_by_key(|x| x.0 as u16);
+        (i.to_string(), v)
+    };
+    use OpAccess::{Read as Rd, ReadWrite as Rw, Write as Wr};
+    for (w, text, expect) in [
+        (
+            0x0400_0597u32,
+            "add z23.b, p1/m, z23.b, z12.b",
+            vec![(R::Z12, Rd), (R::Z23, Rw), (R::P1, Rd)],
+        ),
+        (
+            0x04d0_3ad5,
+            "movprfx z21.d, p6/z, z22.d",
+            vec![(R::Z21, Wr), (R::Z22, Rd), (R::P6, Rd)],
+        ),
+        (
+            0x04d1_3ad5,
+            "movprfx z21.d, p6/m, z22.d",
+            vec![(R::Z21, Rw), (R::Z22, Rd), (R::P6, Rd)],
+        ),
+        (
+            0x6462_017c,
+            "fmla z28.h, z11.h, z2.h[4]",
+            vec![(R::Z2, Rd), (R::Z11, Rd), (R::Z28, Rw)],
+        ),
+        (
+            0x4560_450a,
+            "sqxtnt z10.s, z8.d",
+            vec![(R::Z8, Rd), (R::Z10, Rw)],
+        ),
+        (
+            0x25d9_094c,
+            "cmpge p12.d, p2/z, z10.d, #-7",
+            vec![(R::Z10, Rd), (R::P2, Rd), (R::P12, Wr), (R::NZCV, Wr)],
+        ),
+        (0x256c_88a7, "incp x7, p5.h", vec![(R::X7, Rw), (R::P5, Rd)]),
+        (0x2528_9000, "wrffr p0.b", vec![(R::P0, Rd), (R::FFR, Wr)]),
+        (
+            0x2518_f1a3,
+            "rdffr p3.b, p13/z",
+            vec![(R::P3, Wr), (R::P13, Rd), (R::FFR, Rd)],
+        ),
+    ] {
+        let (t, v) = info(w);
+        assert_eq!(t, text, "{w:08x}");
+        assert_eq!(v, expect, "{w:08x} {text}");
+    }
 }

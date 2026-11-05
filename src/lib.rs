@@ -56,7 +56,9 @@ pub use generated::{Code, Feature, Mnemonic, Register};
 pub use instr_info::{InstructionInfo, InstructionInfoFactory, OpAccess, UsedMemory, UsedRegister};
 pub use instruction::{Determinism, FlowControl, Instruction, MAX_OPERANDS};
 pub use op_code_info::{AliasInfo, OpCodeInfo};
-pub use operand::{Arrangement, ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, ShiftKind};
+pub use operand::{
+    Arrangement, ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, PredQual, ShiftKind,
+};
 pub use regs::RegisterClass;
 pub use sysreg::{SysEntry, SysKind, sys_encoding};
 pub use tables::FieldInfo;
