@@ -109,33 +109,30 @@ impl CodeAssembler {
         let mut last_err = EncodeError::NoOperandSupport(Code::Invalid);
         for (i, d) in ENCODINGS.iter().enumerate() {
             let code = Code::from_index(i + 1).unwrap_or(Code::Invalid);
-            if d.mnemonic == mnemonic {
-                if let Some(ops) = d.ops {
-                    if let (Some((conv, cost)), Some(sfx)) =
-                        (fit(ops, operands), suffix_index(ops, suffix))
+            if d.mnemonic == mnemonic
+                && let Some(ops) = d.ops
+                && let (Some((conv, cost)), Some(sfx)) =
+                    (fit(ops, operands), suffix_index(ops, suffix))
+            {
+                let (pm, pv) = crate::undefined::pinned(d);
+                match encode_ops(
+                    ops,
+                    &conv,
+                    sfx,
+                    pc,
+                    d.value | d.sb_value | pv,
+                    d.mask | d.sb_mask | pm,
+                ) {
+                    Ok(w)
+                        if !crate::undefined::undefined(d, w)
+                            && decode_word(w, pc, &DecoderOptions::default()).code() == code =>
                     {
-                        let (pm, pv) = crate::undefined::pinned(d);
-                        match encode_ops(
-                            ops,
-                            &conv,
-                            sfx,
-                            pc,
-                            d.value | d.sb_value | pv,
-                            d.mask | d.sb_mask | pm,
-                        ) {
-                            Ok(w)
-                                if !crate::undefined::undefined(d, w)
-                                    && decode_word(w, pc, &DecoderOptions::default()).code()
-                                        == code =>
-                            {
-                                if best.is_none_or(|(c, _)| cost < c) {
-                                    best = Some((cost, w));
-                                }
-                            }
-                            Ok(_) => {}
-                            Err(e) => last_err = e,
+                        if best.is_none_or(|(c, _)| cost < c) {
+                            best = Some((cost, w));
                         }
                     }
+                    Ok(_) => {}
+                    Err(e) => last_err = e,
                 }
             }
             for (k, a) in d.aliases.iter().enumerate() {

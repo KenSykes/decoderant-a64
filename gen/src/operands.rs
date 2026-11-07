@@ -977,12 +977,15 @@ fn map_inner(
     while i < groups.len() {
         let g = groups[i].as_str();
         // A memory operand followed by a post-index part.
-        if !cx.sve() && g.starts_with('[') && g.ends_with(']') && i + 1 < groups.len() {
-            if let Some(op) = post_index(&mut cx, g, &groups[i + 1])? {
-                ops.push(op);
-                i += 2;
-                continue;
-            }
+        if !cx.sve()
+            && g.starts_with('[')
+            && g.ends_with(']')
+            && i + 1 < groups.len()
+            && let Some(op) = post_index(&mut cx, g, &groups[i + 1])?
+        {
+            ops.push(op);
+            i += 2;
+            continue;
         }
         // `MOVI <Vd>.<T>, #<imm8>, MSL #<amount>`: the MSL belongs to the immediate.
         if let Some(c) = m("MSL #%", g) {

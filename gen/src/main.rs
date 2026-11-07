@@ -15,6 +15,7 @@
 mod dispatch;
 mod emit;
 mod expr;
+mod info;
 mod model;
 mod names;
 mod operands;

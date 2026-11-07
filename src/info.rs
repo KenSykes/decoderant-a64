@@ -1,38 +1,58 @@
 //! Flow control, privilege and the system-register lookup for an instance.
 
+use crate::generated::info::ICLASSES;
 use crate::generated::{Code, Mnemonic};
 use crate::instruction::{FlowControl, Instruction};
 use crate::sysreg::{SysEntry, SysKind, sys_encoding};
 
+/// The iclass of an encoding, as far as this module needs it, from a table the
+/// generator writes (`gen/src/info.rs`) so that no instance compares strings.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum Iclass {
+    Other,
+    /// `systemmove`: `MRS` or `MSR` by `L` (bit 21); likewise below.
+    SystemMove,
+    /// `systemmovepr`: `MRRS` or `MSRR`.
+    SystemMovePair,
+    /// `systeminstrs`: `SYSL` or `SYS`.
+    SystemInstrs,
+    /// `syspairinstrs`: `SYSP`.
+    SysPair,
+    /// `MSR (immediate)`. (`CFINV`, `XAFLAG` and `AXFLAG` share the `pstate`
+    /// iclass but name no PSTATE field.)
+    MsrImm,
+    /// `compbranch*`: compare and branch.
+    CompBranch,
+}
+
 /// The system-register access kind of an encoding, by iclass.
 pub(crate) fn sys_kind(code: Code, word: u32) -> Option<SysKind> {
     let l = word >> 21 & 1 == 1;
-    Some(match code.op_code().iclass() {
-        "systemmove" => {
+    Some(match ICLASSES[code as usize] {
+        Iclass::SystemMove => {
             if l {
                 SysKind::Mrs
             } else {
                 SysKind::Msr
             }
         }
-        "systemmovepr" => {
+        Iclass::SystemMovePair => {
             if l {
                 SysKind::Mrrs
             } else {
                 SysKind::Msrr
             }
         }
-        "systeminstrs" => {
+        Iclass::SystemInstrs => {
             if l {
                 SysKind::Sysl
             } else {
                 SysKind::Sys
             }
         }
-        "syspairinstrs" => SysKind::Sysp,
-        // CFINV, XAFLAG and AXFLAG share the iclass but name no PSTATE field.
-        "pstate" if code.op_code().mnemonic() == Mnemonic::Msr => SysKind::MsrImm,
-        _ => return None,
+        Iclass::SysPair => SysKind::Sysp,
+        Iclass::MsrImm => SysKind::MsrImm,
+        Iclass::Other | Iclass::CompBranch => return None,
     })
 }
 
@@ -92,9 +112,7 @@ pub(crate) fn flow_control(insn: &Instruction) -> FlowControl {
             }
         }
         M::Cbz | M::Cbnz | M::Tbz | M::Tbnz => FlowControl::ConditionalBranch,
-        m if insn.op_code().iclass().starts_with("compbranch") && m != M::Invalid => {
-            FlowControl::ConditionalBranch
-        }
+        _ if ICLASSES[insn.code as usize] == Iclass::CompBranch => FlowControl::ConditionalBranch,
         M::Bl => FlowControl::Call,
         M::Blr | M::Blraa | M::Blraaz | M::Blrab | M::Blrabz => FlowControl::IndirectCall,
         M::Br | M::Braa | M::Braaz | M::Brab | M::Brabz => FlowControl::IndirectBranch,

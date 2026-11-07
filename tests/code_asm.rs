@@ -1,8 +1,6 @@
 //! `CodeAssembler`: assembling from operands gives the expected words, and every
 //! word decodes back to the same text.
 
-#![cfg(feature = "code_asm")]
-
 use aarch64_isa::code_asm::{CodeAssembler, registers::*};
 use aarch64_isa::{
     Arrangement as A, ConditionCode, DecoderOptions, EncodeError, ExtendKind, Operand as O,

@@ -150,6 +150,12 @@ static TABLE: &[Constraint] = &[
         },
         reason: "SET* with overlapping or 31 registers (CONSTRAINED UNPREDICTABLE)",
     },
+    // Not listed: LDCLRP/LDSETP/SWPP (`memop_128`) with Rt == Rt2. The open-source
+    // spec has no pseudocode for them, and the Armv9.4-A ASL (the sail-arm snapshot
+    // of emulators/sail-arm) has no `t == t2` check: it rejects only Rt or Rt2 == 31
+    // (UNDEFINED, which the decoder already reports as unallocated), and writes
+    // X[t] and then X[t2], so the result is defined. Add an entry if a later Arm ARM
+    // makes the overlap CONSTRAINED UNPREDICTABLE.
 ];
 
 /// Whether a `memcms` word is a SET* (`op1`, bits 23:22, is 11) rather than a CPY*:

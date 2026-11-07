@@ -82,3 +82,30 @@ pub const REGISTER_COUNT: usize = generated::REGISTER_COUNT;
 
 /// The AARCHMRS release the tables were generated from.
 pub const SPEC_RELEASE: &str = "AARCHMRS_OPENSOURCE_A_profile_FAT-2026-09";
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// `from_name` (a binary search over a name-sorted index) finds every value by
+    /// its name, and nothing else.
+    #[test]
+    fn from_name_round_trips() {
+        fn check<T: Copy + PartialEq + core::fmt::Debug>(
+            values: impl Iterator<Item = T>,
+            name: impl Fn(T) -> &'static str,
+            from_name: impl Fn(&str) -> Option<T>,
+        ) {
+            for v in values {
+                assert_eq!(from_name(name(v)), Some(v), "{v:?}");
+            }
+            for s in ["", "nonexistent", "\u{10ffff}"] {
+                assert!(from_name(s).is_none_or(|v| name(v) == s), "{s:?}");
+            }
+        }
+        check(Code::values(), Code::name, Code::from_name);
+        check(Mnemonic::values(), Mnemonic::name, Mnemonic::from_name);
+        check(Feature::values(), Feature::name, Feature::from_name);
+        check(Register::values(), Register::name, Register::from_name);
+    }
+}

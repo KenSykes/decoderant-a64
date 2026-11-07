@@ -10,6 +10,9 @@ mod code;
 #[rustfmt::skip]
 #[allow(clippy::all, clippy::pedantic)]
 pub(crate) mod conds;
+#[rustfmt::skip]
+#[allow(clippy::all, clippy::pedantic)]
+pub(crate) mod info;
 #[cfg(feature = "code_asm")]
 #[rustfmt::skip]
 #[allow(clippy::all, clippy::pedantic)]

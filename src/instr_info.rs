@@ -2,10 +2,14 @@
 //! manner of `iced_x86::InstructionInfoFactory`.
 //!
 //! The spec's open-source release has no operational pseudocode, so operand access
-//! comes from a hand-maintained classification by iclass and mnemonic (below),
-//! checked against `fARM64`'s `instruction_info()` by the differential test.
+//! comes from a hand-maintained classification by iclass and mnemonic, checked
+//! against `fARM64`'s `instruction_info()` by the differential test. The generator
+//! applies it once per encoding (`gen/src/info.rs`), as `iced-x86` generates its
+//! tables: at run time only the facts that differ between instances of an encoding
+//! are looked at.
 
-use crate::generated::{Mnemonic, Register};
+use crate::generated::Register;
+use crate::generated::info::ACCESS_CLASSES;
 use crate::instruction::{FlowControl, Instruction};
 use crate::operand::{MemoryMode, OpKind, Operand};
 
@@ -151,7 +155,7 @@ impl Instruction {
 
 /// How the explicit operands are accessed.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum Role {
+pub(crate) enum Role {
     /// Operand 0 written, the rest read.
     Dest,
     /// Operand 0 read and written (accumulate, insert, merge), the rest read.
@@ -176,240 +180,90 @@ enum Role {
     SysRead,
 }
 
-/// Destinations that are also read (the rest of the register is kept, or the
-/// operation accumulates). Arm ARM operation pseudocode, by mnemonic. `suffix2`:
-/// the instance has the mnemonic suffix `2`, which `m` does not include (`SMLAL`
-/// for `SMLAL2`).
-fn accumulates(m: &str, suffix2: bool) -> bool {
-    const EXACT: &[&str] = &[
-        "MOVK",
-        "BFM",
-        "BFI",
-        "BFXIL",
-        "BFC",
-        "INS",
-        "MLA",
-        "MLS",
-        "FMLA",
-        "FMLS",
-        "FMLAL",
-        "FMLAL2",
-        "FMLSL",
-        "FMLSL2",
-        "FCMLA",
-        "SDOT",
-        "UDOT",
-        "USDOT",
-        "SUDOT",
-        "BFDOT",
-        "FDOT",
-        "BFMLALB",
-        "BFMLALT",
-        "BFMMLA",
-        "SMMLA",
-        "UMMLA",
-        "USMMLA",
-        "FMMLA",
-        "BSL",
-        "BIT",
-        "BIF",
-        "SRA",
-        "SSRA",
-        "USRA",
-        "SRSRA",
-        "URSRA",
-        "SLI",
-        "SRI",
-        "SADALP",
-        "UADALP",
-        "SABA",
-        "UABA",
-        "SABAL",
-        "SABAL2",
-        "UABAL",
-        "UABAL2",
-        "SQRDMLAH",
-        "SQRDMLSH",
-        "TBX",
-        "AESE",
-        "AESD",
-        "SHA1C",
-        "SHA1M",
-        "SHA1P",
-        "SHA1SU0",
-        "SHA1SU1",
-        "SHA256H",
-        "SHA256H2",
-        "SHA256SU0",
-        "SHA256SU1",
-        "SHA512H",
-        "SHA512H2",
-        "SHA512SU0",
-        "SHA512SU1",
-        "SM3TT1A",
-        "SM3TT1B",
-        "SM3TT2A",
-        "SM3TT2B",
-        "SM3PARTW1",
-        "SM3PARTW2",
-        "SM4E",
-        "FMLALB",
-        "FMLALT",
-        "FMLALLBB",
-        "FMLALLBT",
-        "FMLALLTB",
-        "FMLALLTT",
-        "LDG",
-        // Pointer authentication: the pointer register is the input and the result.
-        "PACIA",
-        "PACIB",
-        "PACDA",
-        "PACDB",
-        "PACIZA",
-        "PACIZB",
-        "PACDZA",
-        "PACDZB",
-        "AUTIA",
-        "AUTIB",
-        "AUTDA",
-        "AUTDB",
-        "AUTIZA",
-        "AUTIZB",
-        "AUTDZA",
-        "AUTDZB",
-        "XPACI",
-        "XPACD",
-    ];
-    // With the suffix, the full mnemonic is `<m>2`.
-    if EXACT
-        .iter()
-        .any(|e| *e == m || (suffix2 && e.strip_suffix('2') == Some(m)))
-    {
-        return true;
-    }
-    // Widening multiply-accumulate (SMLAL, UMLAL2, SQDMLSL, ...).
-    const WIDENING: &[&str] = &["SMLAL", "SMLSL", "UMLAL", "UMLSL", "SQDMLAL", "SQDMLSL"];
-    if WIDENING.contains(&m.strip_suffix('2').unwrap_or(m)) || (suffix2 && WIDENING.contains(&m)) {
-        return true;
-    }
-    // Narrowing to the upper half (`XTN2`, `SHRN2`, `FCVTN2`, `ADDHN2`, ...): the
-    // lower half of the destination is kept. (`TRN2` is a permute, not one.)
-    let narrowing = |base: &str| base.ends_with('N') && base != "TRN";
-    m.strip_suffix('2').is_some_and(narrowing) || (suffix2 && narrowing(m))
+/// Registers an encoding uses without naming them (besides the flags, the PC, the
+/// first-fault register and the link register of calls).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum Implicit {
+    None,
+    /// `PACIASP`: X30 is the pointer, SP the modifier.
+    LrSp,
+    /// `PACIAZ`, `XPACLRI`.
+    Lr,
+    /// `PACIA1716`: X17 is the pointer, X16 the modifier.
+    X17X16,
+    /// `RETAA`: X30 authenticated with SP.
+    RetSp,
+    /// `ERETAA`/`ERETAB` authenticate ELR (not a general register) with SP.
+    Sp,
+    /// `LD64B`/`ST64B*`: Xt names eight consecutive registers, written or read.
+    Ld64b,
+    St64b,
+    /// `CHKFEAT X16`.
+    Chkfeat,
 }
 
-fn role(insn: &Instruction) -> Role {
-    let oc = insn.op_code();
-    let m = insn.mnemonic().name();
-    let ic = oc.iclass();
-    // SVE `ADR <Zd>.D, [<Zn>.D, <Zm>.D, ...]` computes addresses; it does not access
-    // memory.
-    let mem = insn.operands().iter().any(|o| o.kind == OpKind::Memory) && !is_sve_adr(insn);
-    let suffix2 = has_suffix_2(insn);
+/// What instruction info needs to know about an encoding (`gen/src/info.rs`).
+#[derive(Debug, Clone, Copy)]
+pub(crate) struct AccessClass {
+    /// The role when the instance has a memory operand.
+    pub mem: Role,
+    /// The role otherwise; `Dest` may still be `Accum` for the instance (see
+    /// [`role`]).
+    pub reg: Role,
+    pub flags: u16,
+    pub implicit: Implicit,
+}
+
+/// An SVE or SME encoding.
+pub(crate) const SVE: u16 = 1 << 0;
+/// SVE `ADR <Zd>.D, [<Zn>.D, <Zm>.D, ...]` computes addresses; it does not access
+/// memory.
+pub(crate) const SVE_ADR: u16 = 1 << 1;
+/// Accumulates when the instance has the mnemonic suffix `2`.
+pub(crate) const ACCUM_2: u16 = 1 << 2;
+/// SME: accumulates into the ZA array vectors or tile slice of operand 0.
+pub(crate) const ZA_ACCUM: u16 = 1 << 3;
+/// SME `MOVT`: accumulates into `ZT0` (it writes part of it).
+pub(crate) const MOVT: u16 = 1 << 4;
+/// `MOVAZ` reads a tile slice and zeroes it.
+pub(crate) const MOVAZ: u16 = 1 << 5;
+pub(crate) const SETS_FLAGS: u16 = 1 << 6;
+/// Reads the flags whatever its operands (`ADC`, `CCMP`, ...).
+pub(crate) const READS_FLAGS: u16 = 1 << 7;
+/// `CCMP`, `FCCMP`: the flags are read and written.
+pub(crate) const COND_FLAGS: u16 = 1 << 8;
+/// `CB<cc>` and the other compare-and-branch forms carry a condition but compare
+/// registers, not flags.
+pub(crate) const COMPARE_BRANCH: u16 = 1 << 9;
+/// Reads the PC without a label operand (`PACIASPPC`).
+pub(crate) const READS_PC: u16 = 1 << 10;
+pub(crate) const FFR_READ: u16 = 1 << 11;
+pub(crate) const FFR_WRITE: u16 = 1 << 12;
+
+/// The role of the instance, and whether it accesses memory.
+fn role(insn: &Instruction, c: &AccessClass) -> (Role, bool) {
+    let mem = c.flags & SVE_ADR == 0 && insn.operands().iter().any(|o| o.kind == OpKind::Memory);
     if mem {
-        if m.starts_with("PRFM")
-            || m.starts_with("PRFUM")
-            || m == "RPRFM"
-            || is_sve_sme(insn) && m.starts_with("PRF")
-        {
-            return Role::Read;
-        }
-        if m.starts_with("CAS") || m.starts_with("RCWCAS") || m.starts_with("RCWSCAS") {
-            return Role::CompareSwap;
-        }
-        if ic == "memop_128" {
-            return Role::AtomicPair;
-        }
-        if m.starts_with("SWP")
-            || (ic.starts_with("memop") && m.starts_with("LD") && !is_plain_load(m))
-            || m.starts_with("RCW")
-        {
-            return Role::Atomic;
-        }
-        if ic.starts_with("ldstexcl") && m.starts_with("ST") {
-            return Role::StoreExclusive;
-        }
-        if m == "ST64BV" || m == "ST64BV0" {
-            return Role::StoreExclusive;
-        }
-        if m.starts_with("ST") || m.starts_with("CPY") || m.starts_with("SET") {
-            return Role::Store;
-        }
-        if m == "LDG" || (ic.starts_with("asisdlso") && !m.ends_with('R')) {
-            return Role::LoadMerge;
-        }
-        return Role::Load;
+        return (c.mem, true);
     }
-    match m {
-        "MRS" | "MRRS" | "SYSL" => return Role::SysRead,
-        "MSR" | "MSRR" | "SYS" | "SYSP" | "DC" | "IC" | "AT" | "TLBI" | "TLBIP" | "BR" | "BLR"
-        | "RET" | "CBZ" | "CBNZ" | "TBZ" | "TBNZ" | "CCMP" | "CCMN" | "FCMP" | "FCMPE"
-        | "FCCMP" | "FCCMPE" | "BRAA" | "BRAB" | "BRAAZ" | "BRABZ" | "BLRAA" | "BLRAB"
-        | "BLRAAZ" | "BLRABZ" | "WFET" | "WFIT" | "AUTIASPPCR" | "AUTIBSPPCR" | "RETAASPPCR"
-        | "RETABSPPCR" | "AXFLAG" | "XAFLAG" | "CFINV" | "RMIF" | "SETF8" | "SETF16" | "CMPP"
-        | "PLBI" | "GCSPUSHM" | "GCSSS1" | "APAS" | "BRB" | "CFP" | "CPP" | "DVP" | "COSP"
-        | "GIC" | "GICR" | "TRCIT" | "CTERMEQ" | "CTERMNE" | "PTEST" | "WRFFR" => {
-            return Role::Read;
-        }
-        _ => {}
-    }
-    if ic.starts_with("compbranch") || ic.starts_with("testbranch") || ic.starts_with("compfault") {
-        return Role::Read;
-    }
-    if accumulates(m, suffix2) {
-        return Role::Accum;
-    }
-    if is_sve_sme(insn) && sme_accumulates(insn) {
-        return Role::Accum;
-    }
-    // SVE2 narrowing into the top halves (`SQXTNT`, `SHRNT`, `ADDHNT`, `FCVTNT`, ...)
-    // keeps the bottom halves, as `XTN2` keeps the lower half.
-    let narrow_top = m.ends_with("NT") && m != "CNT";
-    if is_sve_sme(insn) && (sve_rw_destination(oc.template()) || merging(insn) || narrow_top) {
-        return Role::Accum;
-    }
-    Role::Dest
+    let accum = c.reg == Role::Dest
+        && (c.flags & ACCUM_2 != 0 && has_suffix_2(insn)
+            || c.flags & SVE != 0 && (sme_accumulates(insn, c) || merging(insn)));
+    (if accum { Role::Accum } else { c.reg }, false)
 }
 
 /// SME instructions that accumulate into ZA array vectors or tile slices (`FMLA
 /// ZA.S[W8, 0, VGx2], ...`, `ADD ZA.D[...]`, `SMLAL`, `FDOT`, ...): every one but
 /// the moves and `ZERO`, which only write; and `MOVT` into part of `ZT0`.
-fn sme_accumulates(insn: &Instruction) -> bool {
-    let m = insn.mnemonic().name();
+fn sme_accumulates(insn: &Instruction, c: &AccessClass) -> bool {
     let Some(d) = insn.operands().first() else {
         return false;
     };
     match d.kind {
-        OpKind::ZaArray | OpKind::ZaSlice => !matches!(m, "MOVA" | "MOV" | "ZERO"),
-        OpKind::Register => m == "MOVT" && d.reg == Register::ZT0,
+        OpKind::ZaArray | OpKind::ZaSlice => c.flags & ZA_ACCUM != 0,
+        OpKind::Register => c.flags & MOVT != 0 && d.reg == Register::ZT0,
         _ => false,
     }
-}
-
-/// SVE `ADR`: a memory-shaped operand without an access.
-fn is_sve_adr(insn: &Instruction) -> bool {
-    is_sve_sme(insn) && insn.mnemonic() == Mnemonic::Adr
-}
-
-/// An SVE or SME encoding.
-fn is_sve_sme(insn: &Instruction) -> bool {
-    matches!(insn.op_code().group(), "sve" | "sme")
-}
-
-/// SVE and SME templates name a destination that is also a source `<Zda>`, `<Zdn>`,
-/// `<Pdn>`, `<Pdm>`, `<ZAda>`, `<Xdn>` (accumulate, destructive and insert forms:
-/// `FMLA <Zda>.S, ...`, `MAD <Zdn>.S, ...`, `INSR <Zdn>.S, <Xm>`).
-fn sve_rw_destination(template: &str) -> bool {
-    let Some(first) = template.split_once(' ').map(|(_, rest)| rest.trim_start()) else {
-        return false;
-    };
-    let first = first.trim_start_matches(['{', ' ']);
-    let Some(sym) = first.strip_prefix('<').and_then(|s| s.split('>').next()) else {
-        return false;
-    };
-    let name = sym.trim_start_matches(|c: char| c.is_ascii_uppercase());
-    let name = name.trim_end_matches(|c: char| c.is_ascii_digit());
-    matches!(name, "da" | "dn" | "dm")
 }
 
 /// Merging predication (`/M`): inactive elements of the destination are kept, so it
@@ -418,11 +272,6 @@ fn merging(insn: &Instruction) -> bool {
     insn.operands()
         .iter()
         .any(|o| o.predicate() == crate::operand::PredQual::Merging)
-}
-
-/// `LDAPR`, `LDAR`, `LDXR` and friends are plain loads in the `memop` class.
-fn is_plain_load(m: &str) -> bool {
-    m.starts_with("LDAPR") || m.starts_with("LDAR") || m == "LD64B" || m.starts_with("LDLAR")
 }
 
 fn has_suffix_2(insn: &Instruction) -> bool {
@@ -481,7 +330,8 @@ fn compute(insn: &Instruction) -> InstructionInfo {
     if insn.is_invalid() || !insn.has_operands {
         return info;
     }
-    let role = role(insn);
+    let c = &ACCESS_CLASSES[insn.code as usize];
+    let (role, accesses_memory) = role(insn, c);
     let ops = insn.operands();
     let mem_index = ops.iter().position(|o| o.kind == OpKind::Memory);
     for (i, o) in ops.iter().enumerate() {
@@ -574,8 +424,7 @@ fn compute(insn: &Instruction) -> InstructionInfo {
             access
         };
         // `MOVAZ` reads a tile slice and zeroes it.
-        let access = if matches!(o.kind, OpKind::ZaSlice | OpKind::ZaArray)
-            && insn.mnemonic().name() == "MOVAZ"
+        let access = if matches!(o.kind, OpKind::ZaSlice | OpKind::ZaArray) && c.flags & MOVAZ != 0
         {
             OpAccess::ReadWrite
         } else {
@@ -587,7 +436,8 @@ fn compute(insn: &Instruction) -> InstructionInfo {
             info.add_reg(o.index_reg, OpAccess::Read);
         }
     }
-    if let Some(mi) = mem_index.filter(|_| is_sve_adr(insn)) {
+    if let Some(mi) = mem_index.filter(|_| !accesses_memory) {
+        // SVE `ADR`.
         let m = ops[mi];
         info.add_reg(m.reg, OpAccess::Read);
         info.add_reg(m.index_reg, OpAccess::Read);
@@ -611,7 +461,7 @@ fn compute(insn: &Instruction) -> InstructionInfo {
         };
         // SVE and SME accesses depend on the vector length (and the predicate): their
         // size is unknown (0).
-        let size = if is_sve_sme(insn) {
+        let size = if c.flags & SVE != 0 {
             0
         } else {
             access_size(&ops[..mi])
@@ -637,57 +487,22 @@ fn compute(insn: &Instruction) -> InstructionInfo {
             });
         }
     }
-    implicit(insn, &mut info);
+    implicit(insn, c, &mut info);
     info
 }
 
 /// Registers an instruction uses without naming them.
-fn implicit(insn: &Instruction, info: &mut InstructionInfo) {
+fn implicit(insn: &Instruction, c: &AccessClass, info: &mut InstructionInfo) {
     use OpAccess::*;
-    let m = insn.mnemonic().name();
-    match insn.flow_control() {
-        FlowControl::Call | FlowControl::IndirectCall => info.add_reg(Register::X30, Write),
-        _ => {}
+    let flow = insn.flow_control();
+    if matches!(flow, FlowControl::Call | FlowControl::IndirectCall) {
+        info.add_reg(Register::X30, Write);
     }
     // Flags.
-    let ic = insn.op_code().iclass();
-    let sets_flags = (m.ends_with('S')
-        && matches!(
-            ic,
-            "addsub_imm"
-                | "addsub_shift"
-                | "addsub_ext"
-                | "addsub_carry"
-                | "log_imm"
-                | "log_shift"
-                | "dp_2src"
-        ))
-        || matches!(
-            m,
-            "FCMP" | "FCMPE" | "AXFLAG" | "XAFLAG" | "CFINV" | "RMIF" | "SETF8" | "SETF16"
-        )
-        || ic == "floatcmp";
-    let cond_flags = matches!(m, "CCMP" | "CCMN" | "FCCMP" | "FCCMPE");
-    let reads_flags = (insn.condition_code().is_some() && !is_compare_branch(ic))
-        || matches!(
-            m,
-            "ADC"
-                | "ADCS"
-                | "SBC"
-                | "SBCS"
-                | "NGC"
-                | "NGCS"
-                | "AXFLAG"
-                | "XAFLAG"
-                | "CFINV"
-                | "RMIF"
-                | "SETF8"
-                | "SETF16"
-        )
-        || cond_flags;
-    // SVE: the predicate-generating instructions that set the flags from the result.
-    let sets_flags = sets_flags || is_sve_sme(insn) && sve_sets_flags(m);
-    if reads_flags && sets_flags || cond_flags {
+    let sets_flags = c.flags & SETS_FLAGS != 0;
+    let reads_flags = c.flags & READS_FLAGS != 0
+        || (c.flags & COMPARE_BRANCH == 0 && insn.condition_code().is_some());
+    if reads_flags && sets_flags || c.flags & COND_FLAGS != 0 {
         info.add_reg(Register::NZCV, ReadWrite);
     } else if sets_flags {
         info.add_reg(Register::NZCV, Write);
@@ -695,104 +510,51 @@ fn implicit(insn: &Instruction, info: &mut InstructionInfo) {
         info.add_reg(Register::NZCV, Read);
     }
     // The first-fault register.
-    if is_sve_sme(insn) {
-        match m {
-            "RDFFR" | "RDFFRS" => info.add_reg(Register::FFR, Read),
-            "SETFFR" | "WRFFR" => info.add_reg(Register::FFR, Write),
-            _ if m.starts_with("LDFF1") || m.starts_with("LDNF1") => {
-                info.add_reg(Register::FFR, ReadWrite)
-            }
-            _ => {}
-        }
+    match (c.flags & FFR_READ != 0, c.flags & FFR_WRITE != 0) {
+        (true, true) => info.add_reg(Register::FFR, ReadWrite),
+        (true, false) => info.add_reg(Register::FFR, Read),
+        (false, true) => info.add_reg(Register::FFR, Write),
+        (false, false) => {}
     }
     // PC-relative addresses and literal loads read the PC.
-    if insn.flow_control() == FlowControl::Next && insn.label_target().is_some() {
+    if flow == FlowControl::Next && insn.label_target().is_some() {
         info.add_reg(Register::PC, Read);
     }
-    if matches!(
-        m,
-        "AUTIASPPC" | "AUTIBSPPC" | "PACIASPPC" | "PACIBSPPC" | "PACNBIASPPC" | "PACNBIBSPPC"
-    ) {
+    if c.flags & READS_PC != 0 {
         info.add_reg(Register::PC, Read);
     }
-    // Pointer authentication with implicit operands.
-    match m {
-        "PACIASP" | "PACIBSP" | "AUTIASP" | "AUTIBSP" => {
+    match c.implicit {
+        Implicit::None => {}
+        Implicit::LrSp => {
             info.add_reg(Register::X30, ReadWrite);
             info.add_reg(Register::SP, Read);
         }
-        "PACIAZ" | "PACIBZ" | "AUTIAZ" | "AUTIBZ" | "XPACLRI" => {
-            info.add_reg(Register::X30, ReadWrite)
-        }
-        "PACIA1716" | "PACIB1716" | "AUTIA1716" | "AUTIB1716" => {
+        Implicit::Lr => info.add_reg(Register::X30, ReadWrite),
+        Implicit::X17X16 => {
             info.add_reg(Register::X17, ReadWrite);
             info.add_reg(Register::X16, Read);
         }
-        "RETAA" | "RETAB" | "RETAASPPC" | "RETABSPPC" | "RETAASPPCR" | "RETABSPPCR" => {
+        Implicit::RetSp => {
             info.add_reg(Register::X30, Read);
             info.add_reg(Register::SP, Read);
         }
-        // ERETAA/ERETAB authenticate ELR (not a general register) with SP.
-        "ERETAA" | "ERETAB" => info.add_reg(Register::SP, Read),
-        "AUTIASPPC" | "AUTIBSPPC" | "AUTIASPPCR" | "AUTIBSPPCR" | "PACIASPPC" | "PACIBSPPC"
-        | "PACNBIASPPC" | "PACNBIBSPPC" => {
-            info.add_reg(Register::X30, ReadWrite);
-            info.add_reg(Register::SP, Read);
-        }
-        // LD64B/ST64B*: Xt names eight consecutive registers.
-        "LD64B" | "ST64B" | "ST64BV" | "ST64BV0" => {
-            let ops = insn.operands();
-            let t = ops
+        Implicit::Sp => info.add_reg(Register::SP, Read),
+        Implicit::Ld64b | Implicit::St64b => {
+            let t = insn
+                .operands()
                 .iter()
                 .rev()
                 .find(|o| o.kind == OpKind::Register)
                 .map_or(0, |o| o.reg.number());
-            let acc = if m == "LD64B" { Write } else { Read };
+            let acc = if c.implicit == Implicit::Ld64b {
+                Write
+            } else {
+                Read
+            };
             for k in 1..8 {
                 info.add_reg(Register::x((t + k) % 32), acc);
             }
         }
-        "BRAAZ" | "BRABZ" | "BLRAAZ" | "BLRABZ" | "BRAA" | "BRAB" | "BLRAA" | "BLRAB" => {}
-        "CHKFEAT" => info.add_reg(Register::X16, ReadWrite),
-        _ => {}
+        Implicit::Chkfeat => info.add_reg(Register::X16, ReadWrite),
     }
-}
-
-/// SVE instructions that set NZCV from a predicate result (the Arm ARM's
-/// `PredTest`): the integer compares into predicates, the `S` forms of the
-/// predicate logical and break instructions, `PTRUES`, `RDFFRS`, `PTEST`, `PFIRST`,
-/// `PNEXT`, `WHILE*`, `CTERM*` and `MATCH`/`NMATCH`.
-fn sve_sets_flags(m: &str) -> bool {
-    (m.starts_with("CMP") && m.len() == 5)
-        || m.starts_with("WHILE")
-        || matches!(
-            m,
-            "ANDS"
-                | "BICS"
-                | "EORS"
-                | "NANDS"
-                | "NORS"
-                | "ORNS"
-                | "ORRS"
-                | "BRKAS"
-                | "BRKBS"
-                | "BRKNS"
-                | "BRKPAS"
-                | "BRKPBS"
-                | "PTRUES"
-                | "RDFFRS"
-                | "PTEST"
-                | "PFIRST"
-                | "PNEXT"
-                | "CTERMEQ"
-                | "CTERMNE"
-                | "MATCH"
-                | "NMATCH"
-        )
-}
-
-/// `CB<cc>` and the other compare-and-branch forms carry a condition but compare
-/// registers, not flags.
-fn is_compare_branch(iclass: &str) -> bool {
-    iclass.starts_with("compbranch") || iclass.starts_with("compfault")
 }

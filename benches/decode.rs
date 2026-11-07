@@ -54,8 +54,10 @@ fn pe_code(path: &str) -> Option<Vec<u32>> {
         let len = vsize.min(raw_size) as usize & !3;
         let code = b.get(raw as usize..raw as usize + len)?;
         words.extend(
-            code.chunks_exact(4)
-                .map(|c| u32::from_le_bytes(c.try_into().unwrap())),
+            code.as_chunks::<4>()
+                .0
+                .iter()
+                .map(|c| u32::from_le_bytes(*c)),
         );
     }
     Some(words)
@@ -108,10 +110,10 @@ fn bytes(words: &[u32]) -> Vec<u8> {
 
 /// Best-of-`RUNS` nanoseconds per item of `f`, which processes `n` items.
 fn time(name: &str, n: usize, mut f: impl FnMut()) {
-    if let Ok(filter) = std::env::var("AARCH64_ISA_BENCH_FILTER") {
-        if !name.contains(&filter) {
-            return;
-        }
+    if let Ok(filter) = std::env::var("AARCH64_ISA_BENCH_FILTER")
+        && !name.contains(&filter)
+    {
+        return;
     }
     f();
     let mut best = f64::MAX;

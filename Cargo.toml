@@ -9,17 +9,15 @@ include = ["src/**", "Cargo.toml", "spec/LICENSE-AARCHMRS"]
 publish.workspace = true
 
 [features]
-default = ["std", "decoder", "encoder", "op_code_info", "instr_info", "formatter"]
+default = ["std", "encoder", "instr_info", "formatter"]
 std = []
-decoder = []
 encoder = []
-op_code_info = []
 instr_info = []
 formatter = []
-code_asm = ["encoder", "op_code_info"]
+code_asm = ["encoder"]
 
 [dependencies]
-thiserror = { workspace = true, default-features = false }
+thiserror.workspace = true
 
 [lints]
 workspace = true
@@ -30,6 +28,45 @@ fARM64 = { version = "0.1", features = ["alloc", "crypto", "sve", "sme"] }
 yaxpeax-arm = "0.5"
 yaxpeax-arch = { version = "0.3", default-features = false }
 
+# Targets that need more than the decoder name the features they use, so that
+# builds with other feature sets skip them rather than fail.
+[[test]]
+name = "code_asm"
+required-features = ["code_asm", "formatter", "std"]
+
+[[test]]
+name = "encoder"
+required-features = ["encoder", "formatter", "std"]
+
+[[test]]
+name = "fingerprint"
+required-features = ["encoder", "formatter", "instr_info", "std"]
+
+[[test]]
+name = "golden"
+required-features = ["encoder", "formatter", "std"]
+
+[[test]]
+name = "info"
+required-features = ["formatter", "instr_info", "std"]
+
+[[test]]
+name = "oracles"
+required-features = ["formatter", "std"]
+
+[[test]]
+name = "sweep"
+required-features = ["encoder", "formatter", "std"]
+
 [[bench]]
 name = "decode"
 harness = false
+required-features = ["encoder", "formatter", "instr_info", "std"]
+
+[[example]]
+name = "compare"
+required-features = ["formatter", "std"]
+
+[[example]]
+name = "dis"
+required-features = ["formatter", "std"]

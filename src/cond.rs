@@ -405,7 +405,7 @@ mod tests {
         for _ in 0..30 {
             let mut s = FeatureSet::EMPTY;
             for f in Feature::values() {
-                if next() % 3 != 0 {
+                if !next().is_multiple_of(3) {
                     s.insert(f);
                 }
             }

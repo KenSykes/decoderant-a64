@@ -8,6 +8,7 @@ use anyhow::{Context, Result, bail};
 
 use crate::emit;
 use crate::expr::{Arena, Scope};
+use crate::info;
 use crate::model::{Field, Kind, Model, Pattern};
 use crate::names;
 use crate::operands;
@@ -447,9 +448,21 @@ pub fn generate(
         "pub(crate) static ENCODINGS: [EncodingData; {}] = [",
         model.leaves.len()
     );
+    let templates: Vec<String> = leaves
+        .iter()
+        .map(|l| template::render(&l.template))
+        .collect();
+    let mut info_rows = Vec::with_capacity(model.leaves.len());
     for (i, leaf) in model.leaves.iter().enumerate() {
         let path = model.path(leaf.node);
         let top = &model.nodes[path[path.len() - 2]].name;
+        info_rows.push(info::Row {
+            name: &leaf.name,
+            iclass: &leaf.iclass,
+            group: top,
+            mnemonic: &leaves[i].mnemonic,
+            template: &templates[i],
+        });
         let mut conds = Vec::new();
         let mut fconds = Vec::new();
         let mut feats = Vec::new();
@@ -530,12 +543,17 @@ pub fn generate(
             cond_list(&fconds),
             fl.join(", "),
             fields.join(", "),
-            template::render(&leaves[i].template),
+            templates[i],
             prec.join(", "),
         );
     }
     let _ = writeln!(t, "];");
     emit::write(&out_dir.join("tables.rs"), &t)?;
+
+    // --- info.rs.
+    let mut inf = emit::header(&spec.release);
+    inf.push_str(&info::generate(&info_rows)?);
+    emit::write(&out_dir.join("info.rs"), &inf)?;
 
     // --- mod.rs.
     let mut m = emit::header(&spec.release);

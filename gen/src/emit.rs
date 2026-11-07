@@ -56,6 +56,20 @@ pub fn simple_enum(
         let _ = writeln!(out, "    {s:?},");
     }
     let _ = writeln!(out, "];\n");
+    // Discriminants in name order, for `from_name`'s binary search.
+    let mut by_name: Vec<usize> = (0..n).collect();
+    by_name.sort_by_key(|&i| variants[i].1.as_str());
+    assert!(
+        by_name
+            .windows(2)
+            .all(|w| variants[w[0]].1 != variants[w[1]].1),
+        "duplicate {name} names"
+    );
+    let _ = writeln!(out, "static {upper}_BY_NAME: [u16; {n}] = [");
+    for i in by_name {
+        let _ = writeln!(out, "    {i},");
+    }
+    let _ = writeln!(out, "];\n");
     let _ = writeln!(out, "static {upper}_VALUES: [{name}; {n}] = [");
     for (v, _, _) in variants {
         let _ = writeln!(out, "    {name}::{v},");
@@ -78,7 +92,10 @@ pub fn simple_enum(
          \x20   }}\n\n\
          \x20   /// The value with this spec name.\n\
          \x20   pub fn from_name(name: &str) -> Option<{name}> {{\n\
-         \x20       {upper}_NAMES.iter().position(|n| *n == name).and_then(Self::from_index)\n\
+         \x20       {upper}_BY_NAME\n\
+         \x20           .binary_search_by(|&i| {upper}_NAMES[i as usize].cmp(name))\n\
+         \x20           .ok()\n\
+         \x20           .and_then(|k| Self::from_index({upper}_BY_NAME[k] as usize))\n\
          \x20   }}\n\
          }}\n"
     );
@@ -395,6 +412,9 @@ mod code;
 #[rustfmt::skip]
 #[allow(clippy::all, clippy::pedantic)]
 pub(crate) mod conds;
+#[rustfmt::skip]
+#[allow(clippy::all, clippy::pedantic)]
+pub(crate) mod info;
 #[cfg(feature = "code_asm")]
 #[rustfmt::skip]
 #[allow(clippy::all, clippy::pedantic)]

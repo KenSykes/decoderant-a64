@@ -461,7 +461,7 @@ fn za_index(w: &mut W, f: Fs, base: u8, o: &Operand, count: u8, offs: Fs) -> R {
         return Err(EncodeError::WrongKind(i));
     }
     let c = u64::from(count.max(1));
-    if o.imm % c != 0 {
+    if !o.imm.is_multiple_of(c) {
         return Err(EncodeError::Unrepresentable(i));
     }
     w.put(f, n - base)?;
