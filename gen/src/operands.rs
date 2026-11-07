@@ -168,6 +168,10 @@ const ARRS: [&str; 18] = [
     "", "8B", "16B", "4H", "8H", "2S", "4S", "1D", "2D", "1Q", "2H", "4B", "2B", "B", "H", "S",
     "D", "Q",
 ];
+/// Extend names by table code (`ExtendKind as u8`).
+pub const EXTENDS: [&str; 9] = [
+    "UXTB", "UXTH", "UXTW", "UXTX", "SXTB", "SXTH", "SXTW", "SXTX", "LSL",
+];
 const RKS: [&str; 13] = [
     "X", "W", "XSp", "WSp", "B", "H", "S", "D", "Q", "V", "Z", "P", "PN",
 ];
@@ -1959,12 +1963,7 @@ fn mem(cx: &mut Cx<'_>, g: &str, mode: &str) -> R<String> {
             &[],
         );
         let ext = cx.table(&c[3], |s| {
-            [
-                "UXTB", "UXTH", "UXTW", "UXTX", "SXTB", "SXTH", "SXTW", "SXTX", "LSL",
-            ]
-            .iter()
-            .position(|x| *x == s)
-            .map(|i| i as u8)
+            EXTENDS.iter().position(|x| *x == s).map(|i| i as u8)
         })?;
         let amount = match cx.num_table(&c[4]) {
             Ok(t) => format!("Amount::Tab({t})"),

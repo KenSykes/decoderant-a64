@@ -40,9 +40,8 @@ pub enum E {
     Call(String, Vec<u32>),
 }
 
-/// Helper functions the library implements (`aarch64_isa::cond::Func`).
-/// System instruction aliases named by `Sys_*` in alias conditions; the library
-/// has the same list (`cond::SYSOP_NAMES`).
+/// System instruction aliases named by `Sys_*` in alias conditions, by index
+/// (emitted for the library as `generated::conds::SYSOP_NAMES`).
 pub const SYSOP_NAMES: &[&str] = &[
     "SYS", "DC", "IC", "AT", "TLBI", "TLBIP", "BRB", "CFP", "CPP", "DVP", "COSP", "APAS", "GIC",
     "GICR", "GSB", "PLBI", "TRCIT", "GCSPUSHM", "GCSPOPM", "GCSPUSHX", "GCSPOPX", "GCSPOPCX",
@@ -62,6 +61,7 @@ fn is_sysop_test(v: &Value) -> bool {
             .is_some_and(|s| s.starts_with("Sys_") || s.starts_with("Sysl_"))
 }
 
+/// Helper functions the library implements (`aarch64_isa::cond::Func`).
 pub const KNOWN_FUNCS: &[&str] = &[
     "SysOpIs",
     "BFXPreferred",

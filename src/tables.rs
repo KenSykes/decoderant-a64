@@ -25,8 +25,10 @@ pub(crate) struct AliasData {
     pub preferred: u16,
     /// Field values the alias condition pins (`Rn == 11111` for `MOV`), as (mask,
     /// value): the assembler starts from them.
+    #[cfg_attr(not(feature = "code_asm"), allow(dead_code))]
     pub fixed: (u32, u32),
     /// Fields the alias condition makes equal (`Rm == Rn` for `ROR`).
+    #[cfg_attr(not(feature = "code_asm"), allow(dead_code))]
     pub copies: &'static [(crate::bits::F, crate::bits::F)],
     /// Operand descriptors, or `None` when the alias template is not supported.
     pub ops: Option<&'static [Op]>,

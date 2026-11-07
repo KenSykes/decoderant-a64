@@ -8,7 +8,6 @@
 use crate::generated::{Mnemonic, Register};
 use crate::instruction::{FlowControl, Instruction};
 use crate::operand::{MemoryMode, OpKind, Operand};
-use crate::regs::RegisterClass;
 
 /// How a register or memory location is accessed.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
@@ -177,13 +176,11 @@ enum Role {
     SysRead,
 }
 
-fn mnemonic_str(m: Mnemonic) -> &'static str {
-    m.name()
-}
-
 /// Destinations that are also read (the rest of the register is kept, or the
-/// operation accumulates). Arm ARM operation pseudocode, by mnemonic.
-fn accumulates(m: &str) -> bool {
+/// operation accumulates). Arm ARM operation pseudocode, by mnemonic. `suffix2`:
+/// the instance has the mnemonic suffix `2`, which `m` does not include (`SMLAL`
+/// for `SMLAL2`).
+fn accumulates(m: &str, suffix2: bool) -> bool {
     const EXACT: &[&str] = &[
         "MOVK",
         "BFM",
@@ -283,25 +280,27 @@ fn accumulates(m: &str) -> bool {
         "XPACI",
         "XPACD",
     ];
-    if EXACT.contains(&m) {
+    // With the suffix, the full mnemonic is `<m>2`.
+    if EXACT
+        .iter()
+        .any(|e| *e == m || (suffix2 && e.strip_suffix('2') == Some(m)))
+    {
         return true;
     }
     // Widening multiply-accumulate (SMLAL, UMLAL2, SQDMLSL, ...).
-    let base = m.strip_suffix('2').unwrap_or(m);
-    if matches!(
-        base,
-        "SMLAL" | "SMLSL" | "UMLAL" | "UMLSL" | "SQDMLAL" | "SQDMLSL"
-    ) {
+    const WIDENING: &[&str] = &["SMLAL", "SMLSL", "UMLAL", "UMLSL", "SQDMLAL", "SQDMLSL"];
+    if WIDENING.contains(&m.strip_suffix('2').unwrap_or(m)) || (suffix2 && WIDENING.contains(&m)) {
         return true;
     }
     // Narrowing to the upper half (`XTN2`, `SHRN2`, `FCVTN2`, `ADDHN2`, ...): the
     // lower half of the destination is kept. (`TRN2` is a permute, not one.)
-    (m.ends_with("N2") && m != "TRN2") || m == "FCVTXN2"
+    let narrowing = |base: &str| base.ends_with('N') && base != "TRN";
+    m.strip_suffix('2').is_some_and(narrowing) || (suffix2 && narrowing(m))
 }
 
 fn role(insn: &Instruction) -> Role {
     let oc = insn.op_code();
-    let m = mnemonic_str(insn.mnemonic());
+    let m = insn.mnemonic().name();
     let ic = oc.iclass();
     // SVE `ADR <Zd>.D, [<Zn>.D, <Zm>.D, ...]` computes addresses; it does not access
     // memory.
@@ -357,7 +356,7 @@ fn role(insn: &Instruction) -> Role {
     if ic.starts_with("compbranch") || ic.starts_with("testbranch") || ic.starts_with("compfault") {
         return Role::Read;
     }
-    if accumulates(m) || (suffix2 && accumulates(&concat2(m))) {
+    if accumulates(m, suffix2) {
         return Role::Accum;
     }
     if is_sve_sme(insn) && sme_accumulates(insn) {
@@ -433,50 +432,6 @@ fn has_suffix_2(insn: &Instruction) -> bool {
         .is_some_and(|ops| crate::desc::suffix(ops, insn.word) == "2")
 }
 
-fn concat2(m: &str) -> heapless_name::Name {
-    heapless_name::Name::new(m, "2")
-}
-
-/// A tiny fixed-size string for `<mnemonic>2` without allocation.
-mod heapless_name {
-    pub struct Name {
-        b: [u8; 24],
-        n: usize,
-    }
-
-    impl Name {
-        pub fn new(a: &str, b: &str) -> Name {
-            let mut s = Name { b: [0; 24], n: 0 };
-            for &c in a.as_bytes().iter().chain(b.as_bytes()) {
-                if s.n < s.b.len() {
-                    s.b[s.n] = c;
-                    s.n += 1;
-                }
-            }
-            s
-        }
-    }
-
-    impl core::ops::Deref for Name {
-        type Target = str;
-        fn deref(&self) -> &str {
-            core::str::from_utf8(&self.b[..self.n]).unwrap_or("")
-        }
-    }
-}
-
-/// Registers a register-list operand names.
-fn list_regs(o: &Operand) -> impl Iterator<Item = Register> + '_ {
-    let n = o.reg.number();
-    let s = u32::from(o.list_stride());
-    (0..u32::from(o.count)).map(move |k| match o.reg.class() {
-        RegisterClass::Z => Register::z((n + k * s) % 32),
-        RegisterClass::P => Register::p((n + k * s) % 16),
-        RegisterClass::PN => Register::pn((n + k * s) % 16),
-        _ => Register::v((n + k) % 32),
-    })
-}
-
 /// The registers of a register-like operand (shifted and extended registers
 /// included), for operands that are not memory.
 fn operand_regs(o: &Operand, mut f: impl FnMut(Register)) {
@@ -488,7 +443,7 @@ fn operand_regs(o: &Operand, mut f: impl FnMut(Register)) {
                 f(o.index_reg);
             }
         }
-        OpKind::RegisterList => list_regs(o).for_each(f),
+        OpKind::RegisterList => (0..u32::from(o.count)).for_each(|k| f(o.list_register(k))),
         // The ZA storage an SME operand names: a tile, or ZA for array vectors.
         OpKind::ZaTile | OpKind::ZaSlice => f(o.reg),
         OpKind::ZaArray => f(Register::ZA),
@@ -503,8 +458,7 @@ fn operand_regs(o: &Operand, mut f: impl FnMut(Register)) {
     }
 }
 
-fn access_size(insn: &Instruction, transfers: &[Operand]) -> u32 {
-    let _ = insn;
+fn access_size(transfers: &[Operand]) -> u32 {
     transfers
         .iter()
         .map(|o| match o.kind {
@@ -660,7 +614,7 @@ fn compute(insn: &Instruction) -> InstructionInfo {
         let size = if is_sve_sme(insn) {
             0
         } else {
-            access_size(insn, &ops[..mi])
+            access_size(&ops[..mi])
         };
         info.add_mem(UsedMemory {
             base: m.reg,

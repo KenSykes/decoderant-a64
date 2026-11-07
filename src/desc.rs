@@ -23,29 +23,30 @@ pub(crate) struct Tab {
 }
 
 impl Tab {
-    pub fn find(&self, word: u32) -> Option<u8> {
+    /// The index of the entry `word` matches.
+    pub const fn entry(&self, word: u32) -> Option<usize> {
         let v = self.f.get(word);
-        self.e.iter().find(|e| v & e.1 == e.0).map(|e| e.2)
+        let mut i = 0;
+        while i < self.e.len() {
+            if v & self.e[i].1 == self.e[i].0 {
+                return Some(i);
+            }
+            i += 1;
+        }
+        None
+    }
+
+    pub const fn find(&self, word: u32) -> Option<u8> {
+        match self.entry(word) {
+            Some(i) => Some(self.e[i].2),
+            None => None,
+        }
     }
 
     /// The first entry for `code`: the bits to set and which of them are fixed.
+    #[cfg(feature = "encoder")]
     pub fn bits(&self, code: u8) -> Option<(u32, u32)> {
         self.e.iter().find(|e| e.2 == code).map(|e| (e.0, e.1))
-    }
-
-    /// The word bits that re-encoding the code `word` decodes to reproduces: the
-    /// fixed bits of the matching entry, when it is also the entry the encoder
-    /// picks for the code (the first). `None` otherwise.
-    fn cover(&self, word: u32) -> Option<u32> {
-        let v = self.f.get(word);
-        let i = self.e.iter().position(|e| v & e.1 == e.0)?;
-        let code = self.e[i].2;
-        if self.e.iter().position(|e| e.2 == code) != Some(i) {
-            return None;
-        }
-        let mut m = 0;
-        self.f.set(&mut m, self.e[i].1);
-        Some(m)
     }
 }
 
@@ -149,6 +150,20 @@ pub(crate) const ARR: [Arrangement; 18] = [
     Arrangement::Q,
 ];
 
+// `RK` and `ARR` map table codes to values; the encoder maps back with `as u8`.
+const _: () = {
+    let mut i = 0;
+    while i < RK.len() {
+        assert!(RK[i] as usize == i);
+        i += 1;
+    }
+    let mut i = 0;
+    while i < ARR.len() {
+        assert!(ARR[i] as usize == i);
+        i += 1;
+    }
+};
+
 /// An arrangement: fixed, or selected by a table (code = `Arrangement as u8`).
 #[derive(Debug, Clone, Copy)]
 pub(crate) enum Arr {
@@ -211,6 +226,7 @@ impl Rn {
     }
 
     /// The field value for register number `n`.
+    #[cfg(feature = "encoder")]
     pub(crate) fn field(self, n: u32) -> Option<u32> {
         match self {
             Rn::Lin(base, mul) => {
@@ -309,6 +325,8 @@ pub(crate) enum Imm {
     /// `LSL #n` as `UBFM`: `n = -immr MOD size`, with `imms = size - 1 - n`.
     LslShift {
         immr: Fs,
+        /// Only the encoder writes `imms`.
+        #[cfg_attr(not(feature = "encoder"), allow(dead_code))]
         imms: Fs,
         size: u8,
     },
@@ -652,7 +670,7 @@ fn decode_imm_shift(s: ImmShift, word: u32, o: &mut Operand) -> Option<()> {
     Some(())
 }
 
-fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
+fn decode_one(op: &'static Op, word: u32, pc: u64) -> Option<Operand> {
     Some(match *op {
         Op::Reg(f, k, add) => reg_op(k.get(word)?.reg(plus(f, word, add))),
         Op::RegFixed(r) => reg_op(r),
@@ -737,7 +755,7 @@ fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
                 ..Operand::none()
             }
         }
-        Op::Mem(m) => decode_mem(&m, word)?,
+        Op::Mem(ref m) => decode_mem(m, word)?,
         Op::Label(i, page) => {
             let off = i.get(word)?;
             let base = if page { pc & !0xfff } else { pc };
@@ -786,7 +804,7 @@ fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
         },
         Op::Name(t, kind) => {
             let v = t.f.get(word);
-            let name = t.find(word).and_then(|c| t.names.get(c as usize)).copied();
+            let name = t.find(word).and_then(|c| t.names.get(c as usize));
             Operand {
                 kind: match kind {
                     NameKind::Barrier => OpKind::Barrier,
@@ -796,11 +814,11 @@ fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
                     NameKind::SvePattern => OpKind::Name,
                 },
                 imm: u64::from(v),
-                name: name.unwrap_or(""),
+                name: name.unwrap_or(&""),
                 ..Operand::none()
             }
         }
-        Op::Lit(s) => Operand {
+        Op::Lit(ref s) => Operand {
             kind: OpKind::Name,
             name: s,
             ..Operand::none()
@@ -829,7 +847,7 @@ fn decode_one(op: &Op, word: u32, pc: u64) -> Option<Operand> {
         Op::MulImm(i) => Operand {
             kind: OpKind::Immediate,
             imm: i.get(word)?,
-            name: "MUL",
+            name: &"MUL",
             ..Operand::none()
         },
         Op::ZList(f, k, n, stride, mul, add, a, idx) => {
@@ -930,6 +948,7 @@ pub(crate) fn zlist_first(v: u32, stride: u8, mul: u8) -> u32 {
     }
 }
 
+/// Shift codes of shift tables: `ShiftKind as u8` (codes above `MSL` decode to it).
 pub(crate) fn shift_kind(code: u8) -> ShiftKind {
     match code {
         0 => ShiftKind::Lsl,
@@ -1003,24 +1022,37 @@ fn decode_mem(m: &Mem, word: u32) -> Option<Operand> {
     Some(o)
 }
 
-/// Extend codes of `<extend>` tables: `ExtendKind as u8`.
+/// Extend codes of `<extend>` tables: `ExtendKind as u8` (the `option` encoding,
+/// then 8 for `LSL`).
 pub(crate) fn extend_code(c: u8) -> ExtendKind {
-    match c {
-        0 => ExtendKind::Uxtb,
-        1 => ExtendKind::Uxth,
-        2 => ExtendKind::Uxtw,
-        3 => ExtendKind::Uxtx,
-        4 => ExtendKind::Sxtb,
-        5 => ExtendKind::Sxth,
-        6 => ExtendKind::Sxtw,
-        7 => ExtendKind::Sxtx,
-        _ => ExtendKind::Lsl,
+    if c < 8 {
+        ExtendKind::from_option(u32::from(c))
+    } else {
+        ExtendKind::Lsl
     }
+}
+
+/// The number of operands `ops` decodes to (a mnemonic suffix is not one).
+pub(crate) const fn operand_count(ops: &[Op]) -> usize {
+    let mut n = 0;
+    let mut i = 0;
+    while i < ops.len() {
+        if !matches!(ops[i], Op::Suffix(_)) {
+            n += 1;
+        }
+        i += 1;
+    }
+    n
 }
 
 /// Decodes `ops` from `word`. `None` when an operand field holds a reserved value
 /// (the word is then UNALLOCATED for this encoding).
-pub(crate) fn decode_ops(ops: &[Op], word: u32, pc: u64, out: &mut [Operand]) -> Option<u8> {
+pub(crate) fn decode_ops(
+    ops: &'static [Op],
+    word: u32,
+    pc: u64,
+    out: &mut [Operand],
+) -> Option<u8> {
     let mut n = 0;
     for op in ops {
         if let Op::Suffix(t) = op {
@@ -1033,364 +1065,24 @@ pub(crate) fn decode_ops(ops: &[Op], word: u32, pc: u64, out: &mut [Operand]) ->
     Some(n as u8)
 }
 
-fn sel_cover(k: RegSel, word: u32) -> Option<u32> {
-    match k {
-        RegSel::Fixed(_) => Some(0),
-        RegSel::Tab(t) => t.cover(word),
-    }
-}
-
-fn arr_cover(a: Arr, word: u32) -> Option<u32> {
-    match a {
-        Arr::Fixed(_) => Some(0),
-        Arr::Tab(t) => t.cover(word),
-    }
-}
-
-fn imm_cover(i: Imm, word: u32) -> Option<u32> {
-    Some(match i {
-        Imm::Const(_) => 0,
-        Imm::U(f, _)
-        | Imm::S(f, _)
-        | Imm::SMul(f, _)
-        | Imm::Add(f, _)
-        | Imm::Rsub(_, f)
-        | Imm::NegU(f, _)
-        | Imm::ShrEs(f)
-        | Imm::ShlEs(f)
-        | Imm::Fp8(f)
-        | Imm::ByteMask(f) => f.mask(),
-        Imm::NegMod(f, m) if 1u32 << f.width() <= u32::from(m) => f.mask(),
-        // `imms` from the value and `immr`, which another operand sets.
-        Imm::Width(imms, _) => imms.mask(),
-        Imm::Bitmask { n, immr, imms, .. } => n.mask() | immr.mask() | imms.mask(),
-        Imm::Tab(t) => {
-            // The encoder looks the value up by its first code.
-            let code = t.find(word)?;
-            let v = *t.nums.get(code as usize)?;
-            if t.nums.iter().position(|&n| n == v) != Some(code as usize) {
-                return None;
-            }
-            t.cover(word)?
-        }
-        Imm::SveBitmask { .. } => return None,
-        Imm::NegMod(..) | Imm::LslShift { .. } | Imm::WideMov { .. } => return None,
-    })
-}
-
-fn op_cover(op: &Op, word: u32) -> Option<u32> {
-    Some(match *op {
-        Op::Reg(f, k, _) => f.mask() | sel_cover(k, word)?,
-        Op::RegFixed(_) | Op::RegPair(..) | Op::Lit(_) => 0,
-        Op::Vec(f, a, _) => f.mask() | arr_cover(a, word)?,
-        Op::List(f, _, a, None) => f.mask() | arr_cover(a, word)?,
-        Op::Elem(..) | Op::List(_, _, _, Some(_)) => return None,
-        Op::Imm(i, s) => {
-            imm_cover(i, word)?
-                | match s {
-                    ImmShift::None => 0,
-                    ImmShift::Lsl(a) | ImmShift::Msl(a) => imm_cover(a, word)?,
-                }
-        }
-        Op::BitImm(i) | Op::FpImm(i) | Op::Label(i, _) => imm_cover(i, word)?,
-        Op::Shifted(f, k, t, amount) => {
-            // Codes above `MSL` all decode to `MSL`.
-            if t.find(word)? > 4 {
-                return None;
-            }
-            f.mask() | sel_cover(k, word)? | t.cover(word)? | amount.mask()
-        }
-        Op::Extended(f, k, option, amount) => {
-            f.mask() | sel_cover(k, word)? | option.mask() | amount.mask()
-        }
-        Op::Mem(ref m) => {
-            let off = match m.off {
-                MemOff::None => 0,
-                MemOff::OptReg(f, _) => f.mask(),
-                MemOff::Imm(i) => imm_cover(i, word)?,
-                MemOff::Reg {
-                    m: f,
-                    k,
-                    ext,
-                    amount,
-                } => {
-                    let ext = match ext {
-                        Some(t) => t.cover(word)?,
-                        None => 0,
-                    };
-                    let amount = match amount {
-                        Amount::None | Amount::Fixed(_) => 0,
-                        Amount::OnBit(f, _) if f.width() == 1 => f.mask(),
-                        Amount::OnBit(..) | Amount::Tab(_) => return None,
-                    };
-                    f.mask() | sel_cover(k, word)? | ext | amount
-                }
-            };
-            let post = match m.post {
-                Post::None => 0,
-                Post::Imm(i) => imm_cover(i, word)?,
-                Post::Reg(f) => f.mask(),
-            };
-            m.base.mask() | off | post | arr_cover(m.arr, word)?
-        }
-        Op::Cond(f, ..) if f.width() <= 4 => f.mask(),
-        Op::SysReg(f) if f.width() <= 15 => f.mask(),
-        Op::SysOperation(f) if f.width() <= 14 => f.mask(),
-        Op::PState(f) | Op::Cr(f) | Op::RegWb(f, _) => f.mask(),
-        Op::Name(t, _) => t.f.mask(),
-        Op::Opt(inner, ..) => op_cover(inner, word)?,
-        Op::Suffix(t) => t.cover(word)?,
-        Op::Zr(f, _, a, _, pq) => {
-            f.mask()
-                | arr_cover(a, word)?
-                | match pq {
-                    Pq::Tab(t) => t.cover(word)?,
-                    _ => 0,
-                }
-        }
-        Op::ZElem(..) => return None,
-        Op::MulImm(i) => imm_cover(i, word)?,
-        Op::ZList(f, _, _, _, _, _, a, None) => f.mask() | arr_cover(a, word)?,
-        Op::ZList(.., Some(_)) | Op::ZSel(..) => return None,
-        Op::ZrMap(f, _, a, None) => f.mask() | arr_cover(a, word)?,
-        Op::ZrMap(..) => return None,
-        Op::ZaTile(f, a) => f.mask() | arr_cover(a, word)?,
-        Op::ZaSlice(t, a, hv, ws, _, offs, _) => {
-            t.mask() | arr_cover(a, word)? | hv.mask() | ws.mask() | offs.mask()
-        }
-        Op::ZaArray(a, wv, _, offs, _, _) => arr_cover(a, word)? | wv.mask() | offs.mask(),
-        Op::ZaMask(f) | Op::Zt0Vl(f) => f.mask(),
-        Op::Braced(inner) => op_cover(inner, word)?,
-        Op::Cond(..) | Op::SysReg(_) | Op::SysOperation(_) => return None,
-    })
-}
-
-/// The word bits that re-encoding the operands decoded from `word` is certain to
-/// reproduce, or `None` when some operand's encoding may differ from the word (a
-/// table with several entries for one value, a value with several encodings, ...).
-/// Variable bits outside the result are don't-care bits; the decoder finds them by
-/// re-encoding, which this lets it skip when there are none.
-pub(crate) fn cover(ops: &[Op], word: u32) -> Option<u32> {
-    let mut m = 0;
-    for op in ops {
-        m |= op_cover(op, word)?;
-    }
-    Some(m)
-}
-
-// A lower bound of `cover` over all words (usable in constants), or `None` where
-// `cover` can be `None`, or where a bound needs the word.
-
-/// For a table whose codes each have one entry, re-encoding writes back whichever
-/// entry a word matches: its fixed bits, at least the bits every entry fixes.
-const fn tab_cover_const(t: &Tab) -> Option<u32> {
-    let mut common = u32::MAX;
-    let mut i = 0;
-    while i < t.e.len() {
-        common &= t.e[i].1;
-        let mut j = 0;
-        while j < i {
-            if t.e[j].2 == t.e[i].2 {
-                return None;
-            }
-            j += 1;
-        }
-        i += 1;
-    }
-    let mut m = 0;
-    t.f.set(&mut m, common);
-    Some(m)
-}
-
-const fn sel_cover_const(k: RegSel) -> Option<u32> {
-    match k {
-        RegSel::Fixed(_) => Some(0),
-        RegSel::Tab(t) => tab_cover_const(t),
-    }
-}
-
-const fn arr_cover_const(a: Arr) -> Option<u32> {
-    match a {
-        Arr::Fixed(_) => Some(0),
-        Arr::Tab(t) => tab_cover_const(t),
-    }
-}
-
-/// `a | b` when both are known.
-const fn or(a: Option<u32>, b: Option<u32>) -> Option<u32> {
-    match (a, b) {
-        (Some(a), Some(b)) => Some(a | b),
+/// The mnemonic suffix table of an encoding (`2` in `SADDL2`, `B`/`T` in
+/// `BFMLALB`/`BFMLALT`), if it has one.
+pub(crate) fn suffix_table(ops: &[Op]) -> Option<&'static Tab> {
+    ops.iter().find_map(|op| match op {
+        Op::Suffix(t) => Some(*t),
         _ => None,
-    }
-}
-
-const fn imm_cover_const(i: Imm) -> Option<u32> {
-    match i {
-        Imm::Const(_) => Some(0),
-        Imm::U(f, _)
-        | Imm::S(f, _)
-        | Imm::SMul(f, _)
-        | Imm::Add(f, _)
-        | Imm::Rsub(_, f)
-        | Imm::NegU(f, _)
-        | Imm::ShrEs(f)
-        | Imm::ShlEs(f)
-        | Imm::Fp8(f)
-        | Imm::ByteMask(f) => Some(f.mask()),
-        Imm::NegMod(f, m) if 1u32 << f.width() <= m as u32 => Some(f.mask()),
-        Imm::Width(imms, _) => Some(imms.mask()),
-        Imm::Bitmask { n, immr, imms, .. } => Some(n.mask() | immr.mask() | imms.mask()),
-        Imm::Tab(t) => {
-            // As in `imm_cover`, each number must have one code.
-            let mut i = 0;
-            while i < t.nums.len() {
-                let mut j = 0;
-                while j < i {
-                    if t.nums[j] == t.nums[i] {
-                        return None;
-                    }
-                    j += 1;
-                }
-                i += 1;
-            }
-            tab_cover_const(t)
-        }
-        Imm::SveBitmask { .. } => None,
-        Imm::NegMod(..) | Imm::LslShift { .. } | Imm::WideMov { .. } => None,
-    }
-}
-
-const fn op_cover_const(op: &Op) -> Option<u32> {
-    match *op {
-        Op::Reg(f, k, _) => or(Some(f.mask()), sel_cover_const(k)),
-        Op::RegFixed(_) | Op::RegPair(..) | Op::Lit(_) => Some(0),
-        Op::Vec(f, a, _) | Op::List(f, _, a, None) => or(Some(f.mask()), arr_cover_const(a)),
-        Op::Elem(..) | Op::List(_, _, _, Some(_)) => None,
-        Op::Imm(i, s) => or(
-            imm_cover_const(i),
-            match s {
-                ImmShift::None => Some(0),
-                ImmShift::Lsl(a) | ImmShift::Msl(a) => imm_cover_const(a),
-            },
-        ),
-        Op::BitImm(i) | Op::FpImm(i) | Op::Label(i, _) => imm_cover_const(i),
-        Op::Shifted(f, k, t, amount) => {
-            // As in `op_cover`: codes above `MSL` all decode to `MSL`.
-            let mut i = 0;
-            while i < t.e.len() {
-                if t.e[i].2 > 4 {
-                    return None;
-                }
-                i += 1;
-            }
-            or(
-                Some(f.mask() | amount.mask()),
-                or(sel_cover_const(k), tab_cover_const(t)),
-            )
-        }
-        Op::Extended(f, k, option, amount) => or(
-            Some(f.mask() | option.mask() | amount.mask()),
-            sel_cover_const(k),
-        ),
-        Op::Mem(ref m) => {
-            let off = match m.off {
-                MemOff::None => Some(0),
-                MemOff::OptReg(f, _) => Some(f.mask()),
-                MemOff::Imm(i) => imm_cover_const(i),
-                MemOff::Reg {
-                    m: f,
-                    k,
-                    ext,
-                    amount,
-                } => {
-                    let ext = match ext {
-                        Some(t) => tab_cover_const(t),
-                        None => Some(0),
-                    };
-                    let amount = match amount {
-                        Amount::None | Amount::Fixed(_) => Some(0),
-                        Amount::OnBit(f, _) if f.width() == 1 => Some(f.mask()),
-                        Amount::OnBit(..) | Amount::Tab(_) => None,
-                    };
-                    or(or(Some(f.mask()), sel_cover_const(k)), or(ext, amount))
-                }
-            };
-            let post = match m.post {
-                Post::None => Some(0),
-                Post::Imm(i) => imm_cover_const(i),
-                Post::Reg(f) => Some(f.mask()),
-            };
-            or(
-                or(Some(m.base.mask()), arr_cover_const(m.arr)),
-                or(off, post),
-            )
-        }
-        Op::Cond(f, ..) if f.width() <= 4 => Some(f.mask()),
-        Op::SysReg(f) if f.width() <= 15 => Some(f.mask()),
-        Op::SysOperation(f) if f.width() <= 14 => Some(f.mask()),
-        Op::PState(f) | Op::Cr(f) | Op::RegWb(f, _) => Some(f.mask()),
-        Op::Name(t, _) => Some(t.f.mask()),
-        Op::Opt(inner, ..) => op_cover_const(inner),
-        Op::Suffix(t) => tab_cover_const(t),
-        Op::Zr(f, _, a, _, pq) => or(
-            or(Some(f.mask()), arr_cover_const(a)),
-            match pq {
-                Pq::Tab(t) => tab_cover_const(t),
-                _ => Some(0),
-            },
-        ),
-        Op::ZElem(..) => None,
-        Op::MulImm(i) => imm_cover_const(i),
-        Op::ZList(f, _, _, _, _, _, a, None) => or(Some(f.mask()), arr_cover_const(a)),
-        Op::ZList(.., Some(_)) | Op::ZSel(..) => None,
-        Op::ZrMap(f, _, a, None) => or(Some(f.mask()), arr_cover_const(a)),
-        Op::ZrMap(..) => None,
-        Op::ZaTile(f, a) => or(Some(f.mask()), arr_cover_const(a)),
-        Op::ZaSlice(t, a, hv, ws, _, offs, _) => or(
-            Some(t.mask() | hv.mask() | ws.mask() | offs.mask()),
-            arr_cover_const(a),
-        ),
-        Op::ZaArray(a, wv, _, offs, _, _) => or(Some(wv.mask() | offs.mask()), arr_cover_const(a)),
-        Op::ZaMask(f) | Op::Zt0Vl(f) => Some(f.mask()),
-        Op::Braced(inner) => op_cover_const(inner),
-        Op::Cond(..) | Op::SysReg(_) | Op::SysOperation(_) => None,
-    }
-}
-
-/// A lower bound of [`cover`] over all words, where `cover` is never `None`.
-pub(crate) const fn cover_const(ops: &[Op]) -> Option<u32> {
-    let mut m = 0;
-    let mut i = 0;
-    while i < ops.len() {
-        match op_cover_const(&ops[i]) {
-            Some(c) => m |= c,
-            None => return None,
-        }
-        i += 1;
-    }
-    Some(m)
+    })
 }
 
 /// The mnemonic suffix of an encoding for `word` (`""` when it has none).
+#[cfg(any(feature = "formatter", feature = "instr_info"))]
 pub(crate) fn suffix(ops: &[Op], word: u32) -> &'static str {
-    for op in ops {
-        if let Op::Suffix(t) = op {
-            return t
-                .find(word)
-                .and_then(|c| t.names.get(c as usize))
-                .copied()
-                .unwrap_or("");
-        }
-    }
-    ""
+    suffix_table(ops)
+        .and_then(|t| t.names.get(t.find(word)? as usize).copied())
+        .unwrap_or("")
 }
 
 /// The index of the mnemonic suffix in its table (0 when there is none).
 pub(crate) fn suffix_code(ops: &[Op], word: u32) -> u8 {
-    for op in ops {
-        if let Op::Suffix(t) = op {
-            return t.find(word).unwrap_or(0);
-        }
-    }
-    0
+    suffix_table(ops).and_then(|t| t.find(word)).unwrap_or(0)
 }

@@ -102,6 +102,19 @@ struct Out<'a> {
 
 impl Out<'_> {
     fn put(&mut self, s: &str, kind: FormatterTextKind) {
+        // Most text (register names, already lower case) needs no change.
+        let upper = self.upper;
+        let recase = |c: u8| {
+            if upper {
+                c.is_ascii_lowercase()
+            } else {
+                c.is_ascii_uppercase()
+            }
+        };
+        if !s.bytes().any(recase) {
+            self.out.write(s, kind);
+            return;
+        }
         let mut b = Buf::new();
         for c in s.chars() {
             let c = if self.upper {
@@ -139,39 +152,36 @@ impl Formatter {
             return;
         }
         let d = insn.op_code().data().expect("valid code has data");
-        let mut ops = [Operand::none(); MAX_OPERANDS];
-        let (mnemonic, suffix, n) = match (self.options.preferred_aliases, insn.alias) {
-            (true, a) if a > 0 => {
-                let al = &d.aliases[a as usize - 1];
-                let descs = al.ops.unwrap_or(&[]);
-                match desc::decode_ops(descs, insn.word, insn.pc, &mut ops) {
-                    Some(n) => (al.mnemonic, desc::suffix(descs, insn.word), n as usize),
-                    None => {
-                        ops = insn.ops;
-                        (
-                            insn.mnemonic(),
-                            desc::suffix(d.ops.unwrap_or(&[]), insn.word),
-                            insn.op_count(),
-                        )
-                    }
+        let mut ops = insn.ops;
+        let mut n = insn.op_count();
+        let mut mnemonic = insn.mnemonic();
+        let mut suffix = desc::suffix(d.ops.unwrap_or(&[]), insn.word);
+        // The alias's operands come from the word.
+        let mut alias_ops = [Operand::NONE; MAX_OPERANDS];
+        if self.options.preferred_aliases
+            && let Some(al) = (insn.alias as usize).checked_sub(1).map(|a| &d.aliases[a])
+            && let Some(descs) = al.ops
+            && let Some(an) = desc::decode_ops(descs, insn.word, insn.pc, &mut alias_ops)
+        {
+            ops = alias_ops;
+            n = an as usize;
+            mnemonic = al.mnemonic;
+            suffix = desc::suffix(descs, insn.word);
+            // Labels are absolute: after `set_pc`, the word's offset is relative
+            // to the old PC. The alias branches to the instruction's target.
+            if let Some(target) = insn.label_target() {
+                for o in ops[..n].iter_mut().filter(|o| o.kind == OpKind::Label) {
+                    o.imm = target;
                 }
             }
-            _ => {
-                ops = insn.ops;
-                (
-                    insn.mnemonic(),
-                    desc::suffix(d.ops.unwrap_or(&[]), insn.word),
-                    insn.op_count(),
-                )
-            }
-        };
+        }
         let ops = &ops[..n];
         o.put(mnemonic.name(), FormatterTextKind::Mnemonic);
         if !suffix.is_empty() {
             o.put(suffix, FormatterTextKind::Mnemonic);
         }
         let mut first = true;
-        for (i, op) in ops.iter().enumerate() {
+        for op in ops {
             if op.kind == OpKind::Condition && op.suffix {
                 o.raw(".", FormatterTextKind::Mnemonic);
                 o.put(
@@ -188,7 +198,7 @@ impl Formatter {
                 FormatterTextKind::Punctuation,
             );
             first = false;
-            self.operand(op, ops, i, mnemonic, &mut o);
+            self.operand(op, ops, mnemonic, &mut o);
         }
     }
 
@@ -222,14 +232,7 @@ impl Formatter {
         o.put(r.name(), FormatterTextKind::Register);
     }
 
-    fn operand(
-        &self,
-        op: &Operand,
-        all: &[Operand],
-        _i: usize,
-        mnemonic: Mnemonic,
-        o: &mut Out<'_>,
-    ) {
+    fn operand(&self, op: &Operand, all: &[Operand], mnemonic: Mnemonic, o: &mut Out<'_>) {
         // `{ ZT0 }`, `{ ZA0H.B[W12, 0] }`: one operand printed as a list.
         if op.braced {
             o.raw("{ ", FormatterTextKind::Punctuation);
@@ -239,7 +242,6 @@ impl Formatter {
                     ..*op
                 },
                 all,
-                _i,
                 mnemonic,
                 o,
             );
@@ -280,12 +282,7 @@ impl Formatter {
                 o.raw("{ ", FormatterTextKind::Punctuation);
                 let n = op.reg.number();
                 let (count, stride) = (u32::from(op.count), u32::from(op.list_stride()));
-                let elem = |k: u32| match op.reg.class() {
-                    RegisterClass::Z => Register::z((n + k * stride) % 32),
-                    RegisterClass::P => Register::p((n + k * stride) % 16),
-                    RegisterClass::PN => Register::pn((n + k * stride) % 16),
-                    _ => Register::v((n + k) % 32),
-                };
+                let elem = |k: u32| op.list_register(k);
                 let sized = |r: Register, o: &mut Out<'_>| {
                     self.reg(r, o);
                     if !op.arr.name().is_empty() {
@@ -389,17 +386,11 @@ impl Formatter {
             }
             OpKind::SystemRegister => {
                 let enc = op.imm as u16;
-                let kind = if matches!(mnemonic, Mnemonic::Mrs | Mnemonic::Mrrs) {
-                    SysKind::Mrs
-                } else {
-                    SysKind::Msr
-                };
-                let kind = if matches!(mnemonic, Mnemonic::Mrrs) {
-                    SysKind::Mrrs
-                } else if matches!(mnemonic, Mnemonic::Msrr) {
-                    SysKind::Msrr
-                } else {
-                    kind
+                let kind = match mnemonic {
+                    Mnemonic::Mrs => SysKind::Mrs,
+                    Mnemonic::Mrrs => SysKind::Mrrs,
+                    Mnemonic::Msrr => SysKind::Msrr,
+                    _ => SysKind::Msr,
                 };
                 match lookup(kind, enc).filter(|e| !e.name.contains('<')) {
                     Some(e) => o.put(e.name, FormatterTextKind::Register),
@@ -623,5 +614,42 @@ impl FormatterOutput for Buf2<'_, '_> {
         if self.f.write_str(text).is_err() {
             self.err = true;
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::desc::Op;
+    use crate::generated::tables::ENCODINGS;
+    use crate::{DecoderOptions, decode_word};
+
+    /// An alias with a label prints the instruction's absolute target, also after
+    /// `set_pc` (the word's offset is then relative to the old PC). No such alias
+    /// is preferred in the pinned release, so the alias is forced here.
+    #[test]
+    fn alias_labels_follow_the_instruction() {
+        let mut n = 0;
+        for d in &ENCODINGS {
+            for (k, a) in d.aliases.iter().enumerate() {
+                let Some(ops) = a.ops else { continue };
+                if !ops.iter().any(|o| matches!(o, Op::Label(..))) {
+                    continue;
+                }
+                let mut i = decode_word(d.value | 0x20 << 5, 0x1000, &DecoderOptions::default());
+                if i.is_invalid() {
+                    continue;
+                }
+                i.alias = k as u8 + 1;
+                let text = std::string::ToString::to_string(&i);
+                assert!(
+                    text.starts_with(&a.mnemonic.name().to_ascii_lowercase()),
+                    "{text}"
+                );
+                i.set_pc(0x80_0000);
+                assert_eq!(std::string::ToString::to_string(&i), text, "{}", d.name);
+                n += 1;
+            }
+        }
+        assert!(n > 0);
     }
 }

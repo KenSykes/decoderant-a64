@@ -8,7 +8,7 @@ use crate::bits::decode_bit_masks;
 use crate::feature_set::FeatureSet;
 #[cfg(test)]
 use crate::generated::Feature;
-use crate::generated::conds::CONDS;
+use crate::generated::conds::{CONDS, SYSOP_NAMES};
 #[cfg(test)]
 use crate::generated::tables::{EXPR_ARGS, EXPRS};
 
@@ -48,13 +48,6 @@ pub(crate) enum Func {
     /// named system instruction alias (`kind`: 0 SYS, 1 SYSL, 2 SYSP).
     SysOpIs,
 }
-
-/// System instruction aliases (same list as the generator's `SYSOP_NAMES`).
-pub(crate) const SYSOP_NAMES: &[&str] = &[
-    "SYS", "DC", "IC", "AT", "TLBI", "TLBIP", "BRB", "CFP", "CPP", "DVP", "COSP", "APAS", "GIC",
-    "GICR", "GSB", "PLBI", "TRCIT", "GCSPUSHM", "GCSPOPM", "GCSPUSHX", "GCSPOPX", "GCSPOPCX",
-    "GCSSS1", "GCSSS2",
-];
 
 #[cfg(test)]
 #[allow(dead_code)]
@@ -407,13 +400,7 @@ mod tests {
     /// with every feature, none, and random feature subsets.
     #[test]
     fn compiled_conditions_match_the_evaluator() {
-        let mut seed = 0x9e37_79b9_7f4a_7c15u64;
-        let mut next = move || {
-            seed ^= seed << 13;
-            seed ^= seed >> 7;
-            seed ^= seed << 17;
-            seed
-        };
+        let mut next = crate::bits::xorshift(0x9e37_79b9_7f4a_7c15);
         let mut sets = std::vec![FeatureSet::ALL, FeatureSet::EMPTY];
         for _ in 0..30 {
             let mut s = FeatureSet::EMPTY;

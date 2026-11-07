@@ -108,3 +108,66 @@ fn build_and_edit() {
     b.set_pc(0x2000);
     assert_eq!(b.encode().unwrap(), 0x17ff_fc04);
 }
+
+/// Operand values the encoding cannot hold are errors, never truncated or taken
+/// for another register class.
+#[test]
+fn rejects_what_does_not_fit() {
+    use aarch64_isa::{Arrangement as A, Instruction, Operand, Register as R};
+    let opts = DecoderOptions::default();
+    // AND W0, W1, #imm: a 32-bit logical immediate with higher bits set.
+    let and = |imm| {
+        Instruction::with(
+            Code::And_32_log_imm,
+            &[
+                Operand::reg(R::W0),
+                Operand::reg(R::W1),
+                Operand::bitmask(imm),
+            ],
+            0,
+        )
+    };
+    assert_eq!(and(0xff).unwrap().to_string(), "and w0, w1, #0xff");
+    assert!(and(0x1_0000_00ff).is_err());
+    // LD1 { V3.16B }, [X1]: a list of general registers is not a vector list.
+    let ld1 = |first| {
+        Instruction::with(
+            Code::Ld1_asisdlse_R1_1v,
+            &[Operand::list(first, 1, A::B16), Operand::mem(R::X1)],
+            0,
+        )
+    };
+    assert_eq!(ld1(R::V3).unwrap().to_string(), "ld1 { v3.16b }, [x1]");
+    assert!(ld1(R::X3).is_err());
+    // PTRUE P0.B, #imm: a pattern number above 32 bits.
+    let mut p = decode_word(0x2518_e3e0, 0, &opts);
+    assert_eq!(p.to_string(), "ptrue p0.b");
+    p.set_op(1, Operand::imm(14)).unwrap();
+    assert_eq!(p.to_string(), "ptrue p0.b, #0xe");
+    assert!(p.set_op(1, Operand::imm(1 << 32 | 14)).is_err());
+    assert_eq!(p.to_string(), "ptrue p0.b, #0xe");
+}
+
+/// Moving an instruction keeps its absolute label target in the text (the
+/// alias forms are a unit test of the formatter: none is preferred in this
+/// release).
+#[test]
+fn set_pc_keeps_label_targets() {
+    let opts = DecoderOptions::default();
+    let mut rng = Rng::new(0x1abe1);
+    let mut n = 0;
+    for c in Code::values().skip(1) {
+        let oc = c.op_code();
+        for _ in 0..16 {
+            let mut i = decode_word(oc.value() | rng.next() & !oc.mask(), 0x1000, &opts);
+            if i.code() != c || i.label_target().is_none() {
+                continue;
+            }
+            let text = i.to_string();
+            i.set_pc(0x80_0000);
+            assert_eq!(i.to_string(), text, "{}", oc.name());
+            n += 1;
+        }
+    }
+    assert!(n > 100, "{n} instructions");
+}

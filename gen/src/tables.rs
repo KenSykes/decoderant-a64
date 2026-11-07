@@ -695,12 +695,11 @@ fn change_report(previous: &str, list: &str, release: &str) -> Result<()> {
             .collect()
     };
     let (old, new) = (parse(previous), parse(list));
-    // The pattern and fields, without the iclass and template, identify a rename.
+    // The pattern and fields (`<mask/value> sb=<...> [<fields>`), without the iclass
+    // and template, identify a rename.
     let shape = |rest: &str| {
-        let mut it = rest.splitn(2, ' ');
-        let _ = it.next();
-        let tail = it.next().unwrap_or("");
-        tail.split(" [").next().unwrap_or("").to_string() + tail.split(']').next().unwrap_or("")
+        let tail = rest.split_once(' ').map_or("", |(_, t)| t);
+        tail.split(']').next().unwrap_or("").to_string()
     };
     let mut removed: Vec<&String> = old.keys().filter(|k| !new.contains_key(*k)).collect();
     let mut added: Vec<&String> = new.keys().filter(|k| !old.contains_key(*k)).collect();

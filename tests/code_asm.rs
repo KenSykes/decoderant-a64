@@ -539,3 +539,27 @@ fn errors() {
         .is_err()
     );
 }
+
+/// A 32-bit `MOV` immediate with higher bits set is an error, not truncated to
+/// the low word (`mov w3, #0x1_0000_0001` is not `mov w3, #1`).
+#[test]
+fn mov_w_immediates_are_not_truncated() {
+    use aarch64_isa::Mnemonic as M;
+    let a = CodeAssembler::new(0x1000);
+    let mov = |v: u64| a.encode(M::Mov, "", &[w3.into(), O::imm(v)]);
+    for (v, want) in [
+        (0x1234, "mov w3, #0x1234"),
+        (0xffff_0000, "mov w3, #0xffff0000"),
+        (0xffff_fffe, "mov w3, #0xfffffffe"),
+        (0x00ff_00ff, "mov w3, #0xff00ff"),
+    ] {
+        assert_eq!(text(mov(v).unwrap(), 0x1000), want);
+    }
+    for v in [0x1_0000_0001, 0xffff_ffff_ffff_0000, 0x1_00ff_00ff] {
+        assert!(
+            mov(v).is_err(),
+            "{v:#x}: {:?}",
+            mov(v).map(|w| text(w, 0x1000))
+        );
+    }
+}

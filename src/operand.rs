@@ -179,16 +179,17 @@ pub(crate) const ARR_ES: [Arrangement; 5] = [
     Arrangement::Q,
 ];
 
-/// A shift applied to a register or immediate.
+/// A shift applied to a register or immediate. The discriminants are the codes of
+/// the generated shift tables (`shift` field values, then `MSL`).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub enum ShiftKind {
     #[default]
-    Lsl,
-    Lsr,
-    Asr,
-    Ror,
+    Lsl = 0,
+    Lsr = 1,
+    Asr = 2,
+    Ror = 3,
     /// `MSL` (AdvSIMD modified immediate: shift in ones).
-    Msl,
+    Msl = 4,
 }
 
 impl ShiftKind {
@@ -203,21 +204,22 @@ impl ShiftKind {
     }
 }
 
-/// An extend applied to a register.
+/// An extend applied to a register. The discriminants are the `option` field
+/// values, and the codes of the generated extend tables (8 for `LSL`).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub enum ExtendKind {
     #[default]
-    Uxtb,
-    Uxth,
-    Uxtw,
-    Uxtx,
-    Sxtb,
-    Sxth,
-    Sxtw,
-    Sxtx,
+    Uxtb = 0,
+    Uxth = 1,
+    Uxtw = 2,
+    Uxtx = 3,
+    Sxtb = 4,
+    Sxth = 5,
+    Sxtw = 6,
+    Sxtx = 7,
     /// `LSL`, the preferred spelling of `UXTX` (64-bit) or `UXTW` (32-bit) where
     /// the stack pointer is involved, and of `UXTX` in register-offset addressing.
-    Lsl,
+    Lsl = 8,
 }
 
 impl ExtendKind {
@@ -350,7 +352,7 @@ pub enum MemoryMode {
 }
 
 /// One decoded operand. Which fields are meaningful depends on [`OpKind`].
-#[derive(Debug, Clone, Copy, PartialEq, Default)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Operand {
     pub(crate) kind: OpKind,
     /// The register, the list's first register, or a memory base.
@@ -375,7 +377,7 @@ pub struct Operand {
     /// operation encoding, depending on the kind.
     pub(crate) imm: u64,
     /// Static text for [`OpKind::Name`] operands.
-    pub(crate) name: &'static str,
+    pub(crate) name: &'static &'static str,
     /// A condition printed as a mnemonic suffix (`B.EQ`).
     pub(crate) suffix: bool,
     /// An optional operand at its default value (`RET` for `RET X30`): the
@@ -425,6 +427,21 @@ impl Operand {
 
     pub fn list_len(&self) -> u8 {
         self.count
+    }
+
+    /// Register `k` of a register list: SVE and SME lists are `list_stride()`
+    /// apart and wrap within their register file; vector lists are consecutive
+    /// and wrap from `V31` to `V0`.
+    #[cfg(any(feature = "formatter", feature = "instr_info"))]
+    pub(crate) fn list_register(&self, k: u32) -> Register {
+        use crate::regs::RegisterClass;
+        let n = self.reg.number() + k * u32::from(self.list_stride());
+        match self.reg.class() {
+            RegisterClass::Z => Register::z(n % 32),
+            RegisterClass::P => Register::p(n % 16),
+            RegisterClass::PN => Register::pn(n % 16),
+            _ => Register::v((self.reg.number() + k) % 32),
+        }
     }
 
     /// The distance between the registers of a list (1 for consecutive lists).
@@ -483,15 +500,48 @@ impl Operand {
         self.pred
     }
 
+    #[cfg(feature = "encoder")]
     pub(crate) fn raw(&self) -> Option<u16> {
         (self.raw_fields >> 15 == 1).then_some(self.raw_fields & 0x7fff)
     }
 
-    pub(crate) fn none() -> Operand {
-        Operand {
-            lane: Self::NO_LANE,
-            ..Operand::default()
-        }
+    /// No operand.
+    pub(crate) const NONE: Operand = Operand {
+        kind: OpKind::None,
+        reg: Register::None,
+        index_reg: Register::None,
+        arr: Arrangement::None,
+        count: 0,
+        lane: Self::NO_LANE,
+        shift: ShiftKind::Lsl,
+        extend: ExtendKind::Uxtb,
+        amount: 0,
+        has_amount: false,
+        mode: MemoryMode::Offset,
+        writeback: false,
+        imm: 0,
+        name: &"",
+        suffix: false,
+        elide: false,
+        signed: false,
+        raw_fields: 0,
+        pred: PredQual::None,
+        stride: 0,
+        mul_vl: false,
+        vertical: false,
+        vg: 0,
+        braced: false,
+    };
+
+    pub(crate) const fn none() -> Operand {
+        Self::NONE
+    }
+}
+
+impl Default for Operand {
+    /// No operand ([`OpKind::None`], no lane index).
+    fn default() -> Self {
+        Self::NONE
     }
 }
 
@@ -913,5 +963,32 @@ impl From<f64> for Operand {
 impl From<ConditionCode> for Operand {
     fn from(c: ConditionCode) -> Operand {
         Operand::cond(c)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_is_no_operand() {
+        let o = Operand::default();
+        assert_eq!((o.kind(), o.index(), o.name()), (OpKind::None, None, ""));
+        assert_eq!(o, Operand::none());
+    }
+
+    #[test]
+    fn table_codes_are_discriminants() {
+        assert_eq!(ExtendKind::from_option(6), ExtendKind::Sxtw);
+        assert_eq!(
+            crate::desc::extend_code(ExtendKind::Lsl as u8),
+            ExtendKind::Lsl
+        );
+        for c in 0..9 {
+            assert_eq!(crate::desc::extend_code(c) as u8, c);
+        }
+        for c in 0..5 {
+            assert_eq!(crate::desc::shift_kind(c) as u8, c);
+        }
     }
 }

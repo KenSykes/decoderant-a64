@@ -2,10 +2,11 @@
 //! decodes its operands.
 
 use crate::cond::{Ctx, holds};
+use crate::desc::operand_count;
 use crate::feature_set::FeatureSet;
 use crate::generated::Code;
 use crate::generated::tables::{CANDIDATES, DISPATCH, DISPATCH_ROOT, ENCODINGS};
-use crate::instruction::Instruction;
+use crate::instruction::{Instruction, MAX_OPERANDS};
 use crate::tables::{NO_COND, SLOT_LIST};
 
 /// Decoder options.
@@ -81,6 +82,25 @@ pub(crate) fn classify_by_tree(word: u32, features: &FeatureSet) -> Code {
     walk(ROOT, &cx)
 }
 
+// Every operand list of the tables fits an `Instruction`.
+const _: () = {
+    let mut i = 0;
+    while i < ENCODINGS.len() {
+        let d = &ENCODINGS[i];
+        if let Some(ops) = d.ops {
+            assert!(operand_count(ops) <= MAX_OPERANDS);
+        }
+        let mut k = 0;
+        while k < d.aliases.len() {
+            if let Some(ops) = d.aliases[k].ops {
+                assert!(operand_count(ops) <= MAX_OPERANDS);
+            }
+            k += 1;
+        }
+        i += 1;
+    }
+};
+
 /// Encodings whose operands reproduce every variable bit of any word, so that
 /// decoding has no don't-care bits to look for.
 #[cfg(feature = "encoder")]
@@ -90,7 +110,7 @@ static NO_DONT_CARE: [bool; crate::generated::CODE_COUNT - 1] = {
     while i < t.len() {
         let d = &ENCODINGS[i];
         if let Some(ops) = d.ops
-            && let Some(c) = crate::desc::cover_const(ops)
+            && let Some(c) = crate::cover::cover(ops, None)
         {
             t[i] = d.mask | d.sb_mask | crate::undefined::pinned(d).0 | c == u32::MAX;
         }
@@ -101,18 +121,30 @@ static NO_DONT_CARE: [bool; crate::generated::CODE_COUNT - 1] = {
 
 /// Decodes one word.
 pub fn decode_word(word: u32, pc: u64, options: &DecoderOptions) -> Instruction {
-    let mut insn = Instruction::default();
-    decode_into(word, pc, options, &mut insn);
+    let mut insn = Instruction::invalid(word, pc, options);
+    decode_into(&mut insn, options);
     insn
 }
 
-fn decode_into(word: u32, pc: u64, options: &DecoderOptions, insn: &mut Instruction) {
-    *insn = Instruction {
-        pc,
-        word,
-        features: options.features,
-        ..Instruction::default()
-    };
+impl Instruction {
+    /// An invalid instruction for `word` at `pc`, where decoding starts.
+    #[inline]
+    fn invalid(word: u32, pc: u64, options: &DecoderOptions) -> Instruction {
+        Instruction {
+            pc,
+            word,
+            features: options.features,
+            ..Instruction::EMPTY
+        }
+    }
+}
+
+/// Decodes `insn` (from [`Instruction::invalid`]) in place: an `Instruction` is a
+/// few hundred bytes, so each caller writes it once rather than building and
+/// copying it.
+#[inline]
+fn decode_into(insn: &mut Instruction, options: &DecoderOptions) {
+    let (word, pc) = (insn.word, insn.pc);
     let code = classify(word, &options.features);
     if code == Code::Invalid {
         return;
@@ -128,8 +160,12 @@ fn decode_into(word: u32, pc: u64, options: &DecoderOptions, insn: &mut Instruct
                 insn.op_count = n;
                 insn.has_operands = true;
             }
-            // A reserved operand value: UNALLOCATED.
-            None => return,
+            // A reserved operand value: UNALLOCATED (without the operands decoded
+            // so far).
+            None => {
+                insn.ops = Instruction::EMPTY.ops;
+                return;
+            }
         }
     }
     insn.code = code;
@@ -143,7 +179,7 @@ fn decode_into(word: u32, pc: u64, options: &DecoderOptions, insn: &mut Instruct
         let (pm, pv) = crate::undefined::pinned(d);
         let fixed = d.mask | d.sb_mask | pm;
         if !NO_DONT_CARE[i]
-            && crate::desc::cover(ops, word).is_none_or(|c| fixed | c != u32::MAX)
+            && crate::cover::cover(ops, Some(word)).is_none_or(|c| fixed | c != u32::MAX)
             && let Ok(w) = crate::encoder::encode_ops(
                 ops,
                 insn.operands(),
@@ -210,22 +246,20 @@ impl<'a> Decoder<'a> {
     /// Decodes the next word. Past the end (or on a partial word) returns an
     /// invalid instruction and does not advance.
     pub fn decode(&mut self) -> Instruction {
-        let mut insn = Instruction::default();
+        let mut insn = Instruction::EMPTY;
         self.decode_out(&mut insn);
         insn
     }
 
+    /// [`decode`](Self::decode) into an existing instruction.
     pub fn decode_out(&mut self, insn: &mut Instruction) {
-        if !self.can_decode() {
-            *insn = Instruction {
-                pc: self.pc,
-                ..Instruction::default()
-            };
+        let Some(b) = self.data.get(self.pos..self.pos + 4) else {
+            *insn = Instruction::invalid(0, self.pc, &self.options);
             return;
-        }
-        let b = &self.data[self.pos..self.pos + 4];
+        };
         let word = u32::from_le_bytes([b[0], b[1], b[2], b[3]]);
-        decode_into(word, self.pc, &self.options, insn);
+        *insn = Instruction::invalid(word, self.pc, &self.options);
+        decode_into(insn, &self.options);
         self.pos += 4;
         self.pc = self.pc.wrapping_add(4);
     }
@@ -242,6 +276,7 @@ impl Iterator for Decoder<'_> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::bits::xorshift;
     use crate::generated::Feature;
 
     /// The dispatch classifies like the decode tree: on random words, on words
@@ -249,13 +284,7 @@ mod tests {
     /// subset.
     #[test]
     fn dispatch_matches_the_decode_tree() {
-        let mut seed = 0x2545_f491_4f6c_dd1du64;
-        let mut next = move || {
-            seed ^= seed << 13;
-            seed ^= seed >> 7;
-            seed ^= seed << 17;
-            seed as u32
-        };
+        let mut next = xorshift(0x2545_f491_4f6c_dd1d);
         let some = FeatureSet::ALL
             .without(Feature::PAuth)
             .without(Feature::SVE)
@@ -269,39 +298,49 @@ mod tests {
                 );
             };
             for _ in 0..200_000 {
-                check(next());
+                check(next() as u32);
             }
             for d in &ENCODINGS {
                 for _ in 0..64 {
-                    check(d.value | next() & !d.mask);
+                    check(d.value | next() as u32 & !d.mask);
                 }
             }
         }
+    }
+
+    /// Past the end the decoder returns an invalid instruction, with its options.
+    #[test]
+    fn past_the_end() {
+        let features = FeatureSet::EMPTY.with(Feature::SVE);
+        let mut d = Decoder::new(
+            &[0x20, 0x00, 0x02],
+            0x40,
+            DecoderOptions::with_features(features),
+        );
+        assert!(!d.can_decode());
+        let i = d.decode();
+        assert!(i.is_invalid());
+        assert_eq!((i.pc(), i.features, d.position()), (0x40, features, 0));
     }
 }
 
 #[cfg(all(test, feature = "encoder"))]
 mod dont_care_tests {
     use super::*;
+    use crate::bits::xorshift;
 
     /// The constant cover is a lower bound of the cover of sample words.
     #[test]
     fn static_cover_matches_word_cover() {
-        let mut seed = 0x1234_5678_9abc_def1u64;
-        let mut next = move || {
-            seed ^= seed << 13;
-            seed ^= seed >> 7;
-            seed ^= seed << 17;
-            seed as u32
-        };
+        let mut next = xorshift(0x1234_5678_9abc_def1);
         for d in &ENCODINGS {
             let Some(ops) = d.ops else { continue };
-            let Some(c) = crate::desc::cover_const(ops) else {
+            let Some(c) = crate::cover::cover(ops, None) else {
                 continue;
             };
             for _ in 0..256 {
-                let w = d.value | next() & !d.mask;
-                if let Some(cw) = crate::desc::cover(ops, w) {
+                let w = d.value | next() as u32 & !d.mask;
+                if let Some(cw) = crate::cover::cover(ops, Some(w)) {
                     assert_eq!(cw & c, c, "{} {w:#010x}", d.name);
                 }
             }

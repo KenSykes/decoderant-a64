@@ -28,13 +28,10 @@ impl F {
         (word & self.mask()) >> self.lsb
     }
 
+    #[cfg(feature = "encoder")]
     #[inline]
     pub const fn set(self, word: &mut u32, v: u32) {
         *word = (*word & !self.mask()) | ((v << self.lsb) & self.mask());
-    }
-
-    pub const fn is_none(self) -> bool {
-        self.width == 0
     }
 }
 
@@ -45,6 +42,22 @@ pub(crate) struct Fs(pub [F; 4]);
 impl Fs {
     pub const NONE: Fs = Fs([F::NONE; 4]);
 
+    /// One field.
+    #[cfg(feature = "encoder")]
+    pub const fn one(f: F) -> Fs {
+        Fs([f, F::NONE, F::NONE, F::NONE])
+    }
+
+    /// The least significant field.
+    #[cfg(feature = "encoder")]
+    pub const fn last(self) -> F {
+        let mut i = 4;
+        while i > 1 && self.0[i - 1].width == 0 {
+            i -= 1;
+        }
+        self.0[i - 1]
+    }
+
     pub const fn width(self) -> u32 {
         self.0[0].width as u32
             + self.0[1].width as u32
@@ -52,16 +65,20 @@ impl Fs {
             + self.0[3].width as u32
     }
 
-    pub fn get(self, word: u32) -> u32 {
+    pub const fn get(self, word: u32) -> u32 {
         let mut v = 0u32;
-        for f in self.0 {
+        let mut i = 0;
+        while i < 4 {
+            let f = self.0[i];
             if f.width != 0 {
                 v = v << f.width | f.get(word);
             }
+            i += 1;
         }
         v
     }
 
+    #[cfg(feature = "encoder")]
     pub const fn set(self, word: &mut u32, mut v: u32) {
         let mut i = 4;
         while i > 0 {
@@ -74,6 +91,7 @@ impl Fs {
         }
     }
 
+    #[cfg(feature = "encoder")]
     pub const fn mask(self) -> u32 {
         self.0[0].mask() | self.0[1].mask() | self.0[2].mask() | self.0[3].mask()
     }
@@ -156,6 +174,7 @@ pub(crate) const fn decode_bit_masks(
 
 /// Inverse of [`decode_bit_masks`] for logical immediates: the `(N, immr, imms)`
 /// that encode `value` as an `m`-bit bitmask immediate.
+#[cfg(feature = "encoder")]
 pub(crate) fn encode_bit_mask(value: u64, m: u32) -> Option<(u32, u32, u32)> {
     let value = value & ones(m);
     if value == 0 || value == ones(m) {
@@ -216,8 +235,20 @@ pub(crate) fn fp_imm8_value(imm8: u32) -> f64 {
 }
 
 /// Inverse of [`fp_imm8_value`].
+#[cfg(feature = "encoder")]
 pub(crate) fn fp_imm8_encode(v: f64) -> Option<u32> {
     (0..256u32).find(|&i| fp_imm8_value(i).to_bits() == v.to_bits())
+}
+
+/// A xorshift64 generator for the unit tests' random words.
+#[cfg(test)]
+pub(crate) fn xorshift(mut seed: u64) -> impl FnMut() -> u64 {
+    move || {
+        seed ^= seed << 13;
+        seed ^= seed >> 7;
+        seed ^= seed << 17;
+        seed
+    }
 }
 
 #[cfg(test)]
@@ -228,6 +259,15 @@ mod tests {
     fn fields() {
         let f = F::new(5, 5);
         assert_eq!(f.get(0x1f << 5), 31);
+        let fs = Fs([F::new(29, 2), F::new(5, 19), F::NONE, F::NONE]);
+        assert_eq!(fs.get(3 << 29 | 0x7_ffff << 5), 0x1f_ffff);
+        assert_eq!(fs.width(), 21);
+    }
+
+    #[test]
+    #[cfg(feature = "encoder")]
+    fn set_fields() {
+        let f = F::new(5, 5);
         let mut w = 0;
         f.set(&mut w, 3);
         assert_eq!(w, 3 << 5);
@@ -236,6 +276,9 @@ mod tests {
         fs.set(&mut w, 0x1f_ffff);
         assert_eq!(fs.get(w), 0x1f_ffff);
         assert_eq!(w, 3 << 29 | 0x7_ffff << 5);
+        assert_eq!(fs.last(), F::new(5, 19));
+        assert_eq!(Fs::one(f).last(), f);
+        assert_eq!(Fs::NONE.last(), F::NONE);
     }
 
     #[test]
@@ -249,6 +292,11 @@ mod tests {
         );
         assert!(decode_bit_masks(0, 0b11_1111, 0, true, 64).is_none());
         assert!(decode_bit_masks(1, 0, 0, true, 32).is_none());
+    }
+
+    #[test]
+    #[cfg(feature = "encoder")]
+    fn bit_masks_round_trip() {
         for n in 0..2 {
             for immr in 0..64 {
                 for imms in 0..64 {
@@ -272,8 +320,17 @@ mod tests {
         assert_eq!(fp_imm8_value(0x70), 1.0);
         assert_eq!(fp_imm8_value(0x00), 2.0);
         assert_eq!(fp_imm8_value(0xf0), -1.0);
-        assert_eq!(fp_imm8_encode(0.5), Some(0x60));
         assert_eq!(vfp_expand_imm(0x70, 16), 0x3c00);
         assert_eq!(vfp_expand_imm(0x70, 32), 0x3f80_0000);
+    }
+
+    #[test]
+    #[cfg(feature = "encoder")]
+    fn fp_imm_round_trip() {
+        assert_eq!(fp_imm8_encode(0.5), Some(0x60));
+        assert_eq!(fp_imm8_encode(0.0), None);
+        for i in 0..256 {
+            assert_eq!(fp_imm8_encode(fp_imm8_value(i)), Some(i));
+        }
     }
 }

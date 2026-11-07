@@ -48,10 +48,14 @@ pub struct Spec {
     pub registers: Value,
 }
 
-fn sha256(path: &Path) -> Result<String> {
+/// The file's contents and their SHA-256 (hex).
+fn read_hashed(path: &Path) -> Result<(Vec<u8>, String)> {
     let bytes = fs::read(path).with_context(|| format!("reading {}", path.display()))?;
-    let digest = Sha256::digest(&bytes);
-    Ok(digest.iter().map(|b| format!("{b:02x}")).collect())
+    let hash = Sha256::digest(&bytes)
+        .iter()
+        .map(|b| format!("{b:02x}"))
+        .collect();
+    Ok((bytes, hash))
 }
 
 /// Checks that a JSON file's `_meta` block states the BSD 3-clause licence and the
@@ -75,14 +79,11 @@ fn load_json(dir: &Path, name: &str, rev: &Revision) -> Result<Value> {
         .files
         .get(name)
         .with_context(|| format!("REVISION pins no hash for {name}"))?;
-    let have = sha256(&path)?;
+    let (bytes, have) = read_hashed(&path)?;
     if &have != want {
         bail!("{name}: SHA-256 {have}, REVISION pins {want}");
     }
-    let file = fs::File::open(&path)?;
-    let v: Value = serde_json::from_reader(std::io::BufReader::new(file))
-        .with_context(|| format!("parsing {}", path.display()))?;
-    Ok(v)
+    serde_json::from_slice(&bytes).with_context(|| format!("parsing {}", path.display()))
 }
 
 impl Spec {
@@ -92,7 +93,7 @@ impl Spec {
             .files
             .get("docs/notice.html")
             .context("REVISION pins no hash for docs/notice.html")?;
-        if &sha256(&notice)? != want {
+        if &read_hashed(&notice)?.1 != want {
             bail!("docs/notice.html differs from the pinned one: re-check the licence");
         }
         let instructions = load_json(dir, "Instructions.json", rev)?;

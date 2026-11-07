@@ -10,7 +10,7 @@
 //! operands (`za`).
 
 use crate::model::Field;
-use crate::operands::{Cx, R, fs, imm, m};
+use crate::operands::{Cx, EXTENDS, R, fs, imm, m};
 use crate::template::SymAlt;
 
 /// The element size in bytes, as a power of two, of an element-size name.
@@ -531,10 +531,6 @@ fn mem_base(cx: &mut Cx<'_>, b: &str) -> R<(String, &'static str, String)> {
     let (k, _) = crate::operands::reg_sym(b).ok_or_else(|| format!("memory base {b}"))?;
     Ok((cx.field(b)?, k, "Arr::Fixed(Arrangement::None)".into()))
 }
-
-const EXTENDS: [&str; 9] = [
-    "UXTB", "UXTH", "UXTW", "UXTX", "SXTB", "SXTH", "SXTW", "SXTX", "LSL",
-];
 
 /// The index of an SVE memory operand (`<Xm>`, `<Zm>.D`): the offset descriptor
 /// and the element size of a vector index.

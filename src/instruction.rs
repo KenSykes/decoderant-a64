@@ -7,8 +7,9 @@ use crate::operand::{
     Arrangement, ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, ShiftKind,
 };
 
-/// Operand slots in an [`Instruction`].
-pub const MAX_OPERANDS: usize = 8;
+/// Operand slots in an [`Instruction`]: the most any encoding or alias of the
+/// pinned release has (checked at compile time).
+pub const MAX_OPERANDS: usize = 6;
 
 /// Control flow of an instruction.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -70,21 +71,26 @@ pub struct Instruction {
     pub(crate) features: FeatureSet,
 }
 
+impl Instruction {
+    /// An invalid instruction at PC 0: the starting point of decoding and building.
+    pub(crate) const EMPTY: Instruction = Instruction {
+        code: Code::Invalid,
+        pc: 0,
+        word: 0,
+        op_count: 0,
+        ops: [Operand::NONE; MAX_OPERANDS],
+        sb: 0,
+        extra: 0,
+        has_operands: false,
+        alias: 0,
+        suffix: 0,
+        features: FeatureSet::ALL,
+    };
+}
+
 impl Default for Instruction {
     fn default() -> Self {
-        Instruction {
-            code: Code::Invalid,
-            pc: 0,
-            word: 0,
-            op_count: 0,
-            ops: [Operand::none(); MAX_OPERANDS],
-            sb: 0,
-            extra: 0,
-            has_operands: false,
-            alias: 0,
-            suffix: 0,
-            features: FeatureSet::ALL,
-        }
+        Self::EMPTY
     }
 }
 

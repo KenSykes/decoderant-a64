@@ -5820,3 +5820,31 @@ pub(crate) static CONDS: [fn(&Ctx<'_>) -> bool; 581] = [
     c579,
     c580,
 ];
+
+/// System instruction aliases, by the index `SysOpIs` conditions use.
+pub(crate) static SYSOP_NAMES: [&str; 24] = [
+    "SYS",
+    "DC",
+    "IC",
+    "AT",
+    "TLBI",
+    "TLBIP",
+    "BRB",
+    "CFP",
+    "CPP",
+    "DVP",
+    "COSP",
+    "APAS",
+    "GIC",
+    "GICR",
+    "GSB",
+    "PLBI",
+    "TRCIT",
+    "GCSPUSHM",
+    "GCSPOPM",
+    "GCSPUSHX",
+    "GCSPOPX",
+    "GCSPOPCX",
+    "GCSSS1",
+    "GCSSS2",
+];

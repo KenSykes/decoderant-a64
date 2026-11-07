@@ -4,17 +4,35 @@
 
 use crate::generated::Register;
 
-const W0: usize = 1;
-const X0: usize = 34;
-const B0: usize = 67;
-const H0: usize = B0 + 32;
-const S0: usize = H0 + 32;
-const D0: usize = S0 + 32;
-const Q0: usize = D0 + 32;
-const V0: usize = Q0 + 32;
-const Z0: usize = V0 + 32;
-const P0: usize = Z0 + 32;
-const PN0: usize = P0 + 16;
+const W0: usize = Register::W0 as usize;
+const X0: usize = Register::X0 as usize;
+const B0: usize = Register::B0 as usize;
+const H0: usize = Register::H0 as usize;
+const S0: usize = Register::S0 as usize;
+const D0: usize = Register::D0 as usize;
+const Q0: usize = Register::Q0 as usize;
+const V0: usize = Register::V0 as usize;
+const Z0: usize = Register::Z0 as usize;
+const P0: usize = Register::P0 as usize;
+const PN0: usize = Register::PN0 as usize;
+
+// The layout the helpers below rely on: 33 W and X registers (with ZR and SP),
+// 32 of each SIMD&FP and SVE view, 16 predicates.
+const _: () = assert!(
+    X0 == W0 + 33
+        && B0 == X0 + 33
+        && H0 == B0 + 32
+        && S0 == H0 + 32
+        && D0 == S0 + 32
+        && Q0 == D0 + 32
+        && V0 == Q0 + 32
+        && Z0 == V0 + 32
+        && P0 == Z0 + 32
+        && PN0 == P0 + 16
+        && Register::ZA as usize == PN0 + 16
+        && Register::WZR as usize == W0 + 31
+        && Register::SP as usize == X0 + 32
+);
 
 /// The class of a register.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]

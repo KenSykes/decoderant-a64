@@ -45,6 +45,8 @@ fn rd(w: u32) -> u32 {
 const VR: u32 = 1 << 26;
 /// Bit 22 (`L`): set for loads in the pair and single-register classes.
 const L: u32 = 1 << 22;
+/// Bits 23:22 (`op1`) of the CPY*/SET* classes: 11 for the SET* family.
+const SET: u32 = 3 << 22;
 
 static TABLE: &[Constraint] = &[
     // C6.2 LDP/LDNP/LDPSW: `if t == t2 then Constraint_UNKNOWN/UNDEF/NOP` (loads).
@@ -118,7 +120,7 @@ static TABLE: &[Constraint] = &[
         value: 0,
         test: |w| {
             let (d, s, n) = (rd(w), rs(w), rn(w));
-            d == s || s == n || d == n || d == 31 || s == 31 || n == 31
+            !is_set(w) && (d == s || s == n || d == n || d == 31 || s == 31 || n == 31)
         },
         reason: "CPY* with overlapping or 31 registers (CONSTRAINED UNPREDICTABLE)",
     },
@@ -140,8 +142,8 @@ static TABLE: &[Constraint] = &[
     // Rn size, Rs data; Rs may be XZR).
     Constraint {
         iclass: &["memcms", "memset_go"],
-        mask: 0,
-        value: 0,
+        mask: SET,
+        value: SET,
         test: |w| {
             let (d, s, n) = (rd(w), rs(w), rn(w));
             d == n || d == s || s == n || d == 31 || n == 31
@@ -150,11 +152,10 @@ static TABLE: &[Constraint] = &[
     },
 ];
 
-/// Whether an entry for the CPY* family applies (bit 23:22 `op1` and the set/copy
-/// split share the `memcms` iclass).
+/// Whether a `memcms` word is a SET* (`op1`, bits 23:22, is 11) rather than a CPY*:
+/// the two families share the iclass.
 fn is_set(w: u32) -> bool {
-    // SET* encodings have bits 28:26 = 0b111 and op1 (23:22) = 0b11.
-    w >> 22 & 3 == 3
+    w & SET == SET
 }
 
 pub(crate) fn unpredictable(insn: &Instruction) -> Option<&'static str> {
@@ -163,20 +164,8 @@ pub(crate) fn unpredictable(insn: &Instruction) -> Option<&'static str> {
         return Some("should-be bits not at their stated value");
     }
     let w = insn.word;
-    for c in TABLE {
-        if !c.iclass.contains(&d.iclass) || w & c.mask != c.value {
-            continue;
-        }
-        // The CPY*/SET* entries split the shared iclass by op1.
-        if d.iclass == "memcms" {
-            let set_entry = c.reason.starts_with("SET");
-            if set_entry != is_set(w) {
-                continue;
-            }
-        }
-        if (c.test)(w) {
-            return Some(c.reason);
-        }
-    }
-    None
+    TABLE
+        .iter()
+        .find(|c| c.iclass.contains(&d.iclass) && w & c.mask == c.value && (c.test)(w))
+        .map(|c| c.reason)
 }

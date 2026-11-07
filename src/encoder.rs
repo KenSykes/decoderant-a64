@@ -6,16 +6,15 @@
 //! such as the `immr` bits above a bitmask immediate's element size); never from
 //! the word it was decoded from. Editing an operand clears the don't-care bits.
 
-use crate::bits::{Fs, encode_bit_mask, fp_imm8_encode, highest_set_bit};
+use crate::bits::{F, Fs, encode_bit_mask, fp_imm8_encode, highest_set_bit};
 use crate::desc::{
-    ARR, Amount, Arr, Idx, Imm, ImmShift, Mem, MemOff, NameKind, Op, Post, Pq, RK, RegSel, Rk, Tab,
+    Amount, Arr, Idx, Imm, ImmShift, Mem, MemOff, NameKind, Op, Post, Pq, RegSel, Rk, Tab,
     sve_bitmask_esize,
 };
 use crate::generated::{Code, Register};
 use crate::instruction::Instruction;
 use crate::operand::{
-    ARR_ES, Arrangement, ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, PredQual,
-    ShiftKind,
+    ARR_ES, Arrangement, ExtendKind, MemoryMode, OpKind, Operand, PredQual, ShiftKind,
 };
 use crate::regs::RegisterClass;
 
@@ -62,6 +61,13 @@ impl W {
         self.put_bits(f.mask(), tmp)
     }
 
+    /// [`put`](Self::put) for an operand's 64-bit value: a value that does not fit
+    /// is out of range, not truncated.
+    fn put_u64(&mut self, f: Fs, v: u64) -> R {
+        let v = u32::try_from(v).map_err(|_| EncodeError::Range(self.op))?;
+        self.put(f, v)
+    }
+
     fn put_bits(&mut self, mask: u32, value: u32) -> R {
         let value = value & mask;
         let both = self.set & mask;
@@ -86,20 +92,22 @@ impl W {
     }
 }
 
-fn rk_of(r: Register) -> Option<(Rk, u32)> {
-    let n = r.number();
+/// The register kind `r` is a register of.
+fn rk_of(r: Register) -> Option<Rk> {
     Some(match r.class() {
-        RegisterClass::Gp64 => (if r == Register::SP { Rk::XSp } else { Rk::X }, n),
-        RegisterClass::Gp32 => (if r == Register::WSP { Rk::WSp } else { Rk::W }, n),
-        RegisterClass::B => (Rk::B, n),
-        RegisterClass::H => (Rk::H, n),
-        RegisterClass::S => (Rk::S, n),
-        RegisterClass::D => (Rk::D, n),
-        RegisterClass::Q => (Rk::Q, n),
-        RegisterClass::V => (Rk::V, n),
-        RegisterClass::Z => (Rk::Z, n),
-        RegisterClass::P => (Rk::P, n),
-        RegisterClass::PN => (Rk::PN, n),
+        RegisterClass::Gp64 if r == Register::SP => Rk::XSp,
+        RegisterClass::Gp64 => Rk::X,
+        RegisterClass::Gp32 if r == Register::WSP => Rk::WSp,
+        RegisterClass::Gp32 => Rk::W,
+        RegisterClass::B => Rk::B,
+        RegisterClass::H => Rk::H,
+        RegisterClass::S => Rk::S,
+        RegisterClass::D => Rk::D,
+        RegisterClass::Q => Rk::Q,
+        RegisterClass::V => Rk::V,
+        RegisterClass::Z => Rk::Z,
+        RegisterClass::P => Rk::P,
+        RegisterClass::PN => Rk::PN,
         _ => return None,
     })
 }
@@ -119,37 +127,18 @@ fn reg(w: &mut W, f: Fs, sel: RegSel, add: u8, r: Register) -> R {
                 return Err(EncodeError::Register(op));
             }
         }
-        RegSel::Tab(t) => {
-            let (k, _) = rk_of(r).ok_or(EncodeError::Register(op))?;
-            // XSp/WSp tables do not occur; X/W tables accept ZR.
-            let code = RK
-                .iter()
-                .position(|&x| x == k)
-                .ok_or(EncodeError::Register(op))? as u8;
-            if !fits(r, k) {
-                return Err(EncodeError::Register(op));
-            }
-            w.tab(t, code)?;
-        }
+        // The table's entry for the register's kind (X/W tables accept ZR; XSp/WSp
+        // tables do not occur).
+        RegSel::Tab(t) => w.tab(t, rk_of(r).ok_or(EncodeError::Register(op))? as u8)?,
     }
     w.put(f, (n + 32 - u32::from(add)) % 32)
 }
 
 fn arr(w: &mut W, a: Arr, have: Arrangement) -> R {
     match a {
-        Arr::Fixed(x) => {
-            if x != have {
-                return Err(EncodeError::Arrangement(w.op));
-            }
-            Ok(())
-        }
-        Arr::Tab(t) => {
-            let code = ARR
-                .iter()
-                .position(|&x| x == have)
-                .ok_or(EncodeError::Arrangement(w.op))?;
-            w.tab(t, code as u8)
-        }
+        Arr::Fixed(x) if x == have => Ok(()),
+        Arr::Fixed(_) => Err(EncodeError::Arrangement(w.op)),
+        Arr::Tab(t) => w.tab(t, have as u8),
     }
 }
 
@@ -186,7 +175,11 @@ fn index(w: &mut W, idx: Idx, es: Arrangement, i: u8) -> R {
             w.put(f, (i << (low + 1)) | (1 << low))
         }
         Idx::Imm4(imm4, _imm5) => {
+            // B, H, S or D elements, as decoding allows.
             let low = es.element_bytes().trailing_zeros();
+            if low >= 4 {
+                return Err(EncodeError::Arrangement(w.op));
+            }
             w.put(imm4, i << low)
         }
         Idx::Const(c) => {
@@ -352,8 +345,12 @@ fn imm(w: &mut W, i: Imm, v: u64) -> R {
             inv,
             size,
         } => {
-            let v = if inv { !v } else { v };
-            let v = if size == 32 { v & 0xffff_ffff } else { v };
+            // A 32-bit value with higher bits set is not silently truncated.
+            let ones = if size == 32 { 0xffff_ffff } else { u64::MAX };
+            if v & !ones != 0 {
+                return Err(EncodeError::Range(op));
+            }
+            let v = if inv { !v & ones } else { v };
             for h in 0..u64::from(size / 16) {
                 if v & !(0xffff << (16 * h)) == 0 {
                     w.put(hw, h as u32)?;
@@ -419,6 +416,10 @@ fn sve_bitmask(w: &mut W, n: Fs, immr: Fs, imms: Fs, v: u64, raw: Option<u16>) -
 
 fn bitmask(w: &mut W, n: Fs, immr: Fs, imms: Fs, size: u32, v: u64, raw: Option<u16>) -> R {
     let op = w.op;
+    // A 32-bit value with higher bits set is not silently truncated.
+    if size < 64 && v >> size != 0 {
+        return Err(EncodeError::Unrepresentable(op));
+    }
     // Prefer the decoded fields when they still give the value: their don't-care
     // `immr` bits are then kept.
     if let Some(raw) = raw {
@@ -508,31 +509,7 @@ fn want(o: &Operand, k: OpKind, i: usize) -> R {
     }
 }
 
-fn shift_code(s: ShiftKind) -> u8 {
-    match s {
-        ShiftKind::Lsl => 0,
-        ShiftKind::Lsr => 1,
-        ShiftKind::Asr => 2,
-        ShiftKind::Ror => 3,
-        ShiftKind::Msl => 4,
-    }
-}
-
-fn extend_code(e: ExtendKind) -> u8 {
-    match e {
-        ExtendKind::Uxtb => 0,
-        ExtendKind::Uxth => 1,
-        ExtendKind::Uxtw => 2,
-        ExtendKind::Uxtx => 3,
-        ExtendKind::Sxtb => 4,
-        ExtendKind::Sxth => 5,
-        ExtendKind::Sxtw => 6,
-        ExtendKind::Sxtx => 7,
-        ExtendKind::Lsl => 8,
-    }
-}
-
-fn mem(w: &mut W, m: &Mem, o: &Operand, pc: u64) -> R {
+fn mem(w: &mut W, m: &Mem, o: &Operand) -> R {
     let i = w.op;
     want(o, OpKind::Memory, i)?;
     // `[x0]` is `[x0, #0, MUL VL]`.
@@ -590,15 +567,12 @@ fn mem(w: &mut W, m: &Mem, o: &Operand, pc: u64) -> R {
             reg(w, f, k, 0, o.index_reg)?;
             match ext {
                 Some(t) => {
-                    // `LSL` is the `UXTX`/`011` entry of the table.
-                    let code = extend_code(o.extend);
-                    let ok = t.bits(code).is_some();
-                    let code = if ok {
-                        code
-                    } else if o.extend == ExtendKind::Uxtx {
-                        8
-                    } else {
-                        code
+                    // A table that spells `011` `LSL` has no `UXTX` entry.
+                    let code = match o.extend as u8 {
+                        c if o.extend == ExtendKind::Uxtx && t.bits(c).is_none() => {
+                            ExtendKind::Lsl as u8
+                        }
+                        c => c,
                     };
                     w.tab(t, code)?;
                 }
@@ -649,7 +623,6 @@ fn mem(w: &mut W, m: &Mem, o: &Operand, pc: u64) -> R {
             w.put(f, o.index_reg.number())?;
         }
     }
-    let _ = pc;
     Ok(())
 }
 
@@ -711,19 +684,7 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
                 }
                 // The top bit of the register field is an index bit here: set the
                 // register's four bits only.
-                let low = Fs([
-                    f.0[f.0.iter().rposition(|x| !x.is_none()).unwrap_or(0)],
-                    crate::bits::F::NONE,
-                    crate::bits::F::NONE,
-                    crate::bits::F::NONE,
-                ]);
-                let low4 = Fs([
-                    crate::bits::F::new(low.0[0].lsb, 4),
-                    crate::bits::F::NONE,
-                    crate::bits::F::NONE,
-                    crate::bits::F::NONE,
-                ]);
-                w.put(low4, n)?;
+                w.put(Fs::one(F::new(f.last().lsb, 4)), n)?;
             } else {
                 w.put(f, n)?;
             }
@@ -733,6 +694,9 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
             want(o, OpKind::RegisterList, i)?;
             if o.count != n {
                 return Err(EncodeError::WrongKind(i));
+            }
+            if o.reg.class() != RegisterClass::V {
+                return Err(EncodeError::Register(i));
             }
             arr(w, a, o.arr)?;
             w.put(f, o.reg.number())?;
@@ -789,7 +753,7 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
         Op::Shifted(f, k, t, amount) => {
             want(o, OpKind::ShiftedRegister, i)?;
             reg(w, f, k, 0, o.reg)?;
-            w.tab(t, shift_code(o.shift))?;
+            w.tab(t, o.shift as u8)?;
             w.put(amount, u32::from(o.amount))
         }
         Op::Extended(f, k, option, amount) => {
@@ -806,13 +770,13 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
                 }
                 e => e,
             };
-            w.put(option, u32::from(extend_code(ext)))?;
+            w.put(option, u32::from(ext as u8))?;
             if o.amount > 4 {
                 return Err(EncodeError::Range(i));
             }
             w.put(amount, u32::from(o.amount))
         }
-        Op::Mem(ref m) => mem(w, m, o, pc),
+        Op::Mem(ref m) => mem(w, m, o),
         Op::Label(x, page) => {
             want(o, OpKind::Label, i)?;
             let base = if page { pc & !0xfff } else { pc };
@@ -820,8 +784,10 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
         }
         Op::Cond(f, _suffix, invert) => {
             want(o, OpKind::Condition, i)?;
-            let c = ConditionCode::from_bits(o.imm as u32).bits() ^ u32::from(invert);
-            w.put(f, c)
+            if o.imm > 15 {
+                return Err(EncodeError::Range(i));
+            }
+            w.put(f, o.imm as u32 ^ u32::from(invert))
         }
         Op::SysReg(f) => {
             want(o, OpKind::SystemRegister, i)?;
@@ -839,11 +805,11 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
         }
         Op::PState(f) => {
             want(o, OpKind::PState, i)?;
-            w.put(f, o.imm as u32)
+            w.put_u64(f, o.imm)
         }
         Op::Cr(f) => {
             want(o, OpKind::ControlRegister, i)?;
-            w.put(f, o.imm as u32)
+            w.put_u64(f, o.imm)
         }
         Op::Name(t, kind) => {
             let pattern_imm = kind == NameKind::SvePattern && o.kind == OpKind::Immediate;
@@ -851,7 +817,7 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
             {
                 return Err(EncodeError::WrongKind(i));
             }
-            w.put(t.f, o.imm as u32)
+            w.put_u64(t.f, o.imm)
         }
         Op::Lit(_) => want(o, OpKind::Name, i),
         Op::RegWb(f, k) => {
@@ -914,7 +880,7 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
         }
         Op::ZaMask(f) => {
             want(o, OpKind::ZaMask, i)?;
-            w.put(f, o.imm as u32)
+            w.put_u64(f, o.imm)
         }
         Op::Braced(inner) => encode_one(w, inner, o, pc),
         Op::Zt0Vl(f) => {
@@ -954,13 +920,13 @@ fn encode_one(w: &mut W, op: &Op, o: &Operand, pc: u64) -> R {
             {
                 return Err(EncodeError::WrongKind(i));
             }
-            if let Some(x) = idx {
-                index(w, x, o.arr, o.lane)?;
-            }
             if !fits(o.reg, k) {
                 return Err(EncodeError::Register(i));
             }
             arr(w, a, o.arr)?;
+            if let Some(x) = idx {
+                index(w, x, o.arr, o.lane)?;
+            }
             let first = o
                 .reg
                 .number()
@@ -1003,7 +969,7 @@ pub(crate) fn encode_ops(
     base: u32,
     mask: u32,
 ) -> Result<u32, EncodeError> {
-    let n = ops.iter().filter(|o| !matches!(o, Op::Suffix(_))).count();
+    let n = crate::desc::operand_count(ops);
     if operands.len() != n {
         return Err(EncodeError::OperandCount {
             expected: n,

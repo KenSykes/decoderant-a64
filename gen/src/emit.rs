@@ -267,6 +267,17 @@ pub fn cond_fns(arena: &Arena, features: &BTreeMap<String, String>) -> String {
         let _ = writeln!(out, "    c{i},");
     }
     let _ = writeln!(out, "];");
+    // The `SysOpIs` calls name a system instruction alias by its index here.
+    let _ = writeln!(
+        out,
+        "\n/// System instruction aliases, by the index `SysOpIs` conditions use.\n\
+         pub(crate) static SYSOP_NAMES: [&str; {}] = [",
+        crate::expr::SYSOP_NAMES.len()
+    );
+    for n in crate::expr::SYSOP_NAMES {
+        let _ = writeln!(out, "    {n:?},");
+    }
+    let _ = writeln!(out, "];");
     out
 }
 

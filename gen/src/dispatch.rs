@@ -77,24 +77,29 @@ impl Builder<'_> {
         list_slot(start, c.len())
     }
 
+    /// Calls `f` with every value of the field (`width` bits from `lsb`) that
+    /// candidate `c`'s fixed bits allow.
+    fn for_each_value(&self, c: usize, lsb: u32, width: u32, mut f: impl FnMut(usize)) {
+        let wm = (1u32 << width) - 1;
+        let (m, v) = self.pats[c];
+        let (m, v) = (m >> lsb & wm, v >> lsb & wm);
+        // v | s for each subset s of the free bits.
+        let free = !m & wm;
+        let mut s = 0u32;
+        loop {
+            f((v | s) as usize);
+            if s == free {
+                break;
+            }
+            s = (s.wrapping_sub(free)) & free;
+        }
+    }
+
     /// The candidates of each value of the field (`width` bits from `lsb`), in order.
     fn buckets(&self, cands: &[usize], lsb: u32, width: u32) -> Vec<Vec<usize>> {
-        let wm = (1u32 << width) - 1;
         let mut b = vec![Vec::new(); 1 << width];
         for &c in cands {
-            let (m, v) = self.pats[c];
-            let (m, v) = (m >> lsb & wm, v >> lsb & wm);
-            // Every field value with the candidate's fixed bits: v | s for each
-            // subset s of the free bits.
-            let free = !m & wm;
-            let mut s = 0u32;
-            loop {
-                b[(v | s) as usize].push(c);
-                if s == free {
-                    break;
-                }
-                s = (s.wrapping_sub(free)) & free;
-            }
+            self.for_each_value(c, lsb, width, |x| b[x].push(c));
         }
         b
     }
@@ -120,18 +125,10 @@ impl Builder<'_> {
                 let mut counts = vec![0usize; 1 << width];
                 let mut total = 0usize;
                 for &c in cands {
-                    let m = self.pats[c].0 >> lsb & wm;
-                    let v = self.pats[c].1 >> lsb & wm;
-                    let free = !m & wm;
-                    let mut s = 0u32;
-                    loop {
-                        counts[(v | s) as usize] += 1;
+                    self.for_each_value(c, lsb, width, |x| {
+                        counts[x] += 1;
                         total += 1;
-                        if s == free {
-                            break;
-                        }
-                        s = (s.wrapping_sub(free)) & free;
-                    }
+                    });
                 }
                 let max = counts.iter().copied().max().unwrap_or(0);
                 if max >= cands.len() {

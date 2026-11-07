@@ -62,12 +62,10 @@ fn fit(ops: &[Op], operands: &[Operand]) -> Option<(Vec<Operand>, u32)> {
 
 /// The suffix-table index of `suffix` (`"2"`, `"B"`, `"T"`; `""` for none).
 fn suffix_index(ops: &[Op], suffix: &str) -> Option<u8> {
-    for op in ops {
-        if let Op::Suffix(t) = op {
-            return t.names.iter().position(|n| *n == suffix).map(|i| i as u8);
-        }
+    match desc::suffix_table(ops) {
+        Some(t) => t.names.iter().position(|n| *n == suffix).map(|i| i as u8),
+        None => suffix.is_empty().then_some(0),
     }
-    suffix.is_empty().then_some(0)
 }
 
 impl CodeAssembler {

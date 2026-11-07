@@ -16,7 +16,8 @@
 
 #![no_std]
 
-#[cfg(feature = "std")]
+// The unit tests use `std` whatever the features.
+#[cfg(any(test, feature = "std"))]
 extern crate std;
 
 mod alias;
@@ -25,6 +26,8 @@ mod bits;
 pub mod code_asm;
 mod cond;
 mod constraints;
+#[cfg(feature = "encoder")]
+mod cover;
 mod decoder;
 mod desc;
 mod determinism;
