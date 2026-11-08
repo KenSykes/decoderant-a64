@@ -2,7 +2,7 @@
 //! refactor or optimisation changes no behaviour. Slow (minutes in release):
 //!
 //! ```text
-//! AARCH64_ISA_FINGERPRINT=<file> cargo test -p aarch64-isa --release --test fingerprint -- --ignored
+//! DECODERANT_A64_FINGERPRINT=<file> cargo test -p decoderant-a64 --release --test fingerprint -- --ignored
 //! ```
 //!
 //! The first run writes `<file>` (one hash per value of the top 16 bits); later runs
@@ -13,7 +13,7 @@ use std::fmt::Write as _;
 use std::hash::{Hash, Hasher};
 use std::sync::atomic::{AtomicU64, Ordering};
 
-use aarch64_isa::{
+use decoderant_a64::{
     DecoderOptions, EncodeError, Feature, FeatureSet, Formatter, FormatterOptions, Instruction,
     InstructionInfoFactory, decode_word,
 };
@@ -129,7 +129,7 @@ fn word_hash(w: u32, cx: &Ctx, info: &mut InstructionInfoFactory, s: &mut String
     }
     hash_encode(i.encode(), h);
     hash_encode(i.without_kept_bits().encode(), h);
-    hash_encode(aarch64_isa::encode(&i, 0x8000), h);
+    hash_encode(decoderant_a64::encode(&i, 0x8000), h);
     (i.unpredictable_reason(), i.nondeterminism_reason()).hash(h);
     (i.flow_control(), i.min_el(), i.determinism()).hash(h);
     for f in i.features() {
@@ -155,8 +155,8 @@ fn word_hash(w: u32, cx: &Ctx, info: &mut InstructionInfoFactory, s: &mut String
 #[test]
 #[ignore]
 fn fingerprint() {
-    let path = std::env::var("AARCH64_ISA_FINGERPRINT")
-        .expect("set AARCH64_ISA_FINGERPRINT to the fingerprint file");
+    let path = std::env::var("DECODERANT_A64_FINGERPRINT")
+        .expect("set DECODERANT_A64_FINGERPRINT to the fingerprint file");
     // A feature subset that removes some hint-space and base encodings.
     let some: FeatureSet = FeatureSet::ALL
         .without(Feature::PAuth)

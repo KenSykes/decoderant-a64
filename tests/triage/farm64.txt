@@ -4,7 +4,7 @@
 #   class: valid-vs-invalid (we decode it, fARM64 rejects it), invalid-vs-valid,
 #          mnemonic, operands, valid-vs-invalid:unpredictable (we decode a
 #          CONSTRAINED UNPREDICTABLE instance and flag it).
-#   right side: isa (aarch64-isa is right), oracle (fARM64 is right: a bug to fix
+#   right side: isa (decoderant-a64 is right), oracle (fARM64 is right: a bug to fix
 #          here), both (a syntax or policy difference, neither is wrong).
 #
 # Generated groups (oracle lacks the encoding, UNPREDICTABLE policy, the other

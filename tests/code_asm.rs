@@ -1,8 +1,8 @@
 //! `CodeAssembler`: assembling from operands gives the expected words, and every
 //! word decodes back to the same text.
 
-use aarch64_isa::code_asm::{CodeAssembler, registers::*};
-use aarch64_isa::{
+use decoderant_a64::code_asm::{CodeAssembler, registers::*};
+use decoderant_a64::{
     Arrangement as A, ConditionCode, DecoderOptions, EncodeError, ExtendKind, Operand as O,
     ShiftKind, decode_word, sys_encoding,
 };
@@ -62,7 +62,7 @@ fn handwritten_set() -> Result<(), EncodeError> {
 fn aliases_and_forms() -> Result<(), EncodeError> {
     let cases: Vec<(Result<u32, EncodeError>, &str)> = {
         let a = CodeAssembler::new(0x1000);
-        use aarch64_isa::Mnemonic as M;
+        use decoderant_a64::Mnemonic as M;
         vec![
             (a.encode(M::Mov, "", &[x0.into(), x1.into()]), "mov x0, x1"),
             (a.encode(M::Mov, "", &[sp.into(), x1.into()]), "mov sp, x1"),
@@ -303,7 +303,7 @@ fn aliases_and_forms() -> Result<(), EncodeError> {
 /// the immediate forms, built from operands.
 #[test]
 fn sve() -> Result<(), EncodeError> {
-    use aarch64_isa::PredQual as Q;
+    use decoderant_a64::PredQual as Q;
     let z = O::vec;
     let mut a = CodeAssembler::new(0x1000);
     a.add_4(
@@ -364,7 +364,7 @@ fn sve() -> Result<(), EncodeError> {
 /// SVE memory operands, patterns and register lists, built from operands.
 #[test]
 fn sve_memory_and_patterns() -> Result<(), EncodeError> {
-    use aarch64_isa::PredQual as Q;
+    use decoderant_a64::PredQual as Q;
     let z = O::vec;
     let zl = |r, a| O::list(r, 1, a);
     let mut a = CodeAssembler::new(0x1000);
@@ -421,7 +421,7 @@ fn sve_memory_and_patterns() -> Result<(), EncodeError> {
 /// Multi-vector, strided and predicate-pair lists, and `PSEL`.
 #[test]
 fn sve_lists() -> Result<(), EncodeError> {
-    use aarch64_isa::PredQual as Q;
+    use decoderant_a64::PredQual as Q;
     let mut a = CodeAssembler::new(0);
     let sel = O::elem_sel(p11, A::S, w13, 1);
     a.add(
@@ -456,7 +456,7 @@ fn sve_lists() -> Result<(), EncodeError> {
 /// SME operands built from operands: tiles, slices, array vectors, ZT0, the mask.
 #[test]
 fn sme() -> Result<(), EncodeError> {
-    use aarch64_isa::{PredQual as Q, Register as R};
+    use decoderant_a64::{PredQual as Q, Register as R};
     let mut a = CodeAssembler::new(0);
     a.fmopa(
         O::za_tile(R::ZAS0),
@@ -509,7 +509,7 @@ fn sme() -> Result<(), EncodeError> {
 #[test]
 fn errors() {
     let a = CodeAssembler::new(0x1000);
-    use aarch64_isa::Mnemonic as M;
+    use decoderant_a64::Mnemonic as M;
     // No such form.
     assert!(
         a.encode(M::Add, "", &[x0.into(), O::vec(v0, A::S4), x1.into()])
@@ -542,7 +542,7 @@ fn errors() {
 /// the low word (`mov w3, #0x1_0000_0001` is not `mov w3, #1`).
 #[test]
 fn mov_w_immediates_are_not_truncated() {
-    use aarch64_isa::Mnemonic as M;
+    use decoderant_a64::Mnemonic as M;
     let a = CodeAssembler::new(0x1000);
     let mov = |v: u64| a.encode(M::Mov, "", &[w3.into(), O::imm(v)]);
     for (v, want) in [

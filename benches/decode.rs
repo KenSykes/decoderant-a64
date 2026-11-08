@@ -1,20 +1,20 @@
 //! Throughput of the decoder, encoder, formatter and instruction info:
-//! `cargo bench -p aarch64-isa --bench decode`.
+//! `cargo bench -p decoderant-a64 --bench decode`.
 //!
 //! Corpora:
-//! - `code`: the code sections of ARM64 PE files (`AARCH64_ISA_BENCH_PE`, a
+//! - `code`: the code sections of ARM64 PE files (`DECODERANT_A64_BENCH_PE`, a
 //!   `;`-separated list; on Windows the default is a few system DLLs), skipped when
 //!   there are none;
 //! - `valid`: random words that decode to an instruction with operands;
 //! - `random`: uniformly random words (mostly SVE/SME and unallocated space).
 //!
 //! Each figure is the best of several runs, in nanoseconds per instruction.
-//! `AARCH64_ISA_BENCH_FILTER` runs only the benchmarks whose name contains it.
+//! `DECODERANT_A64_BENCH_FILTER` runs only the benchmarks whose name contains it.
 
 use std::hint::black_box;
 use std::time::Instant;
 
-use aarch64_isa::{
+use decoderant_a64::{
     Decoder, DecoderOptions, Formatter, Instruction, InstructionInfoFactory, decode_word,
 };
 
@@ -64,7 +64,7 @@ fn pe_code(path: &str) -> Option<Vec<u32>> {
 }
 
 fn code_corpus() -> Vec<u32> {
-    let paths = std::env::var("AARCH64_ISA_BENCH_PE").unwrap_or_else(|_| {
+    let paths = std::env::var("DECODERANT_A64_BENCH_PE").unwrap_or_else(|_| {
         if cfg!(windows) {
             let sys = std::env::var("SystemRoot").unwrap_or_else(|_| r"C:\Windows".into());
             ["ntdll.dll", "KernelBase.dll", "ucrtbase.dll"]
@@ -110,7 +110,7 @@ fn bytes(words: &[u32]) -> Vec<u8> {
 
 /// Best-of-`RUNS` nanoseconds per item of `f`, which processes `n` items.
 fn time(name: &str, n: usize, mut f: impl FnMut()) {
-    if let Ok(filter) = std::env::var("AARCH64_ISA_BENCH_FILTER")
+    if let Ok(filter) = std::env::var("DECODERANT_A64_BENCH_FILTER")
         && !name.contains(&filter)
     {
         return;

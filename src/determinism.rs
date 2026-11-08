@@ -1,9 +1,9 @@
 //! The hand-maintained determinism table: instances whose results can differ
 //! between runs, cores or machines on the same input, so a recording cannot be the
 //! expected result for an emulator. The spec does not say this; each entry gives
-//! the reason. It covers at least the instructions listed in docs/arch/aarch64.md
-//! ("Determinism and unpredictable behaviour"); the generator excludes every
-//! instance it flags.
+//! the reason. It covers at least the instructions listed in docs/DESIGN.md
+//! ("Constraints and determinism"), so a test generator can exclude every instance
+//! it flags.
 
 use crate::generated::Mnemonic;
 use crate::info::sys_entry;

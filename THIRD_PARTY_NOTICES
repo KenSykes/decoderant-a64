@@ -1,0 +1,12 @@
+Third-party material in decoderant-a64
+======================================
+
+src/generated/, spec/report.md, spec/encodings.txt
+    Derived from Arm's Machine Readable Architecture Specification (AARCHMRS),
+    open-source package AARCHMRS_OPENSOURCE_A_profile_FAT-2026-09 (pinned in
+    spec/REVISION). Copyright 2010-2026 Arm Limited or its affiliates. BSD 3-clause
+    license; full text in LICENSE-AARCHMRS. Arm's name is not used to endorse this
+    project. The specification itself is not included in the repository or the
+    published crate.
+
+Everything else is MIT (see LICENSE).

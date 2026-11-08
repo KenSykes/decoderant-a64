@@ -1,6 +1,6 @@
-# aarch64-isa-gen report
+# decoderant-a64-gen report
 
-@generated from AARCHMRS_OPENSOURCE_A_profile_FAT-2026-09. Regenerate with aarch64-isa-gen; review the diff when the pin changes.
+@generated from AARCHMRS_OPENSOURCE_A_profile_FAT-2026-09. Regenerate with decoderant-a64-gen; review the diff when the pin changes.
 
 ## Encodings
 

@@ -61,7 +61,7 @@ fn is_sysop_test(v: &Value) -> bool {
             .is_some_and(|s| s.starts_with("Sys_") || s.starts_with("Sysl_"))
 }
 
-/// Helper functions the library implements (`aarch64_isa::cond::Func`).
+/// Helper functions the library implements (`decoderant_a64::cond::Func`).
 pub const KNOWN_FUNCS: &[&str] = &[
     "SysOpIs",
     "BFXPreferred",

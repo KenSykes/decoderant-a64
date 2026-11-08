@@ -1,5 +1,5 @@
 //! The hand-maintained operand mapping: assembly symbols to operand descriptors
-//! (`aarch64_isa::desc::Op`).
+//! (`decoderant_a64::desc::Op`).
 //!
 //! The spec gives each encoding's assembler template and, for every symbol, the
 //! fields it is encoded in. Value tables (arrangements, shifts, extends, register
@@ -2238,11 +2238,11 @@ fn cx_field(cx: &Cx<'_>, name: &str) -> Option<Field> {
     cx.leaf_fields.iter().find(|f| f.name == name).cloned()
 }
 
-/// With `AARCH64_ISA_GEN_DUMP=<file>`, appends each template mapped and its symbols
+/// With `DECODERANT_A64_GEN_DUMP=<file>`, appends each template mapped and its symbols
 /// (fields, rule names and texts) to the file: the raw material for new hand rules.
 fn dump(cx: &Cx<'_>, t: &[T]) {
     use std::io::Write as _;
-    let Ok(p) = std::env::var("AARCH64_ISA_GEN_DUMP") else {
+    let Ok(p) = std::env::var("DECODERANT_A64_GEN_DUMP") else {
         return;
     };
     let Ok(mut f) = std::fs::OpenOptions::new()

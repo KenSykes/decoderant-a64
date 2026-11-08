@@ -6,10 +6,10 @@
 //! Disagreements are grouped by (encoding name, class) and every group must be
 //! triaged in `tests/triage/<oracle>.txt` with which side is right and why.
 //!
-//! - `cargo test -p aarch64-isa --test oracles` runs the sampled comparison.
-//! - `AARCH64_ISA_TRIAGE=print` lists the untriaged groups with examples instead of
+//! - `cargo test -p decoderant-a64 --test oracles` runs the sampled comparison.
+//! - `DECODERANT_A64_TRIAGE=print` lists the untriaged groups with examples instead of
 //!   failing on the first.
-//! - `AARCH64_ISA_SAMPLES=<n>` changes the samples per encoding (default 48).
+//! - `DECODERANT_A64_SAMPLES=<n>` changes the samples per encoding (default 48).
 //!
 //! Scope: the base, FP and Advanced SIMD groups (`control`, `dpimm`, `dpreg`,
 //! `ldst`, `simd_dp`) for both oracles, and the SVE and SME groups (`sve`, `sme`)
@@ -25,16 +25,16 @@ use std::sync::Mutex;
 use common::{Oracle, compare_groups, finish, load_triage, merge, tally};
 
 fn run(oracle: Oracle) {
-    let n: u32 = std::env::var("AARCH64_ISA_SAMPLES")
+    let n: u32 = std::env::var("DECODERANT_A64_SAMPLES")
         .ok()
         .and_then(|s| s.parse().ok())
         .unwrap_or(48);
     check(oracle, compare_groups(oracle, n));
 }
 
-/// Every word (or every `AARCH64_ISA_STRIDE`th), in parallel.
+/// Every word (or every `DECODERANT_A64_STRIDE`th), in parallel.
 fn exhaustive(oracle: Oracle) -> common::Groups {
-    let stride: u64 = std::env::var("AARCH64_ISA_STRIDE")
+    let stride: u64 = std::env::var("DECODERANT_A64_STRIDE")
         .ok()
         .and_then(|s| s.parse().ok())
         .unwrap_or(1);
@@ -75,9 +75,9 @@ fn check_with(oracle: Oracle, groups: common::Groups, exhaustive: bool) {
         .collect();
     untriaged.sort_by(|a, b| b.1.count.cmp(&a.1.count).then(a.0.cmp(b.0)));
     let stale: Vec<_> = triage.keys().filter(|k| !groups.contains_key(*k)).collect();
-    if std::env::var("AARCH64_ISA_TRIAGE").as_deref() == Ok("print") {
+    if std::env::var("DECODERANT_A64_TRIAGE").as_deref() == Ok("print") {
         for (k, g) in &untriaged {
-            let suggest = std::env::var("AARCH64_ISA_SUGGEST").is_ok();
+            let suggest = std::env::var("DECODERANT_A64_SUGGEST").is_ok();
             if suggest && k.1 == "valid-vs-invalid:unpredictable" {
                 println!(
                     "SUGGEST {} {} both {} rejects CONSTRAINED UNPREDICTABLE register choices; we decode them and report is_unpredictable()",
@@ -102,7 +102,7 @@ fn check_with(oracle: Oracle, groups: common::Groups, exhaustive: bool) {
                 continue;
             }
             if g.oracle_unknown && suggest {
-                let feats: Vec<String> = aarch64_isa::Code::from_name(&k.0)
+                let feats: Vec<String> = decoderant_a64::Code::from_name(&k.0)
                     .map(|c| {
                         c.op_code()
                             .features()
@@ -159,7 +159,7 @@ fn yaxpeax() {
     run(Oracle::Yaxpeax);
 }
 
-/// The comparison over all 2^32 words (nightly; hours). `AARCH64_ISA_STRIDE=<n>`
+/// The comparison over all 2^32 words (nightly; hours). `DECODERANT_A64_STRIDE=<n>`
 /// takes every nth word for a quicker pass.
 #[test]
 #[ignore]

@@ -1,16 +1,15 @@
-//! aarch64-isa-gen: generates `aarch64-isa`'s tables from the pinned AARCHMRS release.
+//! decoderant-a64-gen: generates `decoderant-a64`'s tables from the pinned AARCHMRS release.
 //!
 //! ```text
-//! aarch64-isa-gen --spec <dir> [--out <dir>] [--report <file>] [--check]
+//! decoderant-a64-gen --spec <dir> [--out <dir>] [--report <file>] [--check]
 //! ```
 //!
-//! `--spec` is the unpacked release (see `arch/aarch64-isa/spec/fetch.cmake`).
-//! `--out` defaults to `arch/aarch64-isa/src/generated` and `--report` to
-//! `arch/aarch64-isa/spec/report.md` (the operand-mapping report, checked in so a
-//! new release shows up as a diff). Output is deterministic: the same release always
-//! produces byte-identical files. `--check` writes nothing and fails if any generated
-//! file (tables, report, `spec/encodings.txt`) differs from the checked-in one: the CI
-//! job for hosts that have the spec data.
+//! `--spec` is the unpacked release (see `spec/fetch.cmake`). `--out` defaults to
+//! `src/generated` and `--report` to `spec/report.md` (the operand-mapping report,
+//! checked in so a new release shows up as a diff). Output is deterministic: the same
+//! release always produces byte-identical files. `--check` writes nothing and fails if
+//! any generated file (tables, report, `spec/encodings.txt`) differs from the
+//! checked-in one: the CI job for hosts that have the spec data.
 
 mod dispatch;
 mod emit;

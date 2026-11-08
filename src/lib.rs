@@ -1,9 +1,13 @@
-//! `aarch64-isa`: an A64 decoder, formatter, encoder and instruction-info library
+//! `decoderant-a64`: an A64 decoder, formatter, encoder and instruction-info library
 //! whose tables are generated from Arm's machine-readable specification (AARCHMRS).
 //! The interface is modelled on `iced-x86`.
 //!
+//! Every A64 encoding of the pinned release is covered (base, FP, Advanced SIMD,
+//! SVE/SVE2 and SME/SME2), with per-encoding metadata ([`OpCodeInfo`]), bit-exact
+//! round trips and UNPREDICTABLE and determinism classification.
+//!
 //! ```
-//! use aarch64_isa::{Decoder, DecoderOptions, Code};
+//! use decoderant_a64::{Decoder, DecoderOptions, Code};
 //!
 //! let bytes = 0x8b02_0020u32.to_le_bytes(); // ADD X0, X1, X2
 //! let insn = Decoder::new(&bytes, 0x1000, DecoderOptions::default()).decode();
@@ -11,14 +15,38 @@
 //! assert_eq!(insn.op_code().iclass(), "addsub_shift");
 //! ```
 //!
-//! The generated tables (`src/generated/`) are BSD-3-Clause derived data from
-//! AARCHMRS; the code is MIT. See docs/arch/aarch64-isa.md.
+//! # Cargo features
+//!
+//! - `std` (default): `FormatterOutput` for `String`. The crate is `#![no_std]`
+//!   without it, and the decoder and encoder never allocate.
+//! - `formatter` (default): `Formatter`, Arm assembler syntax.
+//! - `encoder` (default): `Encoder`, `encode` and the `Instruction` constructors.
+//! - `instr_info` (default): `InstructionInfoFactory`, registers and memory used.
+//! - `code_asm`: the fluent `code_asm::CodeAssembler` (implies `encoder`).
+//!
+//! The decoder and [`OpCodeInfo`] are always present.
+//!
+//! # Licence
+//!
+//! The code is MIT. The generated tables (`src/generated/`) are BSD-3-Clause derived
+//! data from AARCHMRS; see `THIRD_PARTY_NOTICES` and `LICENSE-AARCHMRS`.
 
 #![no_std]
 
 // The unit tests use `std` whatever the features.
 #[cfg(any(test, feature = "std"))]
 extern crate std;
+
+// The README's examples run as doctests (they use every feature).
+#[cfg(all(
+    doctest,
+    feature = "std",
+    feature = "code_asm",
+    feature = "formatter",
+    feature = "instr_info"
+))]
+#[doc = include_str!("../README.md")]
+struct ReadmeDoctests;
 
 mod alias;
 mod bits;

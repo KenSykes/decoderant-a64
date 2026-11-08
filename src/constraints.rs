@@ -5,8 +5,8 @@
 //! names the encodings (by iclass and fixed bits), the condition, the reason and the
 //! Arm ARM reference (the encoding's pseudocode or "Architectural Constraints on
 //! UNPREDICTABLE behaviors", Arm ARM K1). It covers at least the cases in
-//! docs/arch/aarch64.md ("Determinism and unpredictable behaviour"); the generator
-//! excludes every instance it flags.
+//! docs/DESIGN.md ("Constraints and determinism"), so a test generator can exclude
+//! every instance it flags.
 
 use crate::instruction::Instruction;
 

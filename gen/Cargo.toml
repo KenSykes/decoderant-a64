@@ -1,11 +1,13 @@
 [package]
-name = "aarch64-isa-gen"
-description = "Generates aarch64-isa's tables from the pinned AARCHMRS release"
+name = "decoderant-a64-gen"
+description = "Generates decoderant-a64's tables from the pinned AARCHMRS release"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
-license.workspace = true
-publish.workspace = true
+authors.workspace = true
+repository.workspace = true
+license = "MIT"
+publish = false
 
 [dependencies]
 anyhow.workspace = true

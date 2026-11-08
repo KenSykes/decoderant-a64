@@ -1,12 +1,52 @@
+[workspace]
+resolver = "3"
+members = [".", "gen"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+authors = ["Ken Sykes"]
+repository = "https://github.com/KenSykes/decoderant-a64"
+
+[workspace.dependencies]
+anyhow = "1"
+serde_json = "1"
+# Without `std`: the library is `no_std`, and thiserror 2 implements
+# `core::error::Error` either way. (Cargo 1.88, the MSRV, rejects turning default
+# features off in a member when the workspace entry has them on.)
+thiserror = { version = "2", default-features = false }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
 [package]
-name = "aarch64-isa"
-description = "A64 decoder, encoder, formatter and instruction info generated from Arm's AARCHMRS"
+name = "decoderant-a64"
+description = "A64 (AArch64) decoder, encoder, formatter and instruction info generated from Arm's machine-readable specification"
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
+authors.workspace = true
+repository.workspace = true
+# The code is MIT; the generated tables are derived from Arm's BSD-3-Clause AARCHMRS.
 license = "MIT AND BSD-3-Clause"
-include = ["src/**", "Cargo.toml", "spec/LICENSE-AARCHMRS"]
-publish.workspace = true
+homepage = "https://github.com/KenSykes/decoderant-a64"
+documentation = "https://docs.rs/decoderant-a64"
+readme = "README.md"
+keywords = ["aarch64", "arm64", "disassembler", "assembler", "decoder"]
+categories = ["no-std", "development-tools::debugging", "encoding", "hardware-support", "emulators"]
+include = [
+    "/src/**",
+    "/Cargo.toml",
+    "/README.md",
+    "/CHANGELOG.md",
+    "/LICENSE",
+    "/LICENSE-AARCHMRS",
+    "/THIRD_PARTY_NOTICES",
+]
+
+[package.metadata.docs.rs]
+all-features = true
 
 [features]
 default = ["std", "encoder", "instr_info", "formatter"]

@@ -10,7 +10,7 @@
 
 use std::collections::BTreeMap;
 
-/// Slot encoding (`aarch64_isa::tables::Slot`): a list of candidates, or a node
+/// Slot encoding (`decoderant_a64::tables::Slot`): a list of candidates, or a node
 /// that indexes further slots by a field of the word.
 const LIST: u32 = 1 << 31;
 /// At most this many candidates end the splitting.

@@ -8,8 +8,8 @@
 
 mod common;
 
-use aarch64_isa::{Code, DecoderOptions, decode_word};
 use common::Rng;
+use decoderant_a64::{Code, DecoderOptions, decode_word};
 
 /// Checks one word; `Err` describes the failure.
 pub fn check(w: u32) -> Result<(), String> {
@@ -78,14 +78,14 @@ fn round_trip_per_code() {
 
 #[test]
 fn build_and_edit() {
-    use aarch64_isa::{Instruction, Operand, Register as R};
+    use decoderant_a64::{Instruction, Operand, Register as R};
     // ADD X0, X1, X2 from operands.
     let mut i = Instruction::with(
         Code::Add_64_addsub_shift,
         &[
             Operand::reg(R::X0),
             Operand::reg(R::X1),
-            Operand::shifted(R::X2, aarch64_isa::ShiftKind::Lsl, 0),
+            Operand::shifted(R::X2, decoderant_a64::ShiftKind::Lsl, 0),
         ],
         0x1000,
     )
@@ -113,7 +113,7 @@ fn build_and_edit() {
 /// for another register class.
 #[test]
 fn rejects_what_does_not_fit() {
-    use aarch64_isa::{Arrangement as A, Instruction, Operand, Register as R};
+    use decoderant_a64::{Arrangement as A, Instruction, Operand, Register as R};
     let opts = DecoderOptions::default();
     // AND W0, W1, #imm: a 32-bit logical immediate with higher bits set.
     let and = |imm| {

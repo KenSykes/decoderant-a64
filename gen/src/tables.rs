@@ -575,7 +575,7 @@ pub fn generate(
     let mut r = String::new();
     let _ = writeln!(
         r,
-        "# aarch64-isa-gen report\n\n@generated from {}. Regenerate with aarch64-isa-gen; \
+        "# decoderant-a64-gen report\n\n@generated from {}. Regenerate with decoderant-a64-gen; \
          review the diff when the pin changes.\n",
         spec.release
     );

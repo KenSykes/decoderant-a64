@@ -63,7 +63,7 @@ fn read_hashed(path: &Path) -> Result<(Vec<u8>, String)> {
 fn check_meta(meta: &Value, file: &str, release: &str) -> Result<()> {
     let info = meta["license"]["info"].as_str().unwrap_or("");
     if !info.contains("BSD 3-clause") {
-        bail!("{file}: _meta licence is {info:?}, not BSD 3-clause; see docs/arch/aarch64.md");
+        bail!("{file}: _meta licence is {info:?}, not BSD 3-clause; see spec/REVISION");
     }
     let rel = meta["version"]["ref"].as_str().unwrap_or("");
     let short = rel.trim_end_matches("_rel");

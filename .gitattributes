@@ -1,0 +1,5 @@
+# Text files are stored and checked out with LF, so byte-exact checks (the
+# generator's --check mode, golden snapshots) pass on every OS.
+* text=auto eol=lf
+
+*.gz binary

@@ -4,7 +4,7 @@
 
 use std::collections::BTreeMap;
 
-use aarch64_isa::{Code, DecoderOptions, Formatter, FormatterOptions, decode_word};
+use decoderant_a64::{Code, DecoderOptions, Formatter, FormatterOptions, decode_word};
 use fARM64::format::FmtFormatter;
 use yaxpeax_arch::{Decoder as _, U8Reader};
 

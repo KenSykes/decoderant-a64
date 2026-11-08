@@ -1,5 +1,5 @@
-# Pinned AARCHMRS release that aarch64-isa's generated tables come from. fetch.cmake
-# downloads the tarball and refuses it unless its SHA-256 matches; aarch64-isa-gen
+# Pinned AARCHMRS release that decoderant-a64's generated tables come from. fetch.cmake
+# downloads the tarball and refuses it unless its SHA-256 matches; decoderant-a64-gen
 # refuses spec files whose SHA-256 differs from the `file` lines. Nothing listed here
 # is committed (Instructions.json alone is over 100 MB).
 #

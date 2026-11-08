@@ -1,17 +1,17 @@
 //! Instruction info against `fARM64`'s `instruction_info()`: the registers read and
 //! written, per encoding, over the words both decoders agree on. Disagreement
 //! groups are triaged in `tests/triage/farm64_info.txt` (same format as the decode
-//! triage). `AARCH64_ISA_TRIAGE=print` lists untriaged groups. The base groups and,
+//! triage). `DECODERANT_A64_TRIAGE=print` lists untriaged groups. The base groups and,
 //! where we decode their operands, SVE and SME.
 
 mod common;
 
 use std::collections::{BTreeMap, BTreeSet};
 
-use aarch64_isa::{DecoderOptions, InstructionInfoFactory, OpAccess, decode_word};
 use common::{
     GROUPS, Oracle, PC, SVE_GROUPS, load_triage, ours, same, sample_words, sve_sample_words,
 };
+use decoderant_a64::{DecoderOptions, InstructionInfoFactory, OpAccess, decode_word};
 
 fn acc(read: bool, write: bool) -> &'static str {
     match (read, write) {
@@ -97,7 +97,7 @@ fn farm64_instruction_info() {
         .iter()
         .filter(|(k, _)| !triage.contains_key(*k))
         .collect();
-    if std::env::var("AARCH64_ISA_TRIAGE").as_deref() == Ok("print") {
+    if std::env::var("DECODERANT_A64_TRIAGE").as_deref() == Ok("print") {
         for (k, (n, ex)) in &untriaged {
             println!("{} {} ({n} samples)", k.0, k.1);
             for e in ex {
@@ -145,7 +145,7 @@ fn load_triage_file(name: &str) -> BTreeMap<(String, String), String> {
 /// flag-setting predicate instructions write NZCV; FFR is implicit.
 #[test]
 fn sve_predication_and_implicit_registers() {
-    use aarch64_isa::Register as R;
+    use decoderant_a64::Register as R;
     let info = |w: u32| {
         let i = decode_word(w, PC, &DecoderOptions::default());
         assert!(i.has_operands(), "{w:08x}");
@@ -212,7 +212,7 @@ fn sve_predication_and_implicit_registers() {
 #[test]
 fn sve_memory() {
     use OpAccess::{Read as Rd, ReadWrite as Rw, Write as Wr};
-    use aarch64_isa::Register as R;
+    use decoderant_a64::Register as R;
     let info = |w: u32| {
         let i = decode_word(w, PC, &DecoderOptions::default());
         let mut f = InstructionInfoFactory::new();
@@ -287,7 +287,7 @@ fn sve_memory() {
 #[test]
 fn sve_lists_and_psel() {
     use OpAccess::{Read as Rd, Write as Wr};
-    use aarch64_isa::Register as R;
+    use decoderant_a64::Register as R;
     let regs = |w: u32| {
         let i = decode_word(w, PC, &DecoderOptions::default());
         let mut f = InstructionInfoFactory::new();
@@ -337,7 +337,7 @@ fn sve_lists_and_psel() {
 #[test]
 fn sme_za() {
     use OpAccess::{Read as Rd, ReadWrite as Rw, Write as Wr};
-    use aarch64_isa::Register as R;
+    use decoderant_a64::Register as R;
     let regs = |w: u32| {
         let i = decode_word(w, PC, &DecoderOptions::default());
         let mut f = InstructionInfoFactory::new();

@@ -1,6 +1,6 @@
 //! Prints sample disagreements with fARM64 and yaxpeax-arm, for development.
 //! `cargo run --release --example compare -- [samples-per-code] [filter]`
-use aarch64_isa::{Code, DecoderOptions, decode_word};
+use decoderant_a64::{Code, DecoderOptions, decode_word};
 use fARM64::format::FmtFormatter;
 use yaxpeax_arch::{Decoder as _, U8Reader};
 

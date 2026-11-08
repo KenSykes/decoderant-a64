@@ -1,5 +1,5 @@
 //! Exhaustive checks over all 2^32 words. Slow (minutes in release): run with
-//! `cargo test -p aarch64-isa --release --test sweep -- --ignored`.
+//! `cargo test -p decoderant-a64 --release --test sweep -- --ignored`.
 //!
 //! - every word decodes without panicking;
 //! - every word that decodes to `C` satisfies `C`'s `matches()`;
@@ -9,7 +9,7 @@
 use std::sync::Mutex;
 use std::sync::atomic::{AtomicU64, Ordering};
 
-use aarch64_isa::{Code, DecoderOptions, decode_word};
+use decoderant_a64::{Code, DecoderOptions, decode_word};
 
 /// For each value of the top 16 bits, the encodings whose fixed bits allow it.
 fn buckets() -> Vec<Vec<Code>> {

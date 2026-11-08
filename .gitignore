@@ -1,0 +1,5 @@
+/target
+# The unpacked AARCHMRS release (spec/fetch.cmake).
+/spec/data/
+# Local probe tests.
+/tests/zz_*.rs

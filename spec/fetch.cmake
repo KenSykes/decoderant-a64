@@ -3,9 +3,9 @@
 #
 #   cmake [-DDEST=<dir>] -P fetch.cmake
 #
-# DEST defaults to $HARNESS_DATA_DIR/aarchmrs/<release> when HARNESS_DATA_DIR is set,
-# else to `data/<release>` next to this script (ignored by git). The spec files are
-# checked against the `file` hashes after unpacking. Run aarch64-isa-gen with
+# DEST defaults to $AARCHMRS_DATA_DIR/<release> when AARCHMRS_DATA_DIR is set, else
+# to `data/<release>` next to this script (ignored by git). The spec files are
+# checked against the `file` hashes after unpacking. Run decoderant-a64-gen with
 # `--spec <DEST>` afterwards.
 cmake_minimum_required(VERSION 3.20)
 
@@ -28,8 +28,8 @@ if(NOT release OR NOT tar_hash)
 endif()
 
 if(NOT DEFINED DEST)
-  if(DEFINED ENV{HARNESS_DATA_DIR})
-    set(DEST "$ENV{HARNESS_DATA_DIR}/aarchmrs/${release}")
+  if(DEFINED ENV{AARCHMRS_DATA_DIR})
+    set(DEST "$ENV{AARCHMRS_DATA_DIR}/${release}")
   else()
     set(DEST "${CMAKE_CURRENT_LIST_DIR}/data/${release}")
   endif()

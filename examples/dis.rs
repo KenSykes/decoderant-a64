@@ -1,5 +1,5 @@
 //! Disassembles words given on the command line: `cargo run --example dis -- 8b020020`.
-use aarch64_isa::{DecoderOptions, decode_word};
+use decoderant_a64::{DecoderOptions, decode_word};
 
 fn main() {
     for a in std::env::args().skip(1) {

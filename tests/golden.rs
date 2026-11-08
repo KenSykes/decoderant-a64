@@ -3,7 +3,7 @@
 //! hint-space fallback with the Dev Kit's feature set, and the constraints table.
 //!
 //! The snapshot files under `tests/golden/` are reviewed like code; regenerate them
-//! with `AARCH64_ISA_BLESS=1 cargo test -p aarch64-isa --test golden` and review the
+//! with `DECODERANT_A64_BLESS=1 cargo test -p decoderant-a64 --test golden` and review the
 //! diff.
 
 mod common;
@@ -11,14 +11,14 @@ mod common;
 use std::collections::BTreeSet;
 use std::fmt::Write as _;
 
-use aarch64_isa::{
+use common::{GROUPS, Rng, SVE_GROUPS};
+use decoderant_a64::{
     Code, DecoderOptions, Feature, FeatureSet, SysKind, decode_word, system::entries,
 };
-use common::{GROUPS, Rng, SVE_GROUPS};
 
 fn snapshot(name: &str, actual: &str) {
     let path = format!("{}/tests/golden/{name}", env!("CARGO_MANIFEST_DIR"));
-    if std::env::var("AARCH64_ISA_BLESS").is_ok() {
+    if std::env::var("DECODERANT_A64_BLESS").is_ok() {
         std::fs::create_dir_all(format!("{}/tests/golden", env!("CARGO_MANIFEST_DIR"))).unwrap();
         std::fs::write(&path, actual).unwrap();
         return;
@@ -31,7 +31,7 @@ fn snapshot(name: &str, actual: &str) {
             .find(|(a, b)| a != b)
             .map(|(a, b)| format!("expected {a:?}\n  actual {b:?}"))
             .unwrap_or_else(|| "length differs".into());
-        panic!("{name} differs from the snapshot (AARCH64_ISA_BLESS=1 to update):\n{first}");
+        panic!("{name} differs from the snapshot (DECODERANT_A64_BLESS=1 to update):\n{first}");
     }
 }
 
@@ -285,7 +285,7 @@ fn stragglers() {
         assert_eq!(i.to_string(), text, "{w:08x}");
         assert_eq!(i.min_el(), min_el, "{w:08x} {text}");
         assert_eq!(i.encode(), Ok(w), "{w:08x} {text}");
-        let built = aarch64_isa::Instruction::with(i.code(), i.operands(), 0x1000).unwrap();
+        let built = decoderant_a64::Instruction::with(i.code(), i.operands(), 0x1000).unwrap();
         assert_eq!(built.encode(), Ok(w), "{w:08x} {text} from operands");
     }
 }
