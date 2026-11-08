@@ -12,6 +12,7 @@ spec/              REVISION (the pinned AARCHMRS release), fetch.cmake, and the
                    generator's checked-in reports (report.md, encodings.txt)
 tests/             integration tests; golden/ snapshots, triage/ oracle triage files
 benches/, examples/
+scripts/test.ps1   runs every check and reports what it skipped
 ```
 
 ## Checks
@@ -23,6 +24,10 @@ cargo fmt --check
 cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace --all-features
 ```
+
+`scripts/test.ps1` (Windows PowerShell 5.1 or PowerShell 7) runs these, the docs
+and the generated-files check, and lists what it skipped; `-Sweep`,
+`-Fingerprint <file>` and `-Exhaustive` add the slow checks.
 
 Slow checks, for changes to the decoder, encoder, generator or tables (release
 builds; minutes to hours):
