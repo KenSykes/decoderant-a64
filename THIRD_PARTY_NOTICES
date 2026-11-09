@@ -9,4 +9,5 @@ src/generated/, spec/report.md, spec/encodings.txt
     project. The specification itself is not included in the repository or the
     published crate.
 
-Everything else is MIT (see LICENSE).
+Everything else is licensed under either of the MIT licence (LICENSE-MIT) or the
+Apache License, Version 2.0 (LICENSE-APACHE), at your option.

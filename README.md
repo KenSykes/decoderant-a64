@@ -158,8 +158,22 @@ Rust 1.88. Raising it is a minor-version change.
 
 ## Licence
 
-The code is licensed under the [MIT licence](LICENSE). The generated tables are
-derived from Arm's AARCHMRS, which Arm publishes under the BSD 3-clause licence
-([LICENSE-AARCHMRS](LICENSE-AARCHMRS), [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES)),
-so the crate's licence expression is `MIT AND BSD-3-Clause`. Arm's name is not used to
-endorse this project.
+Licensed under either of
+
+- Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE) or
+  <https://www.apache.org/licenses/LICENSE-2.0>)
+- MIT licence ([LICENSE-MIT](LICENSE-MIT) or <https://opensource.org/licenses/MIT>)
+
+at your option.
+
+The generated tables (`src/generated/`) are derived from Arm's AARCHMRS, which Arm
+publishes under the BSD 3-clause licence: see [LICENSE-AARCHMRS](LICENSE-AARCHMRS)
+and [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES), both included in the published crate.
+Keep that notice when you redistribute the crate or a binary built with it. Arm's
+name is not used to endorse this project.
+
+### Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted for
+inclusion in the work by you, as defined in the Apache-2.0 license, shall be dual
+licensed as above, without any additional terms or conditions.
