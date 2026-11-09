@@ -28,8 +28,10 @@
 //!
 //! # Licence
 //!
-//! The code is MIT. The generated tables (`src/generated/`) are BSD-3-Clause derived
-//! data from AARCHMRS; see `THIRD_PARTY_NOTICES` and `LICENSE-AARCHMRS`.
+//! Licensed under either of the MIT licence or the Apache License, Version 2.0, at
+//! your option. The generated tables (`src/generated/`) are derived from Arm's
+//! AARCHMRS, published under the BSD 3-clause licence; see `THIRD_PARTY_NOTICES` and
+//! `LICENSE-AARCHMRS`.
 
 #![no_std]
 

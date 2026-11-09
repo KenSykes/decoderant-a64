@@ -7,6 +7,7 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.88"
 authors = ["Ken Sykes"]
+license = "MIT OR Apache-2.0"
 repository = "https://github.com/KenSykes/decoderant-a64"
 
 [workspace.dependencies]
@@ -28,8 +29,7 @@ edition.workspace = true
 rust-version.workspace = true
 authors.workspace = true
 repository.workspace = true
-# The code is MIT; the generated tables are derived from Arm's BSD-3-Clause AARCHMRS.
-license = "MIT AND BSD-3-Clause"
+license.workspace = true
 homepage = "https://github.com/KenSykes/decoderant-a64"
 documentation = "https://docs.rs/decoderant-a64"
 readme = "README.md"
@@ -40,7 +40,8 @@ include = [
     "/Cargo.toml",
     "/README.md",
     "/CHANGELOG.md",
-    "/LICENSE",
+    "/LICENSE-MIT",
+    "/LICENSE-APACHE",
     "/LICENSE-AARCHMRS",
     "/THIRD_PARTY_NOTICES",
 ]

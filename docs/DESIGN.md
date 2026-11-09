@@ -38,9 +38,10 @@ open-source (BSD 3-clause) package is used. The licence was checked for this rel
 `docs/notice.html` and the `_meta` block of all three JSON files state BSD 3-clause,
 and the generator refuses to run if a pinned file or the notice changes.
 
-The code is MIT; the generated tables are BSD-3 derived data, so the crate's
-`license` field is `MIT AND BSD-3-Clause`. Attribution: `THIRD_PARTY_NOTICES`,
-`LICENSE-AARCHMRS` and a header on every generated file.
+The crate is `MIT OR Apache-2.0`. The generated tables are derived from the BSD-3
+spec, and that notice travels with the crate: `THIRD_PARTY_NOTICES`,
+`LICENSE-AARCHMRS` (both in the published package) and a header on every generated
+file.
 
 ## Code generation
 

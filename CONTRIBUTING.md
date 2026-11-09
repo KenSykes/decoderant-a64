@@ -1,6 +1,8 @@
 # Contributing
 
-Contributions are accepted under the MIT licence (see [LICENSE](LICENSE)). Read
+Contributions are accepted under the same terms as the crate: dual licensed under
+the MIT licence ([LICENSE-MIT](LICENSE-MIT)) or the Apache License, Version 2.0
+([LICENSE-APACHE](LICENSE-APACHE)), at the user's option. Read
 [docs/DESIGN.md](docs/DESIGN.md) first.
 
 ## Layout
