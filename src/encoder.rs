@@ -39,6 +39,8 @@ pub enum EncodeError {
     Unrepresentable(usize),
     #[error("operand {0} conflicts with an earlier operand or a fixed bit")]
     Conflict(usize),
+    #[error("the code buffer is full")]
+    BufferFull,
 }
 
 type R = Result<(), EncodeError>;

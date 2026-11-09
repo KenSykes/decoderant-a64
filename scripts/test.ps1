@@ -87,6 +87,20 @@ Invoke-Step "clippy" @('cargo', 'clippy', '--workspace', '--all-targets', '--all
 Invoke-Step "tests" @('cargo', 'test', '--workspace', '--all-features', '--no-fail-fast')
 Invoke-Step "docs" @('cargo', 'doc', '--no-deps', '--all-features') @{ RUSTDOCFLAGS = '-D warnings' }
 
+# The library must build for a target with no operating system (and so no std),
+# with each feature on its own and all together.
+$bareTarget = 'thumbv7em-none-eabihf'
+$installed = if (Get-Command rustup -ErrorAction SilentlyContinue) { @(rustup target list --installed) } else { @() }
+if ($installed -contains $bareTarget) {
+    foreach ($features in @('', 'formatter', 'encoder', 'instr_info', 'code_asm', 'formatter,encoder,instr_info,code_asm')) {
+        $cmd = @('cargo', 'build', '--lib', '--target', $bareTarget, '--no-default-features')
+        if ($features) { $cmd += @('--features', $features) }
+        Invoke-Step "no_std build ($(if ($features) { $features } else { 'no features' }))" $cmd
+    }
+} else {
+    Skip-Step "no_std builds" "target $bareTarget not installed (rustup target add $bareTarget)"
+}
+
 # The generated tables must match the pinned spec, when it is here.
 $release = ((Get-Content 'spec/REVISION') |
     Where-Object { $_ -like 'release *' }) -replace '^release ', ''

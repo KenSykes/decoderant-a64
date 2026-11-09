@@ -561,3 +561,28 @@ fn mov_w_immediates_are_not_truncated() {
         );
     }
 }
+
+/// Without an allocator the assembler fills a fixed buffer or a caller's slice, and
+/// reports a full buffer as an error.
+#[test]
+fn assembles_without_allocating() -> Result<(), EncodeError> {
+    use decoderant_a64::code_asm::{FixedBuffer, SliceBuffer};
+
+    let mut a = CodeAssembler::with_buffer(0x1000, FixedBuffer::<2>::new());
+    a.add(x0, x1, x2)?.ret(x30)?;
+    assert_eq!(a.words(), [0x8b02_0020, 0xd65f_03c0]);
+    assert_eq!(a.pc(), 0x1008);
+    assert_eq!(a.ret(x30).err(), Some(EncodeError::BufferFull));
+    assert_eq!(a.words().len(), 2);
+    let mut bytes = [0u8; 8];
+    assert_eq!(a.assemble_into(&mut bytes), Some(8));
+    assert_eq!(bytes, [0x20, 0x00, 0x02, 0x8b, 0xc0, 0x03, 0x5f, 0xd6]);
+    assert_eq!(a.assemble_into(&mut bytes[..7]), None);
+
+    let mut words = [0u32; 1];
+    let mut b = CodeAssembler::with_buffer(0, SliceBuffer::new(&mut words));
+    b.add(x0, x1, x2)?;
+    assert!(matches!(b.word(0), Err(EncodeError::BufferFull)));
+    assert_eq!(b.words(), [0x8b02_0020]);
+    Ok(())
+}
