@@ -70,7 +70,8 @@ assert_eq!(a.words(), [0x8b02_0020, 0xf940_0be3, 0xd65f_03c0]);
 # Ok::<(), decoderant_a64::EncodeError>(())
 ```
 
-`CodeAssembler` needs the `code_asm` feature. Decoded instructions re-encode with
+`CodeAssembler` needs the `code_asm` feature. Without an allocator, build it over a
+`FixedBuffer` or `SliceBuffer` with `CodeAssembler::with_buffer`. Decoded instructions re-encode with
 `Instruction::encode()` or `decoderant_a64::encode(&insn, pc)`; `Instruction::with`
 builds one from a `Code` and its operands.
 
@@ -119,7 +120,8 @@ More in [`examples/`](examples) (`cargo run --example dis -- 8b020020`) and in t
 
 | Feature | Default | Enables |
 |---|---|---|
-| `std` | yes | `FormatterOutput` for `String`. Without it the crate is `#![no_std]`. |
+| `std` | yes | Implies `alloc`. Without it the crate is `#![no_std]`. |
+| `alloc` | via `std` | `FormatterOutput` for `String` and `CodeAssembler::new` (a `Vec`). Needs a global allocator. |
 | `formatter` | yes | `Formatter`: Arm assembler syntax from the spec's templates. |
 | `encoder` | yes | `Encoder`, `encode`, `Instruction::with` and the operand setters. |
 | `instr_info` | yes | `InstructionInfoFactory`: registers and memory used. |

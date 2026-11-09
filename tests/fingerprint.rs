@@ -72,6 +72,7 @@ fn hash_encode(r: Result<u32, EncodeError>, h: &mut Fx) {
                 EncodeError::Range(i) => (6, i),
                 EncodeError::Unrepresentable(i) => (7, i),
                 EncodeError::Conflict(i) => (8, i),
+                EncodeError::BufferFull => (9, 0),
             };
             (tag, v).hash(h);
         }

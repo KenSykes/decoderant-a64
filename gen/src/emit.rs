@@ -346,8 +346,8 @@ fn ident(s: &str) -> String {
 pub fn code_asm(asm: &BTreeMap<(String, String), BTreeMap<usize, bool>>) -> String {
     let mut out = String::new();
     out.push_str(
-        "use crate::code_asm::CodeAssembler;\nuse crate::encoder::EncodeError;\nuse crate::generated::Mnemonic;\nuse crate::operand::Operand;\n\n\
-         #[allow(clippy::too_many_arguments)]\nimpl CodeAssembler {\n",
+        "use crate::code_asm::{CodeAssembler, CodeBuffer};\nuse crate::encoder::EncodeError;\nuse crate::generated::Mnemonic;\nuse crate::operand::Operand;\n\n\
+         #[allow(clippy::too_many_arguments)]\nimpl<B: CodeBuffer> CodeAssembler<B> {\n",
     );
     let mut seen = std::collections::BTreeSet::new();
     for ((m, s), arities) in asm {

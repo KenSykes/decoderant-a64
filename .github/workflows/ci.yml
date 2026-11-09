@@ -43,7 +43,7 @@ jobs:
       # Each feature on its own, and none: targets that need more skip themselves.
       - run: cargo test --lib --tests --no-default-features
       - run: |
-          for f in std formatter encoder instr_info code_asm; do
+          for f in std alloc formatter encoder instr_info code_asm; do
             cargo test --lib --tests --no-default-features --features "$f"
           done
 
@@ -54,9 +54,12 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: thumbv7em-none-eabihf
-      - run: >
-          cargo build --lib --target thumbv7em-none-eabihf --no-default-features
-          --features formatter,encoder,instr_info,code_asm
+      # No operating system, no allocator: each feature on its own, and all together.
+      - run: cargo build --lib --target thumbv7em-none-eabihf --no-default-features
+      - run: |
+          for f in formatter encoder instr_info code_asm formatter,encoder,instr_info,code_asm; do
+            cargo build --lib --target thumbv7em-none-eabihf --no-default-features --features "$f"
+          done
 
   msrv:
     runs-on: ubuntu-latest

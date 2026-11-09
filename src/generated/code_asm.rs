@@ -4,13 +4,13 @@
 // Copyright (c) 2010-2026 Arm Limited or its affiliates, licensed under the
 // BSD 3-clause license. See THIRD_PARTY_NOTICES at the crate root.
 
-use crate::code_asm::CodeAssembler;
+use crate::code_asm::{CodeAssembler, CodeBuffer};
 use crate::encoder::EncodeError;
 use crate::generated::Mnemonic;
 use crate::operand::Operand;
 
 #[allow(clippy::too_many_arguments)]
-impl CodeAssembler {
+impl<B: CodeBuffer> CodeAssembler<B> {
     /// `ABS` with 2 operands.
     pub fn abs(&mut self, a0: impl Into<Operand>, a1: impl Into<Operand>) -> Result<&mut Self, EncodeError> {
         self.emit(Mnemonic::Abs, "", &[a0.into(), a1.into()])

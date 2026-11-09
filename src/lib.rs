@@ -17,12 +17,15 @@
 //!
 //! # Cargo features
 //!
-//! - `std` (default): `FormatterOutput` for `String`. The crate is `#![no_std]`
-//!   without it, and the decoder and encoder never allocate.
+//! - `std` (default): implies `alloc`. The crate is `#![no_std]` without it, and the
+//!   decoder, encoder, formatter and instruction info never allocate.
+//! - `alloc`: `FormatterOutput` for `String`, and `CodeAssembler::new`, which keeps
+//!   its words in a `Vec`. Needs a global allocator.
 //! - `formatter` (default): `Formatter`, Arm assembler syntax.
 //! - `encoder` (default): `Encoder`, `encode` and the `Instruction` constructors.
 //! - `instr_info` (default): `InstructionInfoFactory`, registers and memory used.
-//! - `code_asm`: the fluent `code_asm::CodeAssembler` (implies `encoder`).
+//! - `code_asm`: the fluent `code_asm::CodeAssembler` (implies `encoder`). Without
+//!   `alloc` it assembles into a `FixedBuffer` or `SliceBuffer`.
 //!
 //! The decoder and [`OpCodeInfo`] are always present.
 //!
@@ -35,8 +38,11 @@
 
 #![no_std]
 
+#[cfg(feature = "alloc")]
+extern crate alloc;
+
 // The unit tests use `std` whatever the features.
-#[cfg(any(test, feature = "std"))]
+#[cfg(test)]
 extern crate std;
 
 // The README's examples run as doctests (they use every feature).
@@ -116,6 +122,14 @@ pub const SPEC_RELEASE: &str = "AARCHMRS_OPENSOURCE_A_profile_FAT-2026-09";
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The error type is a `core::error::Error`, so it needs no `std`.
+    #[cfg(feature = "encoder")]
+    #[test]
+    fn errors_implement_core_error() {
+        fn is_error<E: core::error::Error + Send + Sync + 'static>() {}
+        is_error::<EncodeError>();
+    }
 
     /// `from_name` (a binary search over a name-sorted index) finds every value by
     /// its name, and nothing else.

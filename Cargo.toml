@@ -51,7 +51,8 @@ all-features = true
 
 [features]
 default = ["std", "encoder", "instr_info", "formatter"]
-std = []
+alloc = []
+std = ["alloc"]
 encoder = []
 instr_info = []
 formatter = []

@@ -47,8 +47,8 @@ pub trait FormatterOutput {
     fn write(&mut self, text: &str, kind: FormatterTextKind);
 }
 
-#[cfg(feature = "std")]
-impl FormatterOutput for std::string::String {
+#[cfg(feature = "alloc")]
+impl FormatterOutput for alloc::string::String {
     fn write(&mut self, text: &str, _kind: FormatterTextKind) {
         self.push_str(text);
     }
