@@ -6,21 +6,6 @@ All notable changes to this crate are documented here. The format follows
 
 ## [Unreleased]
 
-### Added
-
-- `alloc` feature (implied by `std`): `FormatterOutput` for `String` and
-  `CodeAssembler::new` need it; nothing else allocates.
-- `code_asm::CodeBuffer`, `FixedBuffer` and `SliceBuffer`, and
-  `CodeAssembler::with_buffer`, `bytes` and `assemble_into`: `code_asm` works
-  without an allocator.
-
-### Changed (breaking)
-
-- `CodeAssembler` is generic over its buffer (`CodeAssembler<B = Vec<u32>>`, the
-  default only with `alloc`). `CodeAssembler::new` and `assemble` need `alloc`.
-- `CodeAssembler::word` returns `Result`, as it can now fail on a full buffer.
-- `EncodeError::BufferFull` is a new variant.
-
 ## [0.1.0]
 
 First release, generated from `AARCHMRS_OPENSOURCE_A_profile_FAT-2026-09`.
@@ -32,6 +17,10 @@ First release, generated from `AARCHMRS_OPENSOURCE_A_profile_FAT-2026-09`.
   register of the release; `OpCodeInfo` per encoding.
 - `Formatter` (Arm assembler syntax with preferred aliases), `Encoder`,
   `code_asm::CodeAssembler`, `InstructionInfoFactory`.
+- `no_std`: only the `alloc` feature (implied by `std`) allocates, for
+  `FormatterOutput` for `String` and `CodeAssembler::new`. `CodeAssembler` is
+  generic over a `CodeBuffer` (`Vec<u32>` by default with `alloc`; `FixedBuffer` or
+  `SliceBuffer` via `CodeAssembler::with_buffer` without it).
 - Operand support for all 4,429 encodings: base, FP, Advanced SIMD, SVE/SVE2 and
   SME/SME2.
 
