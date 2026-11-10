@@ -65,6 +65,7 @@ impl Fs {
             + self.0[3].width as u32
     }
 
+    #[inline(always)]
     pub const fn get(self, word: u32) -> u32 {
         let mut v = 0u32;
         let mut i = 0;

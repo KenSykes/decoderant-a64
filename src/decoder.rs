@@ -5,7 +5,7 @@ use crate::cond::{Ctx, holds};
 use crate::desc::operand_count;
 use crate::feature_set::FeatureSet;
 use crate::generated::Code;
-use crate::generated::tables::{CANDIDATES, DISPATCH, DISPATCH_ROOT, ENCODINGS};
+use crate::generated::tables::{CANDIDATES, DECODE_OPS, DISPATCH, DISPATCH_ROOT, ENCODINGS};
 use crate::instruction::{Instruction, MAX_OPERANDS};
 use crate::tables::{NO_COND, SLOT_LIST};
 
@@ -154,8 +154,8 @@ fn decode_into(insn: &mut Instruction, options: &DecoderOptions) {
     if crate::undefined::undefined(d, word) {
         return;
     }
-    if let Some(ops) = d.ops {
-        match crate::desc::decode_ops(ops, word, pc, &mut insn.ops) {
+    if d.ops.is_some() {
+        match DECODE_OPS[i](word, pc, &mut insn.ops) {
             Some(n) => {
                 insn.op_count = n;
                 insn.has_operands = true;
@@ -303,6 +303,33 @@ mod tests {
             for d in &ENCODINGS {
                 for _ in 0..64 {
                     check(d.value | next() as u32 & !d.mask);
+                }
+            }
+        }
+    }
+
+    /// Each encoding's generated operand decoder decodes like the descriptor
+    /// interpreter, on words built from its fixed bits.
+    #[test]
+    fn generated_operand_decoders_match_the_descriptors() {
+        use crate::desc::decode_ops;
+        use crate::instruction::MAX_OPERANDS;
+        use crate::operand::Operand;
+
+        let mut next = xorshift(0x5851_f42d_4c95_7f2d);
+        for (i, d) in ENCODINGS.iter().enumerate() {
+            let Some(ops) = d.ops else { continue };
+            for _ in 0..256 {
+                let w = d.value | next() as u32 & !d.mask;
+                let pc = next() & !3;
+                let mut a = [Operand::NONE; MAX_OPERANDS];
+                let mut b = [Operand::NONE; MAX_OPERANDS];
+                let ra = DECODE_OPS[i](w, pc, &mut a);
+                let rb = decode_ops(ops, w, pc, &mut b);
+                assert_eq!(ra, rb, "{} {w:#010x}", d.name);
+                if let Some(n) = ra {
+                    let n = n as usize;
+                    assert_eq!(a[..n], b[..n], "{} {w:#010x}", d.name);
                 }
             }
         }

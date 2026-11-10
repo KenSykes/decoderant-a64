@@ -5,6 +5,7 @@
 
 use crate::bits::{Fs, decode_bit_masks, fp_imm8_value, highest_set_bit, sext};
 use crate::generated::Register;
+use crate::instruction::MAX_OPERANDS;
 use crate::operand::{
     Arrangement, ConditionCode, ExtendKind, MemoryMode, OpKind, Operand, PredQual, ShiftKind,
 };
@@ -24,6 +25,7 @@ pub(crate) struct Tab {
 
 impl Tab {
     /// The index of the entry `word` matches.
+    #[inline(always)]
     pub const fn entry(&self, word: u32) -> Option<usize> {
         let v = self.f.get(word);
         let mut i = 0;
@@ -36,6 +38,7 @@ impl Tab {
         None
     }
 
+    #[inline(always)]
     pub const fn find(&self, word: u32) -> Option<u8> {
         match self.entry(word) {
             Some(i) => Some(self.e[i].2),
@@ -121,6 +124,7 @@ pub(crate) enum RegSel {
 }
 
 impl RegSel {
+    #[inline(always)]
     fn get(self, word: u32) -> Option<Rk> {
         match self {
             RegSel::Fixed(k) => Some(k),
@@ -172,6 +176,7 @@ pub(crate) enum Arr {
 }
 
 impl Arr {
+    #[inline(always)]
     fn get(self, word: u32) -> Option<Arrangement> {
         match self {
             Arr::Fixed(a) => Some(a),
@@ -242,6 +247,7 @@ impl Rn {
 }
 
 impl Idx {
+    #[inline(always)]
     fn get(self, word: u32, es: Arrangement) -> Option<u8> {
         Some(match self {
             Idx::Bits(f, shr) => (f.get(word) >> shr) as u8,
@@ -354,6 +360,7 @@ pub(crate) enum Imm {
 }
 
 impl Imm {
+    #[inline(always)]
     fn get(self, word: u32) -> Option<u64> {
         Some(match self {
             Imm::Const(c) => c as u64,
@@ -526,6 +533,7 @@ pub(crate) enum Pq {
 }
 
 impl Pq {
+    #[inline(always)]
     fn get(self, word: u32) -> Option<PredQual> {
         Some(match self {
             Pq::None => PredQual::None,
@@ -653,6 +661,7 @@ fn plus(f: Fs, word: u32, add: u8) -> u32 {
     (f.get(word) + u32::from(add)) % 32
 }
 
+#[inline(always)]
 fn decode_imm_shift(s: ImmShift, word: u32, o: &mut Operand) -> Option<()> {
     match s {
         ImmShift::None => {}
@@ -671,6 +680,14 @@ fn decode_imm_shift(s: ImmShift, word: u32, o: &mut Operand) -> Option<()> {
 }
 
 fn decode_one(op: &'static Op, word: u32, pc: u64) -> Option<Operand> {
+    decode_op(op, word, pc)
+}
+
+/// [`decode_one`], inlined so that a constant descriptor folds away (the generated
+/// per-list decoders, `DECODE_OPS`). Nested operands (`Opt`, `Braced`) go through
+/// `decode_one`.
+#[inline(always)]
+fn decode_op(op: &'static Op, word: u32, pc: u64) -> Option<Operand> {
     Some(match *op {
         Op::Reg(f, k, add) => reg_op(k.get(word)?.reg(plus(f, word, add))),
         Op::RegFixed(r) => reg_op(r),
@@ -959,6 +976,7 @@ pub(crate) fn shift_kind(code: u8) -> ShiftKind {
     }
 }
 
+#[inline(always)]
 fn decode_mem(m: &Mem, word: u32) -> Option<Operand> {
     let mut o = Operand {
         kind: OpKind::Memory,
@@ -1055,14 +1073,38 @@ pub(crate) fn decode_ops(
 ) -> Option<u8> {
     let mut n = 0;
     for op in ops {
-        if let Op::Suffix(t) = op {
-            t.find(word)?;
-            continue;
-        }
-        out[n] = decode_one(op, word, pc)?;
-        n += 1;
+        decode_step(op, word, pc, out, &mut n)?;
     }
     Some(n as u8)
+}
+
+/// A decoder for one operand list: [`decode_ops`] with the list built in, which the
+/// generator emits for each distinct list (`DECODE_OPS`, by encoding).
+pub(crate) type OpsFn = fn(u32, u64, &mut [Operand; MAX_OPERANDS]) -> Option<u8>;
+
+/// The [`OpsFn`] of encodings without operands.
+pub(crate) fn no_ops(_: u32, _: u64, _: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    Some(0)
+}
+
+/// One entry of an operand list: decodes it into `out[*n]`, or for a mnemonic suffix
+/// checks that its value is allocated. Inlined, so that a generated decoder's
+/// constant descriptors fold into straight-line code.
+#[inline(always)]
+pub(crate) fn decode_step(
+    op: &'static Op,
+    word: u32,
+    pc: u64,
+    out: &mut [Operand],
+    n: &mut usize,
+) -> Option<()> {
+    if let Op::Suffix(t) = op {
+        t.find(word)?;
+        return Some(());
+    }
+    out[*n] = decode_op(op, word, pc)?;
+    *n += 1;
+    Some(())
 }
 
 /// The mnemonic suffix table of an encoding (`2` in `SADDL2`, `B`/`T` in

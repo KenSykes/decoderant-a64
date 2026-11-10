@@ -218,7 +218,11 @@ The decoder does not walk the decode tree. The generator emits a dispatch
 (`gen/src/dispatch.rs`): tables indexed by fields of the word, ending in short
 candidate lists kept in decode-tree order, so the first candidate whose fixed bits and
 path conditions match is the tree's answer. Conditions are compiled to Rust functions
-(`src/generated/conds.rs`). Decoding re-encodes to find don't-care bits only where the
+(`src/generated/conds.rs`). Operands are decoded by a generated function per distinct
+operand list (`DECODE_OPS`), which calls the `#[inline(always)]` descriptor code
+(`decode_step` in `src/desc.rs`) on constant descriptors, so field extraction and
+table lookups fold to straight-line code; `decode_ops` interprets the same lists for
+aliases and the tests, which check the two agree. Decoding re-encodes to find don't-care bits only where the
 operands may not reproduce every variable bit (`src/cover.rs`). The tree and the
 expression table are still generated, for the unit tests, which check the dispatch
 and the compiled conditions against them. `benches/decode.rs` measures throughput.
