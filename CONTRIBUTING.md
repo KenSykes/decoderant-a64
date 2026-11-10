@@ -102,8 +102,14 @@ and each JSON file's `_meta` block is still BSD 3-clause, update `SPEC_RELEASE` 
 
 1. Update `CHANGELOG.md` and the version in `Cargo.toml` (`[workspace.package]`).
    Breaking changes, including removed or renamed `Code` variants after a spec
-   update, need a minor-version bump while the version is `0.x`.
-2. Run the checks above, the slow checks, and `cargo package --list` (the package
+   update, need a minor-version bump while the version is `0.x`; anything else is a
+   patch bump.
+2. Check the bump against the last published release with
+   [`cargo-semver-checks`](https://github.com/obi1kenobi/cargo-semver-checks)
+   (`cargo install --locked cargo-semver-checks`):
+   `cargo semver-checks -p decoderant-a64 --all-features`. A reported break needs
+   the bump in step 1.
+3. Run the checks above, the slow checks, and `cargo package --list` (the package
    holds `src/`, the licences, the notices, the README and the changelog).
-3. `cargo publish --dry-run`, then `cargo publish`.
-4. Tag the release `vX.Y.Z`.
+4. `cargo publish --dry-run`, then `cargo publish`.
+5. Tag the release `vX.Y.Z`.

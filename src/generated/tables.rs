@@ -12,7 +12,8 @@ use crate::cond::{BinOp, Expr, Func};
 #[allow(unused_imports)]
 use crate::desc::*;
 use crate::generated::{Code, Feature, Mnemonic, Register};
-use crate::operand::{Arrangement, MemoryMode};
+use crate::instruction::MAX_OPERANDS;
+use crate::operand::{Arrangement, MemoryMode, Operand};
 use crate::tables::{AliasData, Cand, EncodingData, FieldInfo, NO_COND};
 #[cfg(test)]
 use crate::tables::Node;
@@ -59024,3 +59025,14799 @@ pub(crate) static ENCODINGS: [EncodingData; 4429] = [
         aliases: &[],
     },
 ];
+
+pub(crate) static DECODE_OPS: [OpsFn; 4429] = [
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_1,
+    ops_1,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_2,
+    ops_2,
+    ops_2,
+    ops_2,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_3,
+    ops_4,
+    ops_5,
+    ops_6,
+    ops_6,
+    ops_6,
+    ops_6,
+    ops_5,
+    ops_5,
+    ops_5,
+    ops_5,
+    ops_7,
+    ops_6,
+    ops_6,
+    ops_6,
+    ops_5,
+    ops_5,
+    ops_5,
+    ops_8,
+    ops_9,
+    ops_8,
+    ops_9,
+    ops_8,
+    ops_9,
+    ops_8,
+    ops_9,
+    ops_8,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_10,
+    ops_10,
+    ops_10,
+    ops_11,
+    ops_12,
+    ops_11,
+    ops_12,
+    ops_13,
+    ops_14,
+    ops_15,
+    ops_16,
+    ops_17,
+    ops_18,
+    ops_13,
+    ops_14,
+    ops_15,
+    ops_16,
+    ops_17,
+    ops_18,
+    ops_11,
+    ops_12,
+    ops_11,
+    ops_12,
+    ops_11,
+    ops_12,
+    ops_11,
+    ops_12,
+    ops_17,
+    ops_18,
+    ops_17,
+    ops_18,
+    ops_11,
+    ops_12,
+    ops_19,
+    ops_19,
+    ops_20,
+    ops_20,
+    ops_21,
+    ops_21,
+    ops_22,
+    ops_22,
+    ops_21,
+    ops_21,
+    ops_21,
+    ops_21,
+    ops_22,
+    ops_22,
+    ops_22,
+    ops_22,
+    ops_23,
+    ops_24,
+    ops_24,
+    ops_24,
+    ops_24,
+    ops_24,
+    ops_24,
+    ops_25,
+    ops_25,
+    ops_25,
+    ops_26,
+    ops_27,
+    ops_26,
+    ops_28,
+    ops_29,
+    ops_30,
+    ops_31,
+    ops_32,
+    ops_33,
+    ops_34,
+    ops_35,
+    ops_36,
+    ops_37,
+    ops_38,
+    ops_38,
+    ops_38,
+    ops_38,
+    ops_39,
+    ops_39,
+    ops_21,
+    ops_40,
+    ops_21,
+    ops_21,
+    ops_21,
+    ops_21,
+    ops_21,
+    ops_21,
+    ops_41,
+    ops_41,
+    ops_41,
+    ops_41,
+    ops_42,
+    ops_42,
+    ops_42,
+    ops_42,
+    ops_43,
+    ops_43,
+    ops_43,
+    ops_43,
+    ops_41,
+    ops_41,
+    ops_42,
+    ops_42,
+    ops_43,
+    ops_43,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_45,
+    ops_46,
+    ops_45,
+    ops_46,
+    ops_44,
+    ops_44,
+    ops_45,
+    ops_46,
+    ops_45,
+    ops_46,
+    ops_44,
+    ops_44,
+    ops_45,
+    ops_46,
+    ops_45,
+    ops_46,
+    ops_44,
+    ops_44,
+    ops_45,
+    ops_46,
+    ops_45,
+    ops_46,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_44,
+    ops_47,
+    ops_47,
+    ops_47,
+    ops_48,
+    ops_49,
+    ops_50,
+    ops_51,
+    ops_52,
+    ops_53,
+    ops_54,
+    ops_54,
+    ops_54,
+    ops_54,
+    ops_54,
+    ops_54,
+    ops_55,
+    ops_56,
+    ops_57,
+    ops_58,
+    ops_21,
+    ops_59,
+    ops_21,
+    ops_60,
+    ops_61,
+    ops_62,
+    ops_63,
+    ops_64,
+    ops_65,
+    ops_66,
+    ops_67,
+    ops_68,
+    ops_69,
+    ops_70,
+    ops_71,
+    ops_71,
+    ops_71,
+    ops_71,
+    ops_72,
+    ops_73,
+    ops_74,
+    ops_74,
+    ops_74,
+    ops_74,
+    ops_74,
+    ops_74,
+    ops_75,
+    ops_75,
+    ops_76,
+    ops_21,
+    ops_21,
+    ops_21,
+    ops_21,
+    ops_21,
+    ops_21,
+    ops_77,
+    ops_78,
+    ops_79,
+    ops_6,
+    ops_6,
+    ops_17,
+    ops_18,
+    ops_15,
+    ops_16,
+    ops_13,
+    ops_14,
+    ops_11,
+    ops_12,
+    ops_80,
+    ops_80,
+    ops_81,
+    ops_81,
+    ops_80,
+    ops_82,
+    ops_83,
+    ops_83,
+    ops_84,
+    ops_85,
+    ops_86,
+    ops_86,
+    ops_87,
+    ops_88,
+    ops_89,
+    ops_90,
+    ops_91,
+    ops_91,
+    ops_92,
+    ops_91,
+    ops_91,
+    ops_91,
+    ops_92,
+    ops_91,
+    ops_92,
+    ops_92,
+    ops_92,
+    ops_92,
+    ops_92,
+    ops_92,
+    ops_92,
+    ops_92,
+    ops_93,
+    ops_93,
+    ops_93,
+    ops_93,
+    ops_94,
+    ops_94,
+    ops_94,
+    ops_94,
+    ops_94,
+    ops_94,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_96,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_95,
+    ops_97,
+    ops_98,
+    ops_97,
+    ops_98,
+    ops_99,
+    ops_99,
+    ops_100,
+    ops_101,
+    ops_102,
+    ops_103,
+    ops_103,
+    ops_104,
+    ops_105,
+    ops_105,
+    ops_104,
+    ops_106,
+    ops_107,
+    ops_107,
+    ops_107,
+    ops_107,
+    ops_107,
+    ops_107,
+    ops_107,
+    ops_107,
+    ops_108,
+    ops_108,
+    ops_108,
+    ops_108,
+    ops_108,
+    ops_108,
+    ops_108,
+    ops_108,
+    ops_109,
+    ops_110,
+    ops_111,
+    ops_112,
+    ops_112,
+    ops_112,
+    ops_112,
+    ops_112,
+    ops_112,
+    ops_112,
+    ops_112,
+    ops_113,
+    ops_113,
+    ops_114,
+    ops_114,
+    ops_115,
+    ops_115,
+    ops_115,
+    ops_116,
+    ops_117,
+    ops_117,
+    ops_117,
+    ops_117,
+    ops_117,
+    ops_117,
+    ops_118,
+    ops_119,
+    ops_118,
+    ops_119,
+    ops_120,
+    ops_120,
+    ops_120,
+    ops_120,
+    ops_120,
+    ops_120,
+    ops_121,
+    no_ops,
+    ops_122,
+    ops_122,
+    ops_122,
+    ops_122,
+    ops_122,
+    ops_122,
+    ops_122,
+    ops_123,
+    ops_123,
+    ops_124,
+    ops_124,
+    ops_123,
+    ops_125,
+    ops_126,
+    ops_127,
+    ops_128,
+    ops_127,
+    ops_128,
+    ops_129,
+    ops_129,
+    ops_130,
+    ops_131,
+    ops_131,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_21,
+    ops_21,
+    ops_132,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_133,
+    ops_134,
+    ops_133,
+    ops_134,
+    ops_11,
+    ops_12,
+    ops_11,
+    ops_12,
+    ops_135,
+    ops_135,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_0,
+    ops_21,
+    ops_21,
+    ops_136,
+    ops_136,
+    ops_137,
+    ops_137,
+    ops_22,
+    ops_138,
+    ops_129,
+    ops_129,
+    ops_21,
+    ops_21,
+    ops_59,
+    ops_21,
+    ops_21,
+    ops_139,
+    ops_140,
+    ops_141,
+    ops_139,
+    ops_140,
+    ops_141,
+    ops_142,
+    ops_143,
+    ops_144,
+    ops_142,
+    ops_143,
+    ops_144,
+    ops_142,
+    ops_143,
+    ops_144,
+    ops_142,
+    ops_143,
+    ops_144,
+    ops_139,
+    ops_139,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_147,
+    ops_148,
+    ops_149,
+    ops_150,
+    ops_149,
+    ops_150,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_145,
+    ops_146,
+    ops_142,
+    ops_143,
+    ops_144,
+    ops_142,
+    ops_143,
+    ops_144,
+    ops_142,
+    ops_143,
+    ops_144,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_151,
+    ops_151,
+    ops_151,
+    ops_151,
+    ops_151,
+    ops_151,
+    ops_151,
+    ops_151,
+    ops_129,
+    ops_152,
+    ops_153,
+    ops_129,
+    ops_129,
+    ops_152,
+    ops_153,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_21,
+    ops_21,
+    ops_132,
+    ops_132,
+    ops_132,
+    ops_154,
+    ops_154,
+    ops_154,
+    ops_154,
+    ops_21,
+    ops_21,
+    ops_21,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_129,
+    ops_155,
+    ops_155,
+    ops_155,
+    ops_155,
+    ops_156,
+    ops_156,
+    ops_26,
+    ops_26,
+    ops_26,
+    ops_26,
+    ops_26,
+    ops_27,
+    ops_21,
+    ops_21,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_157,
+    ops_158,
+    ops_159,
+    ops_158,
+    ops_159,
+    ops_160,
+    ops_160,
+    ops_158,
+    ops_159,
+    ops_160,
+    ops_161,
+    ops_161,
+    ops_161,
+    ops_161,
+    ops_161,
+    ops_161,
+    ops_162,
+    ops_162,
+    ops_162,
+    ops_163,
+    ops_163,
+    ops_163,
+    ops_163,
+    ops_163,
+    ops_163,
+    ops_163,
+    ops_163,
+    ops_164,
+    ops_164,
+    ops_40,
+    ops_165,
+    ops_166,
+    ops_167,
+    ops_168,
+    ops_169,
+    ops_170,
+    ops_171,
+    ops_172,
+    ops_173,
+    ops_173,
+    ops_174,
+    ops_174,
+    ops_175,
+    ops_176,
+    ops_176,
+    ops_176,
+    ops_176,
+    ops_177,
+    ops_177,
+    ops_177,
+    ops_177,
+    ops_178,
+    ops_22,
+    ops_179,
+    ops_179,
+    ops_180,
+    ops_181,
+    ops_182,
+    ops_183,
+    ops_184,
+    ops_183,
+    ops_182,
+    ops_185,
+    ops_186,
+    ops_186,
+    ops_186,
+    ops_186,
+    ops_186,
+    ops_186,
+    ops_187,
+    ops_188,
+    ops_189,
+    ops_188,
+    ops_187,
+    ops_190,
+    ops_186,
+    ops_186,
+    ops_186,
+    ops_186,
+    ops_186,
+    ops_191,
+    ops_191,
+    ops_191,
+    ops_191,
+    ops_191,
+    ops_192,
+    ops_192,
+    ops_192,
+    ops_192,
+    ops_192,
+    ops_192,
+    ops_18,
+    ops_18,
+    ops_18,
+    ops_18,
+    ops_18,
+    ops_18,
+    ops_18,
+    ops_182,
+    ops_183,
+    ops_184,
+    ops_183,
+    ops_193,
+    ops_194,
+    ops_182,
+    ops_185,
+    ops_18,
+    ops_18,
+    ops_195,
+    ops_195,
+    ops_195,
+    ops_195,
+    ops_134,
+    ops_185,
+    ops_182,
+    ops_14,
+    ops_196,
+    ops_183,
+    ops_193,
+    ops_134,
+    ops_185,
+    ops_182,
+    ops_14,
+    ops_196,
+    ops_183,
+    ops_193,
+    ops_197,
+    ops_134,
+    ops_182,
+    ops_185,
+    ops_14,
+    ops_196,
+    ops_184,
+    ops_194,
+    ops_134,
+    ops_182,
+    ops_185,
+    ops_14,
+    ops_196,
+    ops_184,
+    ops_194,
+    ops_142,
+    ops_142,
+    ops_143,
+    ops_144,
+    ops_142,
+    ops_142,
+    ops_143,
+    ops_144,
+    ops_149,
+    ops_150,
+    ops_142,
+    ops_142,
+    ops_143,
+    ops_144,
+    ops_31,
+    ops_198,
+    ops_137,
+    ops_137,
+    ops_199,
+    ops_139,
+    ops_145,
+    ops_145,
+    ops_145,
+    ops_145,
+    ops_145,
+    ops_145,
+    ops_145,
+    ops_145,
+    ops_200,
+    ops_200,
+    ops_136,
+    ops_136,
+    ops_128,
+    ops_132,
+    ops_136,
+    ops_136,
+    ops_136,
+    ops_136,
+    ops_136,
+    ops_136,
+    ops_136,
+    ops_136,
+    ops_132,
+    ops_132,
+    ops_132,
+    ops_132,
+    ops_128,
+    ops_128,
+    ops_201,
+    ops_201,
+    ops_201,
+    ops_201,
+    ops_132,
+    ops_128,
+    ops_198,
+    ops_198,
+    ops_136,
+    ops_136,
+    ops_178,
+    ops_22,
+    ops_31,
+    ops_198,
+    ops_31,
+    ops_198,
+    ops_31,
+    ops_198,
+    ops_31,
+    ops_202,
+    ops_202,
+    ops_31,
+    ops_31,
+    ops_192,
+    ops_192,
+    ops_192,
+    ops_192,
+    ops_192,
+    ops_203,
+    ops_203,
+    ops_203,
+    ops_203,
+    ops_203,
+    ops_203,
+    ops_203,
+    ops_186,
+    ops_204,
+    ops_186,
+    ops_204,
+    ops_186,
+    ops_204,
+    ops_186,
+    ops_186,
+    ops_204,
+    ops_186,
+    ops_204,
+    ops_186,
+    ops_204,
+    ops_186,
+    ops_204,
+    ops_186,
+    ops_186,
+    ops_204,
+    ops_186,
+    ops_186,
+    ops_186,
+    ops_186,
+    ops_186,
+    ops_205,
+    ops_206,
+    ops_206,
+    ops_207,
+    ops_206,
+    ops_208,
+    ops_208,
+    ops_208,
+    ops_208,
+    ops_17,
+    ops_17,
+    ops_17,
+    ops_17,
+    ops_17,
+    ops_17,
+    ops_17,
+    ops_187,
+    ops_188,
+    ops_189,
+    ops_188,
+    ops_209,
+    ops_210,
+    ops_187,
+    ops_190,
+    ops_17,
+    ops_17,
+    ops_211,
+    ops_211,
+    ops_211,
+    ops_211,
+    ops_133,
+    ops_190,
+    ops_187,
+    ops_13,
+    ops_212,
+    ops_188,
+    ops_209,
+    ops_133,
+    ops_190,
+    ops_187,
+    ops_13,
+    ops_212,
+    ops_188,
+    ops_209,
+    ops_213,
+    ops_133,
+    ops_187,
+    ops_190,
+    ops_13,
+    ops_212,
+    ops_189,
+    ops_210,
+    ops_133,
+    ops_187,
+    ops_190,
+    ops_13,
+    ops_212,
+    ops_189,
+    ops_210,
+    ops_214,
+    ops_214,
+    ops_214,
+    ops_214,
+    ops_214,
+    ops_214,
+    ops_214,
+    ops_214,
+    ops_215,
+    ops_216,
+    ops_215,
+    ops_216,
+    ops_71,
+    ops_71,
+    ops_71,
+    ops_71,
+    ops_217,
+    ops_217,
+    ops_32,
+    ops_32,
+    ops_218,
+    ops_218,
+    ops_218,
+    ops_218,
+    ops_218,
+    ops_218,
+    ops_219,
+    ops_220,
+    ops_221,
+    ops_220,
+    ops_221,
+    ops_220,
+    ops_220,
+    ops_220,
+    ops_220,
+    ops_220,
+    ops_220,
+    ops_222,
+    ops_222,
+    ops_222,
+    ops_222,
+    ops_222,
+    ops_222,
+    ops_222,
+    ops_222,
+    ops_222,
+    ops_222,
+    ops_223,
+    ops_224,
+    ops_225,
+    ops_226,
+    ops_227,
+    ops_227,
+    ops_227,
+    ops_227,
+    ops_228,
+    ops_228,
+    ops_229,
+    ops_230,
+    ops_231,
+    ops_232,
+    ops_232,
+    ops_232,
+    ops_232,
+    ops_233,
+    ops_233,
+    ops_233,
+    ops_233,
+    ops_233,
+    ops_234,
+    ops_235,
+    ops_236,
+    ops_237,
+    ops_238,
+    ops_239,
+    ops_240,
+    ops_241,
+    ops_242,
+    ops_243,
+    ops_244,
+    ops_242,
+    ops_243,
+    ops_242,
+    ops_243,
+    ops_244,
+    ops_242,
+    ops_243,
+    ops_245,
+    ops_246,
+    ops_247,
+    ops_248,
+    ops_249,
+    ops_250,
+    ops_251,
+    ops_252,
+    ops_252,
+    ops_251,
+    ops_253,
+    ops_249,
+    ops_248,
+    ops_247,
+    ops_246,
+    ops_254,
+    ops_255,
+    ops_255,
+    ops_256,
+    ops_256,
+    ops_257,
+    ops_257,
+    ops_258,
+    ops_258,
+    ops_259,
+    ops_260,
+    ops_261,
+    ops_262,
+    ops_263,
+    ops_264,
+    ops_265,
+    ops_266,
+    ops_267,
+    ops_267,
+    ops_255,
+    ops_268,
+    ops_269,
+    ops_270,
+    ops_271,
+    ops_256,
+    ops_272,
+    ops_273,
+    ops_273,
+    ops_272,
+    ops_257,
+    ops_271,
+    ops_270,
+    ops_269,
+    ops_268,
+    ops_258,
+    ops_274,
+    ops_275,
+    ops_276,
+    ops_277,
+    ops_278,
+    ops_279,
+    ops_280,
+    ops_281,
+    ops_281,
+    ops_280,
+    ops_282,
+    ops_278,
+    ops_277,
+    ops_276,
+    ops_275,
+    ops_283,
+    ops_284,
+    ops_285,
+    ops_286,
+    ops_287,
+    ops_288,
+    ops_289,
+    ops_290,
+    ops_291,
+    ops_292,
+    ops_292,
+    ops_290,
+    ops_291,
+    ops_292,
+    ops_292,
+    ops_291,
+    ops_291,
+    ops_292,
+    ops_292,
+    ops_291,
+    ops_290,
+    ops_292,
+    ops_289,
+    ops_290,
+    ops_291,
+    ops_292,
+    ops_292,
+    ops_290,
+    ops_291,
+    ops_292,
+    ops_292,
+    ops_291,
+    ops_291,
+    ops_292,
+    ops_292,
+    ops_291,
+    ops_290,
+    ops_292,
+    ops_255,
+    ops_256,
+    ops_257,
+    ops_258,
+    ops_293,
+    ops_294,
+    ops_295,
+    ops_296,
+    ops_297,
+    ops_298,
+    ops_299,
+    ops_300,
+    ops_301,
+    ops_302,
+    ops_303,
+    ops_304,
+    ops_289,
+    ops_290,
+    ops_291,
+    ops_292,
+    ops_305,
+    ops_306,
+    ops_307,
+    ops_308,
+    ops_309,
+    ops_310,
+    ops_311,
+    ops_312,
+    ops_313,
+    ops_314,
+    ops_315,
+    ops_316,
+    ops_317,
+    ops_318,
+    ops_319,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_320,
+    ops_321,
+    ops_322,
+    ops_323,
+    ops_324,
+    ops_325,
+    ops_326,
+    ops_327,
+    ops_325,
+    ops_326,
+    ops_325,
+    ops_326,
+    ops_327,
+    ops_325,
+    ops_326,
+    ops_328,
+    ops_328,
+    ops_328,
+    ops_328,
+    ops_328,
+    ops_328,
+    ops_328,
+    ops_329,
+    ops_330,
+    ops_331,
+    ops_332,
+    ops_333,
+    ops_334,
+    ops_335,
+    ops_336,
+    ops_337,
+    ops_334,
+    ops_335,
+    ops_336,
+    ops_334,
+    ops_335,
+    ops_336,
+    ops_337,
+    ops_334,
+    ops_335,
+    ops_336,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_338,
+    ops_339,
+    ops_340,
+    ops_341,
+    ops_342,
+    ops_343,
+    ops_344,
+    ops_345,
+    ops_343,
+    ops_344,
+    ops_343,
+    ops_344,
+    ops_345,
+    ops_343,
+    ops_344,
+    ops_346,
+    ops_347,
+    ops_348,
+    ops_349,
+    ops_350,
+    ops_351,
+    ops_229,
+    ops_352,
+    ops_353,
+    ops_354,
+    ops_355,
+    ops_356,
+    ops_357,
+    ops_230,
+    ops_231,
+    ops_358,
+    ops_358,
+    ops_358,
+    ops_358,
+    ops_359,
+    ops_359,
+    ops_359,
+    ops_360,
+    ops_361,
+    ops_362,
+    ops_363,
+    ops_357,
+    ops_364,
+    ops_365,
+    ops_366,
+    ops_367,
+    ops_368,
+    ops_369,
+    ops_370,
+    ops_371,
+    ops_372,
+    ops_373,
+    ops_374,
+    ops_375,
+    ops_376,
+    ops_376,
+    ops_376,
+    ops_376,
+    ops_377,
+    ops_377,
+    ops_377,
+    ops_378,
+    ops_379,
+    ops_380,
+    ops_381,
+    ops_382,
+    ops_383,
+    ops_383,
+    ops_383,
+    ops_383,
+    ops_384,
+    ops_385,
+    ops_386,
+    ops_387,
+    ops_388,
+    ops_389,
+    ops_390,
+    ops_391,
+    ops_392,
+    ops_393,
+    ops_394,
+    ops_395,
+    ops_396,
+    ops_397,
+    ops_396,
+    ops_398,
+    ops_399,
+    ops_400,
+    ops_401,
+    ops_398,
+    ops_402,
+    ops_403,
+    ops_404,
+    ops_405,
+    ops_406,
+    ops_407,
+    ops_408,
+    ops_409,
+    ops_410,
+    ops_411,
+    ops_412,
+    ops_413,
+    ops_414,
+    ops_414,
+    ops_415,
+    ops_415,
+    ops_416,
+    ops_416,
+    ops_417,
+    ops_417,
+    ops_418,
+    ops_418,
+    ops_419,
+    ops_419,
+    ops_420,
+    ops_420,
+    ops_421,
+    ops_421,
+    ops_422,
+    ops_422,
+    ops_423,
+    ops_423,
+    ops_424,
+    ops_424,
+    ops_425,
+    ops_425,
+    ops_426,
+    ops_426,
+    ops_427,
+    ops_427,
+    ops_428,
+    ops_428,
+    ops_429,
+    ops_429,
+    ops_430,
+    ops_430,
+    ops_431,
+    ops_431,
+    ops_432,
+    ops_432,
+    ops_433,
+    ops_433,
+    ops_434,
+    ops_434,
+    ops_435,
+    ops_435,
+    ops_436,
+    ops_436,
+    ops_437,
+    ops_437,
+    ops_438,
+    ops_438,
+    ops_439,
+    ops_439,
+    ops_440,
+    ops_440,
+    ops_441,
+    ops_441,
+    ops_442,
+    ops_442,
+    ops_443,
+    ops_443,
+    ops_444,
+    ops_444,
+    ops_445,
+    ops_445,
+    ops_446,
+    ops_446,
+    ops_447,
+    ops_447,
+    ops_448,
+    ops_448,
+    ops_449,
+    ops_449,
+    ops_450,
+    ops_450,
+    ops_451,
+    ops_451,
+    ops_452,
+    ops_452,
+    ops_453,
+    ops_453,
+    ops_454,
+    ops_454,
+    ops_455,
+    ops_455,
+    ops_456,
+    ops_456,
+    ops_457,
+    ops_457,
+    ops_458,
+    ops_458,
+    ops_459,
+    ops_459,
+    ops_460,
+    ops_460,
+    ops_461,
+    ops_461,
+    ops_462,
+    ops_462,
+    ops_463,
+    ops_463,
+    ops_464,
+    ops_464,
+    ops_465,
+    ops_465,
+    ops_466,
+    ops_466,
+    ops_467,
+    ops_467,
+    ops_468,
+    ops_468,
+    ops_469,
+    ops_469,
+    ops_470,
+    ops_470,
+    ops_471,
+    ops_471,
+    ops_472,
+    ops_472,
+    ops_473,
+    ops_473,
+    ops_474,
+    ops_474,
+    ops_475,
+    ops_475,
+    ops_476,
+    ops_476,
+    ops_477,
+    ops_477,
+    ops_478,
+    ops_478,
+    ops_479,
+    ops_479,
+    ops_480,
+    ops_480,
+    ops_481,
+    ops_481,
+    ops_482,
+    ops_483,
+    ops_484,
+    ops_485,
+    ops_486,
+    ops_486,
+    ops_487,
+    ops_487,
+    ops_488,
+    ops_488,
+    ops_489,
+    ops_489,
+    ops_486,
+    ops_486,
+    ops_487,
+    ops_487,
+    ops_488,
+    ops_488,
+    ops_489,
+    ops_489,
+    ops_482,
+    ops_482,
+    ops_482,
+    ops_482,
+    ops_482,
+    ops_482,
+    ops_482,
+    ops_482,
+    ops_483,
+    ops_483,
+    ops_483,
+    ops_483,
+    ops_483,
+    ops_483,
+    ops_483,
+    ops_483,
+    ops_484,
+    ops_484,
+    ops_484,
+    ops_484,
+    ops_484,
+    ops_484,
+    ops_484,
+    ops_484,
+    ops_485,
+    ops_485,
+    ops_485,
+    ops_485,
+    ops_485,
+    ops_485,
+    ops_485,
+    ops_485,
+    ops_490,
+    ops_491,
+    ops_492,
+    ops_493,
+    ops_494,
+    ops_494,
+    ops_495,
+    ops_495,
+    ops_496,
+    ops_496,
+    ops_497,
+    ops_497,
+    ops_494,
+    ops_494,
+    ops_495,
+    ops_495,
+    ops_496,
+    ops_496,
+    ops_497,
+    ops_497,
+    ops_486,
+    ops_486,
+    ops_486,
+    ops_486,
+    ops_487,
+    ops_487,
+    ops_487,
+    ops_487,
+    ops_488,
+    ops_488,
+    ops_488,
+    ops_488,
+    ops_489,
+    ops_489,
+    ops_489,
+    ops_489,
+    ops_498,
+    ops_499,
+    ops_500,
+    ops_500,
+    ops_499,
+    ops_499,
+    ops_499,
+    ops_499,
+    ops_501,
+    ops_502,
+    ops_502,
+    ops_500,
+    ops_500,
+    ops_503,
+    ops_503,
+    ops_504,
+    ops_504,
+    ops_504,
+    ops_504,
+    ops_505,
+    ops_503,
+    ops_503,
+    ops_506,
+    ops_507,
+    ops_507,
+    ops_508,
+    ops_508,
+    ops_508,
+    ops_508,
+    ops_505,
+    ops_505,
+    ops_505,
+    ops_505,
+    ops_505,
+    ops_505,
+    ops_505,
+    ops_505,
+    ops_504,
+    ops_504,
+    ops_504,
+    ops_504,
+    ops_509,
+    ops_509,
+    ops_510,
+    ops_510,
+    ops_510,
+    ops_510,
+    ops_510,
+    ops_510,
+    ops_510,
+    ops_510,
+    ops_511,
+    ops_511,
+    ops_512,
+    ops_512,
+    ops_513,
+    ops_513,
+    ops_514,
+    ops_514,
+    ops_515,
+    ops_515,
+    ops_515,
+    ops_515,
+    ops_515,
+    ops_515,
+    ops_515,
+    ops_515,
+    ops_516,
+    ops_516,
+    ops_516,
+    ops_516,
+    ops_516,
+    ops_516,
+    ops_516,
+    ops_516,
+    ops_517,
+    ops_517,
+    ops_517,
+    ops_517,
+    ops_517,
+    ops_517,
+    ops_517,
+    ops_517,
+    ops_518,
+    ops_518,
+    ops_518,
+    ops_518,
+    ops_518,
+    ops_518,
+    ops_518,
+    ops_518,
+    ops_519,
+    ops_520,
+    ops_521,
+    ops_522,
+    ops_523,
+    ops_524,
+    ops_525,
+    ops_526,
+    ops_527,
+    ops_528,
+    ops_529,
+    ops_530,
+    ops_531,
+    ops_532,
+    ops_533,
+    ops_534,
+    ops_535,
+    ops_536,
+    ops_537,
+    ops_538,
+    ops_539,
+    ops_540,
+    ops_541,
+    ops_542,
+    ops_543,
+    ops_544,
+    ops_545,
+    ops_546,
+    ops_547,
+    ops_548,
+    ops_549,
+    ops_550,
+    ops_551,
+    ops_552,
+    ops_553,
+    ops_539,
+    ops_540,
+    ops_541,
+    ops_542,
+    ops_543,
+    ops_544,
+    ops_545,
+    ops_546,
+    ops_547,
+    ops_548,
+    ops_554,
+    ops_555,
+    ops_556,
+    ops_557,
+    ops_558,
+    ops_559,
+    ops_560,
+    ops_561,
+    ops_562,
+    ops_563,
+    ops_564,
+    ops_565,
+    ops_566,
+    ops_567,
+    ops_568,
+    ops_569,
+    ops_570,
+    ops_571,
+    ops_572,
+    ops_573,
+    ops_574,
+    ops_575,
+    ops_576,
+    ops_577,
+    ops_576,
+    ops_577,
+    ops_578,
+    ops_578,
+    ops_579,
+    ops_580,
+    ops_581,
+    ops_582,
+    ops_583,
+    ops_584,
+    ops_585,
+    ops_585,
+    ops_585,
+    ops_585,
+    ops_585,
+    ops_585,
+    ops_585,
+    ops_586,
+    ops_586,
+    ops_586,
+    ops_586,
+    ops_587,
+    ops_587,
+    ops_587,
+    ops_587,
+    ops_588,
+    ops_587,
+    ops_587,
+    ops_587,
+    ops_587,
+    ops_589,
+    ops_589,
+    ops_589,
+    ops_589,
+    ops_589,
+    ops_589,
+    ops_590,
+    ops_590,
+    ops_590,
+    ops_590,
+    ops_591,
+    ops_592,
+    ops_592,
+    ops_592,
+    ops_593,
+    ops_592,
+    ops_592,
+    ops_592,
+    ops_593,
+    ops_593,
+    ops_591,
+    ops_592,
+    ops_592,
+    ops_593,
+    ops_593,
+    ops_594,
+    ops_594,
+    ops_594,
+    ops_594,
+    ops_589,
+    ops_595,
+    ops_595,
+    ops_595,
+    ops_595,
+    ops_596,
+    ops_597,
+    ops_597,
+    ops_598,
+    ops_599,
+    ops_598,
+    ops_599,
+    ops_595,
+    ops_595,
+    ops_595,
+    ops_595,
+    ops_600,
+    ops_600,
+    ops_601,
+    ops_601,
+    ops_601,
+    ops_601,
+    ops_601,
+    ops_601,
+    ops_601,
+    ops_602,
+    ops_602,
+    ops_602,
+    ops_602,
+    ops_603,
+    ops_604,
+    ops_605,
+    ops_605,
+    ops_605,
+    ops_606,
+    ops_606,
+    ops_606,
+    ops_605,
+    ops_605,
+    ops_604,
+    ops_605,
+    ops_605,
+    ops_606,
+    ops_605,
+    ops_605,
+    ops_607,
+    ops_607,
+    ops_607,
+    ops_607,
+    ops_608,
+    ops_608,
+    ops_608,
+    ops_608,
+    ops_609,
+    ops_610,
+    ops_611,
+    ops_611,
+    ops_610,
+    ops_611,
+    ops_611,
+    ops_608,
+    ops_608,
+    ops_608,
+    ops_608,
+    ops_612,
+    ops_613,
+    ops_612,
+    ops_612,
+    ops_613,
+    ops_612,
+    ops_613,
+    ops_614,
+    ops_615,
+    ops_614,
+    ops_614,
+    ops_614,
+    ops_616,
+    ops_616,
+    ops_617,
+    ops_616,
+    ops_616,
+    ops_616,
+    ops_616,
+    ops_616,
+    ops_616,
+    ops_618,
+    ops_618,
+    ops_618,
+    ops_618,
+    ops_618,
+    ops_618,
+    ops_618,
+    ops_618,
+    ops_619,
+    ops_619,
+    ops_620,
+    ops_621,
+    ops_622,
+    ops_622,
+    ops_621,
+    ops_621,
+    ops_619,
+    ops_619,
+    ops_623,
+    ops_623,
+    ops_623,
+    ops_623,
+    ops_624,
+    ops_624,
+    ops_624,
+    ops_624,
+    ops_625,
+    ops_626,
+    ops_625,
+    ops_625,
+    ops_626,
+    ops_625,
+    ops_626,
+    ops_615,
+    ops_627,
+    ops_627,
+    ops_628,
+    ops_627,
+    ops_627,
+    ops_627,
+    ops_627,
+    ops_627,
+    ops_627,
+    ops_629,
+    ops_630,
+    ops_630,
+    ops_631,
+    ops_632,
+    ops_633,
+    ops_633,
+    ops_632,
+    ops_632,
+    ops_630,
+    ops_630,
+    ops_634,
+    ops_634,
+    ops_634,
+    ops_634,
+    ops_635,
+    ops_635,
+    ops_635,
+    ops_635,
+    ops_636,
+    ops_637,
+    ops_636,
+    ops_636,
+    ops_636,
+    ops_637,
+    ops_638,
+    ops_638,
+    ops_638,
+    ops_638,
+    ops_639,
+    ops_638,
+    ops_638,
+    ops_638,
+    ops_638,
+    ops_640,
+    ops_640,
+    ops_641,
+    ops_642,
+    ops_643,
+    ops_643,
+    ops_643,
+    ops_643,
+    ops_644,
+    ops_644,
+    ops_642,
+    ops_640,
+    ops_640,
+    ops_645,
+    ops_645,
+    ops_645,
+    ops_645,
+    ops_646,
+    ops_646,
+    ops_646,
+    ops_646,
+    ops_647,
+    ops_647,
+    ops_647,
+    ops_647,
+    ops_648,
+    ops_649,
+    ops_648,
+    ops_648,
+    ops_648,
+    ops_649,
+    ops_650,
+    ops_650,
+    ops_650,
+    ops_650,
+    ops_651,
+    ops_650,
+    ops_650,
+    ops_650,
+    ops_650,
+    ops_652,
+    ops_652,
+    ops_653,
+    ops_654,
+    ops_655,
+    ops_655,
+    ops_655,
+    ops_655,
+    ops_656,
+    ops_656,
+    ops_654,
+    ops_652,
+    ops_652,
+    ops_657,
+    ops_657,
+    ops_657,
+    ops_657,
+    ops_658,
+    ops_658,
+    ops_658,
+    ops_658,
+    ops_659,
+    ops_659,
+    ops_659,
+    ops_659,
+    ops_660,
+    ops_661,
+    ops_662,
+    ops_662,
+    ops_662,
+    ops_662,
+    ops_663,
+    ops_664,
+    ops_663,
+    ops_664,
+    ops_663,
+    ops_664,
+    ops_663,
+    ops_664,
+    ops_663,
+    ops_664,
+    ops_662,
+    ops_662,
+    ops_662,
+    ops_662,
+    ops_665,
+    ops_665,
+    ops_665,
+    ops_665,
+    ops_666,
+    ops_667,
+    ops_666,
+    ops_667,
+    ops_666,
+    ops_667,
+    ops_666,
+    ops_667,
+    ops_666,
+    ops_667,
+    ops_665,
+    ops_665,
+    ops_665,
+    ops_665,
+    ops_668,
+    ops_668,
+    ops_668,
+    ops_668,
+    ops_669,
+    ops_670,
+    ops_669,
+    ops_670,
+    ops_669,
+    ops_670,
+    ops_669,
+    ops_670,
+    ops_669,
+    ops_669,
+    ops_669,
+    ops_670,
+    ops_668,
+    ops_668,
+    ops_668,
+    ops_671,
+    ops_671,
+    ops_671,
+    ops_671,
+    ops_672,
+    ops_673,
+    ops_672,
+    ops_673,
+    ops_672,
+    ops_673,
+    ops_672,
+    ops_673,
+    ops_672,
+    ops_672,
+    ops_672,
+    ops_673,
+    ops_671,
+    ops_671,
+    ops_671,
+    ops_674,
+    ops_675,
+    ops_676,
+    ops_676,
+    ops_677,
+    ops_678,
+    ops_679,
+    ops_679,
+    ops_676,
+    ops_676,
+    ops_680,
+    ops_680,
+    ops_158,
+    ops_158,
+    ops_158,
+    ops_681,
+    ops_681,
+    ops_681,
+    ops_681,
+    ops_681,
+    ops_681,
+    ops_162,
+    ops_162,
+    ops_162,
+    ops_162,
+    ops_682,
+    ops_682,
+    ops_682,
+    ops_682,
+    ops_162,
+    ops_162,
+    ops_162,
+    ops_215,
+    ops_215,
+    ops_683,
+    ops_683,
+    ops_684,
+    ops_684,
+    ops_684,
+    ops_684,
+    ops_684,
+    ops_684,
+    ops_684,
+    ops_684,
+    ops_682,
+    ops_682,
+    ops_682,
+    ops_682,
+    ops_685,
+    ops_685,
+    ops_686,
+    ops_686,
+    ops_686,
+    ops_686,
+    ops_687,
+    ops_687,
+    ops_687,
+    ops_687,
+    ops_687,
+    ops_687,
+    ops_688,
+    ops_688,
+    ops_689,
+    ops_689,
+    ops_690,
+    ops_690,
+    ops_691,
+    ops_691,
+    ops_686,
+    ops_686,
+    ops_686,
+    ops_686,
+    ops_692,
+    ops_693,
+    ops_694,
+    ops_695,
+    ops_696,
+    ops_697,
+    ops_698,
+    ops_699,
+    ops_700,
+    ops_701,
+    ops_702,
+    ops_703,
+    ops_704,
+    ops_705,
+    ops_706,
+    ops_707,
+    ops_708,
+    ops_709,
+    ops_710,
+    ops_710,
+    ops_711,
+    ops_711,
+    ops_712,
+    ops_713,
+    ops_714,
+    ops_715,
+    ops_715,
+    ops_716,
+    ops_717,
+    ops_718,
+    ops_719,
+    ops_720,
+    ops_721,
+    ops_720,
+    ops_721,
+    ops_722,
+    ops_723,
+    ops_722,
+    ops_723,
+    ops_724,
+    ops_724,
+    ops_725,
+    ops_726,
+    ops_725,
+    ops_726,
+    ops_727,
+    ops_728,
+    ops_727,
+    ops_728,
+    ops_729,
+    ops_729,
+    ops_729,
+    ops_730,
+    ops_731,
+    ops_731,
+    ops_731,
+    ops_732,
+    ops_733,
+    ops_733,
+    ops_733,
+    ops_734,
+    ops_734,
+    ops_734,
+    ops_735,
+    ops_735,
+    ops_735,
+    ops_736,
+    ops_736,
+    ops_736,
+    ops_737,
+    ops_737,
+    ops_715,
+    ops_715,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_739,
+    ops_739,
+    ops_739,
+    ops_739,
+    ops_740,
+    ops_739,
+    ops_741,
+    ops_741,
+    ops_741,
+    ops_742,
+    ops_743,
+    ops_743,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    ops_744,
+    ops_744,
+    ops_745,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    ops_746,
+    no_ops,
+    ops_747,
+    ops_748,
+    ops_749,
+    no_ops,
+    ops_750,
+    no_ops,
+    ops_751,
+    ops_752,
+    ops_753,
+    ops_753,
+    ops_754,
+    no_ops,
+    ops_755,
+    ops_756,
+    no_ops,
+    no_ops,
+    no_ops,
+    ops_757,
+    ops_758,
+    ops_759,
+    ops_760,
+    ops_761,
+    ops_762,
+    ops_763,
+    ops_764,
+    ops_764,
+    ops_764,
+    ops_764,
+    ops_764,
+    ops_764,
+    ops_765,
+    ops_743,
+    no_ops,
+    ops_743,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    ops_766,
+    no_ops,
+    ops_767,
+    ops_767,
+    ops_767,
+    ops_767,
+    ops_768,
+    ops_768,
+    ops_769,
+    ops_769,
+    ops_770,
+    ops_770,
+    ops_771,
+    ops_771,
+    ops_772,
+    ops_772,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_738,
+    ops_773,
+    ops_773,
+    ops_773,
+    ops_773,
+    ops_773,
+    ops_773,
+    ops_774,
+    ops_774,
+    ops_774,
+    ops_774,
+    ops_774,
+    ops_774,
+    ops_775,
+    ops_775,
+    ops_775,
+    ops_775,
+    ops_775,
+    ops_775,
+    ops_776,
+    ops_776,
+    ops_776,
+    ops_776,
+    ops_776,
+    ops_776,
+    ops_777,
+    ops_777,
+    ops_777,
+    ops_777,
+    ops_777,
+    ops_777,
+    ops_778,
+    ops_778,
+    ops_779,
+    ops_779,
+    ops_779,
+    ops_779,
+    ops_779,
+    ops_779,
+    ops_780,
+    ops_780,
+    ops_780,
+    ops_780,
+    ops_780,
+    ops_780,
+    ops_781,
+    ops_781,
+    ops_782,
+    ops_783,
+    ops_783,
+    ops_783,
+    ops_783,
+    ops_784,
+    ops_784,
+    ops_784,
+    ops_784,
+    ops_785,
+    ops_786,
+    ops_787,
+    ops_788,
+    ops_789,
+    ops_790,
+    ops_791,
+    ops_785,
+    ops_786,
+    ops_787,
+    ops_788,
+    ops_789,
+    ops_790,
+    ops_791,
+    ops_792,
+    ops_793,
+    ops_794,
+    ops_795,
+    ops_796,
+    ops_797,
+    ops_798,
+    ops_799,
+    ops_800,
+    ops_801,
+    ops_802,
+    ops_803,
+    ops_804,
+    ops_805,
+    ops_792,
+    ops_793,
+    ops_794,
+    ops_795,
+    ops_796,
+    ops_797,
+    ops_798,
+    ops_799,
+    ops_800,
+    ops_801,
+    ops_802,
+    ops_803,
+    ops_804,
+    ops_805,
+    ops_806,
+    ops_807,
+    ops_808,
+    ops_809,
+    ops_810,
+    ops_811,
+    ops_812,
+    ops_813,
+    ops_811,
+    ops_814,
+    ops_815,
+    ops_816,
+    ops_817,
+    ops_818,
+    ops_819,
+    ops_820,
+    ops_821,
+    ops_806,
+    ops_807,
+    ops_808,
+    ops_809,
+    ops_810,
+    ops_811,
+    ops_812,
+    ops_813,
+    ops_789,
+    ops_788,
+    ops_811,
+    ops_814,
+    ops_815,
+    ops_816,
+    ops_817,
+    ops_818,
+    ops_819,
+    ops_820,
+    ops_821,
+    ops_791,
+    ops_786,
+    ops_822,
+    ops_823,
+    ops_824,
+    ops_825,
+    ops_826,
+    ops_827,
+    ops_828,
+    ops_829,
+    ops_830,
+    ops_831,
+    ops_832,
+    ops_833,
+    ops_834,
+    ops_835,
+    ops_836,
+    ops_837,
+    ops_838,
+    ops_839,
+    ops_840,
+    ops_841,
+    ops_842,
+    ops_843,
+    ops_844,
+    ops_845,
+    ops_846,
+    ops_847,
+    ops_848,
+    ops_849,
+    ops_850,
+    ops_851,
+    ops_852,
+    ops_853,
+    ops_822,
+    ops_823,
+    ops_824,
+    ops_825,
+    ops_826,
+    ops_827,
+    ops_828,
+    ops_829,
+    ops_796,
+    ops_795,
+    ops_830,
+    ops_831,
+    ops_832,
+    ops_833,
+    ops_834,
+    ops_835,
+    ops_836,
+    ops_837,
+    ops_854,
+    ops_855,
+    ops_838,
+    ops_839,
+    ops_840,
+    ops_841,
+    ops_842,
+    ops_843,
+    ops_844,
+    ops_845,
+    ops_798,
+    ops_793,
+    ops_846,
+    ops_847,
+    ops_848,
+    ops_849,
+    ops_850,
+    ops_851,
+    ops_852,
+    ops_853,
+    ops_856,
+    ops_857,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_784,
+    ops_784,
+    ops_784,
+    ops_784,
+    ops_784,
+    ops_784,
+    ops_784,
+    ops_784,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_784,
+    ops_784,
+    ops_784,
+    ops_784,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_860,
+    ops_860,
+    ops_861,
+    ops_862,
+    ops_863,
+    ops_860,
+    ops_864,
+    ops_861,
+    ops_862,
+    ops_863,
+    ops_861,
+    ops_862,
+    ops_863,
+    ops_860,
+    ops_861,
+    ops_862,
+    ops_863,
+    ops_860,
+    ops_865,
+    ops_865,
+    ops_866,
+    ops_866,
+    ops_867,
+    ops_867,
+    ops_868,
+    ops_868,
+    ops_869,
+    ops_869,
+    ops_870,
+    ops_870,
+    ops_871,
+    ops_871,
+    ops_860,
+    ops_860,
+    ops_869,
+    ops_869,
+    ops_870,
+    ops_870,
+    ops_869,
+    ops_869,
+    ops_870,
+    ops_870,
+    ops_869,
+    ops_869,
+    ops_870,
+    ops_870,
+    ops_871,
+    ops_871,
+    ops_860,
+    ops_860,
+    ops_870,
+    ops_870,
+    ops_870,
+    ops_870,
+    ops_870,
+    ops_870,
+    ops_870,
+    ops_870,
+    ops_870,
+    ops_870,
+    ops_870,
+    ops_870,
+    ops_860,
+    ops_860,
+    ops_860,
+    ops_860,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_872,
+    ops_873,
+    ops_874,
+    ops_873,
+    ops_875,
+    ops_859,
+    ops_859,
+    ops_876,
+    ops_859,
+    ops_859,
+    ops_859,
+    ops_877,
+    ops_878,
+    ops_879,
+    ops_880,
+    ops_881,
+    ops_881,
+    ops_882,
+    ops_881,
+    ops_881,
+    ops_881,
+    ops_882,
+    ops_881,
+    ops_881,
+    ops_881,
+    ops_882,
+    ops_882,
+    ops_882,
+    ops_883,
+    ops_883,
+    ops_883,
+    ops_883,
+    ops_883,
+    ops_883,
+    ops_883,
+    ops_883,
+    ops_883,
+    ops_883,
+    ops_883,
+    ops_883,
+    ops_884,
+    ops_884,
+    ops_885,
+    ops_885,
+    ops_886,
+    ops_886,
+    ops_887,
+    ops_887,
+    ops_888,
+    ops_888,
+    ops_771,
+    ops_889,
+    ops_772,
+    ops_890,
+    ops_772,
+    ops_891,
+    ops_892,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_893,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_894,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_895,
+    ops_895,
+    ops_896,
+    ops_896,
+    ops_897,
+    ops_897,
+    ops_898,
+    ops_898,
+    ops_899,
+    ops_899,
+    ops_898,
+    ops_898,
+    ops_899,
+    ops_899,
+    ops_900,
+    ops_900,
+    ops_901,
+    ops_901,
+    ops_902,
+    ops_903,
+    ops_904,
+    ops_904,
+    ops_905,
+    ops_905,
+    ops_906,
+    ops_906,
+    ops_905,
+    ops_905,
+    ops_906,
+    ops_906,
+    ops_895,
+    ops_895,
+    ops_896,
+    ops_896,
+    ops_907,
+    ops_908,
+    ops_897,
+    ops_897,
+    ops_898,
+    ops_898,
+    ops_899,
+    ops_899,
+    ops_898,
+    ops_898,
+    ops_899,
+    ops_899,
+    ops_909,
+    ops_909,
+    ops_910,
+    ops_910,
+    ops_911,
+    ops_912,
+    ops_913,
+    ops_913,
+    ops_914,
+    ops_914,
+    ops_915,
+    ops_915,
+    ops_914,
+    ops_914,
+    ops_915,
+    ops_915,
+    ops_881,
+    ops_881,
+    ops_882,
+    ops_881,
+    ops_884,
+    ops_884,
+    ops_885,
+    ops_885,
+    ops_881,
+    ops_881,
+    ops_882,
+    ops_881,
+    ops_886,
+    ops_886,
+    ops_881,
+    ops_881,
+    ops_882,
+    ops_887,
+    ops_887,
+    ops_882,
+    ops_882,
+    ops_916,
+    ops_888,
+    ops_888,
+    ops_917,
+    ops_917,
+    ops_918,
+    ops_917,
+    ops_919,
+    ops_919,
+    ops_920,
+    ops_920,
+    ops_917,
+    ops_917,
+    ops_918,
+    ops_917,
+    ops_921,
+    ops_921,
+    ops_917,
+    ops_917,
+    ops_918,
+    ops_922,
+    ops_922,
+    ops_918,
+    ops_918,
+    ops_923,
+    ops_923,
+    ops_881,
+    ops_881,
+    ops_882,
+    ops_881,
+    ops_881,
+    ops_881,
+    ops_882,
+    ops_881,
+    ops_881,
+    ops_881,
+    ops_882,
+    ops_882,
+    ops_882,
+    ops_924,
+    ops_924,
+    ops_925,
+    ops_924,
+    ops_926,
+    ops_926,
+    ops_927,
+    ops_927,
+    ops_924,
+    ops_924,
+    ops_925,
+    ops_924,
+    ops_928,
+    ops_928,
+    ops_924,
+    ops_924,
+    ops_925,
+    ops_929,
+    ops_929,
+    ops_925,
+    ops_925,
+    ops_930,
+    ops_930,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_870,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_870,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_870,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_869,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_860,
+    ops_860,
+    ops_860,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_860,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_860,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_858,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_932,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_931,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_934,
+    ops_934,
+    ops_934,
+    ops_934,
+    ops_934,
+    ops_934,
+    ops_934,
+    ops_934,
+    ops_934,
+    ops_934,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_933,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_936,
+    ops_936,
+    ops_936,
+    ops_936,
+    ops_936,
+    ops_936,
+    ops_936,
+    ops_936,
+    ops_936,
+    ops_936,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_935,
+    ops_937,
+    ops_938,
+    ops_937,
+    ops_938,
+    ops_939,
+    ops_940,
+    ops_937,
+    ops_938,
+    ops_941,
+    ops_942,
+    ops_941,
+    ops_942,
+    ops_943,
+    ops_943,
+    ops_944,
+    ops_944,
+    ops_945,
+    ops_944,
+    ops_946,
+    ops_946,
+    ops_947,
+    ops_947,
+    ops_948,
+    ops_949,
+    ops_949,
+    ops_950,
+    ops_950,
+    ops_951,
+    ops_952,
+    ops_953,
+    ops_953,
+    ops_954,
+    ops_955,
+    ops_954,
+    ops_955,
+    ops_956,
+    ops_956,
+    ops_957,
+    ops_956,
+    ops_958,
+    ops_958,
+    ops_959,
+    ops_959,
+    ops_960,
+    ops_960,
+    ops_961,
+    ops_960,
+    ops_962,
+    ops_962,
+    ops_963,
+    ops_963,
+    ops_964,
+    ops_965,
+    ops_965,
+    ops_966,
+    ops_966,
+    ops_967,
+    ops_968,
+    ops_968,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_970,
+    ops_971,
+    ops_971,
+    ops_972,
+    ops_973,
+    ops_971,
+    ops_971,
+    ops_971,
+    ops_971,
+    ops_974,
+    ops_975,
+    ops_975,
+    ops_971,
+    ops_971,
+    ops_971,
+    ops_971,
+    ops_970,
+    ops_976,
+    ops_976,
+    ops_976,
+    ops_976,
+    ops_976,
+    ops_976,
+    ops_976,
+    ops_976,
+    ops_977,
+    ops_977,
+    ops_977,
+    ops_977,
+    ops_977,
+    ops_977,
+    ops_977,
+    ops_977,
+    ops_977,
+    ops_978,
+    ops_978,
+    ops_978,
+    ops_978,
+    ops_978,
+    ops_978,
+    ops_978,
+    ops_978,
+    ops_743,
+    ops_743,
+    ops_743,
+    ops_743,
+    ops_743,
+    ops_743,
+    ops_743,
+    ops_743,
+    ops_743,
+    ops_743,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    ops_764,
+    ops_764,
+    no_ops,
+    no_ops,
+    no_ops,
+    no_ops,
+    ops_979,
+    ops_979,
+    ops_979,
+    ops_979,
+    ops_979,
+    ops_979,
+    ops_979,
+    ops_979,
+    ops_980,
+    ops_980,
+    ops_980,
+    ops_980,
+    ops_980,
+    ops_980,
+    ops_980,
+    ops_980,
+    ops_981,
+    ops_981,
+    ops_981,
+    ops_981,
+    ops_982,
+    ops_982,
+    ops_982,
+    ops_982,
+    ops_983,
+    ops_984,
+    ops_983,
+    ops_984,
+    ops_985,
+    ops_986,
+    ops_985,
+    ops_986,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_969,
+    ops_971,
+    ops_971,
+    ops_971,
+    ops_971,
+    ops_987,
+    ops_987,
+    ops_988,
+    ops_989,
+    ops_989,
+    ops_990,
+    ops_990,
+    ops_991,
+    ops_991,
+    ops_992,
+    ops_992,
+    ops_993,
+    ops_993,
+    ops_994,
+    ops_994,
+    ops_994,
+    ops_994,
+    ops_995,
+    ops_995,
+    ops_995,
+    ops_995,
+    ops_996,
+    ops_996,
+    ops_997,
+    ops_997,
+    ops_998,
+    ops_998,
+    ops_971,
+    ops_997,
+    ops_997,
+    ops_998,
+    ops_998,
+    ops_971,
+    ops_999,
+    ops_999,
+    ops_999,
+    ops_999,
+    ops_1000,
+    ops_1000,
+    ops_1000,
+    ops_1001,
+    ops_1002,
+    ops_1002,
+    ops_1001,
+    ops_1003,
+    ops_1004,
+    ops_1004,
+    ops_1005,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1008,
+    ops_1008,
+    ops_1008,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1008,
+    ops_1008,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1009,
+    ops_1009,
+    ops_1010,
+    ops_1010,
+    ops_1011,
+    ops_1011,
+    ops_1011,
+    ops_1012,
+    ops_1013,
+    ops_1014,
+    ops_1014,
+    ops_1014,
+    ops_1014,
+    ops_1015,
+    ops_1015,
+    ops_1015,
+    ops_1014,
+    ops_1014,
+    ops_1014,
+    ops_1014,
+    ops_1010,
+    ops_1010,
+    ops_1011,
+    ops_1011,
+    ops_1012,
+    ops_1013,
+    ops_1013,
+    ops_1016,
+    ops_1014,
+    ops_1014,
+    ops_1014,
+    ops_1014,
+    ops_1015,
+    ops_1015,
+    ops_1014,
+    ops_1014,
+    ops_1014,
+    ops_1017,
+    ops_1018,
+    ops_1018,
+    ops_1018,
+    ops_1018,
+    ops_1018,
+    ops_1019,
+    ops_1019,
+    ops_1019,
+    ops_1019,
+    ops_1019,
+    ops_1020,
+    ops_1020,
+    ops_1020,
+    ops_1021,
+    ops_1021,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1021,
+    ops_1022,
+    ops_1021,
+    ops_1022,
+    ops_1022,
+    ops_1009,
+    ops_1023,
+    ops_1023,
+    ops_1023,
+    ops_1023,
+    ops_1021,
+    ops_1021,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1021,
+    ops_1022,
+    ops_1021,
+    ops_1022,
+    ops_1022,
+    ops_1009,
+    ops_1023,
+    ops_1023,
+    ops_1023,
+    ops_1023,
+    ops_1023,
+    ops_1024,
+    ops_1024,
+    ops_1024,
+    ops_1024,
+    ops_1025,
+    ops_1026,
+    ops_1027,
+    ops_1027,
+    ops_1028,
+    ops_1028,
+    ops_1024,
+    ops_1024,
+    ops_1024,
+    ops_1024,
+    ops_1024,
+    ops_1025,
+    ops_1026,
+    ops_1026,
+    ops_1027,
+    ops_1027,
+    ops_1027,
+    ops_1027,
+    ops_1028,
+    ops_1028,
+    ops_1029,
+    ops_1029,
+    ops_1029,
+    ops_1030,
+    ops_1030,
+    ops_1031,
+    ops_1031,
+    ops_1031,
+    ops_1032,
+    ops_1032,
+    ops_1032,
+    ops_1030,
+    ops_1030,
+    ops_1031,
+    ops_1032,
+    ops_1033,
+    ops_1033,
+    ops_1034,
+    ops_1034,
+    ops_1035,
+    ops_1035,
+    ops_1036,
+    ops_1036,
+    ops_1037,
+    ops_1038,
+    ops_1039,
+    ops_1040,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1042,
+    ops_1043,
+    ops_1044,
+    ops_1045,
+    ops_1046,
+    ops_1047,
+    ops_1048,
+    ops_1049,
+    ops_1050,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1051,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1053,
+    ops_1053,
+    ops_1053,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1053,
+    ops_1053,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1052,
+    ops_1054,
+    ops_1055,
+    ops_1054,
+    ops_1056,
+    ops_1057,
+    ops_1054,
+    ops_1058,
+    ops_1059,
+    ops_1059,
+    ops_1054,
+    ops_1060,
+    ops_1061,
+    ops_1058,
+    ops_1062,
+    ops_1063,
+    ops_1063,
+    ops_1064,
+    ops_1063,
+    ops_1063,
+    ops_1063,
+    ops_1063,
+    ops_1065,
+    ops_1064,
+    ops_1064,
+    ops_1066,
+    ops_1066,
+    ops_1063,
+    ops_1063,
+    ops_1067,
+    ops_1068,
+    ops_1069,
+    ops_1070,
+    ops_1067,
+    ops_1068,
+    ops_1069,
+    ops_1070,
+    ops_1071,
+    ops_1071,
+    ops_1071,
+    ops_1070,
+    ops_1072,
+    ops_1072,
+    ops_1073,
+    ops_1074,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1076,
+    ops_1076,
+    ops_1076,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1077,
+    ops_1075,
+    ops_1078,
+    ops_1079,
+    ops_1069,
+    ops_1070,
+    ops_1067,
+    ops_1069,
+    ops_1070,
+    ops_1071,
+    ops_1071,
+    ops_1070,
+    ops_1072,
+    ops_1080,
+    ops_1072,
+    ops_1081,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1082,
+    ops_1083,
+    ops_1082,
+    ops_1083,
+    ops_1076,
+    ops_1076,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1075,
+    ops_1077,
+    ops_1075,
+    ops_1075,
+    ops_1083,
+    ops_1083,
+    ops_1084,
+    ops_1085,
+    ops_1085,
+    ops_1085,
+    ops_1086,
+    ops_1086,
+    ops_1086,
+    ops_1086,
+    ops_1084,
+    ops_1085,
+    ops_1085,
+    ops_1087,
+    ops_1087,
+    ops_1087,
+    ops_1087,
+    ops_1088,
+    ops_1089,
+    ops_1088,
+    ops_1089,
+    ops_1090,
+    ops_1088,
+    ops_1090,
+    ops_1088,
+    ops_1088,
+    ops_1091,
+    ops_1088,
+    ops_1091,
+    ops_1088,
+    ops_1091,
+    ops_1092,
+    ops_1088,
+    ops_1089,
+    ops_1088,
+    ops_1089,
+    ops_1090,
+    ops_1088,
+    ops_1090,
+    ops_1088,
+    ops_1088,
+    ops_1088,
+    ops_1088,
+    ops_1093,
+    ops_1041,
+    ops_1093,
+    ops_1093,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1093,
+    ops_1093,
+    ops_1093,
+    ops_1093,
+    ops_1041,
+    ops_1041,
+    ops_1093,
+    ops_1093,
+    ops_1093,
+    ops_1093,
+    ops_1059,
+    ops_1041,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1095,
+    ops_1096,
+    ops_1095,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1095,
+    ops_1096,
+    ops_1095,
+    ops_1093,
+    ops_1041,
+    ops_1093,
+    ops_1093,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1041,
+    ops_1093,
+    ops_1093,
+    ops_1093,
+    ops_1093,
+    ops_1041,
+    ops_1041,
+    ops_1093,
+    ops_1097,
+    ops_1093,
+    ops_1093,
+    ops_1059,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1095,
+    ops_1096,
+    ops_1095,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1094,
+    ops_1095,
+    ops_1096,
+    ops_1095,
+    ops_1098,
+    ops_1098,
+    ops_1099,
+    ops_1099,
+    ops_1100,
+    ops_1101,
+    ops_1102,
+    ops_1103,
+    ops_1098,
+    ops_1098,
+    ops_1099,
+    ops_1099,
+    ops_1100,
+    ops_1104,
+    ops_1105,
+    ops_1106,
+    ops_1107,
+    ops_1107,
+    ops_1107,
+    ops_1107,
+    ops_1108,
+    ops_1108,
+    ops_1109,
+    ops_1109,
+    ops_1109,
+    ops_1109,
+    ops_1110,
+    ops_1111,
+    ops_1111,
+    ops_1107,
+    ops_1107,
+    ops_1107,
+    ops_1107,
+    ops_1107,
+    ops_1108,
+    ops_1108,
+    ops_1108,
+    ops_1109,
+    ops_1109,
+    ops_1109,
+    ops_1109,
+    ops_1110,
+    ops_1111,
+    ops_1111,
+    ops_1112,
+    ops_1112,
+    ops_1112,
+    ops_1112,
+    ops_1113,
+    ops_1112,
+    ops_1112,
+    ops_1113,
+    ops_1113,
+    ops_1114,
+    ops_1114,
+    ops_1115,
+    ops_1115,
+    ops_1115,
+    ops_1114,
+    ops_1116,
+    ops_1117,
+    ops_1117,
+    ops_1118,
+    ops_1118,
+    ops_1118,
+    ops_1119,
+    ops_1119,
+    ops_1114,
+    ops_1120,
+    ops_1113,
+    ops_1112,
+    ops_1113,
+    ops_1112,
+    ops_1112,
+    ops_1113,
+    ops_1114,
+    ops_1113,
+    ops_1115,
+    ops_1121,
+    ops_1118,
+    ops_1119,
+    ops_1119,
+    ops_1122,
+    ops_1123,
+    ops_1123,
+    ops_1122,
+    ops_1123,
+    ops_1123,
+    ops_1124,
+    ops_1124,
+    ops_1124,
+    ops_1124,
+    ops_1125,
+    ops_1125,
+    ops_1126,
+    ops_1126,
+    ops_1001,
+    ops_1001,
+    ops_1001,
+    ops_1127,
+    ops_1127,
+    ops_1128,
+    ops_1129,
+    ops_1130,
+    ops_1004,
+    ops_1131,
+    ops_1131,
+    ops_1132,
+    ops_1132,
+    ops_1133,
+    ops_1133,
+    ops_1134,
+    ops_1134,
+    ops_1135,
+    ops_1135,
+    ops_1136,
+    ops_1136,
+    ops_1137,
+    ops_1137,
+    ops_1138,
+    ops_1138,
+    ops_1139,
+    ops_1139,
+    ops_1140,
+    ops_1140,
+    ops_1141,
+    ops_1141,
+    ops_1142,
+    ops_1142,
+    ops_1143,
+    ops_1143,
+    ops_1144,
+    ops_1144,
+    ops_1143,
+    ops_1143,
+    ops_1143,
+    ops_1144,
+    ops_1143,
+    ops_1143,
+    ops_1143,
+    ops_1143,
+    ops_1143,
+    ops_1143,
+    ops_1145,
+    ops_1145,
+    ops_1146,
+    ops_1146,
+    ops_1145,
+    ops_1145,
+    ops_1145,
+    ops_1145,
+    ops_1145,
+    ops_1145,
+    ops_1145,
+    ops_1145,
+    ops_1145,
+    ops_1147,
+    ops_1147,
+    ops_1148,
+    ops_1148,
+    ops_1147,
+    ops_1147,
+    ops_1147,
+    ops_1148,
+    ops_1147,
+    ops_1147,
+    ops_1147,
+    ops_1147,
+    ops_1147,
+    ops_1147,
+    ops_1149,
+    ops_1149,
+    ops_1150,
+    ops_1150,
+    ops_1149,
+    ops_1149,
+    ops_1149,
+    ops_1149,
+    ops_1149,
+    ops_1149,
+    ops_1149,
+    ops_1149,
+    ops_1151,
+    ops_1151,
+    ops_1152,
+    ops_1152,
+    ops_1151,
+    ops_1151,
+    ops_1151,
+    ops_1152,
+    ops_1151,
+    ops_1151,
+    ops_1151,
+    ops_1151,
+    ops_1151,
+    ops_1151,
+    ops_1153,
+    ops_1154,
+    ops_1155,
+    ops_1155,
+    ops_1156,
+    ops_1156,
+    ops_1155,
+    ops_1155,
+    ops_1155,
+    ops_1156,
+    ops_1155,
+    ops_1155,
+    ops_1155,
+    ops_1155,
+    ops_1155,
+    ops_1155,
+    ops_1016,
+    ops_1016,
+    ops_1016,
+    ops_1016,
+    ops_1016,
+    ops_1157,
+    ops_1016,
+    ops_1016,
+    ops_1016,
+    ops_1016,
+    ops_1016,
+    ops_1157,
+    ops_1158,
+    ops_1158,
+    ops_1158,
+    ops_1158,
+    ops_1158,
+    ops_1159,
+    ops_1158,
+    ops_1158,
+    ops_1158,
+    ops_1158,
+    ops_1158,
+    ops_1159,
+    ops_1160,
+    ops_1160,
+    ops_1160,
+    ops_1160,
+    ops_1160,
+    ops_1161,
+    ops_1160,
+    ops_1160,
+    ops_1160,
+    ops_1160,
+    ops_1160,
+    ops_1161,
+    ops_1157,
+    ops_1157,
+    ops_1157,
+    ops_1157,
+    ops_1157,
+    ops_1016,
+    ops_1157,
+    ops_1157,
+    ops_1157,
+    ops_1157,
+    ops_1157,
+    ops_1016,
+    ops_1003,
+    ops_1003,
+    ops_1003,
+    ops_1003,
+    ops_1157,
+    ops_1159,
+    ops_1003,
+    ops_1003,
+    ops_1003,
+    ops_1003,
+    ops_1003,
+    ops_1003,
+    ops_1003,
+    ops_1003,
+    ops_1003,
+    ops_1003,
+    ops_1003,
+    ops_1012,
+    ops_1012,
+    ops_1012,
+    ops_1012,
+    ops_1016,
+    ops_1159,
+    ops_1161,
+    ops_1012,
+    ops_1012,
+    ops_1012,
+    ops_1012,
+    ops_1012,
+    ops_1012,
+    ops_1012,
+    ops_1012,
+    ops_1012,
+    ops_1012,
+    ops_1012,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1158,
+    ops_1160,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1007,
+    ops_1162,
+    ops_1163,
+    ops_1162,
+    ops_1163,
+    ops_1162,
+    ops_1162,
+    ops_1164,
+    ops_1165,
+    ops_1164,
+    ops_1165,
+    ops_1164,
+    ops_1164,
+    ops_1166,
+    ops_1167,
+    ops_1166,
+    ops_1167,
+    ops_1166,
+    ops_1166,
+    ops_1168,
+    ops_1169,
+    ops_1170,
+    ops_1171,
+    ops_1171,
+    ops_1172,
+    ops_1172,
+    ops_1173,
+    ops_1173,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1174,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1022,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1006,
+    ops_1175,
+    ops_1176,
+    ops_1177,
+    ops_1178,
+    ops_1178,
+    ops_1178,
+    ops_1178,
+    ops_1179,
+    ops_1179,
+    ops_1179,
+    ops_1179,
+    ops_1180,
+    ops_1180,
+    ops_1180,
+    ops_1180,
+];
+
+fn ops_0(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_2(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_20), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_20), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_20), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_3(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_6), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_4(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_5(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_21), 0), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_6(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_7), 0), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_7(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Tab(&TAB_22)), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_8(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_23), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_23), 0, Pq::None), Op::Imm(Imm::ShrEs(Fs([F::new(22, 2), F::new(5, 5), F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_9(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_23), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_23), 0, Pq::None), Op::Imm(Imm::ShlEs(Fs([F::new(22, 2), F::new(5, 5), F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_10(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_6), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_6), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_11(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_12(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_13(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_14(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_15(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_20), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_20), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_16(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_20), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_20), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_17(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_18(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_19(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_20(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_21(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_22(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_23(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_24), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_24), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_24), 0, Pq::None), Op::Imm(Imm::ShrEs(Fs([F::new(22, 2), F::new(16, 5), F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_24(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_25(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_6), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_6), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_26(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_24), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_24), 0, Pq::None), Op::Imm(Imm::ShrEs(Fs([F::new(22, 2), F::new(16, 5), F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_27(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_24), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_24), 0, Pq::None), Op::Imm(Imm::ShlEs(Fs([F::new(22, 2), F::new(16, 5), F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_28(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_25), amount: Amount::Tab(&TAB_26) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_29(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_27), amount: Amount::Tab(&TAB_26) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_30(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_28), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::Tab(&TAB_26) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Tab(&TAB_28), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_31(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_32(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_33(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_34(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Imm(Imm::S(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Imm(Imm::S(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_35(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_29), 0), Op::Imm(Imm::S(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_36(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Imm(Imm::S(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_29), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_37(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_29), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_29), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_38(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Imm(Imm::S(Fs([F::new(5, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_39(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::S(Fs([F::new(5, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_40(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_41(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Opt(&Op::Name(&TAB_30, NameKind::SvePattern), Fs([F::new(5, 5), F::new(16, 4), F::NONE, F::NONE]), 0x1f0), Op::Opt(&Op::MulImm(Imm::Add(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 1)), Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_42(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Opt(&Op::Name(&TAB_30, NameKind::SvePattern), Fs([F::new(5, 5), F::new(16, 4), F::NONE, F::NONE]), 0x1f0), Op::Opt(&Op::MulImm(Imm::Add(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 1)), Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_43(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Opt(&Op::Name(&TAB_30, NameKind::SvePattern), Fs([F::new(5, 5), F::new(16, 4), F::NONE, F::NONE]), 0x1f0), Op::Opt(&Op::MulImm(Imm::Add(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 1)), Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_44(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Opt(&Op::Name(&TAB_30, NameKind::SvePattern), Fs([F::new(5, 5), F::new(16, 4), F::NONE, F::NONE]), 0x1f0), Op::Opt(&Op::MulImm(Imm::Add(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 1)), Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_45(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Opt(&Op::Name(&TAB_30, NameKind::SvePattern), Fs([F::new(5, 5), F::new(16, 4), F::NONE, F::NONE]), 0x1f0), Op::Opt(&Op::MulImm(Imm::Add(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 1)), Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_46(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Opt(&Op::Name(&TAB_30, NameKind::SvePattern), Fs([F::new(5, 5), F::new(16, 4), F::NONE, F::NONE]), 0x1f0), Op::Opt(&Op::MulImm(Imm::Add(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 1)), Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_47(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_0), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_0), 0, Pq::None), Op::BitImm(Imm::SveBitmask { n: Fs([F::new(17, 1), F::NONE, F::NONE, F::NONE]), immr: Fs([F::new(11, 6), F::NONE, F::NONE, F::NONE]), imms: Fs([F::new(5, 6), F::NONE, F::NONE, F::NONE]) })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_48(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_0), 0, Pq::None), Op::BitImm(Imm::SveBitmask { n: Fs([F::new(17, 1), F::NONE, F::NONE, F::NONE]), immr: Fs([F::new(11, 6), F::NONE, F::NONE, F::NONE]), imms: Fs([F::new(5, 6), F::NONE, F::NONE, F::NONE]) })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_49(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Imm(Imm::S(Fs([F::new(5, 8), F::NONE, F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::Tab(&TAB_2)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_50(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Imm(Imm::S(Fs([F::new(5, 8), F::NONE, F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::Tab(&TAB_2)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_51(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::FpImm(Imm::Fp8(Fs([F::new(5, 8), F::NONE, F::NONE, F::NONE])))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_52(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Imm(Imm::U(Fs([F::new(16, 5), F::new(10, 3), F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_53(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Imm(Imm::U(Fs([F::new(16, 5), F::new(10, 3), F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_54(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_55(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_4), 0, Pq::None), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_4), Idx::Imm5(Fs([F::new(22, 2), F::new(16, 5), F::NONE, F::NONE])), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_56(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_31), 0, Pq::None), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_31), Idx::Imm5(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_57(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Imm(Imm::U(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_58(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Tab(&TAB_1), None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_59(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Tab(&TAB_1), None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_60(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_6), 0, Pq::None), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::WSp), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_61(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_62(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_29), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_63(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_64(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Opt(Fs([F::new(17, 1), F::NONE, F::NONE, F::NONE])), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_65(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Opt(Fs([F::new(17, 2), F::NONE, F::NONE, F::NONE])), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_66(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Opt(Fs([F::new(22, 1), F::new(17, 2), F::NONE, F::NONE])), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_67(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_68(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZElem(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Opt(Fs([F::new(17, 1), F::NONE, F::NONE, F::NONE])), 0), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_69(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZElem(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Opt(Fs([F::new(17, 2), F::NONE, F::NONE, F::NONE])), 0), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_70(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZElem(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Opt(Fs([F::new(22, 1), F::new(17, 2), F::NONE, F::NONE])), 0), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_71(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_32), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_72(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_7), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_73(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_74(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_75(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_76(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_77(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_7), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_78(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_79(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_28), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_28), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_80(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_81(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_7), 0), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_7), 0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_82(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Tab(&TAB_1), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_83(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_29), 0), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_84(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_6), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::WSp), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_85(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_86(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_29), 0), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_29), 0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_87(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_88(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_89(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_90(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_91(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_92(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_6), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_6), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_93(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Imm(Imm::U(Fs([F::new(14, 7), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_94(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Imm(Imm::S(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_95(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(10, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_96(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(10, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_97(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(10, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Tab(&TAB_34)), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_98(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(10, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_99(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(10, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_100(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(10, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_101(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_102(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_103(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::Opt(&Op::Name(&TAB_30, NameKind::SvePattern), Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 31)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_104(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_105(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_106(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(10, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::ZSel(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_35), Fs([F::new(16, 2), F::NONE, F::NONE, F::NONE]), Idx::Imm5(Fs([F::new(22, 2), F::new(18, 3), F::NONE, F::NONE])))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_107(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Tab(&TAB_1), 8, Pq::None), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Name(&TAB_36, NameKind::Plain)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_108(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 3), F::NONE, F::NONE, F::NONE]), Rk::P, 2, 1, 2, 0, Arr::Tab(&TAB_1), None), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_109(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::ZElem(Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(8, 2), F::NONE, F::NONE, F::NONE]), 0), 8)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_110(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, 2, 1, 1, 0, Arr::Tab(&TAB_1), None), Op::ZElem(Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(8, 1), F::NONE, F::NONE, F::NONE]), 0), 8)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_111(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Zr(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Tab(&TAB_1), 8, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_112(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_37), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_37), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_113(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_38), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_38), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_114(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_115(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Zr(Fs([F::new(10, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_116(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Tab(&TAB_1), 0, Pq::None), Op::Name(&TAB_39, NameKind::Plain)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_117(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_118(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_119(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_120(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_121(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Zr(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_122(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Imm(Imm::U(Fs([F::new(5, 8), F::NONE, F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::Tab(&TAB_2)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_123(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Imm(Imm::S(Fs([F::new(5, 8), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_124(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Imm(Imm::U(Fs([F::new(5, 8), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_125(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Imm(Imm::S(Fs([F::new(5, 8), F::NONE, F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::Tab(&TAB_2)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_126(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::FpImm(Imm::Fp8(Fs([F::new(5, 8), F::NONE, F::NONE, F::NONE])))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_127(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_28), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_128(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_129(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_32), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_32), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_130(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_20), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_40), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_40), 0, Pq::None), Op::Imm(Imm::Tab(&TAB_41), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_131(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Imm(Imm::Tab(&TAB_41), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_132(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_133(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_134(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_135(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_32), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_136(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_137(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZElem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(19, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_138(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_139(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZElem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(19, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_140(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(20, 1), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_141(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZElem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(22, 1), F::new(19, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_142(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZElem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(22, 1), F::new(19, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_143(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::ZElem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), Idx::Bits(Fs([F::new(19, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_144(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), Idx::Bits(Fs([F::new(20, 1), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_145(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZElem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(19, 2), F::new(11, 1), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_146(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), Idx::Bits(Fs([F::new(20, 1), F::new(11, 1), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_147(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZElem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(19, 2), F::NONE, F::NONE, F::NONE]), 0), 0), Op::Imm(Imm::Tab(&TAB_41), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_148(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(20, 1), F::NONE, F::NONE, F::NONE]), 0), 0), Op::Imm(Imm::Tab(&TAB_41), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_149(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZElem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(19, 2), F::NONE, F::NONE, F::NONE]), 0), 0), Op::Imm(Imm::Tab(&TAB_41), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_150(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), Idx::Bits(Fs([F::new(20, 1), F::NONE, F::NONE, F::NONE]), 0), 0), Op::Imm(Imm::Tab(&TAB_41), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_151(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_32), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_152(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_153(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_42), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_43), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_43), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_154(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_44), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_45), 0, Pq::None), Op::Imm(Imm::ShlEs(Fs([F::new(22, 1), F::new(16, 5), F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_155(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_28), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_28), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_28), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_156(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Imm(Imm::Tab(&TAB_46), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_157(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_45), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_44), 0, Pq::None), Op::Imm(Imm::ShrEs(Fs([F::new(22, 1), F::new(16, 5), F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_158(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::Imm(Imm::Rsub(16, Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_159(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Imm(Imm::Rsub(8, Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_160(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_47), 0, Pq::None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_48), None), Op::Imm(Imm::ShrEs(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_161(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_49), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_50), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_162(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_163(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_32), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_164(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_33), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_165(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(22, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_166(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(22, 2), F::new(12, 1), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_167(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(23, 1), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_168(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(22, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_169(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(22, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_170(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_171(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(23, 1), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_172(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_20), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_20), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_20), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_173(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_174(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_175(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_176(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), Idx::Bits(Fs([F::new(19, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_177(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), Idx::Bits(Fs([F::new(19, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_178(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_179(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_180(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Imm(Imm::Tab(&TAB_51), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_181(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Imm(Imm::Tab(&TAB_52), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_182(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_183(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_184(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_185(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_186(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_187(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_188(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_189(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_190(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_191(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_53), 0), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_192(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_54), 0), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_193(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_194(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_195(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_55), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_55), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_196(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_197(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_56), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_56), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_198(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_199(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZElem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(19, 2), F::new(11, 1), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_200(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZElem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(19, 2), F::new(10, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_201(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZElem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(19, 2), F::new(10, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_202(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_203(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_204(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_205(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Imm(Imm::U(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_206(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::FpImm(Imm::Tab(&TAB_57))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_207(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::FpImm(Imm::Tab(&TAB_58))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_208(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::FpImm(Imm::Tab(&TAB_59))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_209(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_210(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_211(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_60), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_60), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_212(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_213(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_61), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_61), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_214(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_215(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_216(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_217(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_32), 0, Pq::None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_218(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::FpImm(Imm::Const(0))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_219(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_54), 0), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_54), 0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_220(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_221(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_222(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_223(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_224(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_225(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_226(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_227(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_228(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_229(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 6), F::new(10, 3), F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_230(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 6), F::new(10, 3), F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_231(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::new(10, 3), F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_232(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_233(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_234(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_235(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_236(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_237(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_238(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_239(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_240(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_241(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_242(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_243(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_244(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_245(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_246(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_247(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_248(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_249(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_250(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_251(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_252(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_253(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_254(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_255(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_256(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_257(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_258(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_259(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_260(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 5)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_261(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_262(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 5)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_263(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_264(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 5)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_265(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_266(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 5)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_267(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_268(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_269(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_270(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_271(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_272(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_273(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_274(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_275(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_276(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_277(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_278(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 2), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_279(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 1), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_280(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 1), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_281(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 1), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_282(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 2), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_283(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 3), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_284(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_285(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_286(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(4) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_287(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(4) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_288(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(4) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_289(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_290(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_291(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_292(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_293(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_294(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_295(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_296(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_297(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_298(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_299(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_300(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_301(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_302(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_303(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_304(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_305(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_306(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_307(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_308(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_309(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_310(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_311(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_312(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_313(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_314(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_315(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_316(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_317(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_318(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_319(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_320(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_321(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_322(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_323(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_324(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_325(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_326(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_327(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_62), amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_328(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_329(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_330(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_331(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_332(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_333(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_334(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_335(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_336(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_337(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_338(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_339(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_340(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_341(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_342(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_63, NameKind::Prefetch), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_343(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_344(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_345(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_346(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_347(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_348(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_349(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(4) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_350(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(4) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_351(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(4) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_352(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Tab(&TAB_64), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_353(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Tab(&TAB_65), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_354(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_355(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Tab(&TAB_66), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_356(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_357(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_358(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_359(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_360(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_361(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_362(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_363(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_364(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_365(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_366(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_367(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_368(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_369(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_370(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_371(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_372(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_373(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_374(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_375(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_376(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_67), amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_377(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_67), amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_378(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_67), amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_379(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_67), amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_380(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_67), amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_381(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_67), amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_382(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: Some(&TAB_67), amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_383(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_384(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_385(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_386(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::Z), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_387(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_388(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_389(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_390(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::D), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_391(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_392(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_393(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::Z, off: MemOff::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::S), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_394(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Tab(&TAB_64), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_395(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Tab(&TAB_65), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_396(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_397(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Tab(&TAB_66), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_398(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_399(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_400(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_401(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 1, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_402(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_403(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_404(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_405(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_406(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_407(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_408(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_409(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_410(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_411(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_412(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_413(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_414(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_415(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_416(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_417(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_418(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_419(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_420(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_421(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_422(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_423(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_424(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_425(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_426(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_427(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_428(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_429(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_430(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_431(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_432(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_433(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_434(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_435(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_436(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_437(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_438(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_439(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_440(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_441(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_442(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_443(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_444(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_445(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_446(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_447(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_448(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_449(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_450(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_451(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_452(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_453(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_454(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_455(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_456(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_457(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_458(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::None }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_459(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(1) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_460(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(2) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_461(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::Fixed(3) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_462(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_463(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_464(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_465(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_466(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_467(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_468(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_469(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_470(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_471(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_472(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_473(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_474(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_475(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_476(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_477(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::D), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::SMul(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_478(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::S), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::S), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_479(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::S), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::S), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_480(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::S), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_481(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::S), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_482(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::B), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_483(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_484(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_485(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_486(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::H), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_487(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_488(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_489(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_490(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::B), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_491(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_492(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_493(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_494(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::H), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_495(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_496(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_497(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_498(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::ZrMap(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rn::K8(20), Arr::Fixed(Arrangement::None), Some(Idx::Bits(Fs([F::new(4, 2), F::NONE, F::NONE, F::NONE]), 0)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_499(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZrMap(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rn::K8(20), Arr::Fixed(Arrangement::None), Some(Idx::Bits(Fs([F::new(4, 2), F::NONE, F::NONE, F::NONE]), 0)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_500(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZrMap(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rn::K8(20), Arr::Fixed(Arrangement::None), Some(Idx::Bits(Fs([F::new(4, 2), F::NONE, F::NONE, F::NONE]), 0)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_501(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZrMap(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rn::K8(20), Arr::Fixed(Arrangement::None), Some(Idx::Bits(Fs([F::new(4, 2), F::NONE, F::NONE, F::NONE]), 0)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_502(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZrMap(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rn::K8(20), Arr::Fixed(Arrangement::None), Some(Idx::Bits(Fs([F::new(4, 2), F::NONE, F::NONE, F::NONE]), 0)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_503(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_504(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_505(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_506(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_507(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZrMap(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rn::K8(20), Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_508(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::ZaTile(Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_509(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::ZaTile(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_510(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::ZaTile(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_511(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::D), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::D), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_512(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::D), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::D), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_513(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::D), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::D), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_514(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::D), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::D), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_515(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::H), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_516(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D)), Op::ZrMap(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(0, 2), Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_517(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZrMap(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rn::Lin(16, 2), Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_518(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaTile(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D)), Op::ZList(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(17, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 16, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_519(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaSlice(Fs::NONE, Arr::Fixed(Arrangement::B), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 1), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_520(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaSlice(Fs([F::new(3, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_521(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaSlice(Fs([F::new(2, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 1), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_522(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaSlice(Fs([F::new(1, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 1), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_523(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaSlice(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::Q), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs::NONE, 1), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_524(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaSlice(Fs::NONE, Arr::Fixed(Arrangement::B), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_525(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaSlice(Fs([F::new(2, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_526(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaSlice(Fs([F::new(1, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_527(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaSlice(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs::NONE, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::D), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_528(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaSlice(Fs::NONE, Arr::Fixed(Arrangement::B), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_529(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaSlice(Fs([F::new(1, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_530(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaSlice(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs::NONE, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::S), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_531(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaSlice(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs::NONE, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::D), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_532(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::D), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_533(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::D), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_534(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::ZaSlice(Fs::NONE, Arr::Fixed(Arrangement::B), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), 1)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_535(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::ZaSlice(Fs([F::new(8, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), 1)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_536(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::ZaSlice(Fs([F::new(7, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 2), F::NONE, F::NONE, F::NONE]), 1)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_537(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::ZaSlice(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 1), F::NONE, F::NONE, F::NONE]), 1)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_538(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::ZaSlice(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::Q), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs::NONE, 1)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_539(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZaSlice(Fs::NONE, Arr::Fixed(Arrangement::B), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), 2)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_540(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZaSlice(Fs([F::new(7, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 2), F::NONE, F::NONE, F::NONE]), 2)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_541(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::ZaSlice(Fs([F::new(6, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 1), F::NONE, F::NONE, F::NONE]), 2)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_542(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::D), None), Op::ZaSlice(Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs::NONE, 2)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_543(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::ZaSlice(Fs::NONE, Arr::Fixed(Arrangement::B), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 2), F::NONE, F::NONE, F::NONE]), 4)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_544(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZaSlice(Fs([F::new(6, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 1), F::NONE, F::NONE, F::NONE]), 4)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_545(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::S), None), Op::ZaSlice(Fs([F::new(5, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs::NONE, 4)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_546(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::D), None), Op::ZaSlice(Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs::NONE, 4)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_547(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::D), None), Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), 1, 2)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_548(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::D), None), Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), 1, 4)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_549(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZaSlice(Fs::NONE, Arr::Fixed(Arrangement::B), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), 1)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_550(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZaSlice(Fs([F::new(8, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), 1)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_551(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None), Op::ZaSlice(Fs([F::new(7, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 2), F::NONE, F::NONE, F::NONE]), 1)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_552(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None), Op::ZaSlice(Fs([F::new(6, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(5, 1), F::NONE, F::NONE, F::NONE]), 1)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_553(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None), Op::ZaSlice(Fs([F::new(5, 4), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::Q), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs::NONE, 1)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_554(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::ZaMask(Fs([F::new(0, 8), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_555(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_556(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_557(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 2, 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_558(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 2)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_559(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 4)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_560(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 4, 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_561(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 2)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_562(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 4)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_563(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Braced(&Op::RegFixed(Register::ZT0))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_564(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::ZElem(Fs::NONE, Rk::Zt0, Arr::Fixed(Arrangement::None), Idx::Mul(Fs([F::new(12, 3), F::NONE, F::NONE, F::NONE]), 8), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_565(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZElem(Fs::NONE, Rk::Zt0, Arr::Fixed(Arrangement::None), Idx::Mul(Fs([F::new(12, 3), F::NONE, F::NONE, F::NONE]), 8), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_566(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zt0Vl(Fs([F::new(12, 2), F::NONE, F::NONE, F::NONE])), Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_567(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_68), None), Op::RegFixed(Register::ZT0), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(15, 3), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_568(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_68), None), Op::RegFixed(Register::ZT0), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(15, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_569(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_68), None), Op::RegFixed(Register::ZT0), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(16, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_570(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_69), None), Op::RegFixed(Register::ZT0), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(16, 1), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_571(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_68), 0, Pq::None), Op::RegFixed(Register::ZT0), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(14, 4), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_572(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_68), 0, Pq::None), Op::RegFixed(Register::ZT0), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(14, 3), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_573(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::RegFixed(Register::ZT0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_574(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::RegFixed(Register::ZT0), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::None), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_575(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::RegFixed(Register::ZT0), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 4, 0, Arr::Fixed(Arrangement::None), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_576(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::ZaTile(Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_577(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::ZaTile(Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Merging), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_578(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(3, 2), F::NONE, F::NONE, F::NONE]), 0), 0), Op::ZrMap(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rn::K8(20), Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_579(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Tab(&TAB_70), None), Op::RegFixed(Register::ZT0), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(15, 3), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_580(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 3), F::NONE, F::NONE]), Rk::Z, 2, 8, 1, 0, Arr::Tab(&TAB_70), None), Op::RegFixed(Register::ZT0), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(15, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_581(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Tab(&TAB_70), None), Op::RegFixed(Register::ZT0), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(16, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_582(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::H), None), Op::RegFixed(Register::ZT0), Op::ZElem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(16, 1), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_583(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::B), None), Op::RegFixed(Register::ZT0), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::None), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_584(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::B), None), Op::RegFixed(Register::ZT0), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 3, 1, 4, 0, Arr::Fixed(Arrangement::None), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_585(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 4, 0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(15, 1), F::new(10, 3), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_586(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 4, 0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(15, 1), F::new(10, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_587(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 2, 0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(15, 1), F::new(10, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_588(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 2, 0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(15, 1), F::new(10, 2), F::new(3, 1), F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_589(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(10, 2), F::new(1, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_590(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(10, 2), F::new(3, 1), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_591(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), Idx::Bits(Fs([F::new(10, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_592(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(10, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_593(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(10, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_594(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(10, 1), F::new(1, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_595(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(10, 2), F::new(2, 1), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_596(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(10, 2), F::new(2, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_597(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(10, 1), F::new(3, 1), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_598(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::D), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), Idx::Bits(Fs([F::new(10, 1), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_599(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(10, 1), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_600(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(10, 2), F::new(3, 1), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_601(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(10, 2), F::new(1, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_602(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(10, 2), F::new(3, 1), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_603(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(10, 2), F::new(3, 1), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_604(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::S), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::S), Idx::Bits(Fs([F::new(10, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_605(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(10, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_606(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(10, 2), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_607(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(10, 1), F::new(1, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_608(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(10, 2), F::new(2, 1), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_609(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(10, 2), F::new(2, 2), F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_610(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::D), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::D), Idx::Bits(Fs([F::new(10, 1), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_611(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::D), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZElem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(10, 1), F::NONE, F::NONE, F::NONE]), 0), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_612(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 2), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Tab(&TAB_33), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_613(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 2), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_614(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 4, 0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_615(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 4, 0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_616(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 2), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_617(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 2), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_618(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 2, 0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_619(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_620(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_621(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_622(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Tab(&TAB_33), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_623(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Tab(&TAB_28), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_28), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_624(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_625(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 4), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Tab(&TAB_33), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_626(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 4), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_627(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 4), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_628(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 4), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_629(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 2, 0), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_630(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_631(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_632(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::B), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_633(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Tab(&TAB_33), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_33), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_634(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Tab(&TAB_28), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_28), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_635(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_636(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_33), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_33), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_637(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_638(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_639(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_640(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_641(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_642(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_643(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_644(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_33), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_33), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_645(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_28), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_28), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_646(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_28), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_647(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 2), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_648(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_33), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_33), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_649(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 4, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_650(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_651(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 2, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_652(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_653(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_654(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::S), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::B), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_655(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_656(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_33), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_33), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_657(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_28), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_28), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_658(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaArray(Arr::Tab(&TAB_28), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_28), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_659(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaArray(Arr::Fixed(Arrangement::H), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 8, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1, 4), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_660(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_1), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_1), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_1), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_661(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_1), None), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::PN, Arr::Fixed(Arrangement::None), 8, Pq::None), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_1), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_1), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_662(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_1), None), Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_1), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_663(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_664(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_665(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_1), None), Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_1), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_666(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_667(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_668(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_1), None), Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_1), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_1), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_669(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_670(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_671(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_1), None), Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_1), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_1), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_672(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_673(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_674(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_675(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_676(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_1), None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_677(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_678(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_679(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_1), None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_1), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_680(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::Q), None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None), Op::Zr(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::Q), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_681(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_71), 0, Pq::None), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_72), None), Op::Imm(Imm::ShrEs(Fs([F::new(22, 2), F::new(16, 5), F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_682(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_683(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_32), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_684(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_685(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::S), None), Op::Zr(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_686(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::S), None), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::S), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_687(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_73), 0, Pq::None), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_74), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_688(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Zr(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::B), 0, Pq::None), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::S), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_689(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_32), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_690(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_1), None), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_1), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_691(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::Q), None), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::Q), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_692(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_693(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_694(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_695(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(18, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_696(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Tab(&TAB_3), None), Op::Zr(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_697(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(1, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(6, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 2, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_698(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Tab(&TAB_3), None), Op::Zr(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Tab(&TAB_3), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_699(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(7, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::Zr(Fs([F::new(17, 4), F::NONE, F::NONE, F::NONE]), Rk::Z, Arr::Fixed(Arrangement::H), 0, Pq::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_700(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(2, 3), F::NONE, F::NONE, F::NONE]), Rk::Z, 4, 1, 4, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::None), Some(Idx::Bits(Fs([F::new(22, 1), F::NONE, F::NONE, F::NONE]), 0)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_701(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::ZList(Fs([F::new(4, 1), F::new(0, 2), F::NONE, F::NONE]), Rk::Z, 4, 4, 1, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::H), None), Op::ZList(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Rk::Z, 2, 1, 1, 0, Arr::Fixed(Arrangement::None), Some(Idx::Bits(Fs([F::new(22, 1), F::NONE, F::NONE, F::NONE]), 0)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_702(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Braced(&Op::ZaSlice(Fs::NONE, Arr::Fixed(Arrangement::B), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 1)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_703(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Braced(&Op::ZaSlice(Fs([F::new(3, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 1), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_704(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Braced(&Op::ZaSlice(Fs([F::new(2, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 1)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 2), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_705(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Braced(&Op::ZaSlice(Fs([F::new(1, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 1)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 3), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_706(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Braced(&Op::ZaSlice(Fs::NONE, Arr::Fixed(Arrangement::B), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 1)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_707(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Braced(&Op::ZaSlice(Fs([F::new(3, 1), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 3), F::NONE, F::NONE, F::NONE]), 1)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 1), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_708(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Braced(&Op::ZaSlice(Fs([F::new(2, 2), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 2), F::NONE, F::NONE, F::NONE]), 1)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 2), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_709(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Braced(&Op::ZaSlice(Fs([F::new(1, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 1), F::NONE, F::NONE, F::NONE]), 1)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 3), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_710(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::ZaArray(Arr::Fixed(Arrangement::None), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 1, 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: true })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_711(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::RegFixed(Register::ZT0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_712(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Braced(&Op::ZaSlice(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::Q), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs::NONE, 1)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::Zeroing), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 4), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_713(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Braced(&Op::ZaSlice(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::Q), Fs([F::new(15, 1), F::NONE, F::NONE, F::NONE]), Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 12, Fs::NONE, 1)), Op::Zr(Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]), Rk::P, Arr::Fixed(Arrangement::None), 0, Pq::None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::OptReg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 4), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_714(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Imm(Imm::U(Fs([F::new(0, 16), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_715(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Label(Imm::NegU(Fs([F::new(5, 16), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_716(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::U(Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_717(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::U(Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_718(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Label(Imm::S(Fs([F::new(5, 19), F::new(29, 2), F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_719(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Label(Imm::S(Fs([F::new(5, 19), F::new(29, 2), F::NONE, F::NONE]), 12), true)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_720(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::WSp), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::WSp), 0), Op::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::Tab(&TAB_8)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_721(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::WSp), 0), Op::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::Tab(&TAB_8)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_722(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::Tab(&TAB_8)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_723(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::Tab(&TAB_8)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_724(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 4), ImmShift::None), Op::Imm(Imm::U(Fs([F::new(10, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_725(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::S(Fs([F::new(10, 8), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_726(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::U(Fs([F::new(10, 8), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_727(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::S(Fs([F::new(10, 8), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_728(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::U(Fs([F::new(10, 8), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_729(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::WSp), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::BitImm(Imm::Bitmask { n: Fs::NONE, immr: Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), imms: Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]), size: 32 })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_730(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::BitImm(Imm::Bitmask { n: Fs::NONE, immr: Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), imms: Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]), size: 32 })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_731(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::BitImm(Imm::Bitmask { n: Fs([F::new(22, 1), F::NONE, F::NONE, F::NONE]), immr: Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), imms: Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]), size: 64 })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_732(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::BitImm(Imm::Bitmask { n: Fs([F::new(22, 1), F::NONE, F::NONE, F::NONE]), immr: Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), imms: Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]), size: 64 })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_733(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::U(Fs([F::new(5, 16), F::NONE, F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::U(Fs([F::new(21, 2), F::NONE, F::NONE, F::NONE]), 4)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_734(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::U(Fs([F::new(5, 16), F::NONE, F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::U(Fs([F::new(21, 2), F::NONE, F::NONE, F::NONE]), 4)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_735(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Imm(Imm::U(Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_736(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::U(Fs([F::new(16, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Imm(Imm::U(Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_737(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Cond(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), true, false), Op::Label(Imm::S(Fs([F::new(5, 19), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_738(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Label(Imm::S(Fs([F::new(5, 9), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_739(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Imm(Imm::U(Fs([F::new(5, 16), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_740(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Cond(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), true, false), Op::Imm(Imm::U(Fs([F::new(5, 16), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_741(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Opt(&Op::Imm(Imm::U(Fs([F::new(5, 16), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Fs([F::new(5, 16), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_742(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Imm(Imm::U(Fs([F::new(5, 7), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Opt(&Op::Name(&TAB_75, NameKind::Plain), Fs([F::new(17, 1), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_743(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_744(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Lit("CSYNC")];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_745(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Lit("DSYNC")];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_746(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Opt(&Op::Name(&TAB_76, NameKind::Plain), Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_747(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::RegFixed(Register::X16)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_748(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Name(&TAB_77, NameKind::Plain)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_749(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Opt(&Op::Name(&TAB_78, NameKind::Plain), Fs([F::new(5, 1), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_750(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Opt(&Op::Name(&TAB_79, NameKind::Plain), Fs([F::new(5, 1), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_751(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Imm(Imm::U(Fs([F::new(5, 7), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_752(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Opt(&Op::Imm(Imm::U(Fs([F::new(8, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Fs([F::new(8, 4), F::NONE, F::NONE, F::NONE]), 15)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_753(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Name(&TAB_80, NameKind::Barrier)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_754(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Opt(&Op::Name(&TAB_81, NameKind::Barrier), Fs([F::new(8, 4), F::NONE, F::NONE, F::NONE]), 15)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_755(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Name(&TAB_82, NameKind::Barrier)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_756(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::PState(Fs([F::new(16, 3), F::new(5, 7), F::NONE, F::NONE])), Op::Imm(Imm::U(Fs([F::new(8, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_757(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::Imm(Imm::U(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Cr(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE])), Op::Cr(Fs([F::new(8, 4), F::NONE, F::NONE, F::NONE])), Op::Imm(Imm::U(Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Opt(&Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 31)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_758(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::U(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Cr(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE])), Op::Cr(Fs([F::new(8, 4), F::NONE, F::NONE, F::NONE])), Op::Imm(Imm::U(Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_759(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::SysReg(Fs([F::new(5, 15), F::NONE, F::NONE, F::NONE])), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_760(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::SysReg(Fs([F::new(5, 15), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_761(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 6] = [Op::Imm(Imm::U(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Cr(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE])), Op::Cr(Fs([F::new(8, 4), F::NONE, F::NONE, F::NONE])), Op::Imm(Imm::U(Fs([F::new(5, 3), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Opt(&Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 31), Op::Opt(&Op::RegPair(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Rk::X), Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 31)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    decode_step(&OPS[5], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_762(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::SysReg(Fs([F::new(5, 15), F::NONE, F::NONE, F::NONE])), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 1)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_763(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 1), Op::SysReg(Fs([F::new(5, 15), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_764(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_765(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Opt(&Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 30)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_766(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Opt(&Op::Name(&TAB_83, NameKind::Plain), Fs([F::new(10, 1), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_767(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_768(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Opt(&Op::Name(&TAB_75, NameKind::Plain), Fs([F::new(17, 1), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_769(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::U(Fs([F::new(5, 7), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Opt(&Op::Name(&TAB_75, NameKind::Plain), Fs([F::new(17, 1), F::NONE, F::NONE, F::NONE]), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_770(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Label(Imm::S(Fs([F::new(0, 26), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_771(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Label(Imm::S(Fs([F::new(5, 19), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_772(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Label(Imm::S(Fs([F::new(5, 19), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_773(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Label(Imm::S(Fs([F::new(5, 9), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_774(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Imm(Imm::U(Fs([F::new(10, 2), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::S(Fs([F::new(16, 5), F::new(5, 4), F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_775(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Imm(Imm::U(Fs([F::new(10, 2), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::S(Fs([F::new(16, 5), F::new(5, 4), F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_776(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Imm(Imm::U(Fs([F::new(10, 2), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::WSp), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::WSp), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_777(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Imm(Imm::U(Fs([F::new(10, 2), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_778(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Imm(Imm::U(Fs([F::new(10, 2), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_84), 0), Op::Imm(Imm::U(Fs([F::new(31, 1), F::new(19, 5), F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_779(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::U(Fs([F::new(15, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Label(Imm::S(Fs([F::new(5, 9), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_780(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::U(Fs([F::new(15, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Label(Imm::S(Fs([F::new(5, 9), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_781(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_84), 0), Op::Imm(Imm::U(Fs([F::new(31, 1), F::new(19, 5), F::NONE, F::NONE]), 0), ImmShift::None), Op::Label(Imm::S(Fs([F::new(5, 14), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_782(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Imm(Imm::U(Fs([F::new(21, 1), F::new(16, 3), F::new(0, 12), F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_783(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 1), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 1), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_784(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 5] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 1), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 1), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    decode_step(&OPS[4], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_785(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Tab(&TAB_85), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_786(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_787(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Tab(&TAB_85), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_788(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_789(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_790(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Tab(&TAB_85), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_791(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_792(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Tab(&TAB_85), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_793(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_794(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Tab(&TAB_85), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_795(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_796(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_797(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Tab(&TAB_85), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_798(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_799(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Tab(&TAB_85), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Tab(&TAB_87)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_800(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Tab(&TAB_87)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_801(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Tab(&TAB_85), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Tab(&TAB_88)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_802(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Tab(&TAB_88)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_803(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Tab(&TAB_89)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_804(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Tab(&TAB_85), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Tab(&TAB_90)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_805(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Tab(&TAB_90)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_806(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_807(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_808(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_809(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_810(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_811(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_812(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_813(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_814(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_815(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_816(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_817(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_818(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_819(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_820(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_821(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_822(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_823(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_824(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_825(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_826(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_827(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_828(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_829(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_830(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(1)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_831(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(3)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_832(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(2)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_833(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(6)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_834(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(4)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_835(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(8)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_836(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(12)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_837(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(24)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_838(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_839(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_840(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_841(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_842(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_843(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_844(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_845(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_846(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(2)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_847(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::B), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(4)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_848(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(4)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_849(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::H), Some(Idx::Bits(Fs([F::new(30, 1), F::new(10, 3), F::NONE, F::NONE]), 1))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(8)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_850(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(8)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_851(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(16)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_852(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::S), Some(Idx::Bits(Fs([F::new(30, 1), F::new(12, 1), F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(16)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_853(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::D), Some(Idx::Bits(Fs([F::new(30, 1), F::NONE, F::NONE, F::NONE]), 0))), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(32)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_854(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Tab(&TAB_91)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_855(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Tab(&TAB_92)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_856(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Tab(&TAB_93)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_857(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::List(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Tab(&TAB_86), None), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Tab(&TAB_94)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_858(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_859(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_860(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_861(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 4)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_862(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_863(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_864(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_865(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_866(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_867(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_868(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_869(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_870(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_871(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_872(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::Const(-8)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_873(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_874(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(8)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_875(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::Const(-16)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_876(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(16)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_877(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::Const(-4)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_878(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(4)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_879(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::Const(-8)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_880(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::Const(8)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_881(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_882(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_883(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Mem(Mem { base: Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::X, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: true, arr: Arr::Fixed(Arrangement::None), mul_vl: false }), Op::RegWb(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::X)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_884(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::B), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_885(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_886(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_887(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_888(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_889(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Label(Imm::S(Fs([F::new(5, 19), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_890(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Label(Imm::S(Fs([F::new(5, 19), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_891(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Label(Imm::S(Fs([F::new(5, 19), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_892(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Name(&TAB_95, NameKind::Prefetch), Op::Label(Imm::S(Fs([F::new(5, 19), F::NONE, F::NONE, F::NONE]), 2), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_893(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Mem(Mem { base: Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::X, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: true, arr: Arr::Fixed(Arrangement::None), mul_vl: false }), Op::Mem(Mem { base: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::X, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: true, arr: Arr::Fixed(Arrangement::None), mul_vl: false }), Op::RegWb(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::X)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_894(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Mem(Mem { base: Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::X, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: true, arr: Arr::Fixed(Arrangement::None), mul_vl: false }), Op::RegWb(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Rk::X), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_895(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_896(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_897(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_898(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_899(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_900(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 2)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_901(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 2)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_902(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 4)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_903(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 2)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_904(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 3)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_905(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 3)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_906(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 4)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_907(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_908(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_909(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_910(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_911(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_912(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_913(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_914(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_915(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(15, 7), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_916(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Name(&TAB_95, NameKind::Prefetch), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_917(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_918(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_919(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::B), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_920(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_921(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_922(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_923(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::PostIndex, post: Post::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_924(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_925(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_926(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::B), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_927(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_928(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_929(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_930(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(12, 9), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_931(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_932(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_933(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_934(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_935(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_936(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_937(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_97), amount: Amount::OnBit(Fs([F::new(12, 1), F::NONE, F::NONE, F::NONE]), 0) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_938(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::OnBit(Fs([F::new(12, 1), F::NONE, F::NONE, F::NONE]), 0) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_939(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_97), amount: Amount::OnBit(Fs([F::new(12, 1), F::NONE, F::NONE, F::NONE]), 0) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_940(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::OnBit(Fs([F::new(12, 1), F::NONE, F::NONE, F::NONE]), 0) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_941(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::B), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_97), amount: Amount::OnBit(Fs([F::new(12, 1), F::NONE, F::NONE, F::NONE]), 0) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_942(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::B), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Fixed(Rk::X), ext: None, amount: Amount::OnBit(Fs([F::new(12, 1), F::NONE, F::NONE, F::NONE]), 0) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_943(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_98), amount: Amount::Tab(&TAB_99) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_944(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_98), amount: Amount::Tab(&TAB_100) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_945(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_98), amount: Amount::Tab(&TAB_100) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_946(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_98), amount: Amount::Tab(&TAB_100) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_947(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_98), amount: Amount::Tab(&TAB_101) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_948(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_98), amount: Amount::Tab(&TAB_101) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_949(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_98), amount: Amount::Tab(&TAB_101) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_950(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_98), amount: Amount::Tab(&TAB_102) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_951(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Name(&TAB_95, NameKind::Prefetch), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_98), amount: Amount::Tab(&TAB_102) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_952(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Name(&TAB_103, NameKind::Prefetch), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::None, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_953(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Reg { m: Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), k: RegSel::Tab(&TAB_96), ext: Some(&TAB_98), amount: Amount::Tab(&TAB_102) }, mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_954(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(22, 1), F::new(12, 9), F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_955(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::S(Fs([F::new(22, 1), F::new(12, 9), F::NONE, F::NONE]), 3)), mode: MemoryMode::PreIndex, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_956(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_957(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_958(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::B), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 0)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_959(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 4)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_960(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_961(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_962(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 1)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_963(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_964(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_965(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 2)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_966(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_967(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Name(&TAB_95, NameKind::Prefetch), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_968(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Mem(Mem { base: Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), base_k: Rk::XSp, off: MemOff::Imm(Imm::U(Fs([F::new(10, 12), F::NONE, F::NONE, F::NONE]), 3)), mode: MemoryMode::Offset, post: Post::None, writeback: false, arr: Arr::Fixed(Arrangement::None), mul_vl: false })];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_969(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_970(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_971(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_972(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Opt(&Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 31)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_973(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_974(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_975(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_976(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_977(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_978(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_979(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Shifted(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), &TAB_10, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_980(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Shifted(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), &TAB_10, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_981(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Shifted(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), &TAB_11, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_982(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Shifted(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), &TAB_11, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_983(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::WSp), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::WSp), 0), Op::Extended(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_984(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::WSp), 0), Op::Extended(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_985(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Extended(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_12), Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_986(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Extended(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_12), Fs([F::new(13, 3), F::NONE, F::NONE, F::NONE]), Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_987(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::XSp), 0), Op::Shifted(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), &TAB_104, Fs([F::new(10, 3), F::NONE, F::NONE, F::NONE]))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_988(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::U(Fs([F::new(15, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Imm(Imm::U(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_989(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 1] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_990(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::U(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_991(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::U(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_992(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Imm(Imm::U(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_993(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::U(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Imm(Imm::U(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_994(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_995(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_996(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_997(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_998(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_999(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1000(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1001(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1002(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1003(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1004(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1005(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_13), 0), Op::Elem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_14), Idx::Imm5(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1006(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1007(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1008(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::FpImm(Imm::Const(0))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1009(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_105), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_105), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_105), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1010(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_7), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_7), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1011(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Imm(Imm::Const(0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1012(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1013(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_106), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_107), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1014(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_108), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_108), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1015(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_108), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_108), 0), Op::FpImm(Imm::Const(0))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1016(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1017(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1018(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H2), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1019(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_108), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_109), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1020(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_110), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_105), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_105), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1021(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_7), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_7), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_7), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1022(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1023(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_108), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_108), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_108), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1024(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Imm(Imm::ShrEs(Fs([F::new(16, 7), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1025(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Imm(Imm::ShlEs(Fs([F::new(16, 7), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1026(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_111), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_111), 0), Op::Imm(Imm::ShlEs(Fs([F::new(16, 7), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1027(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_112), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_113), 0), Op::Imm(Imm::ShrEs(Fs([F::new(16, 7), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1028(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_114), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_114), 0), Op::Imm(Imm::ShrEs(Fs([F::new(16, 7), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1029(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_110), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_105), 0), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_115), Idx::ByEs { b: Fs::NONE, h: Fs([F::new(11, 1), F::new(20, 2), F::NONE, F::NONE]), s: Fs([F::new(11, 1), F::new(21, 1), F::NONE, F::NONE]), d: Fs([F::new(11, 1), F::NONE, F::NONE, F::NONE]), zs: Fs::NONE, dz: Fs::NONE }, true)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1030(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_105), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_105), 0), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_115), Idx::ByEs { b: Fs::NONE, h: Fs([F::new(11, 1), F::new(20, 2), F::NONE, F::NONE]), s: Fs([F::new(11, 1), F::new(21, 1), F::NONE, F::NONE]), d: Fs([F::new(11, 1), F::NONE, F::NONE, F::NONE]), zs: Fs::NONE, dz: Fs::NONE }, true)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1031(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Elem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(11, 1), F::new(20, 2), F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1032(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_108), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_108), 0), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_28), Idx::ByEs { b: Fs::NONE, h: Fs::NONE, s: Fs([F::new(11, 1), F::new(21, 1), F::NONE, F::NONE]), d: Fs([F::new(11, 1), F::NONE, F::NONE, F::NONE]), zs: Fs::NONE, dz: Fs([F::new(21, 1), F::NONE, F::NONE, F::NONE]) }, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1033(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::List(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::B16), None), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1034(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::List(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::B16), None), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1035(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::List(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 3, Arr::Fixed(Arrangement::B16), None), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1036(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::List(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 4, Arr::Fixed(Arrangement::B16), None), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1037(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0), Op::List(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 2, Arr::Fixed(Arrangement::H8), None), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1038(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0), Op::List(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::B16), None), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(14, 1), F::NONE, F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1039(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0), Op::List(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::B16), None), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(13, 2), F::NONE, F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1040(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0), Op::List(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), 1, Arr::Fixed(Arrangement::H8), None), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::None), Idx::Bits(Fs([F::new(12, 3), F::NONE, F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1041(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_116), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_116), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_116), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1042(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Imm(Imm::U(Fs([F::new(11, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1043(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_117), 0), Op::Elem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_14), Idx::Imm5(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1044(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_117), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_15), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1045(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Elem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_118), Idx::Imm5(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1046(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Elem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_119), Idx::Imm5(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1047(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Elem(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_14), Idx::Imm5(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), false), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_15), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1048(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Elem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_119), Idx::Imm5(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1049(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Elem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Idx::Imm5(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1050(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Elem(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_14), Idx::Imm5(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), false), Op::Elem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_14), Idx::Imm4(Fs([F::new(11, 4), F::NONE, F::NONE, F::NONE]), Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE])), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1051(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1052(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1053(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::FpImm(Imm::Const(0))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1054(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_121), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1055(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1056(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1057(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1058(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_121), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1059(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_122), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_122), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_122), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1060(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_123), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_123), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_123), 0), Op::Imm(Imm::Tab(&TAB_124), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1061(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_123), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_123), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_123), 0), Op::Imm(Imm::Tab(&TAB_125), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1062(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_126), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1063(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1064(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1065(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1066(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1067(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1068(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_128), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_128), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1069(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_129), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1070(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_116), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_116), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1071(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_116), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_116), 0), Op::Imm(Imm::Const(0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1072(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_130), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1073(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_131), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_132), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1074(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_132), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_131), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1075(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_133), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_133), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1076(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_133), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_133), 0), Op::FpImm(Imm::Const(0))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1077(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_134), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_134), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1078(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1079(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_135), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_135), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1080(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_130), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0), Op::Imm(Imm::Tab(&TAB_136), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1081(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_121), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1082(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1083(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1084(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_107), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_137), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1085(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Tab(&TAB_106), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_137), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1086(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1087(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1088(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_130), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1089(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_130), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_130), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1090(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_130), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_130), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1091(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_138), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_122), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_122), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1092(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_139), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_140), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_140), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1093(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_127), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1094(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_133), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_133), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_133), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1095(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1096(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_121), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_141), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_141), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1097(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_128), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_128), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_128), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1098(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_121), 0), Op::Imm(Imm::U(Fs([F::new(16, 3), F::new(5, 5), F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::Tab(&TAB_142)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1099(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Imm(Imm::U(Fs([F::new(16, 3), F::new(5, 5), F::NONE, F::NONE]), 0), ImmShift::Lsl(Imm::Tab(&TAB_2)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1100(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_121), 0), Op::Imm(Imm::U(Fs([F::new(16, 3), F::new(5, 5), F::NONE, F::NONE]), 0), ImmShift::Msl(Imm::Tab(&TAB_143)))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1101(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Imm(Imm::U(Fs([F::new(16, 3), F::new(5, 5), F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1102(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_121), 0), Op::FpImm(Imm::Fp8(Fs([F::new(16, 3), F::new(5, 5), F::NONE, F::NONE])))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1103(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::FpImm(Imm::Fp8(Fs([F::new(16, 3), F::new(5, 5), F::NONE, F::NONE])))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1104(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Imm(Imm::ByteMask(Fs([F::new(16, 3), F::new(5, 5), F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1105(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0), Op::Imm(Imm::ByteMask(Fs([F::new(16, 3), F::new(5, 5), F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1106(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0), Op::FpImm(Imm::Fp8(Fs([F::new(16, 3), F::new(5, 5), F::NONE, F::NONE])))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1107(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_144), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_144), 0), Op::Imm(Imm::ShrEs(Fs([F::new(16, 7), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1108(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_144), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_144), 0), Op::Imm(Imm::ShlEs(Fs([F::new(16, 7), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1109(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_19), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_18), 0), Op::Imm(Imm::ShrEs(Fs([F::new(16, 7), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1110(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_18), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_19), 0), Op::Imm(Imm::ShlEs(Fs([F::new(16, 7), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1111(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_145), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_145), 0), Op::Imm(Imm::ShrEs(Fs([F::new(16, 7), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1112(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_17), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_138), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_122), 0), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_115), Idx::ByEs { b: Fs::NONE, h: Fs([F::new(11, 1), F::new(20, 2), F::NONE, F::NONE]), s: Fs([F::new(11, 1), F::new(21, 1), F::NONE, F::NONE]), d: Fs([F::new(11, 1), F::NONE, F::NONE, F::NONE]), zs: Fs::NONE, dz: Fs::NONE }, true)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1113(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_122), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_122), 0), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_115), Idx::ByEs { b: Fs::NONE, h: Fs([F::new(11, 1), F::new(20, 2), F::NONE, F::NONE]), s: Fs([F::new(11, 1), F::new(21, 1), F::NONE, F::NONE]), d: Fs([F::new(11, 1), F::NONE, F::NONE, F::NONE]), zs: Fs::NONE, dz: Fs::NONE }, true)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1114(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_121), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B4), Idx::Bits(Fs([F::new(11, 1), F::new(21, 1), F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1115(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Elem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(11, 1), F::new(20, 2), F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1116(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_16), 0), Op::Elem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B2), Idx::Bits(Fs([F::new(11, 1), F::new(20, 2), F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1117(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_121), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_120), 0), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H2), Idx::Bits(Fs([F::new(11, 1), F::new(21, 1), F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1118(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_146), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_146), 0), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_28), Idx::ByEs { b: Fs::NONE, h: Fs::NONE, s: Fs([F::new(11, 1), F::new(21, 1), F::NONE, F::NONE]), d: Fs([F::new(11, 1), F::NONE, F::NONE, F::NONE]), zs: Fs::NONE, dz: Fs([F::new(21, 1), F::NONE, F::NONE, F::NONE]) }, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1119(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_121), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_141), 0), Op::Elem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(11, 1), F::new(20, 2), F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1120(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Suffix(&TAB_126), Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0), Op::Elem(Fs([F::new(16, 4), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H), Idx::Bits(Fs([F::new(11, 1), F::new(20, 2), F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1121(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_147), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_147), 0), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Tab(&TAB_115), Idx::ByEs { b: Fs::NONE, h: Fs([F::new(11, 1), F::new(21, 1), F::NONE, F::NONE]), s: Fs([F::new(11, 1), F::NONE, F::NONE, F::NONE]), d: Fs::NONE, zs: Fs([F::new(21, 1), F::NONE, F::NONE, F::NONE]), dz: Fs::NONE }, false), Op::Imm(Imm::Tab(&TAB_51), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1122(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::H8), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0), Op::Elem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(11, 1), F::new(19, 3), F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1123(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0), Op::Elem(Fs([F::new(16, 3), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B), Idx::Bits(Fs([F::new(11, 1), F::new(19, 3), F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1124(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Elem(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S), Idx::Bits(Fs([F::new(12, 2), F::NONE, F::NONE, F::NONE]), 0), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1125(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::Q), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1126(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1127(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0), Op::Vec(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::B16), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1128(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0), Op::Vec(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::S4), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1129(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0), Op::Vec(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0), Op::Imm(Imm::U(Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1130(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Vec(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0), Op::Vec(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D2), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1131(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1132(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1133(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1134(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1135(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1136(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1137(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1138(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1139(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1140(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1141(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1142(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Imm(Imm::Rsub(64, Fs([F::new(10, 6), F::NONE, F::NONE, F::NONE])), ImmShift::None)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1143(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1144(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1145(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1146(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1147(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1148(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::W), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1149(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1150(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1151(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1152(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1153(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Elem(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Idx::Const(1), false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1154(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Elem(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), Arr::Fixed(Arrangement::D), Idx::Const(1), false), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1155(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1156(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::X), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1157(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1158(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1159(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1160(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1161(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1162(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1163(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::FpImm(Imm::Const(0))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1164(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1165(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::FpImm(Imm::Const(0))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1166(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1167(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::FpImm(Imm::Const(0))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1168(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::FpImm(Imm::Fp8(Fs([F::new(13, 8), F::NONE, F::NONE, F::NONE])))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1169(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::FpImm(Imm::Fp8(Fs([F::new(13, 8), F::NONE, F::NONE, F::NONE])))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1170(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 2] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::FpImm(Imm::Fp8(Fs([F::new(13, 8), F::NONE, F::NONE, F::NONE])))];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1171(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Imm(Imm::U(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1172(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Imm(Imm::U(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1173(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Imm(Imm::U(Fs([F::new(0, 4), F::NONE, F::NONE, F::NONE]), 0), ImmShift::None), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1174(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 3] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1175(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1176(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1177(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Cond(Fs([F::new(12, 4), F::NONE, F::NONE, F::NONE]), false, false)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1178(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::S), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1179(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::D), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}
+
+fn ops_1180(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {
+    static OPS: [Op; 4] = [Op::Reg(Fs([F::new(0, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(5, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(16, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0), Op::Reg(Fs([F::new(10, 5), F::NONE, F::NONE, F::NONE]), RegSel::Fixed(Rk::H), 0)];
+    let mut n = 0;
+    decode_step(&OPS[0], w, pc, out, &mut n)?;
+    decode_step(&OPS[1], w, pc, out, &mut n)?;
+    decode_step(&OPS[2], w, pc, out, &mut n)?;
+    decode_step(&OPS[3], w, pc, out, &mut n)?;
+    Some(n as u8)
+}

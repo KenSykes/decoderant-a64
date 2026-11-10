@@ -358,7 +358,8 @@ pub fn generate(
          #[allow(unused_imports)]\n\
          use crate::desc::*;\n\
          use crate::generated::{Code, Feature, Mnemonic, Register};\n\
-         use crate::operand::{Arrangement, MemoryMode};\n\
+         use crate::instruction::MAX_OPERANDS;\n\
+         use crate::operand::{Arrangement, MemoryMode, Operand};\n\
          use crate::tables::{AliasData, Cand, EncodingData, FieldInfo, NO_COND};\n\
          #[cfg(test)]\n\
          use crate::tables::Node;\n\n",
@@ -548,6 +549,7 @@ pub fn generate(
         );
     }
     let _ = writeln!(t, "];");
+    operand_decoders(&mut t, &op_text);
     emit::write(&out_dir.join("tables.rs"), &t)?;
 
     // --- info.rs.
@@ -657,6 +659,83 @@ pub fn generate(
     }
     change_report(previous, &list, &spec.release)?;
     Ok((r, list))
+}
+
+/// `DECODE_OPS`, an operand decoder per encoding: one function per distinct operand
+/// list, calling `decode_step` on each descriptor so that the compiler folds the
+/// constant descriptors (the decoder's hot path; `decode_ops` interprets the same
+/// lists).
+fn operand_decoders(t: &mut String, op_text: &[Option<String>]) {
+    let mut index: BTreeMap<&str, usize> = BTreeMap::new();
+    let mut lists: Vec<&str> = Vec::new();
+    let fns: Vec<String> = op_text
+        .iter()
+        .map(|o| match o.as_deref() {
+            None | Some("") => "no_ops".to_string(),
+            Some(s) => {
+                let k = *index.entry(s).or_insert_with(|| {
+                    lists.push(s);
+                    lists.len() - 1
+                });
+                format!("ops_{k}")
+            }
+        })
+        .collect();
+    let _ = writeln!(
+        t,
+        "\npub(crate) static DECODE_OPS: [OpsFn; {}] = [",
+        fns.len()
+    );
+    for f in &fns {
+        let _ = writeln!(t, "    {f},");
+    }
+    let _ = writeln!(t, "];");
+    for (k, s) in lists.iter().enumerate() {
+        let ops = split_top_level(s);
+        let _ = writeln!(
+            t,
+            "\nfn ops_{k}(w: u32, pc: u64, out: &mut [Operand; MAX_OPERANDS]) -> Option<u8> {{\n    \
+             static OPS: [Op; {}] = [{s}];\n    let mut n = 0;",
+            ops.len()
+        );
+        for i in 0..ops.len() {
+            let _ = writeln!(t, "    decode_step(&OPS[{i}], w, pc, out, &mut n)?;");
+        }
+        let _ = writeln!(t, "    Some(n as u8)\n}}");
+    }
+}
+
+/// Splits Rust expression text at its top-level commas (outside brackets and string
+/// literals).
+fn split_top_level(s: &str) -> Vec<&str> {
+    let mut parts = Vec::new();
+    let (mut depth, mut start, mut in_str, mut escaped) = (0usize, 0, false, false);
+    for (i, c) in s.char_indices() {
+        if in_str {
+            match c {
+                _ if escaped => escaped = false,
+                '\\' => escaped = true,
+                '"' => in_str = false,
+                _ => {}
+            }
+            continue;
+        }
+        match c {
+            '"' => in_str = true,
+            '(' | '[' | '{' => depth += 1,
+            ')' | ']' | '}' => depth -= 1,
+            ',' if depth == 0 => {
+                parts.push(s[start..i].trim());
+                start = i + 1;
+            }
+            _ => {}
+        }
+    }
+    let last = s[start..].trim();
+    if !last.is_empty() {
+        parts.push(last);
+    }
+    parts
 }
 
 /// The conditions on the decode path of a node.
