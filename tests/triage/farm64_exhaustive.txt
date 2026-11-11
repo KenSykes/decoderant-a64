@@ -45,6 +45,9 @@ UNALLOCATED:wfit invalid-vs-valid isa yaxpeax agrees with us on every sample; fa
 # Reviewed one by one.
 UNALLOCATED:fminnmv invalid-vs-valid isa The FP16 across-lanes forms fix bit 22 to 0; fARM64 also accepts bit 22 set
 UNALLOCATED:fminv invalid-vs-valid isa The FP16 across-lanes forms fix bit 22 to 0; fARM64 also accepts bit 22 set
+UNALLOCATED:fmaxnmv invalid-vs-valid isa The FP16 across-lanes forms fix bit 22 to 0; fARM64 also accepts bit 22 set
+UNALLOCATED:fmaxv invalid-vs-valid isa The FP16 across-lanes forms fix bit 22 to 0; fARM64 also accepts bit 22 set
+dupm_z_i_ mnemonic isa MOV is preferred when SVEMoveMaskPreferred holds (the pattern is not a DUP signed 8-bit immediate, optionally shifted by 8, as for #0xff in .S lanes); fARM64 prints DUPM
 UNALLOCATED:fcvtxn invalid-vs-valid isa FCVTXN has only the sz = 1 form (double to single); fARM64 accepts sz = 0
 UNALLOCATED:fcvtxn2 invalid-vs-valid isa FCVTXN2 has only the sz = 1 form (double to single); fARM64 accepts sz = 0
 UNALLOCATED:urecpe invalid-vs-valid isa URECPE has no 64-bit element form (sz = 1 is reserved); fARM64 accepts .2D
