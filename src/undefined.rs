@@ -162,6 +162,7 @@ pub(crate) fn undefined_at(i: usize, w: u32) -> bool {
 }
 
 /// [`pinned`] for the encoding at index `i` of `ENCODINGS`.
+#[cfg(feature = "encoder")]
 #[inline]
 pub(crate) fn pinned_at(i: usize) -> (u32, u32) {
     RULES[i].1

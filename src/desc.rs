@@ -1119,6 +1119,7 @@ pub(crate) fn decode_step(
 
 /// The mnemonic suffix table of an encoding (`2` in `SADDL2`, `B`/`T` in
 /// `BFMLALB`/`BFMLALT`), if it has one.
+#[cfg(any(feature = "formatter", feature = "instr_info", feature = "code_asm"))]
 pub(crate) fn suffix_table(ops: &[Op]) -> Option<&'static Tab> {
     ops.iter().find_map(|op| match op {
         Op::Suffix(t) => Some(*t),
