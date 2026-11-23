@@ -680,14 +680,24 @@ fn decode_imm_shift(s: ImmShift, word: u32, o: &mut Operand) -> Option<()> {
 }
 
 fn decode_one(op: &'static Op, word: u32, pc: u64) -> Option<Operand> {
-    decode_op(op, word, pc)
+    decode_op::<false>(op, word, pc)
 }
 
-/// [`decode_one`], inlined so that a constant descriptor folds away (the generated
+/// The nested operand of `Opt` and `Braced`: folded into the caller when `FOLD`.
+#[inline(always)]
+fn decode_nested<const FOLD: bool>(op: &'static Op, word: u32, pc: u64) -> Option<Operand> {
+    if FOLD {
+        decode_op::<false>(op, word, pc)
+    } else {
+        decode_one(op, word, pc)
+    }
+}
+
+/// The operand decoder, inlined so that a constant descriptor folds away (the generated
 /// per-list decoders, `DECODE_OPS`). Nested operands (`Opt`, `Braced`) go through
 /// `decode_one`.
 #[inline(always)]
-fn decode_op(op: &'static Op, word: u32, pc: u64) -> Option<Operand> {
+fn decode_op<const FOLD: bool>(op: &'static Op, word: u32, pc: u64) -> Option<Operand> {
     Some(match *op {
         Op::Reg(f, k, add) => reg_op(k.get(word)?.reg(plus(f, word, add))),
         Op::RegFixed(r) => reg_op(r),
@@ -846,7 +856,7 @@ fn decode_op(op: &'static Op, word: u32, pc: u64) -> Option<Operand> {
         },
         Op::Opt(inner, f, default) => Operand {
             elide: f.get(word) == default,
-            ..decode_one(inner, word, pc)?
+            ..decode_nested::<FOLD>(inner, word, pc)?
         },
         Op::Zr(f, k, a, add, pq) => Operand {
             arr: a.get(word)?,
@@ -921,7 +931,7 @@ fn decode_op(op: &'static Op, word: u32, pc: u64) -> Option<Operand> {
         },
         Op::Braced(inner) => Operand {
             braced: true,
-            ..decode_one(inner, word, pc)?
+            ..decode_nested::<FOLD>(inner, word, pc)?
         },
         Op::Zt0Vl(f) => Operand {
             lane: match f.get(word) {
@@ -1102,7 +1112,7 @@ pub(crate) fn decode_step(
         t.find(word)?;
         return Some(());
     }
-    out[*n] = decode_op(op, word, pc)?;
+    out[*n] = decode_op::<true>(op, word, pc)?;
     *n += 1;
     Some(())
 }
@@ -1124,7 +1134,30 @@ pub(crate) fn suffix(ops: &[Op], word: u32) -> &'static str {
         .unwrap_or("")
 }
 
-/// The index of the mnemonic suffix in its table (0 when there is none).
-pub(crate) fn suffix_code(ops: &[Op], word: u32) -> u8 {
-    suffix_table(ops).and_then(|t| t.find(word)).unwrap_or(0)
+/// The suffix table of each encoding (`suffix_table` of its operands), indexed by
+/// `Code as usize - 1`, so that decoding does not search the operand list.
+static SUFFIX_TABLES: [Option<&'static Tab>; crate::generated::CODE_COUNT - 1] = {
+    let mut t = [None; crate::generated::CODE_COUNT - 1];
+    let mut i = 0;
+    while i < t.len() {
+        if let Some(ops) = crate::generated::tables::ENCODINGS[i].ops {
+            let mut k = 0;
+            while k < ops.len() {
+                if let Op::Suffix(s) = &ops[k] {
+                    t[i] = Some(*s);
+                    break;
+                }
+                k += 1;
+            }
+        }
+        i += 1;
+    }
+    t
+};
+
+/// The index of the mnemonic suffix in its table for the encoding at index `i` of
+/// `ENCODINGS` (0 when there is none).
+#[inline]
+pub(crate) fn suffix_code_at(i: usize, word: u32) -> u8 {
+    SUFFIX_TABLES[i].and_then(|t| t.find(word)).unwrap_or(0)
 }
