@@ -6,6 +6,8 @@ All notable changes to this crate are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.2]
+
 - Decoding is about 30% faster on real code (39 → 28 ns per instruction on Windows
   system DLLs, Snapdragon): `Decoder::decode_out` rewrites only the fields decoding
   sets instead of the whole `Instruction`, the UNDEFINED rules and suffix tables are
@@ -39,6 +41,7 @@ First release, generated from `AARCHMRS_OPENSOURCE_A_profile_FAT-2026-09`.
 - Operand support for all 4,429 encodings: base, FP, Advanced SIMD, SVE/SVE2 and
   SME/SME2.
 
-[Unreleased]: https://github.com/KenSykes/decoderant-a64/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/KenSykes/decoderant-a64/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/KenSykes/decoderant-a64/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/KenSykes/decoderant-a64/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/KenSykes/decoderant-a64/releases/tag/v0.1.0
