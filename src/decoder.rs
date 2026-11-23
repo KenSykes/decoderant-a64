@@ -7,6 +7,7 @@ use crate::feature_set::FeatureSet;
 use crate::generated::Code;
 use crate::generated::tables::{CANDIDATES, DECODE_OPS, DISPATCH, DISPATCH_ROOT, ENCODINGS};
 use crate::instruction::{Instruction, MAX_OPERANDS};
+use crate::operand::Operand;
 use crate::tables::{NO_COND, SLOT_LIST};
 
 /// Decoder options.
@@ -121,21 +122,32 @@ static NO_DONT_CARE: [bool; crate::generated::CODE_COUNT - 1] = {
 
 /// Decodes one word.
 pub fn decode_word(word: u32, pc: u64, options: &DecoderOptions) -> Instruction {
-    let mut insn = Instruction::invalid(word, pc, options);
-    decode_into(&mut insn, options);
+    let mut insn = Instruction::EMPTY;
+    decode_reusing(&mut insn, word, pc, options);
     insn
 }
 
-impl Instruction {
-    /// An invalid instruction for `word` at `pc`, where decoding starts.
-    #[inline]
-    fn invalid(word: u32, pc: u64, options: &DecoderOptions) -> Instruction {
-        Instruction {
-            pc,
-            word,
-            features: options.features,
-            ..Instruction::EMPTY
-        }
+/// Decodes `word` into `insn`, which is any instruction whose operand slots from
+/// `op_count` on are `Operand::NONE`. Only the fields decoding sets are rewritten,
+/// and the operand slots the previous instruction used are cleared afterwards,
+/// rather than writing all of the few hundred bytes of an `Instruction` each time.
+#[inline]
+fn decode_reusing(insn: &mut Instruction, word: u32, pc: u64, options: &DecoderOptions) {
+    let prev = insn.op_count as usize;
+    insn.code = Code::Invalid;
+    insn.pc = pc;
+    insn.word = word;
+    insn.op_count = 0;
+    insn.sb = 0;
+    insn.extra = 0;
+    insn.has_operands = false;
+    insn.alias = 0;
+    insn.suffix = 0;
+    insn.features = options.features;
+    decode_into(insn, options);
+    let n = insn.op_count as usize;
+    if n < prev {
+        insn.ops[n..prev].fill(Operand::NONE);
     }
 }
 
@@ -151,7 +163,7 @@ fn decode_into(insn: &mut Instruction, options: &DecoderOptions) {
     }
     let i = code as usize - 1;
     let d = &ENCODINGS[i];
-    if crate::undefined::undefined(d, word) {
+    if crate::undefined::undefined_at(i, word) {
         return;
     }
     if d.ops.is_some() {
@@ -163,20 +175,20 @@ fn decode_into(insn: &mut Instruction, options: &DecoderOptions) {
             // A reserved operand value: UNALLOCATED (without the operands decoded
             // so far).
             None => {
-                insn.ops = Instruction::EMPTY.ops;
+                insn.ops = [Operand::NONE; MAX_OPERANDS];
                 return;
             }
         }
     }
     insn.code = code;
     insn.sb = word & d.sb_mask;
-    insn.suffix = d.ops.map_or(0, |ops| crate::desc::suffix_code(ops, word));
+    insn.suffix = crate::desc::suffix_code_at(i, word);
     #[cfg(feature = "encoder")]
     if let Some(ops) = d.ops {
         // Bits the operands do not reproduce are don't-care bits. Re-encoding finds
         // them; where the operands certainly reproduce every variable bit there are
         // none.
-        let (pm, pv) = crate::undefined::pinned(d);
+        let (pm, pv) = crate::undefined::pinned_at(i);
         let fixed = d.mask | d.sb_mask | pm;
         if !NO_DONT_CARE[i]
             && crate::cover::cover(ops, Some(word)).is_none_or(|c| fixed | c != u32::MAX)
@@ -254,12 +266,13 @@ impl<'a> Decoder<'a> {
     /// [`decode`](Self::decode) into an existing instruction.
     pub fn decode_out(&mut self, insn: &mut Instruction) {
         let Some(b) = self.data.get(self.pos..self.pos + 4) else {
-            *insn = Instruction::invalid(0, self.pc, &self.options);
+            *insn = Instruction::EMPTY;
+            insn.pc = self.pc;
+            insn.features = self.options.features;
             return;
         };
         let word = u32::from_le_bytes([b[0], b[1], b[2], b[3]]);
-        *insn = Instruction::invalid(word, self.pc, &self.options);
-        decode_into(insn, &self.options);
+        decode_reusing(insn, word, self.pc, &self.options);
         self.pos += 4;
         self.pc = self.pc.wrapping_add(4);
     }

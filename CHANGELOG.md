@@ -6,6 +6,12 @@ All notable changes to this crate are documented here. The format follows
 
 ## [Unreleased]
 
+- Decoding is about 30% faster on real code (39 → 28 ns per instruction on Windows
+  system DLLs, Snapdragon): `Decoder::decode_out` rewrites only the fields decoding
+  sets instead of the whole `Instruction`, the UNDEFINED rules and suffix tables are
+  looked up per encoding rather than matched on strings, and optional and braced
+  operands are decoded inline.
+
 ## [0.1.1]
 
 - Decoding is about 2× faster on real code (78 → 39 ns per instruction on Windows
