@@ -112,3 +112,16 @@ required-features = ["formatter", "std"]
 [[example]]
 name = "dis"
 required-features = ["formatter", "std"]
+
+[[example]]
+name = "size_probe"
+required-features = ["std"]
+
+# For scripts/formatter-size.ps1: the smallest binary the compiler can make.
+[profile.size]
+inherits = "release"
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
